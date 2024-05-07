@@ -142,7 +142,10 @@ const AdminUploadImage = () => {
                 });
                 setData(false);
                 getData();
-                document.getElementById("file-upload").value = "";
+                if (typeof window !== "undefined") {
+                  // browser code
+                  document.getElementById("file-upload").value = "";
+                }
               } catch (e) {
                 toast.success("File Upload Failed!", {
                   position: "top-right",

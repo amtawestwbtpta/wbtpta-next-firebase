@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AgeCalculator = () => {
   const [dob, setDob] = useState("");
@@ -59,7 +59,9 @@ const AgeCalculator = () => {
 
     setAge({ years: ageYears, months: ageMonths, days: ageDays });
   };
-  document.title = "WBTPTA AMTA WEST:Amaging Age Calculator";
+  useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:Amaging Age Calculator";
+  }, []);
   const toggleCalculator = (e) => {
     toggle === true
       ? (e.currentTarget.textContent = "Calculate Age between Dates")

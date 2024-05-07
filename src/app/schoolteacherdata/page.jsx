@@ -118,16 +118,18 @@ const page = () => {
       iv: filteredSchool[0].iv,
       v: filteredSchool[0].v,
     });
-    document.getElementById("sch_name").value = filteredSchool[0].school;
+    if (typeof window !== "undefined") {
+      document.getElementById("sch_name").value = filteredSchool[0].school;
 
-    document.getElementById("pp").value = filteredSchool[0].pp;
-    document.getElementById("i").value = filteredSchool[0].i;
-    document.getElementById("ii").value = filteredSchool[0].ii;
-    document.getElementById("iii").value = filteredSchool[0].iii;
-    document.getElementById("iv").value = filteredSchool[0].iv;
-    document.getElementById("v").value = filteredSchool[0].v;
-    document.getElementById("total_student").value =
-      filteredSchool[0].total_student;
+      document.getElementById("pp").value = filteredSchool[0].pp;
+      document.getElementById("i").value = filteredSchool[0].i;
+      document.getElementById("ii").value = filteredSchool[0].ii;
+      document.getElementById("iii").value = filteredSchool[0].iii;
+      document.getElementById("iv").value = filteredSchool[0].iv;
+      document.getElementById("v").value = filteredSchool[0].v;
+      document.getElementById("total_student").value =
+        filteredSchool[0].total_student;
+    }
   };
 
   return (

@@ -65,9 +65,9 @@ const TechSalary = (props) => {
     }
     userData();
     // eslint-disable-next-line
+    document.title = `All Teacher's Salary Data of ${school}`;
   }, []);
 
-  document.title = `All Teacher's Salary Data of ${school}`;
   return (
     <div className="container-fluid my-5">
       {showTable ? (

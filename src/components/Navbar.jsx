@@ -22,14 +22,17 @@ const Navbar = () => {
   }
 
   const handleNavCollapse = () => {
-    if (
-      document
-        .querySelector("#navbarSupportedContent")
-        .classList.contains("show")
-    ) {
-      document
-        .querySelector("#navbarSupportedContent")
-        .classList.remove("show");
+    if (typeof window !== "undefined") {
+      // browser code
+      if (
+        document
+          .querySelector("#navbarSupportedContent")
+          .classList.contains("show")
+      ) {
+        document
+          .querySelector("#navbarSupportedContent")
+          .classList.remove("show");
+      }
     }
   };
 

@@ -129,7 +129,10 @@ const ChangePhoto = () => {
                         photoName: teachersID + "-" + file.name,
                       };
                       encryptObjData("uid", newUserDetails, 10080);
-                      document.getElementById("file-upload").value = "";
+                      if (typeof window !== "undefined") {
+                        // browser code
+                        document.getElementById("file-upload").value = "";
+                      }
                     } catch (e) {
                       toast.success("File Upload Failed!", {
                         position: "top-right",
@@ -196,7 +199,10 @@ const ChangePhoto = () => {
   function getCroppedImg() {
     setPhotoCropped(false);
     setDisabled(false);
-    const canvas = document.createElement("canvas");
+    let canvas;
+    if (typeof window !== "undefined") {
+      canvas = document.createElement("canvas");
+    }
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     canvas.width = crop.width;

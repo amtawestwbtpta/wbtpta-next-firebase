@@ -81,49 +81,53 @@ const DisplayComplain = () => {
             let date = new Date(row.complainTime);
 
             let date2 = new Date(row.solvedOn);
-            document.getElementById(
-              "staticBackdropLabel"
-            ).innerHTML = `Complain of Visitor ${row.tname}`;
-            document.getElementById(
-              "name"
-            ).innerHTML = `Complain of Visitor:-<br/> ${row.tname}`;
-            document.getElementById(
-              "school"
-            ).innerHTML = `School of Visitor:-<br/> ${row.school}`;
-            document.getElementById(
-              "sis"
-            ).innerHTML = `Circle of Visitor:-<br/> ${row.sis}`;
-            document.getElementById(
-              "email"
-            ).innerHTML = `Email of Visitor:-<br/> ${row.email}`;
-            document.getElementById(
-              "mobile"
-            ).innerHTML = `Mobile No. of Visitor:-<br/> ${row.mobile}`;
-            document.getElementById(
-              "complain"
-            ).innerHTML = `Complain  of Visitor:-<br/> ${row.complain}`;
-            document.getElementById("remark").value = row.remarks;
-
-            if (row.status !== "Not Solved") {
+            if (typeof window !== "undefined") {
               document.getElementById(
-                "noticed"
-              ).innerHTML = `Status of Complain:-<br/> ${
-                row.status
-              } at ${date2.getDate()}-${date2.getMonth()}-${date2.getFullYear()} At ${
-                date2.getHours() > 12 ? date2.getHours() - 12 : date2.getHours()
-              }:${date2.getMinutes()}:${date2.getSeconds()} ${
-                date2.getHours() > 12 ? "PM" : "AM"
+                "staticBackdropLabel"
+              ).innerHTML = `Complain of Visitor ${row.tname}`;
+              document.getElementById(
+                "name"
+              ).innerHTML = `Complain of Visitor:-<br/> ${row.tname}`;
+              document.getElementById(
+                "school"
+              ).innerHTML = `School of Visitor:-<br/> ${row.school}`;
+              document.getElementById(
+                "sis"
+              ).innerHTML = `Circle of Visitor:-<br/> ${row.sis}`;
+              document.getElementById(
+                "email"
+              ).innerHTML = `Email of Visitor:-<br/> ${row.email}`;
+              document.getElementById(
+                "mobile"
+              ).innerHTML = `Mobile No. of Visitor:-<br/> ${row.mobile}`;
+              document.getElementById(
+                "complain"
+              ).innerHTML = `Complain  of Visitor:-<br/> ${row.complain}`;
+              document.getElementById("remark").value = row.remarks;
+
+              if (row.status !== "Not Solved") {
+                document.getElementById(
+                  "noticed"
+                ).innerHTML = `Status of Complain:-<br/> ${
+                  row.status
+                } at ${date2.getDate()}-${date2.getMonth()}-${date2.getFullYear()} At ${
+                  date2.getHours() > 12
+                    ? date2.getHours() - 12
+                    : date2.getHours()
+                }:${date2.getMinutes()}:${date2.getSeconds()} ${
+                  date2.getHours() > 12 ? "PM" : "AM"
+                }`;
+              } else {
+                document.getElementById("noticed").innerHTML = "Not Solved";
+              }
+              document.getElementById(
+                "reg"
+              ).innerHTML = `Complain Registered On:-<br/> ${date.getDate()}-${date.getMonth()}-${date.getFullYear()} At ${
+                date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
+              }:${date.getMinutes()}:${date.getSeconds()} ${
+                date.getHours() > 12 ? "PM" : "AM"
               }`;
-            } else {
-              document.getElementById("noticed").innerHTML = "Not Solved";
             }
-            document.getElementById(
-              "reg"
-            ).innerHTML = `Complain Registered On:-<br/> ${date.getDate()}-${date.getMonth()}-${date.getFullYear()} At ${
-              date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
-            }:${date.getMinutes()}:${date.getSeconds()} ${
-              date.getHours() > 12 ? "PM" : "AM"
-            }`;
           }}
         >
           Show Complain

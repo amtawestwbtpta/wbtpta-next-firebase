@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import ReactCrop from "react-image-crop";
@@ -20,7 +20,9 @@ import bcrypt from "bcryptjs";
 import Loader from "./Loader";
 import { useRouter } from "next/navigation";
 const Registration = ({ data, setSignUpTrue }) => {
-  document.title = "WBTPTA AMTA WEST:Register Now";
+  useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:Register Now";
+  }, []);
   const firbase = useFirebase();
   const router = useRouter();
   const docId = data.id;
@@ -241,7 +243,10 @@ const Registration = ({ data, setSignUpTrue }) => {
                         setTimeout(() => {
                           router.push("/login");
                         }, 1500);
-                        document.getElementById("file-upload").value = "";
+                        if (typeof window !== "undefined") {
+                          // browser code
+                          document.getElementById("file-upload").value = "";
+                        }
                       } catch (e) {
                         toast.error("File Upload Failed!", {
                           position: "top-right",
@@ -414,7 +419,11 @@ const Registration = ({ data, setSignUpTrue }) => {
   function getCroppedImg() {
     setPhotoCropped(false);
     setDisabled(false);
-    const canvas = document.createElement("canvas");
+    let canvas;
+    if (typeof window !== "undefined") {
+      // browser code
+      canvas = document.createElement("canvas");
+    }
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     canvas.width = crop.width;

@@ -713,9 +713,11 @@ const Result = () => {
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
           onClick={(e) => {
-            document.getElementById(
-              "staticBackdropLabel"
-            ).innerHTML = `DETAILED DATA OF ${row.student_name}`;
+            if (typeof window !== "undefined") {
+              document.getElementById(
+                "staticBackdropLabel"
+              ).innerHTML = `DETAILED DATA OF ${row.student_name}`;
+            }
             setclassNo(row.nclass);
             setInputField({
               id: row.id,

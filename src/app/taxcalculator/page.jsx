@@ -27,7 +27,7 @@ const TaxCalculator = () => {
   const changevalue = (e) => {
     setInputField({ ...inputField, [e.target.name]: parseInt(e.target.value) });
   };
-  document.title = "WBTPTA AMTA WEST:Tax Calculator";
+
   const [julyBasic, setJulyBasic] = useState(0);
 
   let junebasic = inputField.junebasic;
@@ -180,7 +180,9 @@ const TaxCalculator = () => {
     totalTaxableIncome,
     tgpf,
   ]);
-
+  useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:Tax Calculator";
+  }, []);
   return (
     <div className="container my-4">
       <div id="box1" className="my-3">

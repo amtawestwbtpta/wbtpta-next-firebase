@@ -242,31 +242,33 @@ const TeacherDatabase = () => {
             setUpdId(row.id);
             setSelectedTeacher(row);
             setSchUdise(row.udise);
-            document.getElementById(
-              "staticBackdropLabel"
-            ).innerHTML = `DETAILED DATA OF ${row.tname}`;
-
-            if (row.ifsc) {
-              fetch(`https://ifsc.razorpay.com/${row.ifsc}`)
-                .then((res) => res.json())
-                .then((data) => {
-                  document.getElementById("bankdiv").innerHTML =
-                    "<p>Bank Details<br>Bank Name: " +
-                    data.BANK +
-                    "<br/>" +
-                    "Branch: " +
-                    data.BRANCH +
-                    "<br/>" +
-                    "Address: " +
-                    data.ADDRESS +
-                    "<br/>" +
-                    "IFSC: " +
-                    data.IFSC +
-                    "<br/>" +
-                    "MICR: " +
-                    data.MICR +
-                    "<br/></p>";
-                });
+            if (typeof window !== "undefined") {
+              // browser code
+              document.getElementById(
+                "staticBackdropLabel"
+              ).innerHTML = `DETAILED DATA OF ${row.tname}`;
+              if (row.ifsc) {
+                fetch(`https://ifsc.razorpay.com/${row.ifsc}`)
+                  .then((res) => res.json())
+                  .then((data) => {
+                    document.getElementById("bankdiv").innerHTML =
+                      "<p>Bank Details<br>Bank Name: " +
+                      data.BANK +
+                      "<br/>" +
+                      "Branch: " +
+                      data.BRANCH +
+                      "<br/>" +
+                      "Address: " +
+                      data.ADDRESS +
+                      "<br/>" +
+                      "IFSC: " +
+                      data.IFSC +
+                      "<br/>" +
+                      "MICR: " +
+                      data.MICR +
+                      "<br/></p>";
+                  });
+              }
             }
           }}
         >
@@ -1754,7 +1756,10 @@ const TeacherDatabase = () => {
                 onClick={() => {
                   setSrc(null);
                   setFile({});
-                  document.getElementById("image").value = "";
+                  if (typeof window !== "undefined") {
+                    // browser code
+                    document.getElementById("image").value = "";
+                  }
                 }}
               >
                 Cancel

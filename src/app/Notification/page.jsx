@@ -508,9 +508,11 @@ const Notification = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={() => {
-                  document.getElementById("checkbox").checked = false;
-                  if (document.getElementById("img")) {
-                    document.getElementById("img").value = "";
+                  if (typeof window !== "undefined") {
+                    document.getElementById("checkbox").checked = false;
+                    if (document.getElementById("img")) {
+                      document.getElementById("img").value = "";
+                    }
                   }
                   setNoticeText("");
                   setTitle("");
@@ -552,7 +554,9 @@ const Notification = () => {
                     } else {
                       setAddImage(e.target.checked);
                       setFile({});
-                      document.getElementById("img").value = "";
+                      if (typeof window !== "undefined") {
+                        document.getElementById("img").value = "";
+                      }
                       setSrc(null);
                     }
                   }}
@@ -586,7 +590,9 @@ const Notification = () => {
                         onClick={() => {
                           setSrc(null);
                           setFile({});
-                          document.getElementById("img").value = "";
+                          if (typeof window !== "undefined") {
+                            document.getElementById("img").value = "";
+                          }
                         }}
                       ></button>
                     </div>
@@ -637,10 +643,13 @@ const Notification = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  document.getElementById("checkbox").checked = false;
-                  if (document.getElementById("img")) {
-                    document.getElementById("img").value = "";
+                  if (typeof window !== "undefined") {
+                    document.getElementById("checkbox").checked = false;
+                    if (document.getElementById("img")) {
+                      document.getElementById("img").value = "";
+                    }
                   }
+
                   setNoticeText("");
                   setTitle("");
                   setLoader(false);

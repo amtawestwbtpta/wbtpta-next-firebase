@@ -109,8 +109,6 @@ const PayslipWbtpta = () => {
 
   netpay = gross - deduction;
 
-  document.title = `PAYSLIP OF ${tname.toUpperCase()} OF ${school.toUpperCase()}`;
-
   function NumInWords(number) {
     const first = [
       "",

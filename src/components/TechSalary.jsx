@@ -64,10 +64,10 @@ const TechSalary = (props) => {
       router.push("/logout");
     }
     userData();
+    document.title = `All Teacher's Salary Data of ${school}`;
     // eslint-disable-next-line
   }, []);
 
-  document.title = `All Teacher's Salary Data of ${school}`;
   return (
     <div className="container-fluid my-5">
       {showTable ? (

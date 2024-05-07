@@ -130,29 +130,32 @@ const AddTeacher = () => {
     errservice: "",
   });
   const ifsc_ser = (ifsc) => {
-    if (ifsc.length === 11) {
-      fetch(`https://ifsc.razorpay.com/${ifsc}`)
-        .then((res) => res.json())
-        .then((data) => {
-          document.getElementById("bankdiv").innerHTML =
-            "<p>Bank Details<br>Bank Name: " +
-            data.BANK +
-            "<br/>" +
-            "Branch: " +
-            data.BRANCH +
-            "<br/>" +
-            "Address: " +
-            data.ADDRESS +
-            "<br/>" +
-            "IFSC: " +
-            data.IFSC +
-            "<br/>" +
-            "MICR: " +
-            data.MICR +
-            "<br/></p>";
-        });
-    } else {
-      document.getElementById("bankdiv").innerHTML = "";
+    if (typeof window !== "undefined") {
+      // browser code
+      if (ifsc.length === 11) {
+        fetch(`https://ifsc.razorpay.com/${ifsc}`)
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("bankdiv").innerHTML =
+              "<p>Bank Details<br>Bank Name: " +
+              data.BANK +
+              "<br/>" +
+              "Branch: " +
+              data.BRANCH +
+              "<br/>" +
+              "Address: " +
+              data.ADDRESS +
+              "<br/>" +
+              "IFSC: " +
+              data.IFSC +
+              "<br/>" +
+              "MICR: " +
+              data.MICR +
+              "<br/></p>";
+          });
+      } else {
+        document.getElementById("bankdiv").innerHTML = "";
+      }
     }
   };
   const formHandler = (e) => {

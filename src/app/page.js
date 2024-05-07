@@ -4,8 +4,9 @@ import SwiperSlides from "../components/SwiperSlides";
 import Typed from "typed.js";
 export default function Home() {
   const el = React.useRef(null);
-  document.title = "WBTPTA AMTA WEST:Homepage";
+
   useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:Homepage";
     const typed = new Typed(el.current, {
       strings: ["Welcome To WBTPTA Amta West Circle's New Website."],
       typeSpeed: 50,
