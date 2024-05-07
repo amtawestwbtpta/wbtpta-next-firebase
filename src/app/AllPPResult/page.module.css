@@ -1,0 +1,100 @@
+@page {
+    size: landscape;
+}
+
+table td,
+table th {
+    /* border: 1px solid #ddd; */
+    text-align: left;
+    font-size: 10px;
+    padding: 3px;
+    color: #000;
+}
+
+table .new tr td {
+    border: 1px solid #fff;
+    text-align: left;
+    font-size: 10px;
+    padding: 3px;
+}
+
+.tdr,
+td,
+th {
+    border: none;
+    text-align: center;
+}
+
+.tde,
+td,
+th {
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table,
+th,
+td {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.result_info {
+    width: 50%;
+    float: left;
+    margin-top: 10px;
+}
+
+.result_info_tbl {
+    margin-top: 6px;
+}
+
+.result_info_tbl tr td {
+    font-size: 8px;
+    margin: 0px;
+}
+
+.result_info_tbl p {
+    margin: 0px;
+}
+
+.watermark {
+    display: block;
+    position: relative;
+}
+
+.watermark::after {
+    content: "";
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.watermark2 {
+    display: block;
+    position: relative;
+}
+
+.watermark2::after {
+    content: "";
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
