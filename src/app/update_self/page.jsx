@@ -10,7 +10,7 @@ import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
   getCurrentDateInput,
   getSubmitDateInput,
-} from "@/modules/calculatefunctions";
+} from "../../modules/calculatefunctions";
 const UpdateSelf = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
