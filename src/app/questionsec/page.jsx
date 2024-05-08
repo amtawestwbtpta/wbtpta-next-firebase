@@ -26,12 +26,17 @@ import "swiper/css/scrollbar";
 import "swiper/css/effect-cube";
 import { EffectCube } from "swiper";
 import { ImSwitch } from "react-icons/im";
-import { decryptObjData } from "../../modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 function QuestionSec() {
   const [docId, setDocId] = useState("");
   const [serial, setSerial] = useState(0);
-  const questionadmin = decryptObjData("tid").question;
-  const { access, setAccess, setRedirectData } = useGlobalContext();
+  let details = getCookie("tid");
+  if (details) {
+    details = decryptObjData("tid");
+  }
+  const questionadmin = details?.question;
+  const { access, setAccess, setRedirectData, setStateArray } =
+    useGlobalContext();
   const router = useRouter();
 
   const [data, setData] = useState([]);
@@ -392,9 +397,8 @@ function QuestionSec() {
           className="btn btn-sm btn-success m-2"
           onClick={() => {
             router.push("/PrintQuestionAll");
-            setRedirectData(
-              `${JSON.stringify(data)}===${JSON.stringify(qRateData)}`
-            );
+
+            setStateArray([data, qRateData]);
           }}
         >
           Print All Invoice

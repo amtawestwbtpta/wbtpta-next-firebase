@@ -26,7 +26,7 @@ import {
 import AdminNavBar from "../../components/AdminNavBar";
 import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
-import { decryptObjData } from "../../modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 const AdminUploadFile = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
@@ -37,6 +37,10 @@ const AdminUploadFile = () => {
   const [editFileName, setEditFileName] = useState("");
   const [editFileId, setEditFileId] = useState("");
   const docId = uuid();
+  let details = getCookie("uid");
+  if (details) {
+    userdetails = decryptObjData("uid");
+  }
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Upload Files";
 
@@ -60,7 +64,6 @@ const AdminUploadFile = () => {
     }));
     setAllData(datas);
   };
-  let userdetails = decryptObjData("uid");
 
   const uploadFiles = () => {
     if (file == null) {

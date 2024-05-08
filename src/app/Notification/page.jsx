@@ -27,8 +27,7 @@ import { decryptObjData, getCookie } from "../../modules/encryption";
 import { DateValueToSring } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
-// const height = window.screen.height;
-// const width = window.screen.width;
+
 const Notification = () => {
   // const navigate = useNavigate();
   let teacherdetails = {
@@ -292,7 +291,7 @@ const Notification = () => {
   };
 
   useEffect(() => {
-    document.title = "WBTPTA AMTA WEST:Notifications";
+    // document.title = "WBTPTA AMTA WEST:Notifications";
     getData();
     // eslint-disable-next-line
   }, []);
@@ -508,12 +507,6 @@ const Notification = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={() => {
-                  if (typeof window !== "undefined") {
-                    document.getElementById("checkbox").checked = false;
-                    if (document.getElementById("img")) {
-                      document.getElementById("img").value = "";
-                    }
-                  }
                   setNoticeText("");
                   setTitle("");
                   setLoader(false);
@@ -554,9 +547,7 @@ const Notification = () => {
                     } else {
                       setAddImage(e.target.checked);
                       setFile({});
-                      if (typeof window !== "undefined") {
-                        document.getElementById("img").value = "";
-                      }
+
                       setSrc(null);
                     }
                   }}
@@ -590,9 +581,6 @@ const Notification = () => {
                         onClick={() => {
                           setSrc(null);
                           setFile({});
-                          if (typeof window !== "undefined") {
-                            document.getElementById("img").value = "";
-                          }
                         }}
                       ></button>
                     </div>
@@ -643,13 +631,6 @@ const Notification = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  if (typeof window !== "undefined") {
-                    document.getElementById("checkbox").checked = false;
-                    if (document.getElementById("img")) {
-                      document.getElementById("img").value = "";
-                    }
-                  }
-
                   setNoticeText("");
                   setTitle("");
                   setLoader(false);

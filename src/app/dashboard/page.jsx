@@ -112,7 +112,9 @@ const page = () => {
 
   const [hide, setHide] = useState(false);
   useEffect(() => {
-    document.title = "WBTPTA AMTA WEST:Dashboard";
+    if (typeof window !== "undefined") {
+      document.title = "WBTPTA AMTA WEST:Dashboard";
+    }
 
     const typed = new Typed(el.current, {
       strings: [`Welcome ${tname},<br /> ${desig}, of <br /> ${school}`],

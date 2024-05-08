@@ -13,16 +13,20 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import bcrypt from "bcryptjs";
-import { decryptObjData } from "../../modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 import Link from "next/link";
 const UpdateUP = () => {
   const router = useRouter();
-  let userdetails = decryptObjData("uid");
-  const empid = userdetails.empid;
-  const account = userdetails.account;
-  const email = userdetails.email;
-  const id = userdetails.id;
-  const username = userdetails.username;
+  let details = getCookie("uid");
+  let userdetails;
+  if (details) {
+    userdetails = decryptObjData("uid");
+  }
+  const empid = userdetails?.empid;
+  const account = userdetails?.account;
+  const email = userdetails?.email;
+  const id = userdetails?.id;
+  const username = userdetails?.username;
   const [usernameForm, setUsernameForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   // const passwordPattern =

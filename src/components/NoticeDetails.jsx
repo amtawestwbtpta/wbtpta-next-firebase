@@ -18,8 +18,6 @@ import { decryptObjData, getCookie } from "../modules/encryption";
 import { DateValueToSring } from "../modules/calculatefunctions";
 import { v4 as uuid } from "uuid";
 import { notifyAll } from "../modules/notification";
-const height = window.screen.height;
-const width = window.screen.width;
 
 // Core viewer
 // eslint-disable-next-line
@@ -75,6 +73,8 @@ const NoticeDetails = ({ sata }) => {
     date: "",
     noticeId: "",
   });
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
   const getNoticeReplies = async () => {
     setLoader(true);
     const q = query(
@@ -170,7 +170,8 @@ const NoticeDetails = ({ sata }) => {
 
   useEffect(() => {
     getNoticeReplies();
-
+    setHeight(window.screen.height);
+    setWidth(window.screen.width);
     // eslint-disable-next-line
   }, [sata]);
 

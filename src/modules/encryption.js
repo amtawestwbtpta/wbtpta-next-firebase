@@ -34,36 +34,44 @@ export const decryptText = (name) => {
   return mainText;
 };
 export const getCookie = (name) => {
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(";");
-  for (let i = 0; i < cookieArray.length; i++) {
-    let cookie = cookieArray[i].trim();
-    if (cookie.startsWith(name + "=")) {
-      return cookie.substring(name.length + 1, cookie.length);
+  if (typeof window !== "undefined") {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(";");
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1, cookie.length);
+      }
     }
+    return null;
   }
-  return null;
 };
 
 export const setCookie = (name, value, minutes) => {
   const expiryDate = new Date();
   expiryDate.setTime(expiryDate.getTime() + minutes * 60 * 1000); // Convert minutes to milliseconds
   const expires = "expires=" + expiryDate.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  if (typeof window !== "undefined") {
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
 };
 
 // Function to delete a cookie by name
 const deleteCookie = (cookieName) => {
-  document.cookie =
-    cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  if (typeof window !== "undefined") {
+    document.cookie =
+      cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
 };
 
 // Function to remove all cookies
 export const deleteAllCookies = () => {
-  var cookies = document.cookie.split(";");
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].trim();
-    var cookieName = cookie.split("=")[0];
-    deleteCookie(cookieName);
+  if (typeof window !== "undefined") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      var cookieName = cookie.split("=")[0];
+      deleteCookie(cookieName);
+    }
   }
 };

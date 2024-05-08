@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SwiperSlides from "../components/SwiperSlides";
 import Typed from "typed.js";
 export default function Home() {
   const el = React.useRef(null);
+  const [width, setWidth] = useState(100);
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Homepage";
@@ -17,6 +18,8 @@ export default function Home() {
       autoInsertCss: true,
     });
 
+    setWidth(window.screen.width);
+
     return () => {
       // Destroy Typed instance during cleanup to stop animation
       typed.destroy();
@@ -25,7 +28,7 @@ export default function Home() {
   return (
     <div className="container my-5">
       <div className="my-3" style={{ height: "70px" }}>
-        {window.screen.width < 780 ? (
+        {width < 780 ? (
           <span
             className="text-primary text-center fs-6 mb-3 web-message"
             ref={el}

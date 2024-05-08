@@ -6,7 +6,11 @@ import axios from "axios";
 import { firestore } from "../../context/FirbaseContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-import { decryptObjData } from "../../modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
+import {
+  getCurrentDateInput,
+  getSubmitDateInput,
+} from "@/modules/calculatefunctions";
 const UpdateSelf = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
@@ -15,40 +19,31 @@ const UpdateSelf = () => {
       router.push("/login");
     }
   }, []);
-  let userdetails = decryptObjData("tid");
-  let teachersID = userdetails.teachersID;
-  let id = userdetails.id;
-  let tname = userdetails.tname;
-  let school = userdetails.school;
-  let phone = userdetails.phone;
-  let email = userdetails.email;
-  let dob = userdetails.dob;
-  let doj = userdetails.doj;
-  let dojnow = userdetails.dojnow;
-  let dor = userdetails.dor;
-  let account = userdetails.account;
-  let empid = userdetails.empid;
-  let pan = userdetails.pan;
-  let address = userdetails.address;
-  let bonus = userdetails.bonus;
-  let arrear = userdetails.arrear;
+  let details = getCookie("tid");
+  let userdetails;
+  if (details) {
+    userdetails = decryptObjData("tid");
+  }
 
-  let fname = userdetails.fname;
+  let teachersID = userdetails?.teachersID;
+  let id = userdetails?.id;
+  let tname = userdetails?.tname;
+  let school = userdetails?.school;
+  let phone = userdetails?.phone;
+  let email = userdetails?.email;
+  let dob = userdetails?.dob;
+  let doj = userdetails?.doj;
+  let dojnow = userdetails?.dojnow;
+  let dor = userdetails?.dor;
+  let account = userdetails?.account;
+  let empid = userdetails?.empid;
+  let pan = userdetails?.pan;
+  let address = userdetails?.address;
+  let bonus = userdetails?.bonus;
+  let arrear = userdetails?.arrear;
 
-  let getCurrentDateInput = (date) => {
-    let data = date.split("-");
-    let day = data[0];
-    let month = data[1];
-    let year = data[2];
-    return `${year}-${month}-${day}`;
-  };
-  let getSubmitDateInput = (date) => {
-    let data = date.split("-");
-    let day = data[2];
-    let month = data[1];
-    let year = data[0];
-    return `${day}-${month}-${year}`;
-  };
+  let fname = userdetails?.fname;
+
   const [inputField, setInputField] = useState({
     empid: empid,
     tname: tname,

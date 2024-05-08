@@ -6,7 +6,7 @@ import { Loader } from "rsuite";
 import Link from "next/link";
 import { firestore } from "../../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { decryptObjData } from "../../modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 const TechSalary = (props) => {
   const data = props.data;
   const { access, setAccess } = useGlobalContext();
@@ -14,11 +14,13 @@ const TechSalary = (props) => {
   const [filteredData, setFilteredData] = useState([]);
   let udise;
   let school;
-  let userDcryptedDetails;
+  let details = getCookie("tid");
+  if (details) {
+    details = decryptObjData("tid");
+  }
   if (!data) {
-    userDcryptedDetails = decryptObjData("tid");
-    udise = userDcryptedDetails.udise;
-    school = userDcryptedDetails.school;
+    udise = details?.udise;
+    school = details?.school;
   } else {
     udise = data[0].udise;
     school = data[0].school;

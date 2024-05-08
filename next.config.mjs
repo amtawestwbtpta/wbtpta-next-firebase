@@ -1,7 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["firebasestorage.googleapis.com", "raw.githubusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
+    ],
+  },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
   },
 };
 

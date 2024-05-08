@@ -232,15 +232,6 @@ const Navbar = () => {
               Question Section
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              href="/result"
-              onClick={handleNavCollapse}
-            >
-              Result Section
-            </Link>
-          </li>
 
           <li className="nav-item">
             <Link
@@ -516,15 +507,7 @@ const Navbar = () => {
               </li>
             </>
           ) : null}
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              href="/result"
-              onClick={handleNavCollapse}
-            >
-              Result Section
-            </Link>
-          </li>
+
           <li className="nav-item">
             <Link
               className="nav-link"

@@ -31,8 +31,6 @@ import {
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
-const height = window.screen.height;
-const width = window.screen.width;
 
 const MemoSection = () => {
   let teacherdetails = {
@@ -73,6 +71,8 @@ const MemoSection = () => {
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
   const getData = async () => {
     setLoader(true);
     const querySnapshot = await getDocs(query(collection(firestore, "memos")));
@@ -391,12 +391,12 @@ const MemoSection = () => {
                   setOrgmemoText(el.memoText);
                   setOrgMemoDate(el.memoDate);
                   setOrgMemoNumber(el.memoNumber);
-                  if (typeof window !== "undefined") {
-                    setTimeout(() => {
-                      document.querySelector("#editDate").value =
-                        getCurrentDateInput(el.memoDate);
-                    }, 200);
-                  }
+                  // if (typeof window !== "undefined") {
+                  //   setTimeout(() => {
+                  //     document.querySelector("#editDate").value =
+                  //       getCurrentDateInput(el.memoDate);
+                  //   }, 200);
+                  // }
                 }}
               >
                 Edit
@@ -451,6 +451,8 @@ const MemoSection = () => {
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Memo Section";
+    setHeight(window.screen.height);
+    setWidth(window.screen.width);
     getData();
     // eslint-disable-next-line
   }, []);
@@ -623,12 +625,12 @@ const MemoSection = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={() => {
-                  if (typeof window !== "undefined") {
-                    document.getElementById("checkbox").checked = false;
-                    if (document.getElementById("img")) {
-                      document.getElementById("img").value = "";
-                    }
-                  }
+                  // if (typeof window !== "undefined") {
+                  //   document.getElementById("checkbox").checked = false;
+                  //   if (document.getElementById("img")) {
+                  //     document.getElementById("img").value = "";
+                  //   }
+                  // }
                   setTitle("");
                   setMemoNumber("");
                   setmemoText("");
@@ -693,9 +695,9 @@ const MemoSection = () => {
                     } else {
                       setAddImage(e.target.checked);
                       setFile({});
-                      if (typeof window !== "undefined") {
-                        document.getElementById("img").value = "";
-                      }
+                      // if (typeof window !== "undefined") {
+                      //   document.getElementById("img").value = "";
+                      // }
                       setSrc(null);
                     }
                   }}
@@ -729,9 +731,9 @@ const MemoSection = () => {
                         onClick={() => {
                           setSrc(null);
                           setFile({});
-                          if (typeof window !== "undefined") {
-                            document.getElementById("img").value = "";
-                          }
+                          // if (typeof window !== "undefined") {
+                          //   document.getElementById("img").value = "";
+                          // }
                         }}
                       ></button>
                     </div>
@@ -781,12 +783,12 @@ const MemoSection = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  if (typeof window !== "undefined") {
-                    document.getElementById("checkbox").checked = false;
-                    if (document.getElementById("img")) {
-                      document.getElementById("img").value = "";
-                    }
-                  }
+                  // if (typeof window !== "undefined") {
+                  //   document.getElementById("checkbox").checked = false;
+                  //   if (document.getElementById("img")) {
+                  //     document.getElementById("img").value = "";
+                  //   }
+                  // }
                   setTitle("");
                   setMemoNumber("");
                   setmemoText("");
