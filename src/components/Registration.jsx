@@ -116,8 +116,7 @@ const Registration = ({ data, setSignUpTrue }) => {
             setInputField({ ...inputField, username: "" });
           }, 2000);
         } else {
-          const url = `https://awwbtpta-backend.onrender.com/users/add`;
-          // const url = `http://127.0.0.1:8080/users/add`;
+          const url = `/api/signup`;
 
           try {
             let response = await axios.post(url, {

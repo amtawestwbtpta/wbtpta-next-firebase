@@ -1,6 +1,6 @@
 const CryptoJS = require("crypto-js");
 
-export const secretKey = "AmtaWestCircleWBTPTA";
+export const secretKey = process.env.NEXT_PUBLIC_APP_SECRETKEY;
 export const encryptObjData = (name, value, minutes) => {
   let encJsonObj = CryptoJS.AES.encrypt(
     JSON.stringify(value),

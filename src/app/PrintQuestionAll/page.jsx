@@ -1,11 +1,10 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 const PrintQuestionAll = () => {
-  const { access, setAccess, redirectData, stateArray } = useGlobalContext();
+  const { access, stateArray } = useGlobalContext();
   const router = useRouter();
 
   const [allData, setAllData] = useState([]);

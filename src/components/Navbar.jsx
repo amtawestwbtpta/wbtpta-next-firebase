@@ -726,7 +726,7 @@ const Navbar = () => {
               href="/login"
               onClick={handleNavCollapse}
             >
-              Login
+              Login / Sign Up
             </Link>
           </li>
         </>

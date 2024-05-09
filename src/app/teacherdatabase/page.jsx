@@ -30,7 +30,7 @@ import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
 const TeacherDatabase = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { access, setStateArray } = useGlobalContext();
   const router = useRouter();
   const [showTable, setShowTable] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -153,21 +153,21 @@ const TeacherDatabase = () => {
       name: "Sl",
       selector: (row, ind) => ind + 1,
       width: "2",
-      center: true,
+      center: +true,
     },
     {
       name: "Teacher Name",
       selector: (row) => row.tname,
       sortable: true,
       wrap: true,
-      center: true,
+      center: +true,
     },
     {
       name: "School Name",
       selector: (row) => row.school,
       sortable: true,
       wrap: true,
-      center: true,
+      center: +true,
     },
     {
       name: "View Details",
@@ -458,6 +458,21 @@ const TeacherDatabase = () => {
             email: inputField.email,
             phone: inputField.phone,
           });
+          await axios.post("/api/updteacher", {
+            id: updId,
+            tname: inputField.tname,
+            tsname: inputField.tsname,
+            school: inputField.school,
+            desig: inputField.desig,
+            pan: inputField.pan,
+            udise: inputField.udise,
+            sis: inputField.sis,
+            circle: inputField.circle,
+            empid: inputField.empid,
+            question: inputField.question,
+            email: inputField.email,
+            phone: inputField.phone,
+          });
         } catch (e) {
           console.log(e);
           toast.error("UserTeachers Database Not Updated!!!", {
@@ -513,34 +528,59 @@ const TeacherDatabase = () => {
   };
   const deleteTeacher = async (el) => {
     const docRef = doc(firestore, "teachers", el.id);
+    const docRefUser = doc(firestore, "userteachers", el.id);
+    try {
+      await axios.post("/api/delteacher", {
+        id: el.id,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("User not Registerd!!!", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
     await deleteDoc(docRef)
       .then(async () => {
-        await setDoc(doc(firestore, "deletedTeachers", el.id), el)
+        await deleteDoc(docRefUser)
           .then(async () => {
-            toast.success("Congrats! Teacher Deleted Successfully!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            userData();
+            await setDoc(doc(firestore, "deletedTeachers", el.id), el)
+              .then(async () => {
+                toast.success("Congrats! Teacher Deleted Successfully!", {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+                userData();
+              })
+              .catch((err) => {
+                console.log(err);
+                toast.error("Unable To Send Query!!!", {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+              });
           })
           .catch((err) => {
             console.log(err);
-            toast.error("Unable To Send Query!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
           });
       })
       .catch((err) => {
@@ -657,10 +697,10 @@ const TeacherDatabase = () => {
             url: photourl,
             photoName: user.id + "-" + file.name,
           };
-          const backendUrl = `https://awwbtpta-backend.onrender.com/users/add`;
+
           try {
             await axios
-              .post(backendUrl, techerData)
+              .post(`/api/signup`, techerData)
               .then(async () => {
                 await setDoc(doc(firestore, "userteachers", techerData.id), {
                   teachersID: techerData.teachersID,
@@ -762,12 +802,17 @@ const TeacherDatabase = () => {
       {showTable && !showDelTeachers ? (
         <>
           <h3 className="text-center text-primary">Displaying Teachers Data</h3>
-          <Link
+
+          <button
+            type="button"
             className="btn btn-sm btn-info m-3"
-            href={`/JulySalary?details=${JSON.stringify(data)}`}
+            onClick={() => {
+              router.push("/JulySalary");
+              setStateArray(data);
+            }}
           >
             July Salary Data
-          </Link>
+          </button>
           <Link className="btn btn-sm btn-success m-3" href="/AddTeacher">
             Add Teacher
           </Link>
