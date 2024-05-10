@@ -45,6 +45,7 @@ const UpdateSelf = () => {
   let fname = userdetails?.fname;
 
   const [inputField, setInputField] = useState({
+    id: id,
     empid: empid,
     tname: tname,
     fname: fname,
@@ -168,10 +169,10 @@ const UpdateSelf = () => {
   const updateBtn = async () => {
     if (validForm()) {
       try {
-        const url = `https://awwbtpta-backend.onrender.com/users/updateUserData`;
+        const url = `/api/updself`;
         let response = await axios.post(url, inputField);
         let record = response.data;
-        if (record.statusText === "Success") {
+        if (response.status === 200) {
           const docRef = doc(firestore, "teachers", teachersID);
           await updateDoc(docRef, inputField);
           const docRef2 = doc(firestore, "userteachers", id);

@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
     tname: String,
     tsname: String,
     school: String,
+    phone: String,
     udise: Number,
     desig: String,
     sis: String,
