@@ -35,8 +35,7 @@ function QuestionSec() {
     details = decryptObjData("tid");
   }
   const questionadmin = details?.question;
-  const { access, setAccess, setRedirectData, setStateArray } =
-    useGlobalContext();
+  const { access, setStateArray } = useGlobalContext();
   const router = useRouter();
 
   const [data, setData] = useState([]);
@@ -408,9 +407,7 @@ function QuestionSec() {
           className="btn btn-sm btn-info"
           onClick={() => {
             router.push("/PrintQuestionAllCompact");
-            setRedirectData(
-              `${JSON.stringify(data)}===${JSON.stringify(qRateData)}`
-            );
+            setStateArray([data, qRateData]);
           }}
         >
           Print Question All Compact

@@ -7,8 +7,6 @@ import { FirebaseProvider } from "./FirbaseContext";
 const GlobalContext = createContext({
   access: "",
   setAccess: () => "",
-  redirectData: "",
-  setRedirectData: () => "",
   stateArray: [],
   setStateArray: () => [],
   stateObject: {},
@@ -17,7 +15,7 @@ const GlobalContext = createContext({
 
 export const GlobalContextProvider = ({ children }) => {
   const [access, setAccess] = useState("");
-  const [redirectData, setRedirectData] = useState("");
+
   const [stateArray, setStateArray] = useState([]);
   const [stateObject, setStateObject] = useState({});
 
@@ -26,8 +24,6 @@ export const GlobalContextProvider = ({ children }) => {
       value={{
         access,
         setAccess,
-        redirectData,
-        setRedirectData,
         stateArray,
         setStateArray,
         stateObject,
