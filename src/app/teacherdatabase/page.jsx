@@ -30,7 +30,7 @@ import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
 const TeacherDatabase = () => {
-  const { access, setStateArray } = useGlobalContext();
+  const { access, setStateArray, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [showTable, setShowTable] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -172,12 +172,16 @@ const TeacherDatabase = () => {
     {
       name: "View Details",
       cell: (row) => (
-        <Link
+        <button
+          type="button"
           className="btn btn-sm btn-success"
-          href={`/ViewDetails?details=${JSON.stringify(row)}`}
+          onClick={() => {
+            setStateObject(row);
+            router.push("/ViewDetails");
+          }}
         >
           View Details
-        </Link>
+        </button>
       ),
     },
 

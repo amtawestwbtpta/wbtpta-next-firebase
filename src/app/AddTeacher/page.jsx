@@ -21,11 +21,13 @@ import {
 } from "../../modules/calculatefunctions";
 import { DA, HRA } from "../../modules/constants";
 
+import { v4 as uuid } from "uuid";
+
 const AddTeacher = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { access } = useGlobalContext();
   const router = useRouter();
   const [data, setData] = useState([]);
-  const [teacherId, setTeacherId] = useState("");
+  const teacherId = uuid().split("-")[0];
   const [teachersData, setTeachersData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -43,7 +45,6 @@ const AddTeacher = () => {
       id: doc.id,
     }));
     setTeachersData(datas);
-    setTeacherId(`teachers${datas.length + 101}`);
   };
   const [inputField, setInputField] = useState({
     school: "",
@@ -549,7 +550,7 @@ const AddTeacher = () => {
   };
   useEffect(() => {
     sch_search();
-  }, [teacherId]);
+  }, []);
   useEffect(() => {
     if (access !== "admin") {
       router.push("/login");

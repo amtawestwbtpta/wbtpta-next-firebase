@@ -43,5 +43,8 @@
     "swiper": "^9.4.1",
     "typed.js": "^2.0.16",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.8"
   }
 }
