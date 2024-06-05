@@ -45,7 +45,9 @@ const AddTeacher = () => {
       id: doc.id,
     }));
     setTeachersData(datas);
-    setTeacherId("teachers" + datas.length + "-" + uuid().split("-")[0]);
+    setTeacherId(
+      "teachers" + (datas.length + 100) + "-" + uuid().split("-")[0]
+    );
   };
   const [inputField, setInputField] = useState({
     school: "",
