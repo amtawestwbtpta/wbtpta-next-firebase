@@ -46,7 +46,7 @@ const AddTeacher = () => {
     }));
     setTeachersData(datas);
     setTeacherId(
-      "teachers" + (datas.length + 100) + "-" + uuid().split("-")[0]
+      "teachers" + (datas.length + 101) + "-" + uuid().split("-")[0]
     );
   };
   const [inputField, setInputField] = useState({
