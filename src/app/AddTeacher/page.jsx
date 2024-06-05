@@ -27,7 +27,7 @@ const AddTeacher = () => {
   const { access } = useGlobalContext();
   const router = useRouter();
   const [data, setData] = useState([]);
-  const teacherId = uuid().split("-")[0];
+  const [teacherId, setTeacherId] = useState("");
   const [teachersData, setTeachersData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -45,6 +45,7 @@ const AddTeacher = () => {
       id: doc.id,
     }));
     setTeachersData(datas);
+    setTeacherId("teachers" + datas.length + "-" + uuid().split("-")[0]);
   };
   const [inputField, setInputField] = useState({
     school: "",
@@ -556,7 +557,7 @@ const AddTeacher = () => {
       router.push("/login");
     }
   }, []);
-  useEffect(() => {}, [inputField]);
+  useEffect(() => {}, [inputField, teacherId]);
   return (
     <div className="container">
       <ToastContainer
