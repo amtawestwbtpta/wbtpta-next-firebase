@@ -127,12 +127,8 @@ const TechSalary = (props) => {
                     } else {
                       basicpay = mbasic;
                     }
-                    let dapercent = DA;
-                    let hrapercent = HRA;
-
-                    let da = Math.round(basicpay * dapercent);
-                    let hra = Math.round(basicpay * hrapercent);
-
+                    let da = Math.round(basicpay * DA);
+                    let hra = Math.round(basicpay * HRA);
                     let gross = basicpay + da + hra + addl + ma;
                     // console.log(gross)
 

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { decryptObjData } from "../modules/encryption";
+import { DA, HRA } from "../modules/constants";
 const TechSalary = (props) => {
   const data = props.data;
   const { access, setAccess } = useGlobalContext();
@@ -124,11 +125,8 @@ const TechSalary = (props) => {
                     } else {
                       basicpay = mbasic;
                     }
-                    let dapercent = 10 / 100;
-                    let hrapercent = 12 / 100;
-
-                    let da = Math.round(basicpay * dapercent);
-                    let hra = Math.round(basicpay * hrapercent);
+                    let da = Math.round(basicpay * DA);
+                    let hra = Math.round(basicpay * HRA);
 
                     let gross = basicpay + da + hra + addl + ma;
                     // console.log(gross)
