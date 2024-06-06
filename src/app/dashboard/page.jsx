@@ -10,6 +10,7 @@ import {
 } from "../../modules/encryption";
 import { NumInWords } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
+import { DA, HRA } from "../../modules/constants";
 const page = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
@@ -52,6 +53,7 @@ const page = () => {
     gsli,
     netpay,
     mnetpay,
+    addl,
     fname;
   let details = getCookie("tid");
   if (details) {
@@ -83,6 +85,7 @@ const page = () => {
     hra = teacherdetails.hra;
     mhra = teacherdetails.mhra;
     ma = teacherdetails.ma;
+    addl = teacherdetails.addl;
     gross = teacherdetails.gross;
     mgross = teacherdetails.mgross;
     gpf = teacherdetails.gpf;
@@ -98,16 +101,16 @@ const page = () => {
   let junelast = new Date(`${date.getFullYear()}-07-31`);
   if (date >= junelast) {
     setbasicpay = basic;
-    setnetpay = netpay;
-    setda = da;
-    sethra = hra;
-    setgross = gross;
+    setda = setbasicpay * DA;
+    sethra = setbasicpay * HRA;
+    setgross = setbasicpay + setda + sethra + addl + ma;
+    setnetpay = setgross - gpf - ptax - gsli;
   } else {
     setbasicpay = mbasic;
-    setnetpay = mnetpay;
-    setda = mda;
-    sethra = mhra;
-    setgross = mgross;
+    setda = setbasicpay * DA;
+    sethra = setbasicpay * HRA;
+    setgross = setbasicpay + setda + sethra + addl + ma;
+    setnetpay = setgross - gpf - ptax - gsli;
   }
 
   const [hide, setHide] = useState(false);
