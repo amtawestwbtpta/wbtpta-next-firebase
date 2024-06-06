@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { decryptObjData, getCookie } from "../../modules/encryption";
+import { DA, HRA } from "../../modules/constants";
 const PayslipWbtpta = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
@@ -81,11 +82,9 @@ const PayslipWbtpta = () => {
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
-  let dapercent = lastmonth.toUpperCase() === "DECEMBER" ? 6 / 100 : 10 / 100;
-  let hrapercent = 12 / 100;
 
-  da = Math.round(basicpay * dapercent);
-  hra = Math.round(basicpay * hrapercent);
+  da = Math.round(basicpay * DA);
+  hra = Math.round(basicpay * HRA);
 
   gross = basicpay + da + hra + addl + ma;
 

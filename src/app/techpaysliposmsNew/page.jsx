@@ -13,6 +13,7 @@ import {
   printDate,
   months,
 } from "../../modules/calculatefunctions";
+import { DA, HRA } from "../../modules/constants";
 const PaySlipOsmsNew = () => {
   const { access, setAccess } = useGlobalContext();
   const router = useRouter();
@@ -75,10 +76,8 @@ const PaySlipOsmsNew = () => {
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
-  let dapercent = date.getFullYear() > 2023 ? 10 / 100 : 6 / 100;
-  let hrapercent = 12 / 100;
-  da = Math.round(basicpay * dapercent);
-  hra = Math.round(basicpay * hrapercent);
+  da = Math.round(basicpay * DA);
+  hra = Math.round(basicpay * HRA);
 
   gross = basicpay + da + hra + addl + ma;
 
