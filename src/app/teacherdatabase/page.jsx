@@ -331,7 +331,9 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-primary"
-          href={`/techpaysliposmsNew?details=${JSON.stringify(row)}`}
+          // href={`/techpaysliposmsNew?details=${JSON.stringify(row)}`}
+          href={`/techpaysliposmsNew`}
+          onClick={() => setStateObject(row)}
         >
           Payslip OSMS New
         </Link>

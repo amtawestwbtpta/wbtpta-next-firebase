@@ -8,7 +8,7 @@ import {
   encryptData,
   getCookie,
 } from "../../modules/encryption";
-import { NumInWords } from "../../modules/calculatefunctions";
+import { NumInWords, IndianFormat } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { DA, HRA } from "../../modules/constants";
 const page = () => {
@@ -101,17 +101,19 @@ const page = () => {
   let junelast = new Date(`${date.getFullYear()}-07-31`);
   if (date >= junelast) {
     setbasicpay = basic;
-    setda = setbasicpay * DA;
-    sethra = setbasicpay * HRA;
-    setgross = setbasicpay + setda + sethra + addl + ma;
-    setnetpay = setgross - gpf - ptax - gsli;
+  } else if (
+    date.getMonth() == 0 ||
+    date.getMonth() == 1 ||
+    date.getMonth() == 3
+  ) {
+    setbasicpay = basic;
   } else {
     setbasicpay = mbasic;
-    setda = setbasicpay * DA;
-    sethra = setbasicpay * HRA;
-    setgross = setbasicpay + setda + sethra + addl + ma;
-    setnetpay = setgross - gpf - ptax - gsli;
   }
+  setda = Math.round(setbasicpay * DA);
+  sethra = Math.round(setbasicpay * HRA);
+  setgross = setbasicpay + setda + sethra + addl + ma;
+  setnetpay = setgross - gpf - ptax - gsli;
 
   const [hide, setHide] = useState(false);
   useEffect(() => {
@@ -365,7 +367,7 @@ const page = () => {
                 <label>BASIC: </label>
               </div>
               <div>
-                <p>{setbasicpay}</p>
+                <p>₹ {IndianFormat(setbasicpay)}</p>
               </div>
             </div>
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
@@ -373,7 +375,7 @@ const page = () => {
                 <label>DA: </label>
               </div>
               <div>
-                <p>{setda}</p>
+                <p>₹ {IndianFormat(setda)}</p>
               </div>
             </div>
 
@@ -382,7 +384,7 @@ const page = () => {
                 <label>HRA: </label>
               </div>
               <div>
-                <p>{sethra}</p>
+                <p>₹ {IndianFormat(sethra)}</p>
               </div>
             </div>
 
@@ -391,7 +393,7 @@ const page = () => {
                 <label>MA: </label>
               </div>
               <div>
-                <p>{ma}</p>
+                <p>₹ {IndianFormat(ma)}</p>
               </div>
             </div>
 
@@ -400,7 +402,7 @@ const page = () => {
                 <label>Gross Pay: </label>
               </div>
               <div>
-                <p>{setgross}</p>
+                <p>₹ {IndianFormat(setgross)}</p>
               </div>
             </div>
 
@@ -409,7 +411,7 @@ const page = () => {
                 <label>GPF: </label>
               </div>
               <div>
-                <p>{gpf}</p>
+                <p>₹ {IndianFormat(gpf)}</p>
               </div>
             </div>
 
@@ -418,7 +420,7 @@ const page = () => {
                 <label>P. TAX: </label>
               </div>
               <div>
-                <p>{ptax}</p>
+                <p>₹ {IndianFormat(ptax)}</p>
               </div>
             </div>
 
@@ -427,7 +429,7 @@ const page = () => {
                 <label>GSLI: </label>
               </div>
               <div>
-                <p>{gsli}</p>
+                <p>₹ {IndianFormat(gsli)}</p>
               </div>
             </div>
 
@@ -436,7 +438,7 @@ const page = () => {
                 <label>Netpay: </label>
               </div>
               <div>
-                <p>{setnetpay}</p>
+                <p>₹ {IndianFormat(setnetpay)}</p>
               </div>
             </div>
 

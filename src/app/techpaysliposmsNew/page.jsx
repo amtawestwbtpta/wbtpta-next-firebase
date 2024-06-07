@@ -15,12 +15,13 @@ import {
 } from "../../modules/calculatefunctions";
 import { DA, HRA } from "../../modules/constants";
 const PaySlipOsmsNew = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { access, stateObject } = useGlobalContext();
   const router = useRouter();
 
   const searchParams = useSearchParams();
 
-  let details = JSON.parse(searchParams.get("details"));
+  // let details = JSON.parse(searchParams.get("details"));
+  let details = stateObject;
   let tname,
     desig,
     school,
@@ -183,7 +184,7 @@ const PaySlipOsmsNew = () => {
                   style={{
                     textAlign: "center",
                     marginLeft: -54,
-                    color: "#004080 !important",
+                    color: "#004080",
                   }}
                 >
                   AMTA WEST CIRCLE, HAORA
@@ -343,7 +344,7 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "left",
-                        padding: "6pt",
+                        paddingInline: "24pt",
                         borderRight: "1px solid",
                       }}
                     >
@@ -400,7 +401,7 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "center",
                         borderRight: "1px solid",
-                        padding: "6pt",
+                        // padding: "6pt",
                       }}
                     >
                       <table style={{ marginRight: "5px" }}>
@@ -467,8 +468,7 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "right",
                         borderRight: "1px solid",
-                        padding: "6pt",
-                        paddingRight: "33pt",
+                        paddingInline: "24pt",
                       }}
                     >
                       <table style={{ marginRight: -30 }}>
@@ -501,7 +501,7 @@ const PaySlipOsmsNew = () => {
                     <th
                       style={{
                         textAlign: "left",
-                        padding: "6pt",
+                        // padding: "6pt",
                         paddingTop: 30,
                       }}
                     >
@@ -532,7 +532,7 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "right",
-                        padding: "6pt",
+                        // padding: "6pt",
                         paddingTop: 30,
                         borderRight: "1px solid",
                       }}
@@ -577,7 +577,7 @@ const PaySlipOsmsNew = () => {
                   <table>
                     <tr>
                       <th style={{ textAlign: "left" }}>Total:</th>
-                      <th style={{ textAlign: "right", paddingLeft: "40pt" }}>
+                      <th style={{ textAlign: "right", paddingLeft: "87pt" }}>
                         {gross}
                       </th>
                     </tr>
@@ -588,7 +588,7 @@ const PaySlipOsmsNew = () => {
                   colSpan="2"
                   style={{
                     textAlign: "right",
-                    paddingRight: "10pt",
+                    paddingRight: "6pt",
                     borderTop: "1px solid",
                   }}
                 >
@@ -602,7 +602,7 @@ const PaySlipOsmsNew = () => {
                 <td colSpan="8" style={{ borderTop: "1px solid" }}>
                   <table>
                     <tr>
-                      <th style={{ textAlign: "left", width: 100 }}>
+                      <th style={{ textAlign: "left", width: 94 }}>
                         GROSS PAY:
                       </th>
                       <th style={{ textAlign: "left" }}>{gross}</th>
@@ -614,9 +614,7 @@ const PaySlipOsmsNew = () => {
                 <td colSpan="8" style={{ borderTop: "1px solid" }}>
                   <table>
                     <tr>
-                      <th style={{ textAlign: "left", width: 100 }}>
-                        NET PAY:
-                      </th>
+                      <th style={{ textAlign: "left", width: 94 }}>NET PAY:</th>
                       <th style={{ textAlign: "left" }}>
                         {netpay} {NumInWords(netpay)} Only
                       </th>
