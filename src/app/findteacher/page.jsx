@@ -29,7 +29,16 @@ const FindTeacher = () => {
       ...doc.data(),
       id: doc.id,
     }));
-    setData(data);
+    let newData = data.sort(function (a, b) {
+      var nameA = a.school.toLowerCase(),
+        nameB = b.school.toLowerCase();
+      if (nameA < nameB)
+        //sort string ascending
+        return -1;
+      if (nameA > nameB) return 1;
+      return 0; //default return value (no sorting)
+    });
+    setData(newData);
     setShowTable(true);
   };
 
