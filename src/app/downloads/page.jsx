@@ -43,10 +43,25 @@ const Downloads = () => {
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>1</td>
+                <td>Our Android App</td>
+                <td>APK</td>
+                <td>
+                  <a
+                    href="https://drive.google.com/drive/folders/1QQzBMJjI_MXTKxP3_ayTo7QflGD0vbVP?usp=sharing"
+                    className="btn btn-success rounded text-decoration-none"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </a>
+                </td>
+              </tr>
               {allData.map((el, ind) => {
                 return (
                   <tr key={ind}>
-                    <td>{ind + 1}</td>
+                    <td>{ind + 2}</td>
                     <td>{el.fileName.toUpperCase()}</td>
                     <td>
                       {el.fileType === "application/pdf"

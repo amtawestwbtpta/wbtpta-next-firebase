@@ -126,6 +126,12 @@ const Footer = () => {
         >
           <i className="bi bi-browser-chrome"></i> WB Results
         </Link>
+        <Link
+          className="d-inline-block m-2 text-decoration-none text-primary"
+          href="https://drive.google.com/drive/folders/1QQzBMJjI_MXTKxP3_ayTo7QflGD0vbVP?usp=sharing"
+        >
+          <i className="bi bi-android2"></i> Our App
+        </Link>
       </div>
 
       <h6 className="text-center bg-dark text-white p-2 mb-0 h-font">

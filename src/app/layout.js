@@ -6,6 +6,7 @@ import { GlobalContextProvider } from "../context/Store";
 import BootstrapClient from "../components/BootstrapClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import "bootstrap-icons/font/bootstrap-icons.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -18,6 +19,26 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="container-fluid text-center">
+        <div
+          className="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>To download Our Android App Click</strong>{" "}
+          <a
+            className="d-inline-block text-decoration-none fw-bold"
+            href="https://drive.google.com/drive/folders/1QQzBMJjI_MXTKxP3_ayTo7QflGD0vbVP?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Here
+          </a>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
         <GlobalContextProvider>
           <Navbar />
           {children}
