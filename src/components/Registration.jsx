@@ -365,6 +365,14 @@ const Registration = ({ data, setSignUpTrue }) => {
       }));
     }
 
+    if (inputField.password.length <= 6) {
+      formIsValid = false;
+      setErrField((prevState) => ({
+        ...prevState,
+        passwordErr: "Password length must be minimum 6",
+      }));
+    }
+
     if (
       inputField.cpassword === "" ||
       inputField.password !== inputField.cpassword

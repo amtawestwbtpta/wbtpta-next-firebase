@@ -82,6 +82,13 @@ const UpdateUP = () => {
         passwordErr: "Please Enter Password",
       }));
     }
+    if (inputField.password.length <= 6) {
+      formIsValid = false;
+      setErrField((prevState) => ({
+        ...prevState,
+        passwordErr: "Password length must be minimum 6",
+      }));
+    }
 
     if (
       inputField.cpassword === "" ||
