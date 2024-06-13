@@ -316,7 +316,7 @@ const PaySlipOsmsNew = () => {
               <tr>
                 {desig === "AT" ? (
                   <>
-                    <th style={{ textAlign: "left", padding: "6pt" }}>
+                    <th style={{ textAlign: "left" }}>
                       <table>
                         <tr>
                           <th>BASIC</th>
@@ -344,7 +344,7 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "left",
-                        paddingInline: "24pt",
+                        paddingRight: "10pt",
                         borderRight: "1px solid",
                       }}
                     >
@@ -372,8 +372,8 @@ const PaySlipOsmsNew = () => {
                         </tr>
                       </table>
                     </td>
-                    <th style={{ textAlign: "left", padding: "6pt" }}>
-                      <table style={{ marginRight: "5px" }}>
+                    <th style={{ textAlign: "left" }}>
+                      <table>
                         <tr>
                           <th>GPF</th>
                         </tr>
@@ -401,7 +401,6 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "center",
                         borderRight: "1px solid",
-                        // padding: "6pt",
                       }}
                     >
                       <table style={{ marginRight: "5px" }}>
@@ -468,7 +467,7 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "right",
                         borderRight: "1px solid",
-                        paddingInline: "12pt",
+                        paddingRight: "14pt",
                       }}
                     >
                       <table style={{ marginRight: -30 }}>
@@ -501,11 +500,11 @@ const PaySlipOsmsNew = () => {
                     <th
                       style={{
                         textAlign: "left",
-                        paddingInline: "6pt",
+                        // paddingRight: "6pt",
                         paddingTop: "20pt",
                       }}
                     >
-                      <table style={{ marginRight: 5 }}>
+                      <table>
                         <tr>
                           <th>GPF</th>
                         </tr>
@@ -532,32 +531,32 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "right",
-                        paddingInline: "6pt",
+                        // paddingInline: "6pt",
                         paddingTop: "20pt",
                         borderRight: "1px solid",
                       }}
                     >
-                      <table style={{ marginRight: 5 }}>
+                      <table>
                         <tr>
-                          <td>{gpf}</td>
+                          <td style={{ textAlign: "right" }}>{gpf}</td>
                         </tr>
                         <tr>
-                          <td>0</td>
+                          <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                         <tr>
-                          <td>0</td>
+                          <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                         <tr>
-                          <td>{ptax}</td>
+                          <td style={{ textAlign: "right" }}>{ptax}</td>
                         </tr>
                         <tr>
-                          <td>0</td>
+                          <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                         <tr>
-                          <td>{gsli}</td>
+                          <td style={{ textAlign: "right" }}>{gsli}</td>
                         </tr>
                         <tr>
-                          <td>0</td>
+                          <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                       </table>
                     </td>
@@ -577,9 +576,7 @@ const PaySlipOsmsNew = () => {
                   <table>
                     <tr>
                       <th style={{ textAlign: "left" }}>Total:</th>
-                      <th style={{ textAlign: "right", paddingLeft: "87pt" }}>
-                        {gross}
-                      </th>
+                      <th style={{ textAlign: "right" }}>{gross}</th>
                     </tr>
                   </table>
                 </th>
@@ -602,7 +599,7 @@ const PaySlipOsmsNew = () => {
                 <td colSpan="8" style={{ borderTop: "1px solid" }}>
                   <table>
                     <tr>
-                      <th style={{ textAlign: "left", width: 94 }}>
+                      <th style={{ textAlign: "left", width: 85 }}>
                         GROSS PAY:
                       </th>
                       <th style={{ textAlign: "left" }}>{gross}</th>
@@ -614,7 +611,7 @@ const PaySlipOsmsNew = () => {
                 <td colSpan="8" style={{ borderTop: "1px solid" }}>
                   <table>
                     <tr>
-                      <th style={{ textAlign: "left", width: 94 }}>NET PAY:</th>
+                      <th style={{ textAlign: "left", width: 85 }}>NET PAY:</th>
                       <th style={{ textAlign: "left" }}>
                         {netpay} {NumInWords(netpay)} Only
                       </th>
