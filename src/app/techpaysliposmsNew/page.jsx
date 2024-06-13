@@ -468,7 +468,7 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "right",
                         borderRight: "1px solid",
-                        paddingInline: "24pt",
+                        paddingInline: "12pt",
                       }}
                     >
                       <table style={{ marginRight: -30 }}>
@@ -501,8 +501,8 @@ const PaySlipOsmsNew = () => {
                     <th
                       style={{
                         textAlign: "left",
-                        // padding: "6pt",
-                        paddingTop: 30,
+                        paddingInline: "6pt",
+                        paddingTop: "20pt",
                       }}
                     >
                       <table style={{ marginRight: 5 }}>
@@ -532,8 +532,8 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "right",
-                        // padding: "6pt",
-                        paddingTop: 30,
+                        paddingInline: "6pt",
+                        paddingTop: "20pt",
                         borderRight: "1px solid",
                       }}
                     >
