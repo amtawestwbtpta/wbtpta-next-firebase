@@ -82,7 +82,7 @@ const UpdateUP = () => {
         passwordErr: "Please Enter Password",
       }));
     }
-    if (inputField.password.length <= 6) {
+    if (inputField.password.length <= 5) {
       formIsValid = false;
       setErrField((prevState) => ({
         ...prevState,

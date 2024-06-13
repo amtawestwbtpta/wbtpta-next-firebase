@@ -365,7 +365,7 @@ const Registration = ({ data, setSignUpTrue }) => {
       }));
     }
 
-    if (inputField.password.length <= 6) {
+    if (inputField.password.length <= 5) {
       formIsValid = false;
       setErrField((prevState) => ({
         ...prevState,
