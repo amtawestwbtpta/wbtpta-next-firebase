@@ -339,7 +339,10 @@ const page = () => {
                     <button
                       type="button"
                       className="btn btn-success"
-                      onClick={() => setShowSalaryData(!showSalaryData)}
+                      onClick={() => {
+                        // setShowSalaryData(!showSalaryData);
+                        router.push("/techsalary");
+                      }}
                     >
                       All Teacher's Salary Data
                     </button>
