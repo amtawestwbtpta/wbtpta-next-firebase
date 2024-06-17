@@ -47,6 +47,7 @@ function QuestionSec() {
     questionRateState,
     setQuestionRateState,
     schoolState,
+    setStateArray,
   } = useGlobalContext();
 
   const [data, setData] = useState([]);
@@ -458,7 +459,9 @@ function QuestionSec() {
           data-bs-target="#myModal4"
           onClick={() =>
             setTimeout(() => {
-              document.getElementById("term").value = questionInputField.term;
+              if (typeof window !== undefined) {
+                document.getElementById("term").value = questionInputField.term;
+              }
             }, 300)
           }
         >

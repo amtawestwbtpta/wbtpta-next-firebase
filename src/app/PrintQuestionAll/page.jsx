@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
+import { NumInWords, round2dec } from "../../modules/calculatefunctions";
 const PrintQuestionAll = () => {
   const { state, stateArray } = useGlobalContext();
   const router = useRouter();
@@ -26,93 +27,6 @@ const PrintQuestionAll = () => {
   let v_rate = qRate.v_rate;
   let term = qRate.term;
   let year = qRate.year;
-
-  function round2dec(value) {
-    if (value % 1 !== 0) {
-      return Number(Math.round(value + "e" + 2) + "e-" + 2).toFixed(2);
-    } else {
-      return value;
-    }
-  }
-
-  function NumInWords(number) {
-    const first = [
-      "",
-      "one ",
-      "two ",
-      "three ",
-      "four ",
-      "five ",
-      "six ",
-      "seven ",
-      "eight ",
-      "nine ",
-      "ten ",
-      "eleven ",
-      "twelve ",
-      "thirteen ",
-      "fourteen ",
-      "fifteen ",
-      "sixteen ",
-      "seventeen ",
-      "eighteen ",
-      "nineteen ",
-    ];
-    const tens = [
-      "",
-      "",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
-    const mad = ["", "thousand", "million", "billion", "trillion"];
-    let word = "";
-
-    for (let i = 0; i < mad.length; i++) {
-      let tempNumber = number % (100 * Math.pow(1000, i));
-      if (Math.floor(tempNumber / Math.pow(1000, i)) !== 0) {
-        if (Math.floor(tempNumber / Math.pow(1000, i)) < 20) {
-          word = titleCase(
-            first[Math.floor(tempNumber / Math.pow(1000, i))] +
-              mad[i] +
-              " " +
-              word
-          );
-        } else {
-          word = titleCase(
-            tens[Math.floor(tempNumber / (10 * Math.pow(1000, i)))] +
-              " " +
-              first[Math.floor(tempNumber / Math.pow(1000, i)) % 10] +
-              mad[i] +
-              " " +
-              word
-          );
-        }
-      }
-
-      tempNumber = number % Math.pow(1000, i + 1);
-      if (Math.floor(tempNumber / (100 * Math.pow(1000, i))) !== 0)
-        word = titleCase(
-          first[Math.floor(tempNumber / (100 * Math.pow(1000, i)))] +
-            "hunderd " +
-            word
-        );
-    }
-    return word;
-  }
-
-  function titleCase(str) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  }
 
   useEffect(() => {
     setAllData(stateArray[0]);
@@ -168,7 +82,7 @@ const PrintQuestionAll = () => {
               <div className="container timesAll text-black my-5">
                 <div className="d-flex row justify-content-center align-items-center">
                   <img
-                    src={`https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=${
+                    src={`https://api.qrserver.com/v1/create-qr-code/?data=Amta West Circle, School: ${
                       el.school
                     }, PP Students ${parseInt(
                       el.cl_pp_student

@@ -54,7 +54,7 @@ const PrintQuestionInvoice = () => {
       <div className="container times text-black my-5">
         <div className="d-flex row justify-content-center align-items-center">
           <img
-            src={`https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=${school}, GP: ${gp}, PP Students ${cl_pp_student}, Amount Rs. ${cl_pp_rate}, Class I Students ${cl_1_student}, Amount Rs. ${cl_1_rate}, Class II Students ${cl_2_student}, Amount Rs. ${cl_2_rate}, Class III Students ${cl_3_student}, Amount Rs. ${cl_3_rate}, Class IV Students ${cl_4_student}, Amount Rs. ${cl_4_rate}, Class V Students ${cl_5_student}, Amount Rs. ${cl_5_rate}, Total Student. ${total_student}, Total Amount ${total_rate}.`}
+            src={`https://api.qrserver.com/v1/create-qr-code/?data=Amta West Circle, School: ${school}, GP: ${gp}, PP Students ${cl_pp_student}, Amount Rs. ${cl_pp_rate}, Class I Students ${cl_1_student}, Amount Rs. ${cl_1_rate}, Class II Students ${cl_2_student}, Amount Rs. ${cl_2_rate}, Class III Students ${cl_3_student}, Amount Rs. ${cl_3_rate}, Class IV Students ${cl_4_student}, Amount Rs. ${cl_4_rate}, Class V Students ${cl_5_student}, Amount Rs. ${cl_5_rate}, Total Student. ${total_student}, Total Amount ${total_rate}.`}
             className="m-0 p-0"
             style={{ width: "10%", height: "10%" }}
             alt="QRCode"
