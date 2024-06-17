@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { NumInWords, round2dec } from "../../modules/calculatefunctions";
 const PrintQuestionInvoice = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -45,7 +45,7 @@ const PrintQuestionInvoice = () => {
   );
   useEffect(() => {
     document.title = `Question Invoice of ${school}`;
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
   }, []);
@@ -208,7 +208,11 @@ const PrintQuestionInvoice = () => {
           <button
             type="button"
             className="btn btn-primary text-white font-weight-bold p-2 m-5 rounded"
-            onClick={window.print}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.print();
+              }
+            }}
           >
             Print Invoice
           </button>

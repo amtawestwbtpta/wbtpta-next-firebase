@@ -20,7 +20,7 @@ import {
 } from "../../modules/encryption";
 import { useGlobalContext } from "../../context/Store";
 const ChangePhoto = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
 
   let id, teachersID, url, photoName;
@@ -55,7 +55,7 @@ const ChangePhoto = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -109,7 +109,7 @@ const ChangePhoto = () => {
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-                          pauseOnHover: true,
+
                           draggable: true,
                           progress: undefined,
                           theme: "light",
@@ -139,7 +139,7 @@ const ChangePhoto = () => {
                         autoClose: 1500,
                         hideProgressBar: false,
                         closeOnClick: true,
-                        pauseOnHover: true,
+
                         draggable: true,
                         progress: undefined,
                         theme: "light",
@@ -159,7 +159,7 @@ const ChangePhoto = () => {
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -240,7 +240,7 @@ const ChangePhoto = () => {
               autoClose: 5000,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -254,7 +254,7 @@ const ChangePhoto = () => {
   }
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Change Photo";
-    if (!access) {
+    if (!state) {
       router.push("/logout");
     }
   });
@@ -267,7 +267,7 @@ const ChangePhoto = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

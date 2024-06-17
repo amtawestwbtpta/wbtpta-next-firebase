@@ -22,7 +22,7 @@ const OtpForm = () => {
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -36,7 +36,7 @@ const OtpForm = () => {
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -49,7 +49,7 @@ const OtpForm = () => {
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -71,7 +71,7 @@ const OtpForm = () => {
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
+            pauseOnFocusLoss={false}
             draggable
             pauseOnHover
             theme="light"

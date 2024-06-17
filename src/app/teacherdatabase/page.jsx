@@ -30,12 +30,18 @@ import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
 const TeacherDatabase = () => {
-  const { access, setStateArray, setStateObject } = useGlobalContext();
+  const {
+    state,
+    teachersState,
+    setTeachersState,
+    setStateObject,
+    setTeacherUpdateTime,
+  } = useGlobalContext();
   const router = useRouter();
   const [showTable, setShowTable] = useState(false);
   const [loader, setLoader] = useState(false);
   useEffect(() => {
-    if (access !== "admin") {
+    if (state !== "admin") {
       localStorage.clear();
       router.push("/logout");
     }
@@ -79,23 +85,9 @@ const TeacherDatabase = () => {
 
   const userData = async () => {
     setLoader(true);
-    const q = query(collection(firestore, "teachers"));
-
-    const querySnapshot = await getDocs(q);
-    const datas = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    let newDatas = datas.sort(function (a, b) {
-      var nameA = a.school.toLowerCase(),
-        nameB = b.school.toLowerCase();
-      if (nameA < nameB)
-        //sort string ascending
-        return -1;
-      if (nameA > nameB) return 1;
-      return 0; //default return value (no sorting)
-    });
+    let newDatas = teachersState.sort(
+      (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+    );
     setData(newDatas);
     setLoader(false);
     setShowTable(true);
@@ -286,7 +278,8 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-info"
-          href={`/payslipwbtpta?details=${JSON.stringify(row)}`}
+          href={`/payslipwbtpta`}
+          onClick={() => setStateObject(row)}
         >
           Payslip WBTPTA
         </Link>
@@ -298,7 +291,8 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-success"
-          href={`/Form16?details=${JSON.stringify(row)}`}
+          href={`/Form16`}
+          onClick={() => setStateObject(row)}
         >
           Generate Form 16
         </Link>
@@ -309,7 +303,8 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-info"
-          href={`/Form16Prev?details=${JSON.stringify(row)}`}
+          href={`/Form16Prev`}
+          onClick={() => setStateObject(row)}
         >
           Generate Form 16 Previous Year
         </Link>
@@ -402,7 +397,8 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-primary"
-          href={`/ViewDetails?details=${JSON.stringify(row)}`}
+          href={`/ViewDetails`}
+          onClick={() => setStateObject(row)}
         >
           View Details
         </Link>
@@ -431,13 +427,19 @@ const TeacherDatabase = () => {
       ),
     },
   ];
-  // console.log(inputField);
-
   const updateData = async () => {
     setLoader(true);
     try {
       const docRef = doc(firestore, "teachers", updId);
       await updateDoc(docRef, inputField);
+      let x = teachersState.filter((el) => el.id !== updId);
+      x = [...x, inputField];
+      const newData = x.sort(
+        (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+      );
+      setTeachersState(newData);
+      setTeacherUpdateTime(Date.now());
+      setData(newData);
       const collectionRefUser = collection(firestore, "userteachers");
       const qq = query(collectionRefUser, where("teachersID", "==", updId));
       try {
@@ -464,21 +466,6 @@ const TeacherDatabase = () => {
             email: inputField.email,
             phone: inputField.phone,
           });
-          await axios.post("/api/updteacher", {
-            id: updId,
-            tname: inputField.tname,
-            tsname: inputField.tsname,
-            school: inputField.school,
-            desig: inputField.desig,
-            pan: inputField.pan,
-            udise: inputField.udise,
-            sis: inputField.sis,
-            circle: inputField.circle,
-            empid: inputField.empid,
-            question: inputField.question,
-            email: inputField.email,
-            phone: inputField.phone,
-          });
         } catch (e) {
           console.log(e);
           toast.error("UserTeachers Database Not Updated!!!", {
@@ -486,7 +473,7 @@ const TeacherDatabase = () => {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -498,7 +485,7 @@ const TeacherDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -511,7 +498,7 @@ const TeacherDatabase = () => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -523,7 +510,7 @@ const TeacherDatabase = () => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -534,59 +521,48 @@ const TeacherDatabase = () => {
   };
   const deleteTeacher = async (el) => {
     const docRef = doc(firestore, "teachers", el.id);
-    const docRefUser = doc(firestore, "userteachers", el.id);
-    try {
-      await axios.post("/api/delteacher", {
-        id: el.id,
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("User not Registerd!!!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-
     await deleteDoc(docRef)
       .then(async () => {
-        await deleteDoc(docRefUser)
+        let x = teachersState.filter((elem) => elem.id !== el.id);
+        const newData = x.sort(function (a, b) {
+          let nameA = a.school.toLowerCase(),
+            nameB = b.school.toLowerCase();
+          if (nameA < nameB)
+            //sort string ascending
+            return -1;
+          if (nameA > nameB) return 1;
+          return 0; //default return value (no sorting)
+        });
+        setTeachersState(newData);
+        setTeacherUpdateTime(Date.now());
+        setFilteredData(newData);
+        setData(newData);
+        await setDoc(doc(firestore, "deletedTeachers", el.id), el)
           .then(async () => {
-            await setDoc(doc(firestore, "deletedTeachers", el.id), el)
-              .then(async () => {
-                toast.success("Congrats! Teacher Deleted Successfully!", {
-                  position: "top-right",
-                  autoClose: 1500,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
-                userData();
-              })
-              .catch((err) => {
-                console.log(err);
-                toast.error("Unable To Send Query!!!", {
-                  position: "top-right",
-                  autoClose: 1500,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
-              });
+            toast.success("Congrats! Teacher Deleted Successfully!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            userData();
           })
           .catch((err) => {
             console.log(err);
+            toast.error("Unable To Send Query!!!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           });
       })
       .catch((err) => {
@@ -596,7 +572,7 @@ const TeacherDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -609,17 +585,26 @@ const TeacherDatabase = () => {
       .then(async () => {
         await setDoc(doc(firestore, "teachers", el.id), el)
           .then(async () => {
+            let x = teachersState;
+            x = [...x, el];
+            const newData = x.sort(
+              (a, b) =>
+                a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+            );
+            setTeachersState(newData);
+            setTeacherUpdateTime(Date.now());
+            setFilteredData(newData);
             toast.success("Congrats! Teacher Restored Successfully!", {
               position: "top-right",
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
             });
-            userData();
+            // userData();
             getDeletedTeachers();
           })
           .catch((err) => {
@@ -629,7 +614,7 @@ const TeacherDatabase = () => {
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -643,7 +628,7 @@ const TeacherDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -703,10 +688,10 @@ const TeacherDatabase = () => {
             url: photourl,
             photoName: user.id + "-" + file.name,
           };
-
+          const backendUrl = `https://awwbtpta.vercel.app/api/signup`;
           try {
             await axios
-              .post(`/api/signup`, techerData)
+              .post(backendUrl, techerData)
               .then(async () => {
                 await setDoc(doc(firestore, "userteachers", techerData.id), {
                   teachersID: techerData.teachersID,
@@ -748,6 +733,26 @@ const TeacherDatabase = () => {
                     await updateDoc(doc(firestore, "teachers", techerData.id), {
                       registered: true,
                     });
+                    let x = teachersState.filter(
+                      (el) => el.id === techerData.id
+                    )[0];
+                    x.registered = true;
+                    let y = teachersState.filter(
+                      (el) => el.id !== techerData.id
+                    );
+                    y = [...y, x];
+                    const newData = y.sort(function (a, b) {
+                      let nameA = a.school.toLowerCase(),
+                        nameB = b.school.toLowerCase();
+                      if (nameA < nameB)
+                        //sort string ascending
+                        return -1;
+                      if (nameA > nameB) return 1;
+                      return 0; //default return value (no sorting)
+                    });
+                    setTeachersState(newData);
+                    setTeacherUpdateTime(Date.now());
+                    setData(newData);
                     let title = `${techerData.tname} is Registered To App Via Website`;
                     let body = `${
                       techerData.tname
@@ -789,7 +794,7 @@ const TeacherDatabase = () => {
     );
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {}, [user, teachersState]);
 
   return (
     <div className="container text-center my-3">
@@ -800,7 +805,7 @@ const TeacherDatabase = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -1022,7 +1027,7 @@ const TeacherDatabase = () => {
                       </div>
 
                       <div className="mb-0 col-md-3">
-                        <label className="form-label">User Access Type</label>
+                        <label className="form-label">User state Type</label>
                         <br />
                         <select
                           className="form-select form-select-sm mb-3"
@@ -1043,7 +1048,7 @@ const TeacherDatabase = () => {
                       </div>
                       <div className="mb-0 col-md-3">
                         <label className="form-label">
-                          Question Access Type
+                          Question state Type
                         </label>
                         <br />
                         <select

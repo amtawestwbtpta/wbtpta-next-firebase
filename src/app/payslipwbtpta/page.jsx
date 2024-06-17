@@ -2,20 +2,33 @@
 
 import ropa from "../../modules/ropa";
 
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { DA, HRA } from "../../modules/constants";
+import {
+  GetMonthName,
+  NumInWords,
+  RoundTo,
+  months,
+  printDate,
+} from "../../modules/calculatefunctions";
 const PayslipWbtpta = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, stateObject } = useGlobalContext();
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  useEffect(() => {
+    document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth?.toUpperCase()}`;
+    if (!state) {
+      router.push("/login");
+    }
+  });
 
-  let details = JSON.parse(searchParams.get("details"));
-  let tname,
+  let details = stateObject;
+  let {
+    tname,
     desig,
     school,
     disability,
@@ -31,41 +44,9 @@ const PayslipWbtpta = () => {
     gpf,
     ptax,
     gsli,
-    udise;
-  let userdetails = getCookie("uid");
-  let userDcryptedDetails;
-  if (!details) {
-    if (userdetails) {
-      userDcryptedDetails = decryptObjData("tid");
-      tname = userDcryptedDetails.tname;
-      desig = userDcryptedDetails.desig;
-      udise = userDcryptedDetails.udise;
-      school = userDcryptedDetails.school;
-      empid = userDcryptedDetails.empid;
-      disability = userDcryptedDetails.disability;
-      pan = userDcryptedDetails.pan;
-      basic = parseInt(userDcryptedDetails.basic);
-      mbasic = parseInt(userDcryptedDetails.mbasic);
-      addl = parseInt(userDcryptedDetails.addl);
-      ma = parseInt(userDcryptedDetails.ma);
-      gpf = parseInt(userDcryptedDetails.gpf);
-      gsli = parseInt(userDcryptedDetails.gsli);
-    }
-  } else {
-    tname = details.tname;
-    desig = details.desig;
-    school = details.school;
-    disability = details.disability;
-    empid = details.empid;
-    pan = details.pan;
-    basic = parseInt(details.basic);
-    mbasic = parseInt(details.mbasic);
-    addl = parseInt(details.addl);
-    ma = parseInt(details.ma);
-    gpf = parseInt(details.gpf);
-    gsli = parseInt(details.gsli);
-    udise = details.udise;
-  }
+    udise,
+    dataYear,
+  } = details;
 
   let netpay;
 
@@ -73,16 +54,25 @@ const PayslipWbtpta = () => {
 
   let today = new Date();
   let date = new Date();
-
+  const [index, setIndex] = useState(today.getMonth());
+  const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
   let lastmonth = GetMonthName(today.getMonth() - 1);
-  if (date.getMonth() === 0 || date.getMonth() === 1 || date.getMonth() === 3) {
-    basicpay = basic;
+
+  if (dataYear === date.getFullYear()) {
+    if (index > 6) {
+      basicpay = basic;
+    } else {
+      basicpay = mbasic;
+    }
   } else {
-    basicpay = mbasic;
+    if (index > 6) {
+      basicpay = RoundTo(basic + basic * 0.03, 100);
+    } else {
+      basicpay = basic;
+    }
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
-
   da = Math.round(basicpay * DA);
   hra = Math.round(basicpay * HRA);
 
@@ -108,127 +98,14 @@ const PayslipWbtpta = () => {
 
   netpay = gross - deduction;
 
-  function NumInWords(number) {
-    const first = [
-      "",
-      "one ",
-      "two ",
-      "three ",
-      "four ",
-      "five ",
-      "six ",
-      "seven ",
-      "eight ",
-      "nine ",
-      "ten ",
-      "eleven ",
-      "twelve ",
-      "thirteen ",
-      "fourteen ",
-      "fifteen ",
-      "sixteen ",
-      "seventeen ",
-      "eighteen ",
-      "nineteen ",
-    ];
-    const tens = [
-      "",
-      "",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
-    const mad = ["", "thousand", "million", "billion", "trillion"];
-    let word = "";
-
-    for (let i = 0; i < mad.length; i++) {
-      let tempNumber = number % (100 * Math.pow(1000, i));
-      if (Math.floor(tempNumber / Math.pow(1000, i)) !== 0) {
-        if (Math.floor(tempNumber / Math.pow(1000, i)) < 20) {
-          word = titleCase(
-            first[Math.floor(tempNumber / Math.pow(1000, i))] +
-              mad[i] +
-              " " +
-              word
-          );
-        } else {
-          word = titleCase(
-            tens[Math.floor(tempNumber / (10 * Math.pow(1000, i)))] +
-              " " +
-              first[Math.floor(tempNumber / Math.pow(1000, i)) % 10] +
-              mad[i] +
-              " " +
-              word
-          );
-        }
-      }
-
-      tempNumber = number % Math.pow(1000, i + 1);
-      if (Math.floor(tempNumber / (100 * Math.pow(1000, i))) !== 0)
-        word = titleCase(
-          first[Math.floor(tempNumber / (100 * Math.pow(1000, i)))] +
-            "hunderd " +
-            word
-        );
-    }
-    // return word;
-    return `Rupees ${word} Only`;
-  }
-
-  function titleCase(str) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  }
-
-  function GetMonthName(monthNumber) {
-    monthNumber = monthNumber < 0 ? 11 : monthNumber;
-    var months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    return months[monthNumber];
-  }
-
-  function printDate() {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getFullYear();
-    const nthNumber = (number) => {
-      return number > 0
-        ? ["th", "st", "nd", "rd"][
-            (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
-          ]
-        : "";
-    };
-
-    return `Date of Generation  ${day}${nthNumber(day)} of ${month}, ${year} `;
-  }
-
   useEffect(() => {
-    document.title = `PAYSLIP OF ${tname.toUpperCase()} OF ${school.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    if (!access) {
-      router.push("/login");
-    }
+    document.title = `PAYSLIP OF ${tname.toUpperCase()} OF ${school.toUpperCase()}`;
+    //eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [month, index]);
+
   return (
     <Suspense>
       <div
@@ -242,7 +119,11 @@ const PayslipWbtpta = () => {
           <button
             type="button"
             className="btn btn-primary text-white font-weight-bold p-2 rounded"
-            onClick={window.print}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.print();
+              }
+            }}
           >
             Print Payslip
           </button>
@@ -256,6 +137,29 @@ const PayslipWbtpta = () => {
           >
             Go Back
           </button>
+        </div>
+        <div className="mx-auto my-3 col-md-2 noprint">
+          <h6 className="text-primary">Select Salary Month:</h6>
+          <select
+            className="form-select form-select-sm mb-3"
+            aria-label=".form-select-sm example"
+            name="Month"
+            required
+            defaultValue={month + "-" + (index + 1)}
+            onChange={(e) => {
+              setMonth(e.target.value.split("-")[0]);
+              setIndex(parseInt(e.target.value.split("-")[1]));
+            }}
+          >
+            <option value="">Select Month </option>
+            {months.map((el, ind) => {
+              return (
+                <option value={el + "-" + (ind + 1)} key={ind}>
+                  {el}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div>
           <h4 className="mb-2">
@@ -271,8 +175,8 @@ const PayslipWbtpta = () => {
         </div>
 
         <h4 className="my-4 border-2">
-          PAY SLIP FOR THE MONTH OF {lastmonth.toUpperCase()},
-          {lastmonth.toUpperCase() === "DECEMBER"
+          PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
+          {lastmonth?.toUpperCase() === "DECEMBER"
             ? today.getFullYear() - 1
             : today.getFullYear()}
         </h4>

@@ -12,7 +12,10 @@ import "swiper/css/scrollbar";
 import "swiper/css/effect-cube";
 import { EffectCube } from "swiper";
 import Image from "next/image";
+import { useGlobalContext } from "../context/Store";
 const SwiperSlides = () => {
+  const { slideState, setSlideState, slideUpdateTime, setSlideUpdateTime } =
+    useGlobalContext();
   const [data, setData] = useState([]);
   const [showSlide, setShowSlide] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
@@ -26,7 +29,7 @@ const SwiperSlides = () => {
     setCurrentImage(0);
     setIsViewerOpen(false);
   };
-  const slidesData = async () => {
+  const getSlides = async () => {
     const q = query(collection(firestore, "slides"));
 
     const querySnapshot = await getDocs(q);
@@ -37,11 +40,21 @@ const SwiperSlides = () => {
     }));
     data.map((el) => images.push(el.url));
     setData(data);
+    setSlideState(data);
     setShowSlide(true);
   };
-
+  const getData = async () => {
+    const difference = (slideUpdateTime - Date.now()) / 1000 / 60 / 15;
+    if (difference >= 1 || slideState.length == 0) {
+      setSlideUpdateTime(Date.now());
+      getSlides();
+    } else {
+      setData(slideState);
+      setShowSlide(true);
+    }
+  };
   useEffect(() => {
-    slidesData();
+    getData();
     // eslint-disable-next-line
   }, []);
   return (

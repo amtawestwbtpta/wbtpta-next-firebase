@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 const LogOut = () => {
   const router = useRouter();
   // eslint-disable-next-line
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   // eslint-disable-next-line
   const [user, setUser] = useState(null);
   const signOutFirebase = () => {
@@ -29,7 +29,7 @@ const LogOut = () => {
   };
   useEffect(() => {
     signOutFirebase();
-    setAccess(null);
+    setState(null);
     deleteAllCookies();
     router.push("/login");
 

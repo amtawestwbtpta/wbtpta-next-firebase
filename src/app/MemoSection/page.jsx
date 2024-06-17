@@ -31,8 +31,10 @@ import {
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
-
+import { useGlobalContext } from "../../context/Store";
 const MemoSection = () => {
+  const { memoState, memoUpdateTime, setMemoState, setMemoUpdateTime } =
+    useGlobalContext();
   let teacherdetails = {
     question: "",
     gp: "",
@@ -90,6 +92,8 @@ const MemoSection = () => {
     setLoader(false);
     setAllData(datas);
     setFilteredData(datas);
+    setMemoState(datas);
+    setMemoUpdateTime(Date.now());
   };
 
   const addmemo = async () => {
@@ -131,6 +135,52 @@ const MemoSection = () => {
                 type: file.type,
               })
                 .then(async () => {
+                  setMemoState([
+                    ...memoState,
+                    {
+                      id: docId,
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: title,
+                      memoText: memoText,
+                      memoNumber: memoNumber,
+                      memoDate: memoDate,
+                      url: photourl,
+                      photoName: docId + "-" + file.name,
+                      type: file.type,
+                    },
+                  ]);
+                  setAllData([
+                    ...memoState,
+                    {
+                      id: docId,
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: title,
+                      memoText: memoText,
+                      memoNumber: memoNumber,
+                      memoDate: memoDate,
+                      url: photourl,
+                      photoName: docId + "-" + file.name,
+                      type: file.type,
+                    },
+                  ]);
+                  setFilteredData([
+                    ...memoState,
+                    {
+                      id: docId,
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: title,
+                      memoText: memoText,
+                      memoNumber: memoNumber,
+                      memoDate: memoDate,
+                      url: photourl,
+                      photoName: docId + "-" + file.name,
+                      type: file.type,
+                    },
+                  ]);
+                  setMemoUpdateTime(Date.now());
                   let memoTitle = `New memo added By ${teacherdetails.tname}`;
                   let body = memoText;
                   await notifyAll(memoTitle, body)
@@ -142,7 +192,6 @@ const MemoSection = () => {
                       setLoader(false);
                       setAddImage(false);
                       toast.success("memo Added Successfully!");
-                      getData();
                       setFile({});
                       setSrc("");
                       setShowPercent(false);
@@ -166,7 +215,7 @@ const MemoSection = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -190,6 +239,49 @@ const MemoSection = () => {
           photoName: "",
         })
           .then(async () => {
+            setMemoState([
+              ...memoState,
+              {
+                id: docId,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: title,
+                memoText: memoText,
+                memoNumber: memoNumber,
+                memoDate: memoDate,
+                url: "",
+                photoName: "",
+              },
+            ]);
+            setAllData([
+              ...memoState,
+              {
+                id: docId,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: title,
+                memoText: memoText,
+                memoNumber: memoNumber,
+                memoDate: memoDate,
+                url: "",
+                photoName: "",
+              },
+            ]);
+            setFilteredData([
+              ...memoState,
+              {
+                id: docId,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: title,
+                memoText: memoText,
+                memoNumber: memoNumber,
+                memoDate: memoDate,
+                url: "",
+                photoName: "",
+              },
+            ]);
+            setMemoUpdateTime(Date.now());
             let memoTitle = `New memo added By ${teacherdetails.tname}`;
             let body = memoText;
             await notifyAll(memoTitle, body)
@@ -201,7 +293,6 @@ const MemoSection = () => {
                 setLoader(false);
                 setAddImage(false);
                 toast.success("memo Added Successfully!");
-                getData();
                 setFile({});
                 setSrc("");
               })
@@ -223,7 +314,7 @@ const MemoSection = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -245,6 +336,33 @@ const MemoSection = () => {
       addedBy: teacherdetails.tname,
     })
       .then(async () => {
+        let x = memoState.filter((el) => el.id === editID)[0];
+        let y = memoState.filter((el) => el.id !== editID);
+        y = [
+          ...y,
+          {
+            id: editID,
+            date: Date.now(),
+            addedBy: teacherdetails.tname,
+            title: editTitle,
+            memoText: editmemoText,
+            memoNumber: editMemoNumber,
+            memoDate: editMemoDate,
+            url: x.url,
+            photoName: x.photoName,
+            type: x.type,
+          },
+        ];
+
+        let newData = y.sort(
+          (a, b) =>
+            Date.parse(getCurrentDateInput(b.memoDate)) -
+            Date.parse(getCurrentDateInput(a.memoDate))
+        );
+        setMemoState(newData);
+        setAllData(newData);
+        setFilteredData(newData);
+        setMemoUpdateTime(Date.now());
         setLoader(false);
         setEditTitle("");
         setEditmemoText("");
@@ -256,7 +374,6 @@ const MemoSection = () => {
         setOrgMemoNumber("");
         setOrgMemoDate(todayInString());
         toast.success("Details Updated Successfully");
-        getData();
       })
       .catch((err) => {
         toast.error("Memo Updation Failed!");
@@ -267,6 +384,10 @@ const MemoSection = () => {
   const deletememo = async (el) => {
     await deleteDoc(doc(firestore, "memos", el.id))
       .then(async () => {
+        setMemoState(memoState.filter((item) => item.id !== el.id));
+        setAllData(memoState.filter((item) => item.id !== el.id));
+        setFilteredData(memoState.filter((item) => item.id !== el.id));
+        setMemoUpdateTime(Date.now());
         try {
           const desertRef = ref(storage, `memoFiles/${el.photoName}`);
           await deleteObject(desertRef);
@@ -275,7 +396,6 @@ const MemoSection = () => {
         }
         setLoader(false);
         toast.success("memo Deleted Successfully!");
-        getData();
       })
       .catch((err) => {
         console.log(err);
@@ -449,21 +569,33 @@ const MemoSection = () => {
     },
   ];
 
+  const getMemoData = () => {
+    const difference = (Date.now() - memoUpdateTime) / 1000 / 60 / 15;
+    if (memoState.length === 0 || difference >= 1) {
+      getData();
+    } else {
+      let newData = memoState.sort(
+        (a, b) =>
+          Date.parse(getCurrentDateInput(b.memoDate)) -
+          Date.parse(getCurrentDateInput(a.memoDate))
+      );
+      setLoader(false);
+      setAllData(newData);
+      setFilteredData(newData);
+    }
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Memo Section";
     setHeight(window.screen.height);
     setWidth(window.screen.width);
-    getData();
+    getMemoData();
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [file, width]);
+  }, [file, width, allData, filteredData]);
   useEffect(() => {
-    const result = allData.filter((el) => {
-      return el.title.toLowerCase().match(search.toLowerCase());
-    });
-    setFilteredData(result);
     // eslint-disable-next-line
   }, [search]);
 
@@ -476,7 +608,7 @@ const MemoSection = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -509,7 +641,15 @@ const MemoSection = () => {
             placeholder="Search By Name"
             className="w-25 form-control"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              const result = allData.filter((el) => {
+                return el.title
+                  .toLowerCase()
+                  .match(e.target.value.toLowerCase());
+              });
+              setFilteredData(result);
+            }}
           />
         }
         subHeaderAlign="right"
@@ -527,7 +667,14 @@ const MemoSection = () => {
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="viewMemoLabel">
+              <h1
+                className={`modal-title fs-5 ${
+                  !/^[a-zA-Z]+$/.test(memo.title?.split(" ")[0])
+                    ? "ben"
+                    : "timesFont"
+                }`}
+                id="viewMemoLabel"
+              >
                 {memo.title}
               </h1>
               <button
@@ -570,22 +717,36 @@ const MemoSection = () => {
                 </a>
               ) : (
                 memo.url === "" && (
-                  <h5 className="card-title timesFont">No File Available</h5>
+                  <h5 className={`card-title timesFont`}>No File Available</h5>
                 )
               )}
 
               <div className="my-5">
-                <h3 className="text-primary text-center timesFont">
+                <h3
+                  className={`text-primary text-center ${
+                    !/^[a-zA-Z]+$/.test(memo.title?.split(" ")[0])
+                      ? "ben"
+                      : "timesFont"
+                  }`}
+                >
                   {memo.title}
                 </h3>
-                <h5 className="card-title timesFont">
+                <h5 className={`card-title timesFont`}>
                   Memo No.: {memo.memoNumber}, Dated: {memo.memoDate}
                 </h5>
 
                 <p className="text-info timesFont">
                   Published On: {DateValueToSring(memo.date)}
                 </p>
-                <p className="text-primary timesFont">{memo.memoText}</p>
+                <p
+                  className={`text-primary ${
+                    !/^[a-zA-Z]+$/.test(memo.memoText?.split(" ")[0])
+                      ? "ben"
+                      : "timesFont"
+                  }`}
+                >
+                  {memo.memoText}
+                </p>
               </div>
             </div>
             <div className="modal-footer">
@@ -716,7 +877,7 @@ const MemoSection = () => {
                       setSrc(URL.createObjectURL(e.target.files[0]));
                     }}
                   />
-                  {src !== null && file.type.split("/")[0] === "image" ? (
+                  {src !== null && file.type?.split("/")[0] === "image" ? (
                     <div>
                       <img
                         src={src}
@@ -738,7 +899,7 @@ const MemoSection = () => {
                       ></button>
                     </div>
                   ) : src !== null &&
-                    file.type.split("/")[0] === "application" ? (
+                    file.type?.split("/")[0] === "application" ? (
                     <img
                       src={
                         "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"

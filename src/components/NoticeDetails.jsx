@@ -75,6 +75,8 @@ const NoticeDetails = ({ sata }) => {
   });
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+  const [isLink, setIsLink] = useState(false);
+  const [textArr, setTextArr] = useState([]);
   const getNoticeReplies = async () => {
     setLoader(true);
     const q = query(
@@ -174,7 +176,21 @@ const NoticeDetails = ({ sata }) => {
     setWidth(window.screen.width);
     // eslint-disable-next-line
   }, [sata]);
-
+  useEffect(() => {
+    const txt = sata.noticeText;
+    if (txt?.includes("https")) {
+      setIsLink(true);
+      const firstIndex = txt?.indexOf("https"); //find link start
+      const linkEnd = txt?.indexOf(" ", firstIndex); //find the end of link
+      const firstTextSection = txt?.slice(0, firstIndex);
+      const linkSection = txt?.slice(firstIndex, linkEnd);
+      const secondSection = txt?.slice(linkEnd);
+      setTextArr([firstTextSection, linkSection, secondSection]);
+    } else {
+      setIsLink(false);
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="container my-3">
       {loader && <Loader />}
@@ -291,15 +307,48 @@ const NoticeDetails = ({ sata }) => {
         Published At: {DateValueToSring(sata.date)}
       </h5>
       <h5 className="text-dark timesFont">By: {sata.addedBy}</h5>
-      <h5
-        className={`text-primary fs-5 ${
-          !/^[a-zA-Z]+$/.test(sata.noticeText.split(" ")[0])
-            ? "ben"
-            : "timesFont"
-        }`}
-      >
-        {sata.noticeText}
-      </h5>
+      {isLink ? (
+        <div>
+          <h5
+            className={`text-primary fs-5 ${
+              !/^[a-zA-Z]+$/.test(sata.noticeText.split(" ")[0])
+                ? "ben"
+                : "timesFont"
+            }`}
+          >
+            {textArr[0]}
+          </h5>
+          <br />
+          <h5 className="text-primary fs-5 timesFont">{textArr[1]}</h5>
+          <a
+            href={textArr[1]}
+            target="_blank"
+            rel="noreferrer"
+            className="text-decoration-underline text-primary fs-5 timesFont"
+          >
+            Click Here
+          </a>
+          <h5
+            className={`text-primary fs-5 ${
+              !/^[a-zA-Z]+$/.test(sata.noticeText.split(" ")[0])
+                ? "ben"
+                : "timesFont"
+            }`}
+          >
+            {textArr[2]}
+          </h5>
+        </div>
+      ) : (
+        <h5
+          className={`text-primary fs-5 ${
+            !/^[a-zA-Z]+$/.test(sata.noticeText.split(" ")[0])
+              ? "ben"
+              : "timesFont"
+          }`}
+        >
+          {sata.noticeText}
+        </h5>
+      )}
       {noticeReplies.length > 0 && (
         <div className="my-5">
           <h3 className={`fs-3 timesFont`} style={{ color: "blueviolet" }}>

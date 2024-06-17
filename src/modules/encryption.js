@@ -52,7 +52,7 @@ export const setCookie = (name, value, minutes) => {
   expiryDate.setTime(expiryDate.getTime() + minutes * 60 * 1000); // Convert minutes to milliseconds
   const expires = "expires=" + expiryDate.toUTCString();
   if (typeof window !== "undefined") {
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    document.cookie = name + "=" + value + ";" + expires + "; path=/;secure;";
   }
 };
 

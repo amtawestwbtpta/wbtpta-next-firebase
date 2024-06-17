@@ -8,19 +8,15 @@ import { decryptObjData } from "../../modules/encryption";
 import { useSearchParams } from "next/navigation";
 
 const TeacherPhotoCorner = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, stateArray } = useGlobalContext();
   const router = useRouter();
 
-  // const [allTeacher, setAllTeacher] = useState([])
-  const searchParams = useSearchParams();
-  let teacherData = JSON.parse(searchParams.get("details")).sort((a, b) =>
-    b.desig.localeCompare(a.desig)
-  );
-  let userdetails = decryptObjData("tid");
+  let teacherData = stateArray.sort((a, b) => b.desig.localeCompare(a.desig));
+
   let school = teacherData[0].school;
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Teacher's Photo Corner";
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
     // eslint-disable-next-line
@@ -101,7 +97,11 @@ const TeacherPhotoCorner = () => {
           <button
             type="button"
             className="btn btn-primary text-white font-weight-bold p-2 rounded"
-            onClick={window.print}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.print();
+              }
+            }}
           >
             Print Statement
           </button>

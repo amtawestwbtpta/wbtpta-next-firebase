@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 
 const ViewDetails = () => {
-  const { access, stateObject } = useGlobalContext();
+  const { state, stateObject } = useGlobalContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (access !== "admin") {
+    if (state !== "admin") {
       localStorage.clear();
       router.push("/logout");
     }
@@ -462,7 +462,7 @@ const ViewDetails = () => {
         {question === "admin" ? (
           <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
             <div>
-              <label>Question Access: </label>
+              <label>Question state: </label>
             </div>
             <div>
               <p>{question}</p>

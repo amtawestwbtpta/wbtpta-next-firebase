@@ -52,7 +52,7 @@ const SignUp = () => {
               autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -80,7 +80,7 @@ const SignUp = () => {
                   autoClose: 2000,
                   hideProgressBar: false,
                   closeOnClick: true,
-                  pauseOnHover: true,
+
                   draggable: true,
                   progress: undefined,
                   theme: "light",
@@ -95,7 +95,7 @@ const SignUp = () => {
                   autoClose: 2000,
                   hideProgressBar: false,
                   closeOnClick: true,
-                  pauseOnHover: true,
+
                   draggable: true,
                   progress: undefined,
                   theme: "light",
@@ -108,7 +108,7 @@ const SignUp = () => {
               autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -121,7 +121,7 @@ const SignUp = () => {
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -133,7 +133,7 @@ const SignUp = () => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -167,7 +167,7 @@ const SignUp = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

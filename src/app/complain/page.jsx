@@ -129,7 +129,7 @@ const Complain = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -141,7 +141,7 @@ const Complain = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -153,7 +153,7 @@ const Complain = () => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -189,7 +189,7 @@ const Complain = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

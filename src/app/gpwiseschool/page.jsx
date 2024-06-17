@@ -7,7 +7,7 @@ import { firestore } from "../../context/FirbaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
 
 function GpWiseSchool() {
-  const { access, setAccess } = useGlobalContext();
+  const { state, teachersState, schoolState } = useGlobalContext();
   const router = useRouter();
 
   const [teacherData, setTeacherData] = useState([]);
@@ -19,37 +19,18 @@ function GpWiseSchool() {
   const [isclicked, setIsclicked] = useState(false);
 
   const userData = async () => {
-    const q = query(collection(firestore, "teachers"));
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs
-      .map((doc) => ({
-        // doc.data() is never undefined for query doc snapshots
-        ...doc.data(),
-        id: doc.id,
-      }))
-      .sort((a, b) => a.school.localeCompare(b.school));
-    setTeacherData(data);
-
-    const q2 = query(collection(firestore, "schools"));
-
-    const querySnapshot2 = await getDocs(q2);
-    const data2 = querySnapshot2.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setschoolData(data2);
+    setTeacherData(teachersState);
+    setschoolData(schoolState);
   };
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:GP Wise School Data";
     userData();
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
   }, []);
-  useEffect(() => {}, [clickedTeaches]);
+  useEffect(() => {}, [clickedTeaches, teacherData, schoolData]);
 
   return (
     <div className="container-fluid my-5">
@@ -184,7 +165,11 @@ function GpWiseSchool() {
           <button
             type="button"
             className="btn btn-primary noprint text-white font-weight-bold p-2 m-5 rounded"
-            onClick={window.print}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.print();
+              }
+            }}
           >
             Print
           </button>

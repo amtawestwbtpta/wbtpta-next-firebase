@@ -25,7 +25,8 @@ import AdminNavBar from "../../components/AdminNavBar";
 import { v4 as uuid } from "uuid";
 import Loader from "../../components/Loader";
 const AdminUploadImage = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, slideState, setSlideState, setSlideUpdateTime } =
+    useGlobalContext();
   const router = useRouter();
   const docId = uuid();
   const [loader, setLoader] = useState(false);
@@ -88,7 +89,7 @@ const AdminUploadImage = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -122,12 +123,25 @@ const AdminUploadImage = () => {
                   id: docId,
                   fileName: file.name,
                 });
+                if (folder === "slides") {
+                  setSlideState([
+                    ...slideState,
+                    {
+                      title: inputField.title,
+                      description: inputField.description,
+                      url: url,
+                      id: docId,
+                      fileName: file.name,
+                    },
+                  ]);
+                  setSlideUpdateTime(Date.now());
+                }
                 toast.success("Congrats! File Uploaded Successfully!", {
                   position: "top-right",
                   autoClose: 1500,
                   hideProgressBar: false,
                   closeOnClick: true,
-                  pauseOnHover: true,
+
                   draggable: true,
                   progress: undefined,
                   theme: "light",
@@ -152,7 +166,7 @@ const AdminUploadImage = () => {
                   autoClose: 1500,
                   hideProgressBar: false,
                   closeOnClick: true,
-                  pauseOnHover: true,
+
                   draggable: true,
                   progress: undefined,
                   theme: "light",
@@ -172,13 +186,17 @@ const AdminUploadImage = () => {
     deleteObject(desertRef)
       .then(async () => {
         await deleteDoc(doc(firestore, folder, id));
+        if (folder === "slides") {
+          setSlideState(slideState.filter((item) => item.id !== id));
+          setSlideUpdateTime(Date.now());
+        }
         // File deleted successfully
         toast.success("Congrats! File Deleted Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -194,7 +212,7 @@ const AdminUploadImage = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -204,7 +222,7 @@ const AdminUploadImage = () => {
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Upload Image";
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
     // eslint-disable-next-line
@@ -222,7 +240,7 @@ const AdminUploadImage = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

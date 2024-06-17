@@ -1,14 +1,12 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
 import DataTable from "react-data-table-component";
 import { Loader } from "rsuite";
-import { firestore } from "../../context/FirbaseContext";
-import { collection, getDocs, query } from "firebase/firestore";
 const TeacherAddress = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, teachersState } = useGlobalContext();
   const router = useRouter();
 
   const [showTable, setShowTable] = useState(false);
@@ -16,30 +14,17 @@ const TeacherAddress = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const userData = async () => {
-    const q = query(collection(firestore, "teachers"));
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    let newData = data.sort(function (a, b) {
-      var nameA = a.school.toLowerCase(),
-        nameB = b.school.toLowerCase();
-      if (nameA < nameB)
-        //sort string ascending
-        return -1;
-      if (nameA > nameB) return 1;
-      return 0; //default return value (no sorting)
-    });
-    setData(newData);
+    setData(teachersState);
     setShowTable(true);
   };
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Teacher's Address";
+    if (!state) {
+      router.push("/login");
+    }
     userData();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -92,6 +77,7 @@ const TeacherAddress = () => {
           columns={columns}
           data={filteredData}
           pagination
+          paginationPerPage={30}
           highlightOnHover
           fixedHeader
           subHeader

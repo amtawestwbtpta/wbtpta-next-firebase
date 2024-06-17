@@ -8,7 +8,23 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
 const Navbar = () => {
-  const { access, setAccess } = useGlobalContext();
+  const {
+    state,
+    setState,
+    teachersState,
+    setTeachersState,
+    schoolState,
+    setSchoolState,
+    teacherUpdateTime,
+    setTeacherUpdateTime,
+    schoolUpdateTime,
+    setSchoolUpdateTime,
+    setStateObject,
+    setMemoUpdateTime,
+    setNoticeUpdateTime,
+    setQuestionUpdateTime,
+    setSlideUpdateTime,
+  } = useGlobalContext();
   const router = useRouter();
   // let navbarSupportedContent = document.querySelector(
   //   "#navbarSupportedContent"
@@ -42,6 +58,33 @@ const Navbar = () => {
     question = userdetails.question;
   }
 
+  const storeTeachersData = async () => {
+    const q = query(collection(firestore, "teachers"));
+    const querySnapshot = await getDocs(q);
+    const datas = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    let newDatas = datas.sort(
+      (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+    );
+    setTeachersState(newDatas);
+    setTeacherUpdateTime(Date.now());
+  };
+  const storeSchoolData = async () => {
+    const q2 = query(collection(firestore, "schools"));
+
+    const querySnapshot2 = await getDocs(q2);
+    const data2 = querySnapshot2.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setSchoolState(data2);
+    setSchoolUpdateTime(Date.now());
+  };
+
   const checkLogin = async () => {
     const collectionRef = collection(firestore, "userteachers");
     const q = query(
@@ -51,14 +94,14 @@ const Navbar = () => {
     const querySnapshot = await getDocs(q);
     let fdata = querySnapshot.docs[0].data();
     if (!fdata.disabled) {
-      setAccess(teacherdetails.circle);
+      setState(teacherdetails.circle);
     } else {
       toast.error("Your Account is Disabled!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -70,17 +113,24 @@ const Navbar = () => {
   useEffect(() => {
     if (details) {
       if ((Date.now() - loggedAt) / 1000 / 60 / 15 < 1) {
-        setAccess(teacherdetails.circle);
+        setState(teacherdetails.circle);
       } else {
         checkLogin();
       }
     }
-
+    const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
+    if (teacherDifference >= 1 || teachersState.length === 0) {
+      storeTeachersData();
+    }
+    const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
+    if (schDifference >= 1 || schoolState.length === 0) {
+      storeSchoolData();
+    }
     // eslint-disable-next-line
   }, []);
 
   const RenderMenu = () => {
-    if (access === "admin") {
+    if (state === "admin") {
       return (
         <>
           <li className="nav-item">
@@ -163,7 +213,10 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/payslipwbtpta"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateObject(teacherdetails);
+              }}
             >
               Generate Payslip
             </Link>
@@ -172,7 +225,10 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/Form16Prev"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateObject(teacherdetails);
+              }}
             >
               Generate Own Form 16
             </Link>
@@ -375,9 +431,15 @@ const Navbar = () => {
               </Link>
             </li>
           </div>
+          <li className="nav-item">
+            <i
+              className="bi bi-arrow-clockwise text-success fs-3"
+              style={{ cursor: "pointer" }}
+            ></i>
+          </li>
         </>
       );
-    } else if (access === "taw") {
+    } else if (state === "taw") {
       return (
         <>
           <li className="nav-item">
@@ -451,7 +513,10 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/payslipwbtpta"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateObject(teacherdetails);
+              }}
             >
               Generate Payslip
             </Link>
@@ -460,7 +525,10 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/Form16Prev"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateObject(teacherdetails);
+              }}
             >
               Generate Form 16
             </Link>
@@ -601,6 +669,12 @@ const Navbar = () => {
               </Link>
             </li>
           </div>
+          <li className="nav-item">
+            <i
+              className="bi bi-arrow-clockwise text-success fs-3"
+              style={{ cursor: "pointer" }}
+            ></i>
+          </li>
         </>
       );
     } else {
@@ -743,7 +817,7 @@ const Navbar = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

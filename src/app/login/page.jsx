@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const page = () => {
   const router = useRouter();
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const [loader, setLoader] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [inputField, setInputField] = useState({
@@ -97,7 +97,7 @@ const page = () => {
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -110,7 +110,7 @@ const page = () => {
 
             let fdata2 = querySnapshot2.docs[0].data();
 
-            setAccess(fdata2.circle);
+            setState(fdata2.circle);
             encryptObjData("uid", fdata, 10080);
             encryptObjData("tid", fdata2, 10080);
             setCookie("t", fdata2.tname, 10080);
@@ -123,7 +123,7 @@ const page = () => {
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -136,7 +136,7 @@ const page = () => {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -149,7 +149,7 @@ const page = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -161,7 +161,7 @@ const page = () => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -186,7 +186,7 @@ const page = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

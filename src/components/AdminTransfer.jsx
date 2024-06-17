@@ -69,7 +69,7 @@ const AdminTransfer = ({ data, total, myData, getAccount, refresh }) => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -82,7 +82,7 @@ const AdminTransfer = ({ data, total, myData, getAccount, refresh }) => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -106,7 +106,7 @@ const AdminTransfer = ({ data, total, myData, getAccount, refresh }) => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

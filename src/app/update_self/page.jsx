@@ -12,10 +12,10 @@ import {
   getSubmitDateInput,
 } from "../../modules/calculatefunctions";
 const UpdateSelf = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state } = useGlobalContext();
   const router = useRouter();
   useEffect(() => {
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
   }, []);
@@ -172,7 +172,7 @@ const UpdateSelf = () => {
         const url = `/api/updself`;
         let response = await axios.post(url, inputField);
         let record = response.data;
-        if (response.status === 200) {
+        if (record.success) {
           const docRef = doc(firestore, "teachers", teachersID);
           await updateDoc(docRef, inputField);
           const docRef2 = doc(firestore, "userteachers", id);
@@ -188,7 +188,7 @@ const UpdateSelf = () => {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -202,7 +202,7 @@ const UpdateSelf = () => {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -214,7 +214,7 @@ const UpdateSelf = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -230,7 +230,7 @@ const UpdateSelf = () => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -252,7 +252,7 @@ const UpdateSelf = () => {
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
+          pauseOnFocusLoss={false}
           draggable
           pauseOnHover
           theme="light"

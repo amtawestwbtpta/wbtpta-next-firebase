@@ -1,52 +1,36 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { firestore } from "../../context/FirbaseContext";
-import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import TechSalary from "../../components/TechSalary";
 const page = () => {
-  const { access, setAccess } = useGlobalContext();
+  const {
+    state,
+    schoolState,
+    setSchoolState,
+    teachersState,
+    setSchoolUpdateTime,
+  } = useGlobalContext();
   const router = useRouter();
 
-  const [teacherData, setTeacherData] = useState([]);
-  const [schoolData, setschoolData] = useState([]);
+  const teacherData = teachersState.sort((a, b) =>
+    b.desig.localeCompare(a.desig)
+  );
+  const [schoolData, setschoolData] = useState(schoolState);
   const [filteredData, setFilteredData] = useState([]);
   const [filteredSchool, setFilteredSchool] = useState([]);
   const [showSalaryData, setShowSalaryData] = useState(false);
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:School Wise Teacher Data";
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
     // eslint-disable-next-line
-  }, []);
-  const userData = async () => {
-    const q = query(collection(firestore, "teachers"));
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setTeacherData(data);
-    const q2 = query(collection(firestore, "schools"));
-
-    const querySnapshot2 = await getDocs(q2);
-    const data2 = querySnapshot2.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setschoolData(data2);
-  };
-
-  useEffect(() => {
-    userData();
   }, []);
 
   const [inputField, setInputField] = useState({
@@ -60,7 +44,6 @@ const page = () => {
     v: 0,
     total_student: 0,
   });
-  useEffect(() => {}, [inputField]);
   const update = async () => {
     try {
       const docRef = doc(firestore, "schools", inputField.id);
@@ -81,25 +64,58 @@ const page = () => {
             inputField.v
         ),
       });
+      let y = schoolState.filter((el) => el.id !== inputField.id);
+      y = [
+        ...y,
+        {
+          school: inputField.school,
+          id: inputField.id,
+          pp: inputField.pp,
+          i: inputField.i,
+          ii: inputField.ii,
+          iii: inputField.iii,
+          iv: inputField.iv,
+          v: inputField.v,
+          total_student: parseInt(
+            inputField.pp +
+              inputField.i +
+              inputField.ii +
+              inputField.iii +
+              inputField.iv +
+              inputField.v
+          ),
+        },
+      ];
+      y = y.sort(function (a, b) {
+        var nameA = a.school.toLowerCase(),
+          nameB = b.school.toLowerCase();
+        if (nameA < nameB)
+          //sort string ascending
+          return -1;
+        if (nameA > nameB) return 1;
+        return 0; //default return value (no sorting)
+      });
+      setSchoolState(y);
+      setSchoolUpdateTime(Date.now());
+      setschoolData(y);
 
       toast.success("Congrats! School Data Updated Successfully!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
       });
-      userData();
     } catch (e) {
       toast.error("Unable To Send Query!!!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -118,19 +134,18 @@ const page = () => {
       iv: filteredSchool[0].iv,
       v: filteredSchool[0].v,
     });
-    if (typeof window !== "undefined") {
-      document.getElementById("sch_name").value = filteredSchool[0].school;
+    document.getElementById("sch_name").value = filteredSchool[0].school;
 
-      document.getElementById("pp").value = filteredSchool[0].pp;
-      document.getElementById("i").value = filteredSchool[0].i;
-      document.getElementById("ii").value = filteredSchool[0].ii;
-      document.getElementById("iii").value = filteredSchool[0].iii;
-      document.getElementById("iv").value = filteredSchool[0].iv;
-      document.getElementById("v").value = filteredSchool[0].v;
-      document.getElementById("total_student").value =
-        filteredSchool[0].total_student;
-    }
+    document.getElementById("pp").value = filteredSchool[0].pp;
+    document.getElementById("i").value = filteredSchool[0].i;
+    document.getElementById("ii").value = filteredSchool[0].ii;
+    document.getElementById("iii").value = filteredSchool[0].iii;
+    document.getElementById("iv").value = filteredSchool[0].iv;
+    document.getElementById("v").value = filteredSchool[0].v;
+    document.getElementById("total_student").value =
+      filteredSchool[0].total_student;
   };
+  useEffect(() => {}, [inputField, schoolData, filteredSchool]);
 
   return (
     <div className="container my-5">
@@ -143,7 +158,7 @@ const page = () => {
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
+            pauseOnFocusLoss={false}
             draggable
             pauseOnHover
             theme="light"
@@ -304,7 +319,7 @@ const page = () => {
                 )}
               </div>
               <div className="my-2">
-                {access === "admin" ? (
+                {state === "admin" ? (
                   <>
                     {/* <!-- Button trigger modal --> */}
                     <button
@@ -574,7 +589,7 @@ const page = () => {
                       {el.association}
                     </h6>
                   </div>
-                  {access === "admin" ? (
+                  {state === "admin" ? (
                     <h6>
                       <a
                         href={`tel: +91${el.phone}`}
@@ -594,7 +609,7 @@ const page = () => {
                     </h6>
                   ) : null}
 
-                  {access === "admin" ? (
+                  {state === "admin" ? (
                     <>
                       <h6 className="text-primary">DOB: {el.dob}</h6>
                       <h6 className="text-primary">DOJ: {el.doj}</h6>

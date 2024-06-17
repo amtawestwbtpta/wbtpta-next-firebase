@@ -1,16 +1,15 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
 const JulySalary = () => {
-  const { access, stateArray } = useGlobalContext();
   const router = useRouter();
-  const [details, setDetails] = useState([]);
-
+  const { state, teachersState } = useGlobalContext();
+  const [data, setData] = useState(teachersState);
+  const [isclicked, setIsclicked] = useState(false);
   useEffect(() => {
-    setDetails(stateArray);
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
     document.title = "WBTPTA AMTA WEST:All Teacher July Salary Data";
@@ -37,6 +36,31 @@ const JulySalary = () => {
         >
           Go Back
         </button>
+        {!isclicked ? (
+          <button
+            type="button"
+            className="btn btn-success text-white btn-sm font-weight-bold m-2 noprint rounded"
+            onClick={() => {
+              setData(
+                teachersState.filter((el) => el.association === "WBTPTA")
+              );
+              setIsclicked(true);
+            }}
+          >
+            Only WBTPTA Teachers
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-info text-white btn-sm font-weight-bold m-2 noprint rounded"
+            onClick={() => {
+              setData(teachersState);
+              setIsclicked(false);
+            }}
+          >
+            All Teachers
+          </button>
+        )}
         <h3 className="text-center text-primary mb-3">
           All Teacher July Salary Data
         </h3>
@@ -60,7 +84,7 @@ const JulySalary = () => {
             </tr>
           </thead>
           <tbody>
-            {details.map((el, ind) => (
+            {data.map((el, ind) => (
               <tr key={ind}>
                 <td>{ind + 1}</td>
                 <td>{el.tname}</td>
@@ -98,6 +122,31 @@ const JulySalary = () => {
         >
           Go Back
         </button>
+        {!isclicked ? (
+          <button
+            type="button"
+            className="btn btn-success text-white btn-sm font-weight-bold m-2 noprint rounded"
+            onClick={() => {
+              setData(
+                teachersState.filter((el) => el.association === "WBTPTA")
+              );
+              setIsclicked(true);
+            }}
+          >
+            Only WBTPTA Teachers
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-info text-white btn-sm font-weight-bold m-2 noprint rounded"
+            onClick={() => {
+              setData(teachersState);
+              setIsclicked(false);
+            }}
+          >
+            All Teachers
+          </button>
+        )}
       </div>
     </div>
   );

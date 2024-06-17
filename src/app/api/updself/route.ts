@@ -2,6 +2,7 @@ import dbConnect from "../../../lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import User from "../../../models/user";
 import Teacher from "../../../models/teacher";
+import { sendUpdateEmail } from "../../../helpers/updateMailer";
 dbConnect();
 export async function POST(request: NextRequest) {
   try {
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
         userData.phone = phone;
         userData.pan = pan;
         await userData.save();
+        await sendUpdateEmail({ reqBody });
       }
       return NextResponse.json(
         {

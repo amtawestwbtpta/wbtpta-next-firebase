@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
@@ -7,7 +6,23 @@ import BootstrapClient from "../components/BootstrapClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "bootstrap-icons/font/bootstrap-icons.css";
-const inter = Inter({ subsets: ["latin"] });
+import { Tiro_Bangla, Roboto } from "next/font/google";
+
+const tiro_bangla = Tiro_Bangla({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: true,
+  variable: "--font-tiro",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: true,
+  variable: "--font-roboto",
+});
 
 export const metadata = {
   title: "WBTPTA AMTA WEST",
@@ -18,7 +33,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="container-fluid text-center">
+      <body
+        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
+      >
         <div
           className="alert alert-success alert-dismissible fade show"
           role="alert"

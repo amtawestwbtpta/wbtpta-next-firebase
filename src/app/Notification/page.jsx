@@ -27,9 +27,10 @@ import { decryptObjData, getCookie } from "../../modules/encryption";
 import { DateValueToSring } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
-
+import { useGlobalContext } from "../../context/Store";
 const Notification = () => {
-  // const navigate = useNavigate();
+  const { noticeState, noticeUpdateTime, setNoticeState, setNoticeUpdateTime } =
+    useGlobalContext();
   let teacherdetails = {
     convenor: "",
     gp: "",
@@ -73,21 +74,6 @@ const Notification = () => {
   const docId = uuid().split("-")[0];
   const [progress, setProgress] = useState(0);
 
-  const getData = async () => {
-    const querySnapshot = await getDocs(
-      query(collection(firestore, "notices"))
-    );
-    const datas = querySnapshot.docs
-      .map((doc) => ({
-        // doc.data() is never undefined for query doc snapshots
-        ...doc.data(),
-        id: doc.id,
-      }))
-      .sort((a, b) => b.date - a.date);
-    setData(true);
-    setAllData(datas);
-  };
-
   const addNotice = async () => {
     setLoader(true);
     if (addImage) {
@@ -125,26 +111,51 @@ const Notification = () => {
                 type: file.type,
               })
                 .then(async () => {
-                  // let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
-                  // let body = noticeText;
-                  // await notifyAll(noticeTitle, body)
-                  //   .then(async () => {
-                  setNoticeText("");
-                  setTitle("");
-                  setLoader(false);
-                  setAddImage(false);
-                  toast.success("Notice Added Successfully!");
-                  getData();
-                  setFile({});
-                  setSrc(null);
-                  setShowPercent(false);
-                  setProgress(0);
-                  // })
-                  // .catch((e) => {
-                  //   console.log(e);
-                  //   setLoader(false);
-                  //   toast.error("Error Sending Notification");
-                  // });
+                  setNoticeState([
+                    ...noticeState,
+                    {
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: title,
+                      noticeText: noticeText,
+                      url: photourl,
+                      photoName: docId + "-" + file.name,
+                      type: file.type,
+                    },
+                  ]);
+                  setNoticeUpdateTime(Date.now());
+                  setAllData([
+                    ...noticeState,
+                    {
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: title,
+                      noticeText: noticeText,
+                      url: photourl,
+                      photoName: docId + "-" + file.name,
+                      type: file.type,
+                    },
+                  ]);
+                  let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
+                  let body = noticeText;
+                  await notifyAll(noticeTitle, body)
+                    .then(async () => {
+                      setNoticeText("");
+                      setTitle("");
+                      setLoader(false);
+                      setAddImage(false);
+                      toast.success("Notice Added Successfully!");
+                      // getData();
+                      setFile({});
+                      setSrc(null);
+                      setShowPercent(false);
+                      setProgress(0);
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                      setLoader(false);
+                      toast.error("Error Sending Notification");
+                    });
                 })
                 .catch((e) => {
                   setLoader(false);
@@ -158,7 +169,7 @@ const Notification = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -181,6 +192,34 @@ const Notification = () => {
           type: "",
         })
           .then(async () => {
+            setNoticeState([
+              ...noticeState,
+              {
+                id: docId,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: title,
+                noticeText: noticeText,
+                url: "",
+                photoName: "",
+                type: "",
+              },
+            ]);
+            setNoticeUpdateTime(Date.now());
+            setAllData([
+              ...noticeState,
+              {
+                id: docId,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: title,
+                noticeText: noticeText,
+                url: "",
+                photoName: "",
+                type: "",
+              },
+            ]);
+
             let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
             let body = noticeText;
             await notifyAll(noticeTitle, body)
@@ -190,7 +229,7 @@ const Notification = () => {
                 setLoader(false);
                 setAddImage(false);
                 toast.success("Notice Added Successfully!");
-                getData();
+                // getData();
                 setFile({});
                 setSrc("");
               })
@@ -212,7 +251,7 @@ const Notification = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -232,13 +271,32 @@ const Notification = () => {
       addedBy: teacherdetails.tname,
     })
       .then(async () => {
+        let x = noticeState.filter((el) => el.id === editID)[0];
+        let y = noticeState.filter((el) => el.id !== editID);
+        y = [
+          ...y,
+          {
+            id: editID,
+            date: Date.now(),
+            addedBy: teacherdetails.tname,
+            title: editTitle,
+            noticeText: editNoticeText,
+            url: x.url,
+            photoName: x.photoName,
+            type: x.type,
+          },
+        ];
+        let newData = y.sort((a, b) => b.date - a.date);
+        setNoticeState(newData);
+        setAllData(newData);
+        setNoticeUpdateTime(Date.now());
         setLoader(false);
         setEditTitle("");
         setEditNoticeText("");
         setOrgNoticeText("");
         setOrgTitle("");
         toast.success("Details Updated Successfully");
-        getData();
+        // getData();
       })
       .catch((err) => {
         toast.error("Notice Updation Failed!");
@@ -282,20 +340,49 @@ const Notification = () => {
           }
           setLoader(false);
           toast.success("Notice Deleted Successfully!");
-          getData();
+          // getData();
+          setNoticeState(allData.filter((item) => item.id !== el.id));
+          setAllData(allData.filter((item) => item.id !== el.id));
+          setNoticeUpdateTime(Date.now());
         });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const getData = async () => {
+    const querySnapshot = await getDocs(
+      query(collection(firestore, "notices"))
+    );
+    const datas = querySnapshot.docs
+      .map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .sort((a, b) => b.date - a.date);
+    setData(true);
+    setAllData(datas);
+    setNoticeState(datas);
+    setNoticeUpdateTime(Date.now());
+  };
+  const getNoticeData = () => {
+    const difference = (Date.now() - noticeUpdateTime) / 1000 / 60 / 15;
+    if (noticeState.length === 0 || difference >= 1) {
+      getData();
+    } else {
+      let newData = noticeState.sort((a, b) => b.date - a.date);
+      setData(true);
+      setAllData(newData);
+    }
+  };
 
   useEffect(() => {
-    // document.title = "WBTPTA AMTA WEST:Notifications";
-    getData();
+    document.title = "WBTPTA AMTA WEST:Notifications";
+    getNoticeData();
     // eslint-disable-next-line
   }, []);
-  useEffect(() => {}, [file]);
+  useEffect(() => {}, [file, allData]);
   return (
     <div className="container my-3">
       <ToastContainer
@@ -305,7 +392,7 @@ const Notification = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -357,12 +444,6 @@ const Notification = () => {
                         style={{ height: 200, width: 200, cursor: "pointer" }}
                         className="card-img-top rounded-2 m-0 p-0"
                         alt="..."
-                        // onClick={() => {
-                        //   navigate(
-                        //     `/NotificationDetails?id=${el.id}&title=${el.title}&date=${el.date}&noticeText=${el.noticeText}&addedBy=${el.addedBy}&url=${el.url}&type=${el.type}`
-                        //   );
-                        //   console.log(el);
-                        // }}
                         onClick={() => {
                           setSelectedNotice(el);
                           setShowNoticeDetails(true);
@@ -378,12 +459,11 @@ const Notification = () => {
                       }`}
                     >
                       <h5
-                        className="card-title"
-                        // onClick={() => {
-                        //   navigate(
-                        //     `/NotificationDetails?id=${el.id}&title=${el.title}&date=${el.date}&noticeText=${el.noticeText}&addedBy=${el.addedBy}&url=${el.url}&type=${el.type}`
-                        //   );
-                        // }}
+                        className={`card-title ${
+                          !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
+                            ? "ben"
+                            : "timesFont"
+                        }`}
                         onClick={() => {
                           setSelectedNotice(el);
                           setShowNoticeDetails(true);
@@ -397,13 +477,11 @@ const Notification = () => {
                         {DateValueToSring(el.date)}
                       </p>
                       <p
-                        className="card-text text-primary"
-                        // onClick={() => {
-                        //   navigate(
-                        //     `/NotificationDetails?id=${el.id}&title=${el.title}&date=${el.date}&noticeText=${el.noticeText}&addedBy=${el.addedBy}&url=${el.url}&type=${el.type}`
-                        //   );
-                        //   console.log(el);
-                        // }}
+                        className={`card-title ${
+                          !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
+                            ? "ben"
+                            : "timesFont"
+                        } text-primary`}
                         onClick={() => {
                           setSelectedNotice(el);
                           setShowNoticeDetails(true);

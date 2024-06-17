@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 const PrintQuestionAll = () => {
-  const { access, stateArray } = useGlobalContext();
+  const { state, stateArray } = useGlobalContext();
   const router = useRouter();
 
   const [allData, setAllData] = useState([]);
@@ -118,7 +118,7 @@ const PrintQuestionAll = () => {
     setAllData(stateArray[0]);
     setQRate(stateArray[1]);
     document.title = "WBTPTA AMTA WEST:Print All Question Invoice";
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
   }, []);

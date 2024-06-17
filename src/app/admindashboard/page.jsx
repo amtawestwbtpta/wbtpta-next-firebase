@@ -4,11 +4,11 @@ import AdminNavBar from "../../components/AdminNavBar";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 const AdminDashboard = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state } = useGlobalContext();
   const router = useRouter();
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Dashboard";
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
   }, []);

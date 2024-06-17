@@ -8,20 +8,20 @@ import { firestore } from "../../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { DA, HRA } from "../../modules/constants";
+import { GetMonthName } from "../../modules/calculatefunctions";
 const TechSalary = (props) => {
   const data = props.data;
-  const { access, setAccess } = useGlobalContext();
+  const { state, setStateArray, teachersState, setStateObject } =
+    useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
   let udise;
   let school;
-  let details = getCookie("tid");
-  if (details) {
-    details = decryptObjData("tid");
-  }
+  let userDcryptedDetails;
   if (!data) {
-    udise = details?.udise;
-    school = details?.school;
+    userDcryptedDetails = decryptObjData("tid");
+    udise = userDcryptedDetails.udise;
+    school = userDcryptedDetails.school;
   } else {
     udise = data[0].udise;
     school = data[0].school;
@@ -29,41 +29,13 @@ const TechSalary = (props) => {
   const [showTable, setShowTable] = useState(false);
 
   const userData = async () => {
-    const q = query(
-      collection(firestore, "teachers"),
-      where("udise", "==", udise)
-    );
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
+    const data = teachersState.filter((el) => el.udise === udise);
     setFilteredData(data);
     setShowTable(true);
   };
-  function GetMonthName(monthNumber) {
-    monthNumber = monthNumber < 0 ? 11 : monthNumber;
-    var months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    return months[monthNumber];
-  }
 
   useEffect(() => {
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
     userData();
@@ -170,9 +142,8 @@ const TechSalary = (props) => {
                           {el.association === "WBTPTA" ? (
                             <Link
                               className="btn btn-info text-decoration-none"
-                              href={`/payslipwbtpta?details=${JSON.stringify(
-                                el
-                              )}`}
+                              href={`/payslipwbtpta`}
+                              onClick={() => setStateObject(el)}
                             >
                               PRINT PAYSLIP
                             </Link>
@@ -189,7 +160,11 @@ const TechSalary = (props) => {
             <button
               type="button"
               className="btn btn-primary text-white font-weight-bold p-2 rounded"
-              onClick={window.print}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.print();
+                }
+              }}
             >
               Print Statement
             </button>
@@ -207,11 +182,10 @@ const TechSalary = (props) => {
             <button
               type="button"
               className="btn btn-success  font-weight-bold p-2 rounded"
-              onClick={() =>
-                router.push(
-                  `/TeacherPhotoCorner?details=${JSON.stringify(filteredData)}`
-                )
-              }
+              onClick={() => {
+                router.push(`/TeacherPhotoCorner`);
+                setStateArray(filteredData);
+              }}
             >
               Teacher's Photo Corner
             </button>

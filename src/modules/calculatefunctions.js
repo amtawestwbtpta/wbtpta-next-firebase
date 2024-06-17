@@ -276,8 +276,13 @@ export const getSubmitDateSlashInput = (date) => {
     let day = data[1];
     let month = data[0];
     let year = data[2];
-    return `${day}-${month}-${year}`;
-    // return date;
+    if (parseInt(day) < 10) {
+      day = "0" + day;
+    }
+    if (parseInt(month) < 10) {
+      month = "0" + month;
+    }
+    return `${year}-${month}-${day}`;
   }
 };
 

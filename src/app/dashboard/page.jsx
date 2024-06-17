@@ -8,11 +8,15 @@ import {
   encryptData,
   getCookie,
 } from "../../modules/encryption";
-import { NumInWords, IndianFormat } from "../../modules/calculatefunctions";
+import {
+  NumInWords,
+  IndianFormat,
+  RoundTo,
+} from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { DA, HRA } from "../../modules/constants";
 const page = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
   const el = React.useRef(null);
   const [tooltip, setTooltip] = useState(false);
@@ -38,6 +42,7 @@ const page = () => {
     empid,
     training,
     pan,
+    dataYear,
     address,
     basic,
     mbasic,
@@ -94,11 +99,13 @@ const page = () => {
     netpay = teacherdetails.netpay;
     mnetpay = teacherdetails.mnetpay;
     fname = teacherdetails.fname;
+    dataYear = teacherdetails.dataYear;
   }
 
   let date = new Date();
   let setda, sethra, setgross, setbasicpay, setnetpay;
   let junelast = new Date(`${date.getFullYear()}-07-31`);
+  let nextjunelast = new Date(`${date.getFullYear() + 1}-07-31`);
   if (date >= junelast) {
     setbasicpay = basic;
   } else if (
@@ -110,6 +117,21 @@ const page = () => {
   } else {
     setbasicpay = mbasic;
   }
+
+  if (dataYear === date.getFullYear()) {
+    if (date >= junelast) {
+      setbasicpay = basic;
+    } else {
+      setbasicpay = mbasic;
+    }
+  } else {
+    if (date >= nextjunelast) {
+      setbasicpay = RoundTo(basic + basic * 0.03, 100);
+    } else {
+      setbasicpay = basic;
+    }
+  }
+
   setda = Math.round(setbasicpay * DA);
   sethra = Math.round(setbasicpay * HRA);
   setgross = setbasicpay + setda + sethra + addl + ma;
@@ -139,7 +161,7 @@ const page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
     // eslint-disable-next-line
@@ -367,7 +389,7 @@ const page = () => {
                 <label>BASIC: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(setbasicpay)}</p>
+                <p>{setbasicpay}</p>
               </div>
             </div>
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
@@ -375,7 +397,7 @@ const page = () => {
                 <label>DA: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(setda)}</p>
+                <p>{setda}</p>
               </div>
             </div>
 
@@ -384,61 +406,77 @@ const page = () => {
                 <label>HRA: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(sethra)}</p>
+                <p>{sethra}</p>
               </div>
             </div>
 
-            <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>MA: </label>
+            {ma > 0 && (
+              <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                <div>
+                  <label>MA: </label>
+                </div>
+                <div>
+                  <p>{ma}</p>
+                </div>
               </div>
-              <div>
-                <p>₹ {IndianFormat(ma)}</p>
+            )}
+            {addl > 0 && (
+              <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                <div>
+                  <label>ADDL. REMUN.: </label>
+                </div>
+                <div>
+                  <p>{addl}</p>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
               <div>
                 <label>Gross Pay: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(setgross)}</p>
+                <p>{setgross}</p>
               </div>
             </div>
 
-            <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>GPF: </label>
+            {gpf > 0 && (
+              <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                <div>
+                  <label>GPF: </label>
+                </div>
+                <div>
+                  <p>{gpf}</p>
+                </div>
               </div>
-              <div>
-                <p>₹ {IndianFormat(gpf)}</p>
-              </div>
-            </div>
+            )}
 
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
               <div>
                 <label>P. TAX: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(ptax)}</p>
+                <p>{ptax}</p>
               </div>
             </div>
 
-            <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>GSLI: </label>
+            {gsli > 0 && (
+              <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                <div>
+                  <label>GSLI: </label>
+                </div>
+                <div>
+                  <p>{gsli}</p>
+                </div>
               </div>
-              <div>
-                <p>₹ {IndianFormat(gsli)}</p>
-              </div>
-            </div>
+            )}
 
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
               <div>
                 <label>Netpay: </label>
               </div>
               <div>
-                <p>₹ {IndianFormat(setnetpay)}</p>
+                <p>{setnetpay}</p>
               </div>
             </div>
 

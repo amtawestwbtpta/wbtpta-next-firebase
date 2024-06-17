@@ -13,7 +13,7 @@ import Loader from "../../components/Loader";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { INR, IndianFormat } from "../../modules/calculatefunctions";
 const AdminAccounts = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
 
   const [seletedTab, setSeletedTab] = useState(1);
@@ -58,7 +58,7 @@ const AdminAccounts = () => {
   useEffect(() => {
     getAccount();
     document.title = "WBTPTA AMTA WEST:Admin Accounts";
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
     // eslint-disable-next-line

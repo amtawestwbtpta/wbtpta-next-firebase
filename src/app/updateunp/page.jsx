@@ -17,16 +17,16 @@ import { decryptObjData, getCookie } from "../../modules/encryption";
 import Link from "next/link";
 const UpdateUP = () => {
   const router = useRouter();
-  let details = getCookie("uid");
-  let userdetails;
+  let details = getCookie("tid");
+  let user, empid, account, email, id, username;
   if (details) {
-    userdetails = decryptObjData("uid");
+    user = decryptObjData("uid");
+    empid = user.empid;
+    account = user.account;
+    email = user.email;
+    id = user.id;
+    username = user.username;
   }
-  const empid = userdetails?.empid;
-  const account = userdetails?.account;
-  const email = userdetails?.email;
-  const id = userdetails?.id;
-  const username = userdetails?.username;
   const [usernameForm, setUsernameForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   // const passwordPattern =
@@ -123,7 +123,7 @@ const UpdateUP = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -139,7 +139,7 @@ const UpdateUP = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -178,7 +178,7 @@ const UpdateUP = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -192,7 +192,7 @@ const UpdateUP = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -204,7 +204,7 @@ const UpdateUP = () => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -212,6 +212,97 @@ const UpdateUP = () => {
     }
   };
 
+  const deleteAccount = async () => {
+    const url = `https://awwbtpta.vercel.app/api/delteacher`;
+    try {
+      setLoader(true);
+      let response = await axios.post(url, {
+        id: user.id,
+      });
+      let record = response.data;
+      if (record.success) {
+        await deleteDoc(doc(firestore, "userteachers", user.id));
+        await deleteDoc(doc(firestore, "profileImage", user.id));
+        await updateDoc(doc(firestore, "teachers", user.id), {
+          registered: false,
+        });
+        const desertRef = ref(storage, `profileImage/${user.photoName}`);
+        await deleteObject(desertRef);
+        await delTokens(user);
+
+        toast.success(`Your User Deleted Successfully`, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        toast.success(
+          `You Will not be able to Login again, you have register again!`,
+          {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+        setLoader(false);
+
+        router.push("/logout");
+      } else {
+        setLoader(false);
+        toast.error("Something Went Wrong!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (e) {
+      setLoader(false);
+      toast.error("Something Went Wrong!", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
+    // console.log(user.teachersID);
+    // console.log(res);
+  };
+
+  const delTokens = async (user) => {
+    const querySnapshot = await getDocs(
+      query(
+        collection(firestore, "tokens"),
+        where("username", "==", user?.username)
+      )
+    );
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    data.map(async (el) => {
+      await deleteDoc(doc(firestore, "tokens", el.id));
+    });
+  };
   return (
     <div className="container text-black p-2">
       <ToastContainer
@@ -221,7 +312,7 @@ const UpdateUP = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -326,7 +417,7 @@ const UpdateUP = () => {
                             autoClose: 3000,
                             hideProgressBar: false,
                             closeOnClick: true,
-                            pauseOnHover: true,
+
                             draggable: true,
                             progress: undefined,
                             theme: "light",
@@ -351,6 +442,51 @@ const UpdateUP = () => {
             <button className="btn btn-danger m-1 px-4">Back</button>
           </Link>
         </form>
+        <div className="my-2">
+          <button
+            type="button"
+            className="btn btn-danger m-1 px-4"
+            onClick={() => {
+              // eslint-disable-next-line
+              let confirmAlert = confirm(
+                "Are you sure you want to Delete your user account?"
+              );
+              if (confirmAlert) {
+                // eslint-disable-next-line
+                let nextAlert = confirm(
+                  "You Will not be able to Login again, you have register again!"
+                );
+                if (nextAlert) {
+                  deleteAccount();
+                } else {
+                  toast.error("Account Not Deleted!!!", {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                }
+              } else {
+                toast.error("Account Not Deleted!!!", {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+              }
+            }}
+          >
+            Delete Your User Account
+          </button>
+        </div>
       </div>
     </div>
   );

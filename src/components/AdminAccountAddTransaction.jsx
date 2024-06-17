@@ -58,7 +58,7 @@ const AdminAccountAddTransaction = ({ getAccount, refresh, myData, total }) => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -70,7 +70,7 @@ const AdminAccountAddTransaction = ({ getAccount, refresh, myData, total }) => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -118,7 +118,7 @@ const AdminAccountAddTransaction = ({ getAccount, refresh, myData, total }) => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

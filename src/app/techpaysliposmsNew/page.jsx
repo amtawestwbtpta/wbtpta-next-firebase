@@ -15,7 +15,7 @@ import {
 } from "../../modules/calculatefunctions";
 import { DA, HRA } from "../../modules/constants";
 const PaySlipOsmsNew = () => {
-  const { access, stateObject } = useGlobalContext();
+  const { state, stateObject } = useGlobalContext();
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -109,7 +109,7 @@ const PaySlipOsmsNew = () => {
   }, []);
   useEffect(() => {}, [month, index]);
   useEffect(() => {
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
   }, []);
@@ -199,7 +199,11 @@ const PaySlipOsmsNew = () => {
             <button
               type="button"
               className="btn btn-primary text-white font-weight-bold p-2 rounded noprint"
-              onClick={window.print}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.print();
+                }
+              }}
             >
               Print Payslip
             </button>

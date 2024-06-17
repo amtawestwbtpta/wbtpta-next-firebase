@@ -16,11 +16,11 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/Loader";
 const DisplayComplain = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
   }, []);
@@ -175,7 +175,7 @@ const DisplayComplain = () => {
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+
       draggable: true,
       progress: undefined,
       theme: "light",
@@ -204,7 +204,7 @@ const DisplayComplain = () => {
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+
       draggable: true,
       progress: undefined,
       theme: "light",
@@ -236,7 +236,7 @@ const DisplayComplain = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

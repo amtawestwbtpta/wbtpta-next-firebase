@@ -106,7 +106,7 @@ const Registration = ({ data, setSignUpTrue }) => {
               autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -232,7 +232,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                             autoClose: 3000,
                             hideProgressBar: false,
                             closeOnClick: true,
-                            pauseOnHover: true,
+
                             draggable: true,
                             progress: undefined,
                             theme: "light",
@@ -252,7 +252,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-                          pauseOnHover: true,
+
                           draggable: true,
                           progress: undefined,
                           theme: "light",
@@ -270,7 +270,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -284,7 +284,7 @@ const Registration = ({ data, setSignUpTrue }) => {
               autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -303,7 +303,7 @@ const Registration = ({ data, setSignUpTrue }) => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -319,7 +319,7 @@ const Registration = ({ data, setSignUpTrue }) => {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -469,7 +469,7 @@ const Registration = ({ data, setSignUpTrue }) => {
               autoClose: 5000,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
+
               draggable: true,
               progress: undefined,
               theme: "light",
@@ -491,7 +491,7 @@ const Registration = ({ data, setSignUpTrue }) => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"

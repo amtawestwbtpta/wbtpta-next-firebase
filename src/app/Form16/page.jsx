@@ -1,30 +1,25 @@
 "use client";
 import React, { useEffect, useContext, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
   NumInWords,
   randBetween,
   roundSo,
 } from "../../modules/calculatefunctions";
+import { DA, HRA, PREVDA } from "../../modules/constants";
 const Form16Prev = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, stateObject } = useGlobalContext();
   const router = useRouter();
+  let details = stateObject;
 
-  const searchParams = useSearchParams();
-
-  let details = JSON.parse(searchParams.get("details"));
-  let userdetails = getCookie("uid");
-  let userDcryptedDetails;
   let tname,
     desig,
     school,
     disability,
     pan,
+    basic,
     mbasic,
-    prevmbasic,
     addl,
     da,
     hra,
@@ -47,67 +42,41 @@ const Form16Prev = () => {
     fname,
     less;
 
-  if (!details) {
-    if (userdetails) {
-      userDcryptedDetails = decryptObjData("tid");
-      tname = userDcryptedDetails.tname;
-      fname = userDcryptedDetails.fname;
-      desig = userDcryptedDetails.desig;
-      school = userDcryptedDetails.school;
-      disability = userDcryptedDetails.disability;
-      pan = userDcryptedDetails.pan;
-      prevmbasic = parseInt(userDcryptedDetails.prevmbasic);
-      mbasic = parseInt(userDcryptedDetails.mbasic);
-      addl = parseInt(userDcryptedDetails.addl);
-      ma = parseInt(userDcryptedDetails.ma);
-      gpf = parseInt(userDcryptedDetails.gpf);
-      gsli = parseInt(userDcryptedDetails.gsli);
-      ph = parseInt(userDcryptedDetails.ph);
-      mediclaim = 0;
-      nsc = 0;
-      ppf = 0;
-      lic = 0;
-    }
-  } else {
-    tname = details.tname;
-    fname = details.fname;
-    desig = details.desig;
-    school = details.school;
-    disability = details.disability;
-    pan = details.pan;
-
-    mbasic = parseInt(details.mbasic);
-    prevmbasic = parseInt(details.prevmbasic);
-    addl = parseInt(details.addl);
-    ma = parseInt(details.ma);
-    ph = parseInt(details.ph);
-    !details.gpf ? (gpf = 0) : (gpf = parseInt(details.gpfprev));
-    !details.gsli ? (gsli = 0) : (gsli = parseInt(details.gsli));
-    !details.mediclaim
-      ? (mediclaim = 0)
-      : (mediclaim = parseInt(details.mediclaim));
-    !details.nsc ? (nsc = 0) : (nsc = parseInt(details.nsc));
-    !details.ppf ? (ppf = 0) : (ppf = parseInt(details.ppf));
-    !details.lic ? (lic = 0) : (lic = parseInt(details.lic));
-  }
+  tname = details.tname;
+  fname = details.fname;
+  desig = details.desig;
+  school = details.school;
+  disability = details.disability;
+  pan = details.pan;
+  basic = parseInt(details.basic);
+  mbasic = parseInt(details.mbasic);
+  addl = parseInt(details.addl);
+  ma = parseInt(details.ma);
+  ph = parseInt(details.ph);
+  !details.gpf ? (gpf = 0) : (gpf = parseInt(details.gpf));
+  !details.gsli ? (gsli = 0) : (gsli = parseInt(details.gsli));
+  !details.mediclaim
+    ? (mediclaim = 0)
+    : (mediclaim = parseInt(details.mediclaim));
+  !details.nsc ? (nsc = 0) : (nsc = parseInt(details.nsc));
+  !details.ppf ? (ppf = 0) : (ppf = parseInt(details.ppf));
+  !details.lic ? (lic = 0) : (lic = parseInt(details.lic));
 
   let date = new Date();
 
-  let dapercent = 6 / 100;
-  let hrapercent = 12 / 100;
   let rand = randBetween(1000, 3000);
+
   const year = date.getFullYear();
 
-  da = Math.round(mbasic * dapercent);
-  hra = Math.round(mbasic * hrapercent);
+  da = Math.round(basic * DA);
+  hra = Math.round(basic * HRA);
 
-  gross = mbasic + da + hra + addl + ma;
-  mda = Math.round(prevmbasic * dapercent);
-  mhra = Math.round(prevmbasic * hrapercent);
+  gross = basic + da + hra + addl + ma;
+  mda = Math.round(mbasic * PREVDA);
+  mhra = Math.round(mbasic * HRA);
 
-  mgross = prevmbasic + mda + mhra + addl + ma;
+  mgross = mbasic + mda + mhra + addl + ma;
   let tgross = gross * 8 + mgross * 4;
-
   if (gross > 40000) {
     ptax = 200;
   } else if (gross > 25000) {
@@ -152,10 +121,10 @@ const Form16Prev = () => {
   let tax = less > 0 ? b + roundSo(b * 0.04, 10) : 0;
 
   useEffect(() => {
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
-    document.title = `FORM 16 OF ${tname.toUpperCase()} OF ${school.toUpperCase()}`;
+    document.title = `FORM 16 OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()}`;
   }, []);
   return (
     <Suspense>
@@ -169,7 +138,11 @@ const Form16Prev = () => {
             type="button"
             className="btn btn-primary font-weight-bold  p-2 rounded"
             value="Print Statement"
-            onClick={() => window.print()}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.print();
+              }
+            }}
           />
           <input
             id="printbtn"

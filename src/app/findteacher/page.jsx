@@ -1,58 +1,33 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
-import Loader from "../../components/Loader";
 import DataTable from "react-data-table-component";
 import { useRouter } from "next/navigation";
-import { firestore } from "../../context/FirbaseContext";
-import { collection, getDocs, query } from "firebase/firestore";
 const FindTeacher = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, teachersState } = useGlobalContext();
   const router = useRouter();
-  const [showTable, setShowTable] = useState(false);
   useEffect(() => {
-    if (!access) {
+    if (!state) {
       router.push("/login");
     }
   });
 
   const [search, setSearch] = useState("");
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState(data);
 
-  const userData = async () => {
-    const q = query(collection(firestore, "teachers"));
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    let newData = data.sort(function (a, b) {
-      var nameA = a.school.toLowerCase(),
-        nameB = b.school.toLowerCase();
-      if (nameA < nameB)
-        //sort string ascending
-        return -1;
-      if (nameA > nameB) return 1;
-      return 0; //default return value (no sorting)
-    });
-    setData(newData);
-    setShowTable(true);
-  };
+  const [filteredData, setFilteredData] = useState(
+    teachersState.sort((a, b) => a.school.localeCompare(b.school))
+  );
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Teachers Database";
-    userData();
   }, []);
   useEffect(() => {
     // console.log(data);
-    const result = data.filter((el) => {
-      return el.tname.toLowerCase().match(search.toLowerCase());
+    const result = teachersState.filter((el) => {
+      return el.tname?.toLowerCase().match(search.toLowerCase());
     });
     setFilteredData(result);
-  }, [search, data]);
+  }, [search]);
 
   const columns = [
     {
@@ -77,7 +52,7 @@ const FindTeacher = () => {
     {
       name: "Mobile",
       selector: (row) =>
-        access === "admin" ? (
+        state === "admin" ? (
           <a
             href={`tel: +91${row.phone}`}
             className="d-inline-block mb-2 text-decoration-none text-dark"
@@ -106,31 +81,26 @@ const FindTeacher = () => {
 
   return (
     <div className="container text-center my-5">
-      {showTable ? (
-        <>
-          <h3 className="text-center text-primary">Displaying Teachers Data</h3>
-          <DataTable
-            columns={columns}
-            data={filteredData}
-            pagination
-            highlightOnHover
-            fixedHeader
-            subHeader
-            subHeaderComponent={
-              <input
-                type="text"
-                placeholder="Search"
-                className="form-control"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            }
-            subHeaderAlign="right"
+      <h3 className="text-center text-primary">Displaying Teachers Data</h3>
+      <DataTable
+        columns={columns}
+        data={filteredData}
+        pagination
+        paginationPerPage={30}
+        highlightOnHover
+        fixedHeader
+        subHeader
+        subHeaderComponent={
+          <input
+            type="text"
+            placeholder="Search"
+            className="form-control"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        </>
-      ) : (
-        <Loader />
-      )}
+        }
+        subHeaderAlign="right"
+      />
     </div>
   );
 };

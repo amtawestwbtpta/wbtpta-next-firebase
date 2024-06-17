@@ -27,16 +27,27 @@ import "swiper/css/effect-cube";
 import { EffectCube } from "swiper";
 import { ImSwitch } from "react-icons/im";
 import { decryptObjData, getCookie } from "../../modules/encryption";
+import { v4 as uuid } from "uuid";
+import { round2dec } from "../../modules/calculatefunctions";
 function QuestionSec() {
-  const [docId, setDocId] = useState("");
+  const router = useRouter();
+  const [docId, setDocId] = useState(uuid().split("-")[0]);
   const [serial, setSerial] = useState(0);
   let details = getCookie("tid");
   if (details) {
     details = decryptObjData("tid");
   }
   const questionadmin = details?.question;
-  const { access, setStateArray } = useGlobalContext();
-  const router = useRouter();
+  const {
+    state,
+    questionState,
+    setQuestionState,
+    questionUpdateTime,
+    setQuestionUpdateTime,
+    questionRateState,
+    setQuestionRateState,
+    schoolState,
+  } = useGlobalContext();
 
   const [data, setData] = useState([]);
   const [showSlide, setShowSlide] = useState(false);
@@ -91,15 +102,13 @@ function QuestionSec() {
       id: doc.id,
     }));
     setQData(data);
-    setDocId(`questions${data.length + 101}`);
+    setQuestionState(data);
+    setQuestionUpdateTime(Date.now());
+    setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
     setSerial(data.length + 1);
     setShowSlide(true);
     setData(data);
-    await fetch(
-      "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/schools.json"
-    )
-      .then((res) => res.json())
-      .then((fetchdata) => setSchoolData(fetchdata));
+    setSchoolData(schoolState);
     const q2 = query(collection(firestore, "question_rate"));
 
     const querySnapshot2 = await getDocs(q2);
@@ -109,6 +118,7 @@ function QuestionSec() {
       id: doc.id,
     }));
     setQRateData(data2[0]);
+    setQuestionRateState(data2[0]);
     setQuestionInputField({
       id: data2[0].id,
       question_pp_rate: data2[0].pp_rate,
@@ -127,41 +137,57 @@ function QuestionSec() {
 
   const addSchool = async () => {
     try {
-      await setDoc(doc(firestore, "questions", docId), addInputField);
-      toast.success("School Successfully Added!!!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setAddInputField({
-        id: docId,
-        school: "",
-        gp: "",
-        udise: "",
-        cl_pp_student: 0,
-        cl_1_student: 0,
-        cl_2_student: 0,
-        cl_3_student: 0,
-        cl_4_student: 0,
-        cl_5_student: 0,
-        payment: "Due",
-        paid: 0,
-        total_student: 0,
-        total_rate: 0,
-      });
-      userData();
+      await setDoc(doc(firestore, "questions", docId), addInputField)
+        .then(() => {
+          setQuestionState([...questionState, addInputField]);
+          setQuestionUpdateTime(Date.now());
+          toast.success("School Successfully Added!!!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setAddInputField({
+            id: docId,
+            school: "",
+            gp: "",
+            udise: "",
+            cl_pp_student: 0,
+            cl_1_student: 0,
+            cl_2_student: 0,
+            cl_3_student: 0,
+            cl_4_student: 0,
+            cl_5_student: 0,
+            payment: "Due",
+            paid: 0,
+            total_student: 0,
+            total_rate: 0,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something Went Wrong in Server!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        });
     } catch (e) {
       toast.error("Something Went Wrong in Server!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -171,14 +197,48 @@ function QuestionSec() {
   const updateQuestionStudentValue = async () => {
     try {
       const docRef = doc(firestore, "questions", inputField.id);
-      await updateDoc(docRef, inputField);
-      userData();
+      await updateDoc(docRef, inputField)
+        .then(() => {
+          setQuestionState(
+            questionState.map((el) => {
+              if (el.id === inputField.id) {
+                return inputField;
+              }
+              return el;
+            })
+          );
+          setQuestionUpdateTime(Date.now());
+          toast.success("Data Successfully Updated!!!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Something Went Wrong in Server!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        });
+
       toast.success("Data Successfully Updated!!!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -189,7 +249,7 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -219,13 +279,22 @@ function QuestionSec() {
         term: questionInputField.term,
         year: parseInt(questionInputField.year),
       });
-      userData();
+      setQuestionRateState({
+        pp_rate: parseFloat(questionInputField.question_pp_rate).toFixed(2),
+        i_rate: parseFloat(questionInputField.question_1_rate).toFixed(2),
+        ii_rate: parseFloat(questionInputField.question_2_rate).toFixed(2),
+        iii_rate: parseFloat(questionInputField.question_3_rate).toFixed(2),
+        iv_rate: parseFloat(questionInputField.question_4_rate).toFixed(2),
+        v_rate: parseFloat(questionInputField.question_5_rate).toFixed(2),
+        term: questionInputField.term,
+        year: parseInt(questionInputField.year),
+      });
       toast.success("Data Successfully Updated!!!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -236,26 +305,47 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
         theme: "light",
       });
     }
   };
-  function round2dec(value) {
-    if (value % 1 !== 0) {
-      return Number(Math.round(value + "e" + 2) + "e-" + 2).toFixed(2);
+
+  const getQuestionData = async () => {
+    const difference = (Date.now() - questionUpdateTime) / 1000 / 60 / 15;
+    if (questionState.length === 0 || difference >= 1) {
+      userData();
     } else {
-      return value;
+      const data = questionState;
+      setQData(data);
+      setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
+      setSerial(data.length + 1);
+      setShowSlide(true);
+      setData(data);
+      setSchoolData(schoolState);
+      setQRateData(questionRateState);
+      setQuestionInputField({
+        id: questionRateState.id,
+        question_pp_rate: questionRateState.pp_rate,
+        question_1_rate: questionRateState.i_rate,
+        question_2_rate: questionRateState.ii_rate,
+        question_3_rate: questionRateState.iii_rate,
+        question_4_rate: questionRateState.iv_rate,
+        question_5_rate: questionRateState.v_rate,
+        term: questionRateState.term,
+        year: questionRateState.year,
+      });
     }
-  }
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Section";
-    if (!access && questionadmin !== "admin") {
+    if (!state && questionadmin !== "admin") {
       router.push("/login");
     }
-    userData();
+    getQuestionData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -285,7 +375,7 @@ function QuestionSec() {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -1093,14 +1183,13 @@ function QuestionSec() {
                     if (confmessage) {
                       try {
                         await deleteDoc(doc(firestore, "questions", schId));
-                        userData();
 
                         toast.success("Successfully Deleted School!!!", {
                           position: "top-right",
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-                          pauseOnHover: true,
+
                           draggable: true,
                           progress: undefined,
                           theme: "light",
@@ -1113,7 +1202,7 @@ function QuestionSec() {
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-                          pauseOnHover: true,
+
                           draggable: true,
                           progress: undefined,
                           theme: "light",

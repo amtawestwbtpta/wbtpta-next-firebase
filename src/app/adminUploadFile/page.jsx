@@ -28,7 +28,7 @@ import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 const AdminUploadFile = () => {
-  const { access, setAccess } = useGlobalContext();
+  const { state, setState } = useGlobalContext();
   const router = useRouter();
   const [folder, setFolder] = useState("files");
   const [loader, setLoader] = useState(false);
@@ -44,7 +44,7 @@ const AdminUploadFile = () => {
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Upload Files";
 
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
     // eslint-disable-next-line
@@ -102,7 +102,7 @@ const AdminUploadFile = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -116,7 +116,7 @@ const AdminUploadFile = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -139,7 +139,7 @@ const AdminUploadFile = () => {
       autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+
       draggable: true,
       progress: undefined,
       theme: "light",
@@ -159,7 +159,7 @@ const AdminUploadFile = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -175,7 +175,7 @@ const AdminUploadFile = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -184,7 +184,7 @@ const AdminUploadFile = () => {
   };
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Upload File";
-    if (access !== "admin") {
+    if (state !== "admin") {
       localStorage.clear();
       router.push("/logout");
     }
@@ -204,7 +204,7 @@ const AdminUploadFile = () => {
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
+            pauseOnFocusLoss={false}
             draggable
             pauseOnHover
             theme="light"
@@ -262,7 +262,7 @@ const AdminUploadFile = () => {
                     autoClose: 1500,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
+
                     draggable: true,
                     progress: undefined,
                     theme: "light",
@@ -438,7 +438,7 @@ const AdminUploadFile = () => {
                               autoClose: 1500,
                               hideProgressBar: false,
                               closeOnClick: true,
-                              pauseOnHover: true,
+
                               draggable: true,
                               progress: undefined,
                               theme: "light",

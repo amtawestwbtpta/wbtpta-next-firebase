@@ -17,6 +17,8 @@ import {
   funcmhra,
   gross,
   netpay,
+  getCurrentDateInput,
+  getSubmitDateInput,
   getSubmitDateSlashInput,
 } from "../../modules/calculatefunctions";
 import { DA, HRA } from "../../modules/constants";
@@ -24,29 +26,24 @@ import { DA, HRA } from "../../modules/constants";
 import { v4 as uuid } from "uuid";
 
 const AddTeacher = () => {
-  const { access } = useGlobalContext();
   const router = useRouter();
+  const {
+    state,
+    teachersState,
+    schoolState,
+    setTeachersState,
+    setTeacherUpdateTime,
+  } = useGlobalContext();
   const [data, setData] = useState([]);
   const [teacherId, setTeacherId] = useState("");
   const [teachersData, setTeachersData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [loader, setLoader] = useState(false);
   const sch_search = async (e) => {
-    await fetch(
-      "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/schools.json"
-    )
-      .then((res) => res.json())
-      .then((fetchdata) => setData(fetchdata));
-    const q = query(collection(firestore, "teachers"));
-    const querySnapshot = await getDocs(q);
-    const datas = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setTeachersData(datas);
+    setData(schoolState);
+    setTeachersData(teachersState);
     setTeacherId(
-      "teachers" + (datas.length + 101) + "-" + uuid().split("-")[0]
+      "teachers" + (teachersState.length + 101) + "-" + uuid().split("-")[0]
     );
   };
   const [inputField, setInputField] = useState({
@@ -97,6 +94,7 @@ const AddTeacher = () => {
     hoi: "",
     service: "inservice",
     id: "",
+    dataYear: new Date().getFullYear(),
   });
   const [errField, setErrField] = useState({
     errschool: "",
@@ -134,62 +132,45 @@ const AddTeacher = () => {
     errservice: "",
   });
   const ifsc_ser = (ifsc) => {
-    if (typeof window !== "undefined") {
-      // browser code
-      if (ifsc.length === 11) {
-        fetch(`https://ifsc.razorpay.com/${ifsc}`)
-          .then((res) => res.json())
-          .then((data) => {
-            document.getElementById("bankdiv").innerHTML =
-              "<p>Bank Details<br>Bank Name: " +
-              data.BANK +
-              "<br/>" +
-              "Branch: " +
-              data.BRANCH +
-              "<br/>" +
-              "Address: " +
-              data.ADDRESS +
-              "<br/>" +
-              "IFSC: " +
-              data.IFSC +
-              "<br/>" +
-              "MICR: " +
-              data.MICR +
-              "<br/></p>";
-          });
-      } else {
-        document.getElementById("bankdiv").innerHTML = "";
-      }
+    if (ifsc.length === 11) {
+      fetch(`https://ifsc.razorpay.com/${ifsc}`)
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("bankdiv").innerHTML =
+            "<p>Bank Details<br>Bank Name: " +
+            data.BANK +
+            "<br/>" +
+            "Branch: " +
+            data.BRANCH +
+            "<br/>" +
+            "Address: " +
+            data.ADDRESS +
+            "<br/>" +
+            "IFSC: " +
+            data.IFSC +
+            "<br/>" +
+            "MICR: " +
+            data.MICR +
+            "<br/></p>";
+        });
+    } else {
+      document.getElementById("bankdiv").innerHTML = "";
     }
   };
   const formHandler = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
-  let getCurrentDateInput = (date) => {
-    let data = date.split("-");
-    let day = data[0];
-    let month = data[1];
-    let year = data[2];
-    return `${year}-${month}-${day}`;
-  };
-  let getSubmitDateInput = (date) => {
-    let data = date.split("-");
-    let day = data[2];
-    let month = data[1];
-    let year = data[0];
-    return `${day}-${month}-${year}`;
-  };
 
   const julyBasicPay = (junebasic) => {
     if (junebasic >= 24000) {
-      return RoundTo(junebasic + junebasic * DA);
+      return RoundTo(junebasic + junebasic * 0.03, 100);
     } else {
       return 0;
     }
   };
   const prevmbasic = (junebasic) => {
     if (junebasic >= 24000) {
-      return RoundTo(junebasic - junebasic * DA);
+      return RoundTo(junebasic - junebasic * 0.03, 100);
     } else {
       return 0;
     }
@@ -437,6 +418,19 @@ const AddTeacher = () => {
         setLoader(true);
 
         await setDoc(doc(firestore, "teachers", teacherId), inputField);
+        let x = teachersState;
+        x = [...x, inputField];
+        let newData = x.sort(function (a, b) {
+          var nameA = a.school.toLowerCase(),
+            nameB = b.school.toLowerCase();
+          if (nameA < nameB)
+            //sort string ascending
+            return -1;
+          if (nameA > nameB) return 1;
+          return 0; //default return value (no sorting)
+        });
+        setTeachersState(newData);
+        setTeacherUpdateTime(Date.now());
         setLoader(false);
         toast.success(
           `Congratulation ${inputField.tname} Successfully Registered!`,
@@ -445,14 +439,14 @@ const AddTeacher = () => {
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+
             draggable: true,
             progress: undefined,
             theme: "light",
           }
         );
         setTimeout(() => {
-          router.push("/teacherdatabase");
+          navigate("/teacherdatabase");
         }, 1500);
       } catch (e) {
         setLoader(false);
@@ -462,7 +456,7 @@ const AddTeacher = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -555,7 +549,7 @@ const AddTeacher = () => {
     sch_search();
   }, []);
   useEffect(() => {
-    if (access !== "admin") {
+    if (state !== "admin") {
       router.push("/login");
     }
   }, []);
@@ -569,7 +563,7 @@ const AddTeacher = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="light"
@@ -864,12 +858,13 @@ const AddTeacher = () => {
                       id="doj"
                       name="doj"
                       placeholder="Date Of Joining"
-                      defaultValue={getCurrentDateInput(inputField.doj)}
+                      defaultValue={inputField.doj}
                       onChange={(e) => {
                         setInputField({
                           ...inputField,
                           doj: getSubmitDateInput(e.target.value),
                         });
+                        console.log(e.target.value);
                       }}
                     />
                   </div>
@@ -883,7 +878,7 @@ const AddTeacher = () => {
                       id="dojnow"
                       name="dojnow"
                       placeholder="Date Of Joining"
-                      defaultValue={getCurrentDateInput(inputField.dojnow)}
+                      defaultValue={inputField.dojnow}
                       onChange={(e) => {
                         setInputField({
                           ...inputField,
