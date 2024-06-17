@@ -3,17 +3,13 @@ import React, { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 
-import { decryptObjData } from "../../modules/encryption";
-
-import { useSearchParams } from "next/navigation";
-
 const TeacherPhotoCorner = () => {
   const { state, stateArray } = useGlobalContext();
   const router = useRouter();
 
   let teacherData = stateArray.sort((a, b) => b.desig.localeCompare(a.desig));
 
-  let school = teacherData[0].school;
+  let school = teacherData[0]?.school;
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Teacher's Photo Corner";
     if (!state) {

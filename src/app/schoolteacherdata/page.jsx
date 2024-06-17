@@ -14,6 +14,7 @@ const page = () => {
     setSchoolState,
     teachersState,
     setSchoolUpdateTime,
+    setStateArray,
   } = useGlobalContext();
   const router = useRouter();
 
@@ -169,6 +170,9 @@ const page = () => {
               defaultValue={""}
               onChange={(e) => {
                 setFilteredData(
+                  teacherData.filter((el) => el.udise.match(e.target.value))
+                );
+                setStateArray(
                   teacherData.filter((el) => el.udise.match(e.target.value))
                 );
 
@@ -630,7 +634,7 @@ const page = () => {
           </div>
         </>
       ) : (
-        <TechSalary data={filteredData} />
+        <TechSalary />
       )}
     </div>
   );

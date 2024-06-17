@@ -4,28 +4,17 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { Loader } from "rsuite";
 import Link from "next/link";
-import { firestore } from "../../context/FirbaseContext";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { decryptObjData, getCookie } from "../../modules/encryption";
+import { decryptObjData } from "../../modules/encryption";
 import { DA, HRA } from "../../modules/constants";
 import { GetMonthName } from "../../modules/calculatefunctions";
-const TechSalary = (props) => {
-  const data = props.data;
-  const { state, setStateArray, teachersState, setStateObject } =
+const TechSalary = () => {
+  const { state, stateArray, setStateArray, teachersState, setStateObject } =
     useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
-  let udise;
-  let school;
-  let userDcryptedDetails;
-  if (!data) {
-    userDcryptedDetails = decryptObjData("tid");
-    udise = userDcryptedDetails.udise;
-    school = userDcryptedDetails.school;
-  } else {
-    udise = data[0].udise;
-    school = data[0].school;
-  }
+  let udise = stateArray[0]?.udise;
+  let school = stateArray[0]?.school;
+
   const [showTable, setShowTable] = useState(false);
 
   const userData = async () => {

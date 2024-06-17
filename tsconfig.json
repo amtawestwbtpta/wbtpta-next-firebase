@@ -23,7 +23,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/login/page.jsx"
+    "src/app/login/page.jsx",
+    "src/app/techsalary/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
