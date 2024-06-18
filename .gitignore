@@ -37,3 +37,8 @@ next-env.d.ts
 
 # environment
 .env
+service_key.json
+uploader.js
+upload.bat
+databases
+files

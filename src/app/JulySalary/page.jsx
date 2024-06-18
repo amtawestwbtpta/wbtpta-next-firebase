@@ -9,11 +9,16 @@ const JulySalary = () => {
   const [data, setData] = useState(teachersState);
   const [isclicked, setIsclicked] = useState(false);
   useEffect(() => {
-    if (!state) {
-      router.push("/login");
+    if (state !== "admin") {
+      navigate("/logout");
     }
     document.title = "WBTPTA AMTA WEST:All Teacher July Salary Data";
-  }, []);
+    !isclicked
+      ? (document.title = "WBTPTA AMTA WEST:All Teacher's July Salary Data")
+      : (document.title =
+          "WBTPTA AMTA WEST:All WBTPTA Teacher's July Salary Data");
+    //eslint-disable-next-line
+  }, [isclicked]);
 
   return (
     <div>
@@ -32,7 +37,7 @@ const JulySalary = () => {
         <button
           type="button"
           className="btn btn-primary btn-sm noprint m-3"
-          onClick={() => router.back()}
+          onClick={() => navigate(-1)}
         >
           Go Back
         </button>
@@ -62,7 +67,9 @@ const JulySalary = () => {
           </button>
         )}
         <h3 className="text-center text-primary mb-3">
-          All Teacher July Salary Data
+          {!isclicked
+            ? " All Teacher's July Salary Data"
+            : "All WBTPTA Teacher's July Salary Data"}
         </h3>
         <table className="table table-responsive table-bordered table-striped text-center text-black">
           <thead>
@@ -118,7 +125,7 @@ const JulySalary = () => {
         <button
           type="button"
           className="btn btn-primary btn-sm noprint m-3"
-          onClick={() => router.back()}
+          onClick={() => navigate(-1)}
         >
           Go Back
         </button>
