@@ -1,34 +1,41 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { NumInWords, round2dec } from "../../modules/calculatefunctions";
 const PrintQuestionInvoice = () => {
-  const { state, setState } = useGlobalContext();
   const router = useRouter();
-
-  const searchParams = useSearchParams();
-
-  let sl = searchParams.get("sl");
-  let school = searchParams.get("school");
-  let gp = searchParams.get("gp");
-  let cl_pp_student = searchParams.get("cl_pp_student");
-  let cl_1_student = searchParams.get("cl_1_student");
-  let cl_2_student = searchParams.get("cl_2_student");
-  let cl_3_student = searchParams.get("cl_3_student");
-  let cl_4_student = searchParams.get("cl_4_student");
-  let cl_5_student = parseInt(searchParams.get("cl_5_student"));
-  let total_student = searchParams.get("total_student");
-  let pp_rate = searchParams.get("pp_rate");
-  let i_rate = searchParams.get("i_rate");
-  let ii_rate = searchParams.get("ii_rate");
-  let iii_rate = searchParams.get("iii_rate");
-  let iv_rate = searchParams.get("iv_rate");
-  let v_rate = searchParams.get("v_rate");
-  let term = searchParams.get("term");
-  let year = searchParams.get("year");
+  const { state, stateObject, questionRateState } = useGlobalContext();
+  const [allData, setAllData] = useState({});
+  const [qRate, setQRate] = useState({
+    pp_rate: "",
+    i_rate: "",
+    ii_rate: "",
+    iii_rate: "",
+    iv_rate: "",
+    v_rate: "",
+    term: "",
+    year: "",
+  });
+  let sl = allData.sl;
+  let school = allData.school;
+  let gp = allData.gp;
+  let cl_pp_student = allData.cl_pp_student;
+  let cl_1_student = allData.cl_1_student;
+  let cl_2_student = allData.cl_2_student;
+  let cl_3_student = allData.cl_3_student;
+  let cl_4_student = allData.cl_4_student;
+  let cl_5_student = parseInt(allData.cl_5_student);
+  let total_student = allData.total_student;
+  let pp_rate = qRate.pp_rate;
+  let i_rate = qRate.i_rate;
+  let ii_rate = qRate.ii_rate;
+  let iii_rate = qRate.iii_rate;
+  let iv_rate = qRate.iv_rate;
+  let v_rate = qRate.v_rate;
+  let term = qRate.term;
+  let year = qRate.year;
   let cl_pp_rate = round2dec(cl_pp_student * pp_rate);
   let cl_1_rate = round2dec(cl_1_student * i_rate);
   let cl_2_rate = round2dec(cl_2_student * ii_rate);
@@ -45,10 +52,12 @@ const PrintQuestionInvoice = () => {
   );
   useEffect(() => {
     document.title = `Question Invoice of ${school}`;
+    setAllData(stateObject);
+    setQRate(questionRateState);
     if (!state) {
       router.push("/login");
     }
-  }, []);
+  }, [stateObject, questionRateState]);
   return (
     <Suspense>
       <div className="container times text-black my-5">
@@ -80,7 +89,7 @@ const PrintQuestionInvoice = () => {
               <th style={{ border: ".5px solid" }}>SL</th>
               <th style={{ border: ".5px solid" }}>{sl}</th>
               <th style={{ border: ".5px solid" }}>SCHOOL NAME</th>
-              <th style={{ border: ".5px solid" }}>{school.toUpperCase()}</th>
+              <th style={{ border: ".5px solid" }}>{school?.toUpperCase()}</th>
               <th style={{ border: ".5px solid" }}>GP</th>
               <th style={{ border: ".5px solid" }} colSpan="2">
                 {gp}

@@ -1,9 +1,9 @@
 @media print {
-    @media (orientation: portrait) {
-        body {
-            flex-direction: column;
-        }
+  @media (orientation: portrait) {
+    body {
+      flex-direction: column;
     }
+  }
 }
 
 /* table,
@@ -14,5 +14,5 @@ td {
 } */
 
 p {
-    margin: 0;
+  margin: 0;
 }

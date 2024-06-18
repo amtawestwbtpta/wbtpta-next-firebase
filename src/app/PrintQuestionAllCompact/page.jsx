@@ -60,7 +60,7 @@ const PrintQuestionAll = () => {
             Go Back
           </button>
         </div>
-        <table className="table table-resposive table-bordered border-dark border-1">
+        <table className="table table-resposive table-bordered border-dark border-1 text-center">
           <tbody>
             {allData.map((el, ind) => {
               let total_rate = Math.round(
@@ -76,7 +76,7 @@ const PrintQuestionAll = () => {
                 <tr
                   key={ind}
                   style={{ verticalAlign: "middle", height: "100px" }}
-                  className="timesFont"
+                  className="timesFont bordered"
                 >
                   <td style={{ textAlign: "center" }}>Sl: {ind + 1}</td>
                   <td style={{ textAlign: "center" }}>
@@ -107,38 +107,49 @@ const PrintQuestionAll = () => {
                   </td>
 
                   <td style={{ textAlign: "center" }}>GP: {el.gp}</td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     PP: {el.cl_pp_student}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     CLASS I: {el.cl_1_student}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     CLASS II: {el.cl_2_student}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     CLASS III: {el.cl_3_student}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     CLASS IV: {el.cl_4_student}
                   </td>
                   {parseInt(el.cl_5_student) !== 0 ? (
-                    <td style={{ textAlign: "center" }}>
+                    <td style={{ textAlign: "center", border: 0 }}>
                       CLASS V: {el.cl_5_student}
                     </td>
                   ) : null}
 
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", border: 0 }}>
                     Total Students: {el.total_student}
                   </td>
                   {parseInt(el.cl_5_student) !== 0 ? (
-                    <td style={{ textAlign: "center" }}>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        border: 0,
+                      }}
+                    >
                       Total Amount: <i className="bi bi-currency-rupee"></i>
                       {total_rate}
                       <br /> (Rupees {NumInWords(total_rate)} Only)
                     </td>
                   ) : (
-                    <td colSpan={2} style={{ textAlign: "center" }}>
+                    <td
+                      colSpan={2}
+                      style={{
+                        textAlign: "center",
+                        border: 0,
+                      }}
+                    >
                       Total Amount: <i className="bi bi-currency-rupee"></i>
                       {total_rate}
                       <br /> ( Rupees {NumInWords(total_rate)} Only )

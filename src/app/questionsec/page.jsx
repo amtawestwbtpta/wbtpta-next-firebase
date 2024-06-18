@@ -48,6 +48,7 @@ function QuestionSec() {
     setQuestionRateState,
     schoolState,
     setStateArray,
+    setStateObject,
   } = useGlobalContext();
 
   const [data, setData] = useState([]);
@@ -1169,7 +1170,10 @@ function QuestionSec() {
               <td>
                 <Link
                   className="btn btn-sm m-1 btn-info"
-                  href={`/printquestioninvoice?sl=${selectedSchool.sl}&school=${selectedSchool.school}&gp=${selectedSchool.gp}&cl_pp_student=${selectedSchool.cl_pp_student}&cl_1_student=${selectedSchool.cl_1_student}&cl_2_student=${selectedSchool.cl_2_student}&cl_2_student=${selectedSchool.cl_2_student}&cl_3_student=${selectedSchool.cl_3_student}&cl_4_student=${selectedSchool.cl_4_student}&cl_5_student=${selectedSchool.cl_5_student}&total_student=${selectedSchool.total_student}&pp_rate=${qRateData.pp_rate}&i_rate=${qRateData.i_rate}&ii_rate=${qRateData.ii_rate}&iii_rate=${qRateData.iii_rate}&iv_rate=${qRateData.iv_rate}&v_rate=${qRateData.v_rate}&term=${qRateData.term}&year=${qRateData.year}`}
+                  href={`/printquestioninvoice`}
+                  onClick={() => {
+                    setStateObject(selectedSchool);
+                  }}
                 >
                   Print Invoice
                 </Link>
