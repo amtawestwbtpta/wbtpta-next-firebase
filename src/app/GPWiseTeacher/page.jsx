@@ -17,9 +17,7 @@ export default function GPWiseTeacher() {
 
   const userData = async () => {
     let x = teachersState;
-    x = x.sort(
-      (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
-    );
+    x = x.sort((a, b) => a.school.localeCompare(b.school) && b.rank > a.rank);
     setTeacherData(x);
   };
   useEffect(() => {

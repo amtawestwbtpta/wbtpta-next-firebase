@@ -87,7 +87,7 @@ const TeacherDatabase = () => {
   const userData = async () => {
     setLoader(true);
     let newDatas = teachersState.sort(
-      (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+      (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
     );
     setData(newDatas);
     setLoader(false);
@@ -436,7 +436,7 @@ const TeacherDatabase = () => {
       let x = teachersState.filter((el) => el.id !== updId);
       x = [...x, inputField];
       const newData = x.sort(
-        (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+        (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
       );
       setTeachersState(newData);
       setTeacherUpdateTime(Date.now());
@@ -589,8 +589,7 @@ const TeacherDatabase = () => {
             let x = teachersState;
             x = [...x, el];
             const newData = x.sort(
-              (a, b) =>
-                a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+              (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
             );
             setTeachersState(newData);
             setTeacherUpdateTime(Date.now());

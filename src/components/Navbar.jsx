@@ -68,7 +68,7 @@ const Navbar = () => {
       id: doc.id,
     }));
     let newDatas = datas.sort(
-      (a, b) => a.school.localeCompare(b.school) || b.hoi.localeCompare(a.hoi)
+      (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
     );
     setTeachersState(newDatas);
     setTeacherUpdateTime(Date.now());
