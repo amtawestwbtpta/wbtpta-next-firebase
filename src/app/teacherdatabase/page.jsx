@@ -525,15 +525,9 @@ const TeacherDatabase = () => {
     await deleteDoc(docRef)
       .then(async () => {
         let x = teachersState.filter((elem) => elem.id !== el.id);
-        const newData = x.sort(function (a, b) {
-          let nameA = a.school.toLowerCase(),
-            nameB = b.school.toLowerCase();
-          if (nameA < nameB)
-            //sort string ascending
-            return -1;
-          if (nameA > nameB) return 1;
-          return 0; //default return value (no sorting)
-        });
+        const newData = x.sort(
+          (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
+        );
         setTeachersState(newData);
         setTeacherUpdateTime(Date.now());
         setFilteredData(newData);
@@ -741,15 +735,10 @@ const TeacherDatabase = () => {
                       (el) => el.id !== techerData.id
                     );
                     y = [...y, x];
-                    const newData = y.sort(function (a, b) {
-                      let nameA = a.school.toLowerCase(),
-                        nameB = b.school.toLowerCase();
-                      if (nameA < nameB)
-                        //sort string ascending
-                        return -1;
-                      if (nameA > nameB) return 1;
-                      return 0; //default return value (no sorting)
-                    });
+                    const newData = y.sort(
+                      (a, b) =>
+                        a.school.localeCompare(b.school) && b.rank > a.rank
+                    );
                     setTeachersState(newData);
                     setTeacherUpdateTime(Date.now());
                     setData(newData);

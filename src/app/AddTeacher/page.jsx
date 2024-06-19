@@ -96,6 +96,7 @@ const AddTeacher = () => {
     hoi: "",
     service: "inservice",
     id: "",
+    rank: 3,
     dataYear: new Date().getFullYear(),
   });
   const [errField, setErrField] = useState({
@@ -1198,6 +1199,10 @@ const AddTeacher = () => {
                             .toUpperCase()
                             .match(inputField.tname.toUpperCase())
                         );
+                        let totalTeachers = teachersData.filter(
+                          (el) => el.udise === inputField.udise
+                        ).length;
+
                         if (filteredData.length > 0) {
                           setInputField({
                             ...inputField,
@@ -1231,6 +1236,7 @@ const AddTeacher = () => {
                               inputField.gpf,
                               inputField.gsli
                             ),
+                            rank: totalTeachers + 1,
                             netpayword: NumInWords(
                               inputField.basic +
                                 inputField.addl +
@@ -1277,6 +1283,7 @@ const AddTeacher = () => {
                             jptax: ptaxCalc(
                               gross(inputField.basic, inputField.addl)
                             ),
+                            rank: totalTeachers + 1,
                             netpayword: NumInWords(
                               inputField.basic +
                                 inputField.addl +
