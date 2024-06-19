@@ -16,60 +16,56 @@ const ViewDetails = () => {
     }
   }, []);
 
-  const details = stateObject;
-
-  // let id = details.id;
-  // let circle = details.circle;
-  // let sl = details.sl;
-  let udise = details.udise;
-  // let tsname = details.tsname;
-  let tname = details.tname;
-  let desig = details.desig;
-  let school = details.school;
-  let disability = details.disability;
-  // let sis = details.sis;
-  let gp = details.gp;
-  // let association = details.association;
-  let phone = details.phone;
-  let email = details.email;
-  let dob = details.dob;
-  let doj = details.doj;
-  let dojnow = details.dojnow;
-  let dor = details.dor;
-  let bank = details.bank;
-  let account = details.account;
-  let ifsc = details.ifsc;
-  let empid = details.empid;
-  let training = details.training;
-  let pan = details.pan;
-
-  let address = details.address;
-  let basic = details.basic;
-  let mbasic = details.mbasic;
-  let addl = details.addl;
-  let da = details.da;
-  let hra = details.hra;
-  let ma = details.ma;
-  let gross = details.gross;
-  let gpf = details.gpf;
-  let ptax = details.ptax;
-  let gsli = details.gsli;
-  let fname = details.fname;
-  let question = details.question;
-  let hoi = details.hoi;
+  let details = stateObject;
+  let {
+    udise,
+    tname,
+    desig,
+    school,
+    disability,
+    gp,
+    phone,
+    email,
+    dob,
+    doj,
+    dojnow,
+    dor,
+    bank,
+    account,
+    ifsc,
+    empid,
+    training,
+    pan,
+    address,
+    basic,
+    mbasic,
+    addl,
+    ma,
+    gpf,
+    gsli,
+    fname,
+    question,
+    hoi,
+    dataYear,
+  } = details;
 
   let date = new Date();
-  let basicpay, netpay;
+  let basicpay;
+  let ptax;
   let junelast = new Date(`${date.getFullYear()}-07-31`);
-  if (date >= junelast) {
-    basicpay = basic;
+  if (dataYear === new Date().getFullYear()) {
+    if (date >= junelast) {
+      basicpay = basic;
+    } else {
+      basicpay = mbasic;
+    }
   } else {
-    basicpay = mbasic;
+    basicpay = basic;
   }
-  da = Math.round(basicpay * DA);
-  hra = Math.round(basicpay * HRA);
+  let da = Math.round(basicpay * DA);
+  let hra = Math.round(basicpay * HRA);
 
-  gross = basicpay + da + hra + addl + ma;
+  let gross = basicpay + da + hra + addl + ma;
 
   if (gross > 40000) {
     ptax = 200;
@@ -89,9 +85,34 @@ const ViewDetails = () => {
 
   let deduction = gsli + gpf + ptax;
 
-  netpay = gross - deduction;
+  let netpay = gross - deduction;
+  const ifsc_ser = () => {
+    fetch(`https://ifsc.razorpay.com/${ifsc}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof window !== undefined) {
+          document.getElementById("ifsc").innerHTML =
+            "<P>Bank Details<br>Bank Name: " +
+            data.BANK +
+            "<br/>" +
+            "Branch: " +
+            data.BRANCH +
+            "<br/>" +
+            "Address: " +
+            data.ADDRESS +
+            "<br/>" +
+            "IFSC: " +
+            data.IFSC +
+            "<br/>" +
+            "MICR: " +
+            data.MICR +
+            "<br/></p>";
+        }
+      });
+  };
   useEffect(() => {
-    document.title = "WBTPTA AMTA WEST:Teacher's Details";
+    ifsc_ser();
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="container my-5 text-center d-flex flex-column justify-content-center">
@@ -283,15 +304,10 @@ const ViewDetails = () => {
           </div>
         </div>
 
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>IFS Code: </label>
-          </div>
-          <div>
-            <p>{ifsc}</p>
-            <p id="ifsc" className="text-wrap"></p>
-          </div>
-        </div>
+        <div
+          className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2"
+          id="ifsc"
+        ></div>
 
         <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
           <div>
@@ -394,7 +410,7 @@ const ViewDetails = () => {
         {question === "admin" ? (
           <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
             <div>
-              <label>Question state: </label>
+              <label>Question Access: </label>
             </div>
             <div>
               <p>{question}</p>
