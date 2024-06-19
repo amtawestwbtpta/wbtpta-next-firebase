@@ -145,7 +145,7 @@ const UpdateUP = () => {
           theme: "light",
         });
         setTimeout(() => {
-          navigate("/logout");
+          router.push("/logout");
         }, 1500);
       }
     }

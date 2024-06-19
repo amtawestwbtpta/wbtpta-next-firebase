@@ -36,6 +36,7 @@ const TeacherDatabase = () => {
     setTeachersState,
     setStateObject,
     setTeacherUpdateTime,
+    setStateArray,
   } = useGlobalContext();
   const router = useRouter();
   const [showTable, setShowTable] = useState(false);

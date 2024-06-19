@@ -82,10 +82,12 @@ const AddTeacher = () => {
     ma: 500,
     gross: 0,
     mgross: 0,
+    mptax: 0,
     gpf: 0,
     gpfprev: 0,
     ptax: 150,
     gsli: 0,
+    jptax: 0,
     netpay: 0,
     mnetpay: 0,
     bonus: 0,
@@ -446,7 +448,7 @@ const AddTeacher = () => {
           }
         );
         setTimeout(() => {
-          navigate("/teacherdatabase");
+          router.push("/teacherdatabase");
         }, 1500);
       } catch (e) {
         setLoader(false);
@@ -1208,7 +1210,13 @@ const AddTeacher = () => {
                             hra: funchra(inputField.mbasic),
                             mhra: funcmhra(inputField.mbasic),
                             mgross: gross(inputField.mbasic, inputField.addl),
-                            gross: gross(inputField.mbasic, inputField.addl),
+                            gross: gross(inputField.basic, inputField.addl),
+                            mptax: ptaxCalc(
+                              gross(inputField.mbasic, inputField.addl)
+                            ),
+                            jptax: ptaxCalc(
+                              gross(inputField.basic, inputField.addl)
+                            ),
                             netpay: netpay(
                               inputField.basic,
                               inputField.addl,
@@ -1234,11 +1242,7 @@ const AddTeacher = () => {
                                 (inputField.ph === 0
                                   ? 0
                                   : ptaxCalc(
-                                      inputField.basic +
-                                        inputField.addl +
-                                        inputField.basic * DA +
-                                        inputField.basic * HRA +
-                                        inputField.ma
+                                      gross(inputField.mbasic, inputField.addl)
                                     ))
                             ),
                           });
@@ -1252,7 +1256,7 @@ const AddTeacher = () => {
                             hra: funchra(inputField.mbasic),
                             mhra: funcmhra(inputField.mbasic),
                             mgross: gross(inputField.mbasic, inputField.addl),
-                            gross: gross(inputField.mbasic, inputField.addl),
+                            gross: gross(inputField.basic, inputField.addl),
                             netpay: netpay(
                               inputField.basic,
                               inputField.addl,
@@ -1267,6 +1271,12 @@ const AddTeacher = () => {
                               inputField.gpf,
                               inputField.gsli
                             ),
+                            mptax: ptaxCalc(
+                              gross(inputField.mbasic, inputField.addl)
+                            ),
+                            jptax: ptaxCalc(
+                              gross(inputField.basic, inputField.addl)
+                            ),
                             netpayword: NumInWords(
                               inputField.basic +
                                 inputField.addl +
@@ -1278,11 +1288,7 @@ const AddTeacher = () => {
                                 (inputField.ph === 0
                                   ? 0
                                   : ptaxCalc(
-                                      inputField.basic +
-                                        inputField.addl +
-                                        inputField.basic * DA +
-                                        inputField.basic * HRA +
-                                        inputField.ma
+                                      gross(inputField.mbasic, inputField.addl)
                                     ))
                             ),
                           });

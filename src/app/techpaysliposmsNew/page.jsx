@@ -160,20 +160,23 @@ const PaySlipOsmsNew = () => {
             color: "#000",
           }}
         >
-          <div class="main" style={{ zoom: "1.3" }}>
+          <div ClassName="main" style={{ zoom: "1.3" }}>
             <div
-              class="top"
+              ClassName="top"
               style={{ fontSize: "smaller", margin: "10px auto" }}
             >
               <div>
                 <img
-                  class="img2"
+                  ClassName="img2"
                   src="https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=f21c8d21-ac4e-4f2e-b416-2064d91ffe4f"
                   style={{ position: "absolute", width: 80, left: 10 }}
                   alt="OSMS LOGO"
                 />
               </div>
-              <div class="heading" style={{ margin: "auto", width: "100%" }}>
+              <div
+                ClassName="heading"
+                style={{ margin: "auto", width: "100%" }}
+              >
                 <h5 style={{ textAlign: "center", marginLeft: -54 }}>
                   GOVT. OF WEST BENGAL
                 </h5>
@@ -209,7 +212,7 @@ const PaySlipOsmsNew = () => {
             </button>
 
             <div
-              class="details"
+              ClassName="details"
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -242,7 +245,7 @@ const PaySlipOsmsNew = () => {
                 </p>
               </div>
               <div
-                class="idDiv"
+                ClassName="idDiv"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -265,7 +268,7 @@ const PaySlipOsmsNew = () => {
             </div>
 
             <table
-              class="myTable"
+              ClassName="myTable"
               style={{
                 border: "1px solid",
                 fontSize: "0.9rem",
@@ -638,7 +641,7 @@ const PaySlipOsmsNew = () => {
             </table>
           </div>
           <div
-            class="disclaimer"
+            ClassName="disclaimer"
             style={{ margin: "50px auto 300px 2px", textAlign: "left" }}
           >
             <p style={{ margin: "10px" }}>
@@ -654,7 +657,7 @@ const PaySlipOsmsNew = () => {
             </p>
           </div>
           <div
-            class="disclaimer2"
+            ClassName="disclaimer2"
             style={{ margin: "20px auto 10px 10px", textAlign: "left" }}
           >
             <p>
@@ -663,7 +666,7 @@ const PaySlipOsmsNew = () => {
             </p>
           </div>
           <div
-            class="hr"
+            ClassName="hr"
             style={{
               height: 2,
               borderTop: "0.5px solid",
@@ -672,7 +675,7 @@ const PaySlipOsmsNew = () => {
             }}
           ></div>
           <div
-            class="footer"
+            ClassName="footer"
             style={{
               margin: "auto",
               width: "100%",

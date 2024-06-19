@@ -34,15 +34,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
+        class={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
       >
         <div
-          className="alert alert-success alert-dismissible fade show"
+          class="alert alert-success alert-dismissible fade show"
           role="alert"
         >
           <strong>To download Our Android App Click</strong>{" "}
           <a
-            className="d-inline-block text-decoration-none fw-bold"
+            class="d-inline-block text-decoration-none fw-bold"
             href="https://drive.google.com/drive/folders/1QQzBMJjI_MXTKxP3_ayTo7QflGD0vbVP?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"

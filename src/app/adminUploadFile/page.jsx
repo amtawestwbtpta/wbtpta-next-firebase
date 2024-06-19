@@ -389,7 +389,7 @@ const AdminUploadFile = () => {
               </div>
             ) : null}
             <div
-              class="modal fade"
+              ClassName="modal fade"
               id="staticBackdrop"
               data-bs-backdrop="static"
               data-bs-keyboard="false"
@@ -397,15 +397,15 @@ const AdminUploadFile = () => {
               aria-labelledby="staticBackdropLabel"
               aria-hidden="true"
             >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              <div ClassName="modal-dialog">
+                <div ClassName="modal-content">
+                  <div ClassName="modal-header">
+                    <h1 ClassName="modal-title fs-5" id="staticBackdropLabel">
                       Edit File Name
                     </h1>
                     <button
                       type="button"
-                      class="btn-close"
+                      ClassName="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                       onClick={() => {
@@ -414,7 +414,7 @@ const AdminUploadFile = () => {
                       }}
                     ></button>
                   </div>
-                  <div class="modal-body">
+                  <div ClassName="modal-body">
                     <div className="mb-3">
                       <input
                         type="text"
@@ -450,7 +450,7 @@ const AdminUploadFile = () => {
                       </button>
                       <button
                         type="button"
-                        class="btn btn-danger  mx-3"
+                        ClassName="btn btn-danger  mx-3"
                         data-bs-dismiss="modal"
                         onClick={() => {
                           setEditFileId("");

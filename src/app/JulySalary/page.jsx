@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
+import { DA, HRA } from "../../modules/constants";
 
 const JulySalary = () => {
   const router = useRouter();
@@ -10,7 +11,7 @@ const JulySalary = () => {
   const [isclicked, setIsclicked] = useState(false);
   useEffect(() => {
     if (state !== "admin") {
-      navigate("/logout");
+      router.push("/logout");
     }
     document.title = "WBTPTA AMTA WEST:All Teacher July Salary Data";
     !isclicked
@@ -37,7 +38,7 @@ const JulySalary = () => {
         <button
           type="button"
           className="btn btn-primary btn-sm noprint m-3"
-          onClick={() => navigate(-1)}
+          onClick={() => router.back()}
         >
           Go Back
         </button>
@@ -91,24 +92,47 @@ const JulySalary = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((el, ind) => (
-              <tr key={ind}>
-                <td>{ind + 1}</td>
-                <td>{el.tname}</td>
-                <td>{el.school}</td>
-                <td>{el.desig}</td>
-                <td>{el.basic}</td>
-                <td>{el.da}</td>
-                <td>{el.hra}</td>
-                <td>{el.addl}</td>
-                <td>{el.ma}</td>
-                <td>{el.gross}</td>
-                <td>{el.gpf}</td>
-                <td>{el.gsli}</td>
-                <td>{el.ptax}</td>
-                <td>{el.netpay}</td>
-              </tr>
-            ))}
+            {data.map((el, ind) => {
+              let basic = el.basic;
+              let da = Math.round(basic * DA);
+              let hra = Math.round(basic * HRA);
+              let addl = el.addl;
+              let ma = el.ma;
+              let gross = basic + da + hra + addl + ma;
+              let gpf = el.gpf;
+              let gsli = el.gsli;
+              let ptax;
+              if (gross > 40000) {
+                ptax = 200;
+              } else if (gross > 25000) {
+                ptax = 150;
+              } else if (gross > 15000) {
+                ptax = 130;
+              } else if (gross > 10000) {
+                ptax = 110;
+              } else {
+                ptax = 0;
+              }
+              let netpay = gross - gpf - gsli - ptax;
+              return (
+                <tr key={ind}>
+                  <td>{ind + 1}</td>
+                  <td>{el.tname}</td>
+                  <td>{el.school}</td>
+                  <td>{el.desig}</td>
+                  <td>{basic}</td>
+                  <td>{da}</td>
+                  <td>{hra}</td>
+                  <td>{addl}</td>
+                  <td>{ma}</td>
+                  <td>{gross}</td>
+                  <td>{gpf}</td>
+                  <td>{gsli}</td>
+                  <td>{ptax}</td>
+                  <td>{netpay}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <button
@@ -125,7 +149,7 @@ const JulySalary = () => {
         <button
           type="button"
           className="btn btn-primary btn-sm noprint m-3"
-          onClick={() => navigate(-1)}
+          onClick={() => router.back()}
         >
           Go Back
         </button>

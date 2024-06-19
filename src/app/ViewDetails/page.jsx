@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
+import { NumInWords } from "../../modules/calculatefunctions";
+import { DA, HRA } from "../../modules/constants";
 
 const ViewDetails = () => {
   const { state, stateObject } = useGlobalContext();
@@ -46,118 +48,48 @@ const ViewDetails = () => {
   let mbasic = details.mbasic;
   let addl = details.addl;
   let da = details.da;
-  let mda = details.mda;
   let hra = details.hra;
-  let mhra = details.mhra;
   let ma = details.ma;
   let gross = details.gross;
-  let mgross = details.mgross;
   let gpf = details.gpf;
-
   let ptax = details.ptax;
   let gsli = details.gsli;
-  let netpay = details.netpay;
-  let mnetpay = details.mnetpay;
-
   let fname = details.fname;
   let question = details.question;
   let hoi = details.hoi;
 
   let date = new Date();
-  let setda, sethra, setgross, setbasicpay, setnetpay;
+  let basicpay, netpay;
   let junelast = new Date(`${date.getFullYear()}-07-31`);
   if (date >= junelast) {
-    setbasicpay = basic;
-    setnetpay = netpay;
-    setda = da;
-    sethra = hra;
-    setgross = gross;
+    basicpay = basic;
   } else {
-    setbasicpay = mbasic;
-    setnetpay = mnetpay;
-    setda = mda;
-    sethra = mhra;
-    setgross = mgross;
+    basicpay = mbasic;
+  }
+  da = Math.round(basicpay * DA);
+  hra = Math.round(basicpay * HRA);
+
+  gross = basicpay + da + hra + addl + ma;
+
+  if (gross > 40000) {
+    ptax = 200;
+  } else if (gross > 25000) {
+    ptax = 150;
+  } else if (gross > 15000) {
+    ptax = 130;
+  } else if (gross > 10000) {
+    ptax = 110;
+  } else {
+    ptax = 0;
   }
 
-  let NumInWords = (number) => {
-    const first = [
-      "",
-      "one ",
-      "two ",
-      "three ",
-      "four ",
-      "five ",
-      "six ",
-      "seven ",
-      "eight ",
-      "nine ",
-      "ten ",
-      "eleven ",
-      "twelve ",
-      "thirteen ",
-      "fourteen ",
-      "fifteen ",
-      "sixteen ",
-      "seventeen ",
-      "eighteen ",
-      "nineteen ",
-    ];
-    const tens = [
-      "",
-      "",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
-    const mad = ["", "thousand", "million", "billion", "trillion"];
-    let word = "";
+  if (disability === "YES") {
+    ptax = 0;
+  }
 
-    for (let i = 0; i < mad.length; i++) {
-      let tempNumber = number % (100 * Math.pow(1000, i));
-      if (Math.floor(tempNumber / Math.pow(1000, i)) !== 0) {
-        if (Math.floor(tempNumber / Math.pow(1000, i)) < 20) {
-          word = titleCase(
-            first[Math.floor(tempNumber / Math.pow(1000, i))] +
-              mad[i] +
-              " " +
-              word
-          );
-        } else {
-          word = titleCase(
-            tens[Math.floor(tempNumber / (10 * Math.pow(1000, i)))] +
-              " " +
-              first[Math.floor(tempNumber / Math.pow(1000, i)) % 10] +
-              mad[i] +
-              " " +
-              word
-          );
-        }
-      }
+  let deduction = gsli + gpf + ptax;
 
-      tempNumber = number % Math.pow(1000, i + 1);
-      if (Math.floor(tempNumber / (100 * Math.pow(1000, i))) !== 0)
-        word = titleCase(
-          first[Math.floor(tempNumber / (100 * Math.pow(1000, i)))] +
-            "hunderd " +
-            word
-        );
-    }
-    // return word;
-    return `Rupees ${word} Only`;
-  };
-  let titleCase = (str) => {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  };
+  netpay = gross - deduction;
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Teacher's Details";
   }, []);
@@ -366,7 +298,7 @@ const ViewDetails = () => {
             <label>BASIC: </label>
           </div>
           <div>
-            <p>{setbasicpay}</p>
+            <p>{basicpay}</p>
           </div>
         </div>
         {addl > 0 ? (
@@ -384,7 +316,7 @@ const ViewDetails = () => {
             <label>DA: </label>
           </div>
           <div>
-            <p>{setda}</p>
+            <p>{da}</p>
           </div>
         </div>
 
@@ -393,7 +325,7 @@ const ViewDetails = () => {
             <label>HRA: </label>
           </div>
           <div>
-            <p>{sethra}</p>
+            <p>{hra}</p>
           </div>
         </div>
 
@@ -411,7 +343,7 @@ const ViewDetails = () => {
             <label>Gross Pay: </label>
           </div>
           <div>
-            <p>{setgross}</p>
+            <p>{gross}</p>
           </div>
         </div>
 
@@ -447,7 +379,7 @@ const ViewDetails = () => {
             <label>Netpay: </label>
           </div>
           <div>
-            <p>{setnetpay}</p>
+            <p>{netpay}</p>
           </div>
         </div>
 
@@ -456,7 +388,7 @@ const ViewDetails = () => {
             <label>Netpay in Words: </label>
           </div>
           <div>
-            <p>{NumInWords(setnetpay)}</p>
+            <p>{NumInWords(netpay)}</p>
           </div>
         </div>
         {question === "admin" ? (
