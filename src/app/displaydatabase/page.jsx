@@ -19,24 +19,19 @@ import { ref, deleteObject } from "firebase/storage";
 import { ToastContainer, toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
-import { decryptObjData, getCookie } from "../../modules/encryption";
 const DisplayDatabase = () => {
-  const { state, setState } = useGlobalContext();
+  const {
+    state,
+    userState,
+    setUserState,
+    userUpdateTime,
+    setUserUpdateTime,
+    teachersState,
+    setTeachersState,
+    setTeacherUpdateTime,
+  } = useGlobalContext();
   const router = useRouter();
 
-  let teacherdetails = {
-    convenor: "",
-    gp: "",
-    school: "",
-    circle: "",
-    tname: "",
-    udise: "",
-  };
-
-  let details = getCookie("tid");
-  if (details) {
-    teacherdetails = decryptObjData("tid");
-  }
   const [showTable, setShowTable] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -51,15 +46,13 @@ const DisplayDatabase = () => {
       ...doc.data(),
       id: doc.id,
     }));
-
-    setData(data);
+    let newData = data.sort((a, b) => a.createdAt - b.createdAt);
+    setData(newData);
+    setFilteredData(newData);
+    setUserState(newData);
     setShowTable(true);
+    setUserUpdateTime(Date.now());
   };
-
-  useEffect(() => {
-    document.title = "WBTPTA AMTA WEST:User Databse";
-    userData();
-  }, []);
 
   useEffect(() => {
     const result = data.filter((el) => {
@@ -72,6 +65,7 @@ const DisplayDatabase = () => {
     {
       name: "Sl",
       selector: (row, index) => index + 1,
+      sortable: true,
     },
     {
       name: "ID",
@@ -83,7 +77,6 @@ const DisplayDatabase = () => {
       selector: (row) => row.tname,
       sortable: true,
       wrap: true,
-      center: +true,
     },
     {
       name: "Photo",
@@ -96,25 +89,25 @@ const DisplayDatabase = () => {
           />
         );
       },
+      wrap: true,
     },
     {
       name: "School Name",
       selector: (row) => row.school,
       sortable: true,
       wrap: true,
-      center: +true,
     },
     {
       name: "Username",
       selector: (row) => row.username,
+
       wrap: true,
-      center: +true,
     },
     {
       name: "Email",
       selector: (row) => row.email,
+
       wrap: true,
-      center: +true,
     },
     {
       name: "Pan",
@@ -122,10 +115,23 @@ const DisplayDatabase = () => {
       wrap: true,
     },
     {
-      name: "state",
+      name: "EmpID",
+      selector: (row) => row.empid,
+      wrap: true,
+    },
+    {
+      name: "IsMatched",
+      selector: (row) =>
+        compare(row.pan.toLowerCase(), row.password) ? (
+          <h6 className="text-success">Yes</h6>
+        ) : (
+          <h6 className="text-primary">No</h6>
+        ),
+    },
+    {
+      name: "Access",
       selector: (row) => row.circle,
       sortable: true,
-      wrap: true,
     },
     {
       name: "Registered On",
@@ -150,10 +156,9 @@ const DisplayDatabase = () => {
           Delete
         </button>
       ),
-      wrap: true,
     },
     {
-      name: "Update User Login",
+      name: "Disable Login",
       cell: (row) =>
         row.disabled ? (
           <button
@@ -184,65 +189,66 @@ const DisplayDatabase = () => {
             Lock User
           </button>
         ),
-      wrap: true,
     },
     {
       name: "Reset Password",
-      cell: (row) => (
-        <button
-          type="button"
-          className="btn btn-sm btn-warning"
-          onClick={() => {
-            // eslint-disable-next-line
-            let message = confirm(
-              `Are You Sure To Reset Password of ${row.tname}? `
-            );
-            message
-              ? resetPassword(row)
-              : toast.success(`User Password Not Rested!`, {
-                  position: "top-right",
-                  autoClose: 1500,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
-          }}
-        >
-          Reset Password
-        </button>
-      ),
-      wrap: true,
+      cell: (row) =>
+        !compare(row.pan.toLowerCase(), row.password) ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-warning"
+            onClick={() => {
+              // eslint-disable-next-line
+              let message = confirm(
+                `Are You Sure To Reset Password of ${row.tname}? `
+              );
+              message ? resetPassword(row) : alert("User Password Not Rested!");
+            }}
+          >
+            Reset Password
+          </button>
+        ) : (
+          <h6 className="text-primary">Password Need not to be Reset</h6>
+        ),
     },
   ];
   // console.log(inputField);
   const deleteUser = async (user) => {
-    const url = `https://awwbtpta-backend.onrender.com/users/delUser`;
+    const url = `https://awwbtpta.vercel.app/api/delteacher`;
     try {
       setLoader(true);
       let response = await axios.post(url, {
         id: user.id,
       });
-      if (response.status === 200) {
+      let record = response.data;
+      if (record.success) {
         await deleteDoc(doc(firestore, "userteachers", user.id));
         await deleteDoc(doc(firestore, "profileImage", user.id));
         await updateDoc(doc(firestore, "teachers", user.id), {
           registered: false,
         });
+        setUserState(userState.filter((el) => el.id !== user.id));
+        let x = teachersState.filter((el) => el.id === user.id)[0];
+        let y = teachersState.filter((el) => el.id !== user.id);
+        x.registered = false;
+        y = [...y, x];
+        let c = y.sort(
+          (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
+        );
+        setTeachersState(c);
+        setUserUpdateTime(Date.now());
+        setTeacherUpdateTime(Date.now());
         const desertRef = ref(storage, `profileImage/${user.photoName}`);
         await deleteObject(desertRef);
         await delTokens(user);
 
         setLoader(false);
-        userData();
         toast.success(`User Deleted Successfully`, {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -254,7 +260,7 @@ const DisplayDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -267,15 +273,12 @@ const DisplayDatabase = () => {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
+        pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
       });
     }
-
-    // console.log(user.teachersID);
-    // console.log(res);
   };
 
   const delTokens = async (user) => {
@@ -301,17 +304,23 @@ const DisplayDatabase = () => {
       disabled: true,
     })
       .then(() => {
+        let x = userState.filter((el) => el.id === id)[0];
+        let y = userState.filter((el) => el.id !== id);
+        x.disabled = true;
+        y = [...y, x];
+        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+        setUserState(newData);
+        setUserUpdateTime(Date.now());
         toast.success("Congrats! User Login is Disabled Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
         });
-        userData();
       })
       .catch((e) => {
         toast.success("Congrats! User Login Disable Updation Failed!", {
@@ -319,7 +328,7 @@ const DisplayDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -332,17 +341,23 @@ const DisplayDatabase = () => {
       disabled: false,
     })
       .then(() => {
+        let x = userState.filter((el) => el.id === id)[0];
+        let y = userState.filter((el) => el.id !== id);
+        x.disabled = false;
+        y = [...y, x];
+        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+        setUserState(newData);
+        setUserUpdateTime(Date.now());
         toast.success("Congrats! User Login is Enabled Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
         });
-        userData();
       })
       .catch((e) => {
         toast.success("Congrats! User Login Enable Updation Failed!", {
@@ -350,7 +365,7 @@ const DisplayDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -360,20 +375,26 @@ const DisplayDatabase = () => {
   const resetPassword = async (user) => {
     const docRef = doc(firestore, "userteachers", user.id);
     await updateDoc(docRef, {
-      password: bcrypt.hashSync(user.empid, 10),
+      password: bcrypt.hashSync(user.empid.toLowerCase(), 10),
     })
       .then(() => {
+        let x = userState.filter((el) => el.id === user.id)[0];
+        let y = userState.filter((el) => el.id !== user.id);
+        x.password = bcrypt.hashSync(user.empid.toLowerCase(), 10);
+        y = [...y, x];
+        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+        setUserState(newData);
+        setUserUpdateTime(Date.now());
         toast.success("Congrats! User Password Reset was Successful!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
         });
-        userData();
       })
       .catch((e) => {
         toast.success("Congrats! User Password Reset Failed!", {
@@ -381,13 +402,35 @@ const DisplayDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
         });
       });
   };
+
+  const getUserData = () => {
+    const userDifference = (Date.now() - userUpdateTime) / 1000 / 60 / 15;
+    if (userState.length === 0 || userDifference >= 1) {
+      userData();
+    } else {
+      setData(userState);
+      setFilteredData(userState);
+      setShowTable(true);
+    }
+  };
+  const compare = (userPassword, serverPassword) => {
+    let match = bcrypt.compareSync(userPassword, serverPassword);
+
+    return match;
+  };
+  useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:User Databse";
+    getUserData();
+    //eslint-disable-next-line
+  }, []);
+  useEffect(() => {}, [userState]);
   useEffect(() => {
     if (state !== "admin") {
       router.push("/login");

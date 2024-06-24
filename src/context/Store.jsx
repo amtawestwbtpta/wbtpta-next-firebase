@@ -19,6 +19,8 @@ const GlobalContext = createContext({
   setSlideState: () => [],
   userState: [],
   setUserState: () => [],
+  userUpdateTime: "",
+  setUserUpdateTime: () => "",
   noticeState: [],
   setNoticeState: () => [],
   memoState: [],
@@ -72,7 +74,7 @@ export const GlobalContextProvider = ({ children }) => {
     term: "1st",
     year: new Date().getFullYear(),
   });
-
+  const [userUpdateTime, setUserUpdateTime] = useState(Date.now() - 1000);
   return (
     <GlobalContext.Provider
       value={{
@@ -110,6 +112,8 @@ export const GlobalContextProvider = ({ children }) => {
         setQuestionUpdateTime,
         questionRateState,
         setQuestionRateState,
+        userUpdateTime,
+        setUserUpdateTime,
       }}
     >
       <FirebaseProvider>{children}</FirebaseProvider>
