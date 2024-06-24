@@ -415,10 +415,15 @@ const Registration = ({ data, setSignUpTrue }) => {
   }
 
   const handleChange = (e) => {
-    if (e.target.files[0]) {
+    if (e.target.files[0].type.startsWith("image/")) {
       setSrc(URL.createObjectURL(e.target.files[0]));
       setFile(e.target.files[0]);
       setPhotoCropped(true);
+      setImgCroped(false);
+    } else {
+      setSrc(null);
+      toast.error("Please select an image file.");
+      setPhotoCropped(false);
       setImgCroped(false);
     }
   };
@@ -625,6 +630,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                   id="file-upload"
                   className="form-control"
                   placeholder="Upload Document"
+                  accept="image/*"
                   onChange={handleChange}
                 />
                 {errField.profilePhotoErr.length > 0 && (

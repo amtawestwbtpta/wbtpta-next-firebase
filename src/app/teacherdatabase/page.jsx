@@ -1758,10 +1758,20 @@ const TeacherDatabase = () => {
                 type="file"
                 className="form-control"
                 id="image"
+                accept="image/*"
                 name="image"
                 onChange={(e) => {
-                  setFile(e.target.files[0]);
-                  setSrc(URL.createObjectURL(e.target.files[0]));
+                  if (e.target.files[0].type.startsWith("image/")) {
+                    setFile(e.target.files[0]);
+                    setSrc(URL.createObjectURL(e.target.files[0]));
+                  } else {
+                    setSrc(null);
+                    toast.error("Please select an image file.");
+                    setFile(null);
+                    if (typeof window !== undefined) {
+                      document.getElementById("image").value = null;
+                    }
+                  }
                 }}
               />
               {src !== null && (

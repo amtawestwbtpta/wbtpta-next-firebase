@@ -192,9 +192,15 @@ const ChangePhoto = () => {
     return formIsValid;
   };
   const handleChange = (e) => {
-    setSrc(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
-    setPhotoCropped(true);
+    if (e.target.files[0].type.startsWith("image/")) {
+      setSrc(URL.createObjectURL(e.target.files[0]));
+      setFile(e.target.files[0]);
+      setPhotoCropped(true);
+    } else {
+      setSrc(null);
+      toast.error("Please select an image file.");
+      setPhotoCropped(false);
+    }
   };
   function getCroppedImg() {
     setPhotoCropped(false);
@@ -295,6 +301,7 @@ const ChangePhoto = () => {
                 />
                 <input
                   type="file"
+                  accept="image/*"
                   id="file-upload"
                   className="form-control"
                   placeholder="Upload Document"
