@@ -512,7 +512,14 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/techsalary"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateArray(
+                  teachersState.filter(
+                    (el) => el.udise === teacherdetails.udise
+                  )
+                );
+              }}
             >
               All Teacher's Salary Data
             </Link>
