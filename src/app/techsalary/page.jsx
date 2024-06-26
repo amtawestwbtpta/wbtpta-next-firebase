@@ -2,24 +2,26 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
-import { Loader } from "rsuite";
 import Link from "next/link";
-import { decryptObjData } from "../../modules/encryption";
 import { DA, HRA } from "../../modules/constants";
 import { GetMonthName } from "../../modules/calculatefunctions";
 const TechSalary = () => {
   const { state, stateArray, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([{ school: "" }]);
-  let school = filteredData[0].school;
-
+  const [school, setSchool] = useState("");
   useEffect(() => {
     if (!state) {
       router.push("/login");
     }
-    setFilteredData(stateArray);
+
     // eslint-disable-next-line
-    document.title = `All Teacher's Salary Data of ${school}`;
+  }, []);
+  useEffect(() => {
+    setFilteredData(stateArray);
+    setSchool(stateArray[0]?.school);
+    document.title = `All Teacher's Salary Data of ${stateArray[0]?.school}`;
+    // eslint-disable-next-line
   }, [stateArray]);
 
   return (

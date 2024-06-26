@@ -20,10 +20,6 @@ const Navbar = () => {
     schoolUpdateTime,
     setSchoolUpdateTime,
     setStateObject,
-    setMemoUpdateTime,
-    setNoticeUpdateTime,
-    setQuestionUpdateTime,
-    setSlideUpdateTime,
     setStateArray,
   } = useGlobalContext();
   const router = useRouter();
@@ -67,9 +63,17 @@ const Navbar = () => {
       ...doc.data(),
       id: doc.id,
     }));
-    let newDatas = datas.sort(
-      (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
-    );
+    let newDatas = datas.sort((a, b) => {
+      // First, compare the "school" keys
+      if (a.school < b.school) {
+        return -1;
+      }
+      if (a.school > b.school) {
+        return 1;
+      }
+      // If "school" keys are equal, compare the "rank" keys
+      return a.rank - b.rank;
+    });
     setTeachersState(newDatas);
     setTeacherUpdateTime(Date.now());
   };
@@ -512,7 +516,14 @@ const Navbar = () => {
             <Link
               className="nav-link"
               href="/techsalary"
-              onClick={handleNavCollapse}
+              onClick={() => {
+                handleNavCollapse();
+                setStateArray(
+                  teachersState.filter(
+                    (el) => el.udise === teacherdetails.udise
+                  )
+                );
+              }}
             >
               All Teacher's Salary Data
             </Link>
