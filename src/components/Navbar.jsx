@@ -224,6 +224,22 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/TechAccuitance"
+              onClick={() => {
+                handleNavCollapse();
+                setStateArray(
+                  teachersState.filter(
+                    (el) => el.udise === teacherdetails.udise
+                  )
+                );
+              }}
+            >
+              Accuitance Register
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/payslipwbtpta"
               onClick={() => {
                 handleNavCollapse();
@@ -526,6 +542,22 @@ const Navbar = () => {
               }}
             >
               All Teacher's Salary Data
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/TechAccuitance"
+              onClick={() => {
+                handleNavCollapse();
+                setStateArray(
+                  teachersState.filter(
+                    (el) => el.udise === teacherdetails.udise
+                  )
+                );
+              }}
+            >
+              Accuitance Register
             </Link>
           </li>
           <li className="nav-item">

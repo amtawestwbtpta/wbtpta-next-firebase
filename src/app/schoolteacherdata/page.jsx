@@ -352,13 +352,25 @@ const page = () => {
                   <div className="mx-auto my-3 noprint">
                     <button
                       type="button"
-                      className="btn btn-success  p-2 rounded"
+                      className="btn btn-primary p-2 rounded"
                       onClick={() => {
                         router.push(`/TeacherPhotoCorner`);
                         setStateArray(filteredData);
                       }}
                     >
                       Teacher's Photo Corner
+                    </button>
+                  </div>
+                  <div className="mx-auto my-3 noprint">
+                    <button
+                      type="button"
+                      className="btn btn-info p-2 rounded"
+                      onClick={() => {
+                        router.push(`/TechAccuitance`);
+                        setStateArray(filteredData);
+                      }}
+                    >
+                      Teacher's Accuitance
                     </button>
                   </div>
 

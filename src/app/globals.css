@@ -253,3 +253,23 @@ h6 {
 .student h5 {
   opacity: 0.3;
 }
+
+table#team-list {
+  counter-reset: rowNumber;
+}
+
+table#team-list tr:nth-child(n+1) {
+  counter-increment: rowNumber;
+}
+
+table#team-list tr:nth-child(n+1) td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+@media print {
+  div.nobreak {
+    break-inside: avoid;
+  }
+}

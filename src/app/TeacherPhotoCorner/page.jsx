@@ -7,7 +7,7 @@ const TeacherPhotoCorner = () => {
   const { state, stateArray } = useGlobalContext();
   const router = useRouter();
 
-  let teacherData = stateArray.sort((a, b) => b.desig.localeCompare(a.desig));
+  let teacherData = stateArray.sort((a, b) => a.rank - b.rank);
 
   let school = teacherData[0]?.school;
   useEffect(() => {

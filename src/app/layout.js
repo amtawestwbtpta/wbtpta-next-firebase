@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
         class={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
       >
         <div
-          class="alert alert-success alert-dismissible fade show"
+          class="alert alert-success alert-dismissible fade show noprint"
           role="alert"
         >
           <strong>To download Our Android App Click</strong>{" "}
