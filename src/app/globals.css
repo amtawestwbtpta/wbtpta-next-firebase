@@ -1,17 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -258,11 +244,11 @@ table#team-list {
   counter-reset: rowNumber;
 }
 
-table#team-list tr:nth-child(n+1) {
+table#team-list tr:nth-child(n + 1) {
   counter-increment: rowNumber;
 }
 
-table#team-list tr:nth-child(n+1) td:first-child::before {
+table#team-list tr:nth-child(n + 1) td:first-child::before {
   content: counter(rowNumber);
   min-width: 1em;
   margin-right: 0.5em;
@@ -271,5 +257,16 @@ table#team-list tr:nth-child(n+1) td:first-child::before {
 @media print {
   div.nobreak {
     break-inside: avoid;
+  }
+  table.nobreak {
+    break-inside: avoid;
+  }
+}
+
+@media print {
+  @media (orientation: portrait) {
+    body {
+      flex-direction: column;
+    }
   }
 }

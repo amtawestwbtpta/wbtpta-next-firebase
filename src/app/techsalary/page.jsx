@@ -33,7 +33,7 @@ const TechSalary = () => {
             {GetMonthName(new Date().getMonth())} of {school}
           </h3>
           <div className="table-resposive-md" style={{ overflowX: "scroll" }}>
-            <table className="table table-info table-hover table-striped table-borderd align-middle table-responsive">
+            <table className="table table-hover table-striped table-borderd align-middle table-responsive">
               <thead>
                 <tr>
                   <th>SL. NO.</th>

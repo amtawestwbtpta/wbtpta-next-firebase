@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { months, titleCase } from "../../modules/calculatefunctions";
 import { DA, HRA, PREV6DA, PREVDA } from "../../modules/constants";
+
 import { Loader } from "rsuite";
 const TechAccuitance = () => {
   const { state, stateArray } = useGlobalContext();
@@ -60,7 +61,7 @@ const TechAccuitance = () => {
   }, [year, filteredData, mainData]);
 
   return (
-    <div className="container-fluid my-5">
+    <div className="container-fluid my-5 mx-auto">
       {showTable ? (
         <>
           <div className="table-resposive text-center my-2">
@@ -247,8 +248,9 @@ const TechAccuitance = () => {
                     </div>
                   </div>
                   <table
-                    className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black"
+                    className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black nobreak"
                     id="team-list"
+                    style={{ transform: "scalex(.9)" }}
                   >
                     <thead>
                       <th
