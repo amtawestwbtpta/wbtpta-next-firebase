@@ -250,7 +250,6 @@ const TechAccuitance = () => {
                   <table
                     className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black nobreak"
                     id="team-list"
-                    style={{ transform: "scalex(.9)" }}
                   >
                     <thead>
                       <th
