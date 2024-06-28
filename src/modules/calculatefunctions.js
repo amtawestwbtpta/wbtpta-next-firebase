@@ -579,3 +579,28 @@ export const getValues = (firstArray, secondArray, sl) => {
     );
   });
 };
+
+export const getServiceAge = (date) => {
+  if (!date) return "";
+  let currentDate = Date.now();
+  let birthDate = Date.parse(getCurrentDateInput(date));
+  let yearInMillis = 31556926000;
+  let age = Math.floor((currentDate - birthDate) / yearInMillis);
+  return age;
+};
+export const getServiceLife = (date) => {
+  if (!date) return "";
+  let currentDate = Date.now();
+  let birthDate = Date.parse(getCurrentDateInput(date));
+  let yearInMillis = 31556926000;
+  let monthinMillis = 2629800000;
+  let age = Math.floor((currentDate - birthDate) / yearInMillis);
+  let months = Math.floor(
+    ((currentDate - birthDate) % yearInMillis) / monthinMillis
+  );
+  if (age) {
+    return `${age} years ${months} months`;
+  } else {
+    return `${months} months`;
+  }
+};

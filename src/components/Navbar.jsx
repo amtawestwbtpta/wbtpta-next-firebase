@@ -301,6 +301,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/TeacherServiceLife"
+              onClick={handleNavCollapse}
+            >
+              Teacher Service Life
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/displaydatabase"
               onClick={handleNavCollapse}
             >
