@@ -66,11 +66,12 @@ const TechSalary = () => {
       let x = [];
       data.map((teacher) => {
         return selectedValue.map((range) => {
-          if (
-            getServiceAge(teacher.doj) === range ||
-            getServiceAge(teacher.dob) === range
-          ) {
+          if (getServiceAge(teacher.doj) === range) {
             return x.push(teacher);
+          } else if (parsedValue.id === 6) {
+            if (getServiceAge(teacher.dob) === range) {
+              return x.push(teacher);
+            }
           }
         });
       });
