@@ -392,9 +392,17 @@ const TeacherDatabase = () => {
         await updateDoc(docRef, inputField);
         let x = teachersState.filter((el) => el.id !== updId);
         x = [...x, inputField];
-        const newData = x.sort(
-          (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
-        );
+        const newData = x.sort((a, b) => {
+          // First, compare the "school" keys
+          if (a.school < b.school) {
+            return -1;
+          }
+          if (a.school > b.school) {
+            return 1;
+          }
+          // If "school" keys are equal, compare the "rank" keys
+          return a.rank - b.rank;
+        });
         setTeachersState(newData);
         setTeacherUpdateTime(Date.now());
         setData(newData);
@@ -487,99 +495,146 @@ const TeacherDatabase = () => {
     }
   };
   const deleteTeacher = async (el) => {
-    const docRef = doc(firestore, "teachers", el.id);
-    await deleteDoc(docRef)
-      .then(async () => {
-        let x = teachersState.filter((elem) => elem.id !== el.id);
-        const newData = x.sort(
-          (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
-        );
-        setTeachersState(newData);
-        setTeacherUpdateTime(Date.now());
-        setFilteredData(newData);
-        setData(newData);
-        await setDoc(doc(firestore, "deletedTeachers", el.id), el)
-          .then(async () => {
-            toast.success("Congrats! Teacher Deleted Successfully!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            userData();
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error("Unable To Send Query!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+    const url = `/api/delteacher`;
+    let response = await axios.post(url, inputField);
+    let record = response.data;
+    if (record.success) {
+      const docRef = doc(firestore, "teachers", el.id);
+      await deleteDoc(docRef)
+        .then(async () => {
+          let x = teachersState.filter((elem) => elem.id !== el.id);
+          const newData = x.sort((a, b) => {
+            // First, compare the "school" keys
+            if (a.school < b.school) {
+              return -1;
+            }
+            if (a.school > b.school) {
+              return 1;
+            }
+            // If "school" keys are equal, compare the "rank" keys
+            return a.rank - b.rank;
           });
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Unable To Send Query!!!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+          setTeachersState(newData);
+          setTeacherUpdateTime(Date.now());
+          setFilteredData(newData);
+          setData(newData);
+          await setDoc(doc(firestore, "deletedTeachers", el.id), el)
+            .then(async () => {
+              toast.success("Congrats! Teacher Deleted Successfully!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.error("Unable To Send Query!!!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Unable To Send Query!!!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
+    } else {
+      toast.error("Unable To Send Query!!!", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
+    }
   };
   const restoreTeacher = async (el) => {
     const docRef = doc(firestore, "deletedTeachers", el.id);
     await deleteDoc(docRef)
       .then(async () => {
-        await setDoc(doc(firestore, "teachers", el.id), el)
-          .then(async () => {
-            let x = teachersState;
-            x = [...x, el];
-            const newData = x.sort(
-              (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
-            );
-            setTeachersState(newData);
-            setTeacherUpdateTime(Date.now());
-            setFilteredData(newData);
-            toast.success("Congrats! Teacher Restored Successfully!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
+        const url = `/api/addTeacher`;
+        let response = await axios.post(url, el);
+        let record = response.data;
+        if (record.success) {
+          await setDoc(doc(firestore, "teachers", el.id), el)
+            .then(async () => {
+              let x = teachersState;
+              x = [...x, el];
+              const newData = x.sort((a, b) => {
+                // First, compare the "school" keys
+                if (a.school < b.school) {
+                  return -1;
+                }
+                if (a.school > b.school) {
+                  return 1;
+                }
+                // If "school" keys are equal, compare the "rank" keys
+                return a.rank - b.rank;
+              });
+              setTeachersState(newData);
+              setTeacherUpdateTime(Date.now());
+              setFilteredData(newData);
+              toast.success("Congrats! Teacher Restored Successfully!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              // userData();
+              getDeletedTeachers();
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.error("Unable To Send Query!!!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             });
-            // userData();
-            getDeletedTeachers();
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error("Unable To Send Query!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+        } else {
+          toast.error("Unable To Send Query!!!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
           });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -588,7 +643,7 @@ const TeacherDatabase = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -701,10 +756,17 @@ const TeacherDatabase = () => {
                       (el) => el.id !== techerData.id
                     );
                     y = [...y, x];
-                    const newData = y.sort(
-                      (a, b) =>
-                        a.school.localeCompare(b.school) && b.rank > a.rank
-                    );
+                    const newData = y.sort((a, b) => {
+                      // First, compare the "school" keys
+                      if (a.school < b.school) {
+                        return -1;
+                      }
+                      if (a.school > b.school) {
+                        return 1;
+                      }
+                      // If "school" keys are equal, compare the "rank" keys
+                      return a.rank - b.rank;
+                    });
                     setTeachersState(newData);
                     setTeacherUpdateTime(Date.now());
                     setData(newData);
