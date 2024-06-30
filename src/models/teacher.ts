@@ -50,6 +50,7 @@ const teacherSchema = new mongoose.Schema(
     dataYear: Number,
     circle: String,
     showAccount: Boolean,
+    newHt: Boolean,
     pan: String,
     fname: String,
     question: String,

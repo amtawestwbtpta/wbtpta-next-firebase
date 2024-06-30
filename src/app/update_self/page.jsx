@@ -172,6 +172,7 @@ const UpdateSelf = () => {
         const url = `/api/updself`;
         let response = await axios.post(url, inputField);
         let record = response.data;
+        console.log(record);
         if (record.success) {
           const docRef = doc(firestore, "teachers", teachersID);
           await updateDoc(docRef, inputField);

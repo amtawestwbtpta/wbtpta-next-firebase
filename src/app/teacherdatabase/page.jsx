@@ -29,6 +29,7 @@ import {
 import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
+import { DA, HRA } from "../../modules/constants";
 const TeacherDatabase = () => {
   const {
     state,
@@ -187,55 +188,7 @@ const TeacherDatabase = () => {
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
           onClick={(e) => {
-            setinputField({
-              id: row.id,
-              school: row.school,
-              udise: row.udise,
-              tname: row.tname,
-              tsname: row.tsname,
-              disability: row.disability,
-              desig: row.desig,
-              hoi: row.hoi,
-              fname: row.fname,
-              circle: row.circle,
-              question: row.question,
-              gp: row.gp,
-              association: row.association,
-              phone: row.phone,
-              email: row.email,
-              dob: row.dob,
-              doj: row.doj,
-              dojnow: row.dojnow,
-              dor: row.dor,
-              bank: row.bank,
-              account: row.account,
-              ifsc: row.ifsc,
-              empid: row.empid,
-              training: row.training,
-              pan: row.pan,
-              sis: row.sis,
-
-              address: row.address,
-              basic: row.basic,
-              mbasic: row.mbasic,
-              addl: row.addl,
-              da: row.da,
-              mda: row.mda,
-              hra: row.hra,
-              mhra: row.mhra,
-              ma: row.ma,
-              gross: row.gross,
-              mgross: row.mgross,
-              gpf: row.gpf,
-              gpfprev: row.gpfprev,
-              ptax: row.ptax,
-              gsli: row.gsli,
-              netpay: row.netpay,
-              mnetpay: row.mnetpay,
-              arrear: row.arrear,
-              bonus: row.bonus,
-            });
-
+            setinputField(row);
             setUpdId(row.id);
             setSelectedTeacher(row);
             setSchUdise(row.udise);
@@ -432,44 +385,60 @@ const TeacherDatabase = () => {
     setLoader(true);
     try {
       const docRef = doc(firestore, "teachers", updId);
-      await updateDoc(docRef, inputField);
-      let x = teachersState.filter((el) => el.id !== updId);
-      x = [...x, inputField];
-      const newData = x.sort(
-        (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
-      );
-      setTeachersState(newData);
-      setTeacherUpdateTime(Date.now());
-      setData(newData);
-      const collectionRefUser = collection(firestore, "userteachers");
-      const qq = query(collectionRefUser, where("teachersID", "==", updId));
-      try {
-        const qSnap = await getDocs(qq);
-
-        const docRefuser = doc(
-          firestore,
-          "userteachers",
-          qSnap.docs[0].data().id
+      const url = `/api/updteacher`;
+      let response = await axios.post(url, inputField);
+      let record = response.data;
+      if (record.success) {
+        await updateDoc(docRef, inputField);
+        let x = teachersState.filter((el) => el.id !== updId);
+        x = [...x, inputField];
+        const newData = x.sort(
+          (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
         );
-
+        setTeachersState(newData);
+        setTeacherUpdateTime(Date.now());
+        setData(newData);
+        const collectionRefUser = collection(firestore, "userteachers");
+        const qq = query(collectionRefUser, where("teachersID", "==", updId));
         try {
-          await updateDoc(docRefuser, {
-            tname: inputField.tname,
-            tsname: inputField.tsname,
-            school: inputField.school,
-            desig: inputField.desig,
-            pan: inputField.pan,
-            udise: inputField.udise,
-            sis: inputField.sis,
-            circle: inputField.circle,
-            empid: inputField.empid,
-            question: inputField.question,
-            email: inputField.email,
-            phone: inputField.phone,
-          });
+          const qSnap = await getDocs(qq);
+
+          const docRefuser = doc(
+            firestore,
+            "userteachers",
+            qSnap.docs[0].data().id
+          );
+
+          try {
+            await updateDoc(docRefuser, {
+              tname: inputField.tname,
+              tsname: inputField.tsname,
+              school: inputField.school,
+              desig: inputField.desig,
+              pan: inputField.pan,
+              udise: inputField.udise,
+              sis: inputField.sis,
+              circle: inputField.circle,
+              empid: inputField.empid,
+              question: inputField.question,
+              email: inputField.email,
+              phone: inputField.phone,
+            });
+          } catch (e) {
+            console.log(e);
+            toast.error("UserTeachers Database Not Updated!!!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
         } catch (e) {
-          console.log(e);
-          toast.error("UserTeachers Database Not Updated!!!", {
+          toast.error("Teacher Not Registered Yet!!!", {
             position: "top-right",
             autoClose: 1500,
             hideProgressBar: false,
@@ -480,8 +449,9 @@ const TeacherDatabase = () => {
             theme: "light",
           });
         }
-      } catch (e) {
-        toast.error("Teacher Not Registered Yet!!!", {
+        setLoader(false);
+        userData();
+        toast.success("Congrats! Teacher Details Updated Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
@@ -491,19 +461,15 @@ const TeacherDatabase = () => {
           progress: undefined,
           theme: "light",
         });
+      } else {
+        setLoader(false);
+        toast.error("Unable To Update Teacher Details!!!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
       }
-      setLoader(false);
-      userData();
-      toast.success("Congrats! Teacher Details Updated Successfully!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
     } catch (e) {
       setLoader(false);
       toast.error("Unable To Send Query!!!", {
@@ -1016,7 +982,7 @@ const TeacherDatabase = () => {
                       </div>
 
                       <div className="mb-0 col-md-3">
-                        <label className="form-label">User state Type</label>
+                        <label className="form-label">User Access Type</label>
                         <br />
                         <select
                           className="form-select form-select-sm mb-3"
@@ -1037,7 +1003,7 @@ const TeacherDatabase = () => {
                       </div>
                       <div className="mb-0 col-md-3">
                         <label className="form-label">
-                          Question state Type
+                          Question Access Type
                         </label>
                         <br />
                         <select
@@ -1364,10 +1330,17 @@ const TeacherDatabase = () => {
                           placeholder="July Basic"
                           value={inputField.basic}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              basic: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                basic: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                basic: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1381,10 +1354,17 @@ const TeacherDatabase = () => {
                           placeholder="March Basic"
                           value={inputField.mbasic}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              mbasic: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                mbasic: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                mbasic: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1398,10 +1378,17 @@ const TeacherDatabase = () => {
                           placeholder="HT Allowance"
                           value={inputField.addl}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              addl: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                addl: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                addl: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1415,10 +1402,17 @@ const TeacherDatabase = () => {
                           placeholder="July DA"
                           value={inputField.da}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              da: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                da: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                da: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1432,10 +1426,17 @@ const TeacherDatabase = () => {
                           placeholder="March DA"
                           value={inputField.mda}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              mda: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                mda: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                mda: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1449,10 +1450,17 @@ const TeacherDatabase = () => {
                           placeholder="July HRA"
                           value={inputField.hra}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              hra: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                hra: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                hra: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1466,10 +1474,17 @@ const TeacherDatabase = () => {
                           placeholder="March HRA"
                           value={inputField.mhra}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              mhra: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                mhra: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                mhra: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1483,10 +1498,17 @@ const TeacherDatabase = () => {
                           placeholder="Medical Allowance"
                           value={inputField.ma}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              ma: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                ma: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                ma: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1500,10 +1522,17 @@ const TeacherDatabase = () => {
                           placeholder="July Gross"
                           value={inputField.gross}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              gross: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                gross: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                gross: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1517,10 +1546,17 @@ const TeacherDatabase = () => {
                           placeholder="March Gross"
                           value={inputField.mgross}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              mgross: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                mgross: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                mgross: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1534,10 +1570,17 @@ const TeacherDatabase = () => {
                           placeholder="GPF"
                           value={inputField.gpf}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              gpf: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                gpf: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                gpf: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1551,10 +1594,17 @@ const TeacherDatabase = () => {
                           placeholder="GPF"
                           value={inputField.gpfprev}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              gpfprev: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                gpfprev: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                gpfprev: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1568,10 +1618,17 @@ const TeacherDatabase = () => {
                           placeholder="ptax"
                           value={inputField.ptax}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              ptax: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                ptax: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                ptax: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1585,10 +1642,17 @@ const TeacherDatabase = () => {
                           placeholder="GSLI"
                           value={inputField.gsli}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              gsli: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                gsli: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                gsli: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1602,10 +1666,17 @@ const TeacherDatabase = () => {
                           placeholder="July Netpay"
                           value={inputField.netpay}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              netpay: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                netpay: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                netpay: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1619,10 +1690,17 @@ const TeacherDatabase = () => {
                           placeholder="March Netpay"
                           value={inputField.mnetpay}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              mnetpay: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                mnetpay: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                mnetpay: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1639,10 +1717,17 @@ const TeacherDatabase = () => {
                           placeholder="Total Arrear Received"
                           value={inputField.arrear}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              arrear: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                arrear: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                arrear: "",
+                              });
+                            }
                           }}
                         />
                       </div>
@@ -1656,10 +1741,17 @@ const TeacherDatabase = () => {
                           placeholder="Bonus Recived"
                           value={inputField.bonus}
                           onChange={(e) => {
-                            setinputField({
-                              ...inputField,
-                              bonus: parseInt(e.target.value),
-                            });
+                            if (e.target.value !== "") {
+                              setinputField({
+                                ...inputField,
+                                bonus: parseInt(e.target.value),
+                              });
+                            } else {
+                              setinputField({
+                                ...inputField,
+                                bonus: "",
+                              });
+                            }
                           }}
                         />
                       </div>

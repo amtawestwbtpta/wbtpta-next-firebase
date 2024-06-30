@@ -24,6 +24,7 @@ import {
 import { DA, HRA } from "../../modules/constants";
 
 import { v4 as uuid } from "uuid";
+import axios from "axios";
 
 const AddTeacher = () => {
   const router = useRouter();
@@ -97,6 +98,7 @@ const AddTeacher = () => {
     service: "inservice",
     id: "",
     rank: 3,
+    newHt: false,
     dataYear: new Date().getFullYear(),
   });
   const [errField, setErrField] = useState({
@@ -419,38 +421,54 @@ const AddTeacher = () => {
     if (validForm()) {
       try {
         setLoader(true);
-
-        await setDoc(doc(firestore, "teachers", teacherId), inputField);
-        let x = teachersState;
-        x = [...x, inputField];
-        let newData = x.sort(function (a, b) {
-          var nameA = a.school.toLowerCase(),
-            nameB = b.school.toLowerCase();
-          if (nameA < nameB)
-            //sort string ascending
-            return -1;
-          if (nameA > nameB) return 1;
-          return 0; //default return value (no sorting)
-        });
-        setTeachersState(newData);
-        setTeacherUpdateTime(Date.now());
-        setLoader(false);
-        toast.success(
-          `Congratulation ${inputField.tname} Successfully Registered!`,
-          {
+        const url = `/api/addTeacher`;
+        let response = await axios.post(url, inputField);
+        let record = response.data;
+        if (record.success) {
+          await setDoc(doc(firestore, "teachers", teacherId), inputField);
+          let x = teachersState;
+          x = [...x, inputField];
+          let newData = x.sort(function (a, b) {
+            var nameA = a.school.toLowerCase(),
+              nameB = b.school.toLowerCase();
+            if (nameA < nameB)
+              //sort string ascending
+              return -1;
+            if (nameA > nameB) return 1;
+            return 0; //default return value (no sorting)
+          });
+          setTeachersState(newData);
+          setTeacherUpdateTime(Date.now());
+          setLoader(false);
+          toast.success(
+            `Congratulation ${inputField.tname} Successfully Registered!`,
+            {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            }
+          );
+          setTimeout(() => {
+            router.push("/teacherdatabase");
+          }, 1500);
+        } else {
+          setLoader(false);
+          toast.error("Teacher Entry Failed", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-
+            pauseOnHover: true,
             draggable: true,
             progress: undefined,
             theme: "light",
-          }
-        );
-        setTimeout(() => {
-          router.push("/teacherdatabase");
-        }, 1500);
+          });
+        }
       } catch (e) {
         setLoader(false);
         console.log(e);
@@ -459,7 +477,7 @@ const AddTeacher = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",

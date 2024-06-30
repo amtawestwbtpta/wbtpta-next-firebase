@@ -34,15 +34,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        class={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
+        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
       >
         <div
-          class="alert alert-success alert-dismissible fade show noprint"
+          className="alert alert-success alert-dismissible fade show noprint"
           role="alert"
         >
           <strong>To download Our Android App Click</strong>{" "}
           <a
-            class="d-inline-block text-decoration-none fw-bold"
+            className="d-inline-block text-decoration-none fw-bold"
             href="https://drive.google.com/drive/folders/1QQzBMJjI_MXTKxP3_ayTo7QflGD0vbVP?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
           </a>
           <button
             type="button"
-            class="btn-close"
+            className="btn-close"
             data-bs-dismiss="alert"
             aria-label="Close"
           ></button>

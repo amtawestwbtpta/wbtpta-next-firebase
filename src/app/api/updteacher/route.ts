@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       phone,
     }: any = reqBody;
 
-    let teacherData = await Teacher.findOne(id);
+    let teacherData = await Teacher.findOne({ id: id });
     if (teacherData) {
       teacherData.tname = tname;
       teacherData.tsname = tsname;
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       teacherData.email = email;
       teacherData.phone = phone;
       await teacherData.save();
-      let userData = await User.findOne(id);
+      let userData = await User.findOne({ id: id });
       if (userData) {
         userData.tname = tname;
         userData.tsname = tsname;

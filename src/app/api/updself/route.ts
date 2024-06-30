@@ -25,7 +25,8 @@ export async function POST(request: NextRequest) {
       address,
     }: any = reqBody;
 
-    let teacherData = await Teacher.findOne(id);
+    let teacherData = await Teacher.findOne({ id: id });
+
     if (teacherData) {
       teacherData.empid = empid;
       teacherData.tname = tname;
@@ -42,7 +43,8 @@ export async function POST(request: NextRequest) {
       teacherData.bonus = bonus;
       teacherData.address = address;
       await teacherData.save();
-      let userData = await User.findOne(id);
+
+      let userData = await User.findOne({ id: id });
       if (userData) {
         userData.empid = empid;
         userData.tname = tname;
@@ -71,6 +73,7 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error: any) {
+    console.log(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
