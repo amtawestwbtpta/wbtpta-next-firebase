@@ -604,3 +604,25 @@ export const getServiceLife = (date) => {
     return `${months} months`;
   }
 };
+
+export const filterArrayExtraItems = (x, y) => {
+  return x.filter((item) => !y.includes(item));
+};
+export const filterArraySameItems = (x, y) => {
+  return x.filter((item) => y.includes(item));
+};
+export const uniqArray = (a) => [...new Set(a)];
+export const monthNamesWithIndex = [
+  { monthName: "January", index: "01", rank: 1 },
+  { monthName: "February", index: "02", rank: 2 },
+  { monthName: "March", index: "03", rank: 3 },
+  { monthName: "April", index: "04", rank: 4 },
+  { monthName: "May", index: "05", rank: 5 },
+  { monthName: "June", index: "06", rank: 6 },
+  { monthName: "July", index: "07", rank: 7 },
+  { monthName: "August", index: "08", rank: 8 },
+  { monthName: "September", index: "09", rank: 9 },
+  { monthName: "October", index: "10", rank: 10 },
+  { monthName: "November", index: "11", rank: 11 },
+  { monthName: "December", index: "12", rank: 12 },
+];

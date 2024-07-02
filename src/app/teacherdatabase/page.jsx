@@ -29,7 +29,6 @@ import {
 import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
-import { DA, HRA } from "../../modules/constants";
 const TeacherDatabase = () => {
   const {
     state,
