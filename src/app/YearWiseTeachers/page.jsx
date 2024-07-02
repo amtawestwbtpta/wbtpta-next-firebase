@@ -193,7 +193,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => navigate(-1)}
+                onClick={() => router.back()}
               >
                 Go Back
               </button>
@@ -286,7 +286,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => navigate(-1)}
+                onClick={() => router.back()}
               >
                 Go Back
               </button>
