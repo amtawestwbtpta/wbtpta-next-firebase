@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   getServiceLife,
   monthNamesWithIndex,
+  months,
   uniqArray,
 } from "../../modules/calculatefunctions";
 
@@ -124,7 +125,7 @@ const YearWiseTeachers = () => {
         </select>
       </div>
       {selectedYear ? (
-        <div>
+        <div className="noprint">
           {joiningMonths.length > 1 && (
             <h4 className="text-center text-primary">
               Filter By Joining Month
@@ -142,6 +143,12 @@ const YearWiseTeachers = () => {
               onChange={(e) => {
                 if (e.target.value) {
                   handleMonthChange(JSON.parse(e.target.value));
+                } else {
+                  setMonthText("");
+                  setFilteredData(moreFilteredData);
+                  if (typeof window !== undefined) {
+                    document.getElementById("month-select").value = "";
+                  }
                 }
               }}
               aria-label="Default select example"
@@ -193,19 +200,58 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => router.back()}
+                onClick={() => navigate(-1)}
               >
                 Go Back
               </button>
             </div>
           </div>
-          <h4 className="text-center text-primary">
-            {moreFilteredData.length > 1 ? "Teachers" : "Teacher"} Joined on
-            Year {selectedYear} {monthText ? ", " + monthText : null}
-          </h4>
-          <h4 className="text-center text-primary">
-            Total {filteredData.length} Teachers
-          </h4>
+
+          {moreFilteredData.length > 1 ? (
+            <div>
+              <h4 className="text-center text-primary">
+                {moreFilteredData.length > 1
+                  ? `Total ${moreFilteredData.length} Teachers`
+                  : `Total ${moreFilteredData.length} Teacher`}{" "}
+                Joined on Year {selectedYear}
+              </h4>
+              {monthText && (
+                <div>
+                  <h4 className="text-center text-primary">
+                    {filteredData.length}
+                    {filteredData.length > 1 ? " Teachers" : " Teacher"} Joined
+                    on {monthText}
+                  </h4>
+                  <button
+                    type="button"
+                    className="btn btn-danger noprint p-2 rounded"
+                    onClick={() => {
+                      setFilteredData(moreFilteredData);
+                      setMonthText("");
+                      if (typeof window !== undefined) {
+                        let monthSelect =
+                          document.getElementById("month-select");
+                        if (monthSelect) {
+                          monthSelect.value = "";
+                        }
+                      }
+                    }}
+                  >
+                    Clear Filter
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div>
+              <h4 className="text-center text-primary">
+                1 Teacher Joined on{" "}
+                {filteredData.length > 0 &&
+                  months[parseInt(filteredData[0].doj?.split("-")[1]) - 1]}{" "}
+                {selectedYear}
+              </h4>
+            </div>
+          )}
         </div>
       )}
       <div className="container text-center">
@@ -286,7 +332,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => router.back()}
+                onClick={() => navigate(-1)}
               >
                 Go Back
               </button>
