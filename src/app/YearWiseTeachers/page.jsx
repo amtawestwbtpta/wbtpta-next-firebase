@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "../context/Store";
+import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import {
   getServiceLife,
