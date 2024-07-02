@@ -1,12 +1,8 @@
 "use client";
-
 import ropa from "../../modules/ropa";
-
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
   NumInWords,
   GetMonthName,
@@ -17,10 +13,6 @@ import { DA, HRA } from "../../modules/constants";
 const PaySlipOsmsNew = () => {
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
-
-  const searchParams = useSearchParams();
-
-  // let details = JSON.parse(searchParams.get("details"));
   let details = stateObject;
   let tname,
     desig,
