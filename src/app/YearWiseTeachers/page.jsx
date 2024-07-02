@@ -15,13 +15,20 @@ const YearWiseTeachers = () => {
 
   const [filteredData, setFilteredData] = useState([]);
   const [moreFilteredData, setMoreFilteredData] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [monthText, setMonthText] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [joiningMonths, setJoiningMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
 
   const handleChange = (e) => {
     if (e.target.value !== "") {
+      if (typeof window !== undefined) {
+        let monthSelect = document.getElementById("month-select");
+        if (monthSelect) {
+          monthSelect.value = "";
+        }
+      }
+      setMonthText("");
       const selectedValue = e.target.value;
       let x = [];
       let y = [];
@@ -53,11 +60,12 @@ const YearWiseTeachers = () => {
     data.map((teacher) => {
       const joiningYear = teacher.doj.split("-")[2];
       const joiningMonth = teacher.doj.split("-")[1];
-      if (joiningYear === selectedYear && joiningMonth === month) {
+      if (joiningYear === selectedYear && joiningMonth === month.index) {
         return x.push(teacher);
       }
     });
     setFilteredData(x);
+    setMonthText(month.monthName);
   };
   const getData = () => {
     let x = [];
@@ -129,11 +137,11 @@ const YearWiseTeachers = () => {
           <div className="col-md-4 mx-auto mb-3 noprint">
             <select
               className="form-select"
+              id="month-select"
               defaultValue={""}
               onChange={(e) => {
-                let value = e.target.value;
-                if (value) {
-                  handleMonthChange(value);
+                if (e.target.value) {
+                  handleMonthChange(JSON.parse(e.target.value));
                 }
               }}
               aria-label="Default select example"
@@ -145,7 +153,7 @@ const YearWiseTeachers = () => {
                 <option
                   className="text-center text-success"
                   key={index}
-                  value={month.index}
+                  value={JSON.stringify(month)}
                 >
                   {month.monthName +
                     " - " +
@@ -185,7 +193,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => router.back()}
+                onClick={() => navigate(-1)}
               >
                 Go Back
               </button>
@@ -193,7 +201,7 @@ const YearWiseTeachers = () => {
           </div>
           <h4 className="text-center text-primary">
             {moreFilteredData.length > 1 ? "Teachers" : "Teacher"} Joined on
-            Year {selectedYear}
+            Year {selectedYear} {monthText ? ", " + monthText : null}
           </h4>
           <h4 className="text-center text-primary">
             Total {filteredData.length} Teachers
@@ -278,7 +286,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => router.back()}
+                onClick={() => navigate(-1)}
               >
                 Go Back
               </button>
