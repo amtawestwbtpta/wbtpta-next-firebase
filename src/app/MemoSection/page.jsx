@@ -24,6 +24,7 @@ import { v4 as uuid } from "uuid";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 
 import {
+  createDownloadLink,
   DateValueToSring,
   getCurrentDateInput,
   getSubmitDateInput,
@@ -625,6 +626,15 @@ const MemoSection = () => {
             data-bs-target="#addmemo"
           >
             Add Memo
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-warning"
+            onClick={() => {
+              createDownloadLink(memoState, "memos");
+            }}
+          >
+            Download Memo Data
           </button>
         </div>
       )}

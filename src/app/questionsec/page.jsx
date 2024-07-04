@@ -28,7 +28,10 @@ import { EffectCube } from "swiper";
 import { ImSwitch } from "react-icons/im";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { v4 as uuid } from "uuid";
-import { round2dec } from "../../modules/calculatefunctions";
+import {
+  createDownloadLink,
+  round2dec,
+} from "../../modules/calculatefunctions";
 function QuestionSec() {
   const router = useRouter();
   const [docId, setDocId] = useState(uuid().split("-")[0]);
@@ -506,14 +509,28 @@ function QuestionSec() {
         >
           Print Question All Compact
         </button>
-        {/* <Link
-          className="btn btn-sm btn-info "
-          href={`/PrintQuestionAllCompact?allData=${JSON.stringify(
-            data
-          )}&qRate=${JSON.stringify(qRateData)}`}
-        >
-          Print Question All Compact
-        </Link> */}
+        {state === "admin" && (
+          <div>
+            <button
+              type="button"
+              className="btn btn-sm m-3 btn-warning"
+              onClick={() => {
+                createDownloadLink(questionState, "questions");
+              }}
+            >
+              Download Question Data
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm m-3 btn-warning"
+              onClick={() => {
+                createDownloadLink(questionRateState, "question_rate");
+              }}
+            >
+              Download Question Rate Data
+            </button>
+          </div>
+        )}
 
         <div
           className="modal fade"

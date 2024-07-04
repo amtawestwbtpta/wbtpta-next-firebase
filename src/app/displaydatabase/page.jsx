@@ -19,6 +19,7 @@ import { ref, deleteObject } from "firebase/storage";
 import { ToastContainer, toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
+import { createDownloadLink } from "../../modules/calculatefunctions";
 const DisplayDatabase = () => {
   const {
     state,
@@ -456,7 +457,15 @@ const DisplayDatabase = () => {
           <h3 className="text-center text-primary">
             Displaying Users Database
           </h3>
-
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-warning"
+            onClick={() => {
+              createDownloadLink(data, "userteachers");
+            }}
+          >
+            Download User Data
+          </button>
           <DataTable
             columns={columns}
             data={filteredData}

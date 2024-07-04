@@ -362,7 +362,7 @@ const Navbar = () => {
               Display Requests
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               className="nav-link"
               href="/UniformComplainsDisplay"
@@ -370,7 +370,7 @@ const Navbar = () => {
             >
               Display Uniform Complain
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -399,7 +399,7 @@ const Navbar = () => {
               Downloads
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link
               className="nav-link"
               href="/FlexibleComp"
@@ -407,7 +407,7 @@ const Navbar = () => {
             >
               Flexible Component
             </Link>
-          </li> */}
+          </li>
 
           <li className="nav-item">
             <Link

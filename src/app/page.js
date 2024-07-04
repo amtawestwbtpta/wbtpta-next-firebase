@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import SwiperSlides from "../components/SwiperSlides";
 import Typed from "typed.js";
+import { useGlobalContext } from "../context/Store";
+import { createDownloadLink } from "../modules/calculatefunctions";
 export default function Home() {
+  const { state, slideState } = useGlobalContext();
   const el = React.useRef(null);
   const [width, setWidth] = useState(100);
 
@@ -42,6 +45,17 @@ export default function Home() {
       </div>
 
       <SwiperSlides />
+      {state === "admin" && slideState.length > 0 && (
+        <button
+          type="button"
+          className="btn btn-sm m-5 btn-warning"
+          onClick={() => {
+            createDownloadLink(slideState, "slides");
+          }}
+        >
+          Download Slide Data
+        </button>
+      )}
     </div>
   );
 }

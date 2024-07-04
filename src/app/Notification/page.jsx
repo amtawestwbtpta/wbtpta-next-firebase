@@ -24,7 +24,10 @@ import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 
-import { DateValueToSring } from "../../modules/calculatefunctions";
+import {
+  createDownloadLink,
+  DateValueToSring,
+} from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
 import { useGlobalContext } from "../../context/Store";
@@ -408,6 +411,15 @@ const Notification = () => {
             data-bs-target="#addNotice"
           >
             Add Notice
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-warning"
+            onClick={() => {
+              createDownloadLink(noticeState, "notices");
+            }}
+          >
+            Download Notice Data
           </button>
         </div>
       )}

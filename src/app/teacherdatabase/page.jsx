@@ -23,6 +23,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Loader from "../../components/Loader";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
+  createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
 } from "../../modules/calculatefunctions";
@@ -33,6 +34,7 @@ const TeacherDatabase = () => {
   const {
     state,
     teachersState,
+    schoolState,
     setTeachersState,
     setStateObject,
     setTeacherUpdateTime,
@@ -843,6 +845,24 @@ const TeacherDatabase = () => {
           <Link className="btn btn-sm btn-success m-3" href="/AddTeacher">
             Add Teacher
           </Link>
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-warning"
+            onClick={() => {
+              createDownloadLink(teachersState, "teachers");
+            }}
+          >
+            Download Teacher Data
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-info"
+            onClick={() => {
+              createDownloadLink(schoolState, "schools");
+            }}
+          >
+            Download School Data
+          </button>
           {/* <!-- Button trigger modal --> */}
 
           {/* <!-- Modal --> */}
