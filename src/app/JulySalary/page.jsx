@@ -101,6 +101,7 @@ const JulySalary = () => {
               let gross = basic + da + hra + addl + ma;
               let gpf = el.gpf;
               let gsli = el.gsli;
+              let disability = el.disability;
               let ptax;
               if (gross > 40000) {
                 ptax = 200;
@@ -111,6 +112,9 @@ const JulySalary = () => {
               } else if (gross > 10000) {
                 ptax = 110;
               } else {
+                ptax = 0;
+              }
+              if (disability === "YES") {
                 ptax = 0;
               }
               let netpay = gross - gpf - gsli - ptax;
