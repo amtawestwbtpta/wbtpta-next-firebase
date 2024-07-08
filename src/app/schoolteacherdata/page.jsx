@@ -13,6 +13,7 @@ const page = () => {
     teachersState,
     setSchoolUpdateTime,
     setStateArray,
+    setStateObject,
   } = useGlobalContext();
   const router = useRouter();
 
@@ -656,6 +657,30 @@ const page = () => {
                 {el.hoi === "Yes" ? (
                   <h6 className="text-success">Head of The Institute</h6>
                 ) : null}
+                {state === "admin" && (
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-warning btn-sm mx-2"
+                      onClick={() => {
+                        router.push("/EditTeacher");
+                        setStateObject(el);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-success"
+                      onClick={() => {
+                        router.push("/ViewDetails");
+                        setStateObject(el);
+                      }}
+                    >
+                      View
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}

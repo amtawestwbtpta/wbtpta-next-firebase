@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import DataTable from "react-data-table-component";
@@ -23,6 +23,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Loader from "../../components/Loader";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
+  compareObjects,
   createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
@@ -64,9 +65,11 @@ const TeacherDatabase = () => {
     teacherdetails = decryptObjData("tid");
   }
   const [search, setSearch] = useState("");
+  const [schSearch, setSchSearch] = useState("");
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
   const [inputField, setinputField] = useState({});
+  const [editTeacherData, setEditTeacherData] = useState({});
   const [schoolFilterData, setSchoolFilterData] = useState([]);
   const [schUdise, setSchUdise] = useState("");
   const [updId, setUpdId] = useState("");
@@ -109,7 +112,15 @@ const TeacherDatabase = () => {
     setFilteredData(result);
     setSchoolFilterData(data.filter((el) => el.udise.match(schUdise)));
     // eslint-disable-next-line
-  }, [search, inputField, data, updId, schUdise, selectedTeacher]);
+  }, [search, schSearch, inputField, data, updId, schUdise, selectedTeacher]);
+  useEffect(() => {
+    // console.log(data);
+    const result = data.filter((el) => {
+      return el.school.toLowerCase().match(schSearch.toLowerCase());
+    });
+    setFilteredData(result);
+    // eslint-disable-next-line
+  }, [search, schSearch, inputField, data, updId, schUdise, selectedTeacher]);
   useEffect(() => {
     // console.log(data);
     const delResult = allDelTeachers.filter((el) => {
@@ -190,6 +201,7 @@ const TeacherDatabase = () => {
           data-bs-target="#staticBackdrop"
           onClick={(e) => {
             setinputField(row);
+            setEditTeacherData(row);
             setUpdId(row.id);
             setSelectedTeacher(row);
             setSchUdise(row.udise);
@@ -899,20 +911,38 @@ const TeacherDatabase = () => {
                     <div className="row align-items-end">
                       <div className="mb-3 col-md-3">
                         <label className="form-label">School Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="school"
-                          name="school"
-                          placeholder="School Name"
-                          value={inputField.school}
+                        <select
+                          className="form-select"
+                          value={
+                            inputField?.school +
+                            "-" +
+                            inputField?.udise +
+                            "-" +
+                            inputField?.gp
+                          }
+                          id="school-name"
                           onChange={(e) => {
                             setinputField({
                               ...inputField,
-                              school: e.target.value,
+                              school: e.target.value.split("-")[0],
+                              udise: e.target.value.split("-")[1],
+                              gp: e.target.value.split("-")[2],
                             });
                           }}
-                        />
+                          aria-label="Default select example"
+                        >
+                          <option value="">Select School Name</option>
+                          {schoolState.map((el) => {
+                            return (
+                              <option
+                                key={el.id}
+                                value={el.school + "-" + el.udise + "-" + el.gp}
+                              >
+                                {el.school}
+                              </option>
+                            );
+                          })}
+                        </select>
                       </div>
                       <div className="mb-3 col-md-3">
                         <label className="form-label">UDISE</label>
@@ -1061,7 +1091,32 @@ const TeacherDatabase = () => {
                           <option value="No">No</option>
                         </select>
                       </div>
-
+                      <div className="mb-3 col-md-3">
+                        <label className="form-label">Teacher Rank</label>
+                        <br />
+                        <select
+                          className="form-select form-select-sm"
+                          name="rank"
+                          id="rank"
+                          aria-label=".form-select-sm example"
+                          value={inputField?.rank}
+                          onChange={(e) => {
+                            setinputField({
+                              ...inputField,
+                              rank: parseInt(e.target.value),
+                            });
+                          }}
+                        >
+                          <option value="">Select Teacher Rank</option>
+                          {filteredData
+                            .filter((elem) => elem.udise === inputField.udise)
+                            .map((teacher, ind) => (
+                              <option key={ind} value={teacher.rank}>
+                                {teacher.rank}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
                       <div className="mb-0 col-md-3">
                         <label className="form-label">User Access Type</label>
                         <br />
@@ -1850,7 +1905,22 @@ const TeacherDatabase = () => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={updateData}
+                    disabled={compareObjects(inputField, editTeacherData)}
+                    onClick={() => {
+                      if (!compareObjects(inputField, editTeacherData)) {
+                        updateData();
+                      } else {
+                        toast.error("No Changes Detected!!!", {
+                          position: "top-right",
+                          autoClose: 1500,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
+                      }
+                    }}
                     data-bs-dismiss="modal"
                   >
                     Update
@@ -1868,13 +1938,26 @@ const TeacherDatabase = () => {
             fixedHeader
             subHeader
             subHeaderComponent={
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-25 form-control"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+              <div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    placeholder="Search by Teacher"
+                    className="form-control"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <div className="mb-2">
+                  <input
+                    type="text"
+                    placeholder="Search by School"
+                    className="form-control"
+                    value={schSearch}
+                    onChange={(e) => setSchSearch(e.target.value)}
+                  />
+                </div>
+              </div>
             }
             subHeaderAlign="right"
           />

@@ -13,7 +13,7 @@ const JulySalary = () => {
     if (state !== "admin") {
       router.push("/logout");
     }
-    document.title = "WBTPTA AMTA WEST:All Teacher July Salary Data";
+
     !isclicked
       ? (document.title = "WBTPTA AMTA WEST:All Teacher's July Salary Data")
       : (document.title =
@@ -119,21 +119,21 @@ const JulySalary = () => {
               }
               let netpay = gross - gpf - gsli - ptax;
               return (
-                <tr key={ind}>
-                  <td>{ind + 1}</td>
-                  <td>{el.tname}</td>
-                  <td>{el.school}</td>
-                  <td>{el.desig}</td>
-                  <td>{basic}</td>
-                  <td>{da}</td>
-                  <td>{hra}</td>
-                  <td>{addl}</td>
-                  <td>{ma}</td>
-                  <td>{gross}</td>
-                  <td>{gpf}</td>
-                  <td>{gsli}</td>
-                  <td>{ptax}</td>
-                  <td>{netpay}</td>
+                <tr key={ind} className="nobreak">
+                  <td className="nobreak">{ind + 1}</td>
+                  <td className="nobreak">{el.tname}</td>
+                  <td className="nobreak">{el.school}</td>
+                  <td className="nobreak">{el.desig}</td>
+                  <td className="nobreak">{basic}</td>
+                  <td className="nobreak">{da}</td>
+                  <td className="nobreak">{hra}</td>
+                  <td className="nobreak">{addl}</td>
+                  <td className="nobreak">{ma}</td>
+                  <td className="nobreak">{gross}</td>
+                  <td className="nobreak">{gpf}</td>
+                  <td className="nobreak">{gsli}</td>
+                  <td className="nobreak">{ptax}</td>
+                  <td className="nobreak">{netpay}</td>
                 </tr>
               );
             })}

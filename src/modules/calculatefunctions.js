@@ -80,15 +80,11 @@ export function NumInWords(number) {
 }
 
 export function titleCase(str) {
-  if (str !== undefined) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  } else {
-    return "";
+  str = str.toLowerCase().split(" ");
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
   }
+  return str.join(" ");
 }
 
 export function percentTotal(value) {
@@ -219,8 +215,18 @@ export function randBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export const RoundTo = (number, roundto) =>
-  roundto * Math.round(number / roundto);
+export const RoundTo = (number, multiple) => {
+  // Calculate the remainder when number is divided by multiple
+  var remainder = number % multiple;
+
+  // If remainder is less than half of multiple, round down
+  // Otherwise, round up
+  if (remainder < multiple / 2) {
+    return number - remainder;
+  } else {
+    return number + multiple - remainder;
+  }
+};
 
 export function GetMonthName(monthNumber) {
   monthNumber = monthNumber < 0 ? 11 : monthNumber;
@@ -462,6 +468,20 @@ export const months = [
   "November",
   "December",
 ];
+export const finMonths = [
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+  "January",
+  "February",
+  "March",
+];
 export const getMonthDays = [31, 30, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 export function compareObjects(x, y) {
@@ -560,7 +580,7 @@ export function removeDuplicateValues(books) {
 }
 export function uniq(a) {
   return a.sort().filter(function (item, pos, ary) {
-    return !pos || item != ary[pos - 1];
+    return !pos || item !== ary[pos - 1];
   });
 }
 
@@ -604,7 +624,6 @@ export const getServiceLife = (date) => {
     return `${months} months`;
   }
 };
-
 export const filterArrayExtraItems = (x, y) => {
   return x.filter((item) => !y.includes(item));
 };
