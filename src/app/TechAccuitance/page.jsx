@@ -13,6 +13,7 @@ const TechAccuitance = () => {
   const [mainData, setMainData] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [school, setSchool] = useState("");
+  const [editTeacher, setEditTeacher] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   useEffect(() => {
     if (!state) {
@@ -61,7 +62,7 @@ const TechAccuitance = () => {
   }, [year, filteredData, mainData]);
 
   return (
-    <div className="container-fluid my-5 mx-auto">
+    <div className="container-fluid my-5">
       {showTable ? (
         <>
           <div className="table-resposive text-center my-2">
@@ -162,7 +163,7 @@ const TechAccuitance = () => {
                           style={{ border: "1px solid" }}
                         >
                           {filteredData.filter((t) => t.id === teacher.id)
-                            .length > 0 && (
+                            .length > 0 ? (
                             <button
                               type="button"
                               className="btn btn-danger btn-sm m-1"
@@ -175,9 +176,7 @@ const TechAccuitance = () => {
                             >
                               Remove
                             </button>
-                          )}
-                          {filteredData.filter((t) => t.id === teacher.id)
-                            .length === 0 && (
+                          ) : (
                             <button
                               type="button"
                               className="btn btn-success btn-sm m-1"
@@ -192,11 +191,200 @@ const TechAccuitance = () => {
                               Add
                             </button>
                           )}
+                          {/* <!-- Button trigger modal --> */}
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop"
+                            onClick={() => {
+                              setEditTeacher(teacher);
+                              if (typeof window !== undefined) {
+                                document.getElementById("rank").value =
+                                  teacher.rank;
+                              }
+                            }}
+                          >
+                            Edit
+                          </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+            {/* <!-- Modal --> */}
+            <div
+              className="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabIndex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                      {editTeacher?.tname}
+                    </h1>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <form>
+                      <div className="mb-3">
+                        <label htmlFor="tname" className="form-label">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="tname"
+                          name="tname"
+                          value={editTeacher?.tname}
+                          onChange={(e) => {
+                            setEditTeacher({
+                              ...editTeacher,
+                              tname: e.target.value,
+                            });
+                          }}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="rank" className="form-label">
+                          Rank
+                        </label>
+
+                        <select
+                          className="form-select form-select-sm"
+                          name="rank"
+                          id="rank"
+                          aria-label=".form-select-sm example"
+                          defaultValue={editTeacher?.rank}
+                          onChange={(e) => {
+                            setEditTeacher({
+                              ...editTeacher,
+                              rank: parseInt(e.target.value),
+                            });
+                          }}
+                        >
+                          <option value="">Select Teacher Rank</option>
+                          {filteredData.map((teacher, ind) => (
+                            <option key={ind} value={ind + 1}>
+                              {ind + 1}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="rank" className="form-label">
+                          March Basic
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="rank"
+                          name="rank"
+                          value={editTeacher?.mbasic}
+                          onChange={(e) => {
+                            if (e.target.value !== "") {
+                              setEditTeacher({
+                                ...editTeacher,
+                                mbasic: parseInt(e.target.value),
+                              });
+                            } else {
+                              setEditTeacher({
+                                ...editTeacher,
+                                mbasic: "",
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="rank" className="form-label">
+                          July Basic
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="rank"
+                          name="rank"
+                          value={editTeacher?.basic}
+                          onChange={(e) => {
+                            if (e.target.value !== "") {
+                              setEditTeacher({
+                                ...editTeacher,
+                                basic: parseInt(e.target.value),
+                              });
+                            } else {
+                              setEditTeacher({
+                                ...editTeacher,
+                                basic: "",
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="rank" className="form-label">
+                          Previous March Basic
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="rank"
+                          name="rank"
+                          value={editTeacher?.prevmbasic}
+                          onChange={(e) => {
+                            if (e.target.value !== "") {
+                              setEditTeacher({
+                                ...editTeacher,
+                                prevmbasic: parseInt(e.target.value),
+                              });
+                            } else {
+                              setEditTeacher({
+                                ...editTeacher,
+                                prevmbasic: "",
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        const updatedArray = filteredData
+                          .map((t) =>
+                            t.id === editTeacher?.id ? editTeacher : t
+                          )
+                          .sort((a, b) => a.rank - b.rank);
+                        setFilteredData(updatedArray);
+                      }}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="mx-auto my-3 noprint">
@@ -248,7 +436,7 @@ const TechAccuitance = () => {
                     </div>
                   </div>
                   <table
-                    className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black nobreak"
+                    className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black"
                     id="team-list"
                   >
                     <thead>
@@ -366,6 +554,7 @@ const TechAccuitance = () => {
                         let addl = el.addl;
                         let ma = el.ma;
                         let gpf = el.gpf;
+                        let gpfprev = el.gpfprev;
                         let gsli = el.gsli;
                         let disability = el.disability;
                         let date = new Date();
@@ -373,14 +562,17 @@ const TechAccuitance = () => {
                         // console.log(junelast)
                         let basicpay;
                         let ptax;
+                        let pfund;
                         if (year === date.getFullYear() - 1) {
                           if (index <= 5) {
                             basicpay = prevmbasic;
+                            pfund = gpfprev;
                             da = Math.round(basicpay * PREV6DA);
                             if (el.newHt) {
                               addl = 0;
                             }
                           } else {
+                            pfund = gpfprev;
                             if (el.newHt && index <= 9) {
                               addl = 0;
                             }
@@ -390,6 +582,7 @@ const TechAccuitance = () => {
                         } else {
                           if (index <= 5) {
                             basicpay = mbasic;
+                            pfund = gpfprev;
                             if (index <= 2) {
                               da = Math.round(basicpay * PREVDA);
                             } else {
@@ -397,6 +590,7 @@ const TechAccuitance = () => {
                             }
                           } else {
                             basicpay = basic;
+                            pfund = gpf;
                             da = Math.round(basicpay * DA);
                           }
                         }
@@ -422,7 +616,7 @@ const TechAccuitance = () => {
                           ptax = 0;
                         }
 
-                        let deduction = gsli + gpf + ptax;
+                        let deduction = gsli + pfund + ptax;
 
                         let netpay = gross - deduction;
 
@@ -492,7 +686,7 @@ const TechAccuitance = () => {
                                 className="text-center"
                                 style={{ border: "1px solid" }}
                               >
-                                {gpf}
+                                {pfund}
                               </td>
                               <td
                                 className="text-center"

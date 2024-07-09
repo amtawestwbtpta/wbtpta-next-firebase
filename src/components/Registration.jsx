@@ -94,7 +94,7 @@ const Registration = ({ data, setSignUpTrue }) => {
         const collectionRef = collection(firestore, "userteachers");
         const q = query(
           collectionRef,
-          where("username", "==", inputField.username)
+          where("username", "==", inputField.username.toLowerCase())
         );
         const querySnapshot = await getDocs(q);
         // console.log(querySnapshot.docs[0].data().pan);
@@ -196,7 +196,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                           dpsc3: inputField.dpsc3,
                           dpsc4: inputField.dpsc4,
                           tan: inputField.tan,
-                          username: inputField.username,
+                          username: inputField.username.toLowerCase(),
                           password: bcrypt.hashSync(inputField.password, 10),
                           createdAt: inputField.createdAt,
                           disabled: false,

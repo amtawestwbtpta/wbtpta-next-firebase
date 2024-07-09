@@ -36,12 +36,14 @@ const PayslipWbtpta = () => {
     pan,
     basic,
     mbasic,
+    prevmbasic,
     addl,
     da,
     hra,
     ma,
     gross,
     gpf,
+    gpfprev,
     ptax,
     gsli,
     udise,
@@ -49,7 +51,7 @@ const PayslipWbtpta = () => {
   } = details;
 
   let netpay;
-
+  let pfund;
   let basicpay;
 
   let today = new Date();
@@ -61,19 +63,34 @@ const PayslipWbtpta = () => {
   if (dataYear === date.getFullYear()) {
     if (index > 6) {
       basicpay = basic;
+      da = Math.round(basicpay * DA);
+      pfund = gpf;
     } else {
       basicpay = mbasic;
+      pfund = gpfprev;
+      if (index < 4) {
+        da = Math.round(basicpay * PREVDA);
+      } else {
+        da = Math.round(basicpay * DA);
+      }
     }
+  } else if (dataYear === date.getFullYear() - 1) {
+    basicpay = prevmbasic;
+    da = Math.round(basicpay * PREV6DA);
+    pfund = gpfprev;
   } else {
+    pfund = gpf;
     if (index > 6) {
       basicpay = RoundTo(basic + basic * 0.03, 100);
+      da = Math.round(basicpay * NEXTDA);
     } else {
       basicpay = basic;
+      da = Math.round(basicpay * DA);
     }
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
-  da = Math.round(basicpay * DA);
+
   hra = Math.round(basicpay * HRA);
 
   gross = basicpay + da + hra + addl + ma;
@@ -94,7 +111,7 @@ const PayslipWbtpta = () => {
     ptax = 0;
   }
 
-  let deduction = gsli + gpf + ptax;
+  let deduction = gsli + pfund + ptax;
 
   netpay = gross - deduction;
 
@@ -378,7 +395,7 @@ const PayslipWbtpta = () => {
                   fontSize: "16px",
                 }}
               >
-                {gpf}
+                {pfund}
               </td>
             </tr>
             <tr>

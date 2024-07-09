@@ -20,13 +20,12 @@ const page = () => {
   const router = useRouter();
   const el = React.useRef(null);
   const [tooltip, setTooltip] = useState(false);
-  // let details = sessionStorage.getItem("teacherdetails");
-  // let details2 = sessionStorage.getItem("userdetails");
   let teacherdetails,
     userdetails,
     udise,
     tname,
     desig,
+    disability,
     school,
     gp,
     url,
@@ -42,31 +41,24 @@ const page = () => {
     empid,
     training,
     pan,
-    dataYear,
     address,
     basic,
     mbasic,
-    da,
-    mda,
-    hra,
-    mhra,
     ma,
-    gross,
-    mgross,
     gpf,
+    gpfprev,
     ptax,
     gsli,
-    netpay,
-    mnetpay,
     addl,
     fname;
   let details = getCookie("tid");
   if (details) {
     teacherdetails = decryptObjData("tid");
     userdetails = decryptObjData("uid");
-    udise = teacherdetails.udi;
+    udise = teacherdetails.udise;
     tname = teacherdetails.tname;
     desig = teacherdetails.desig;
+    disability = teacherdetails.disability;
     school = teacherdetails.school;
     gp = teacherdetails.gp;
     url = userdetails.url;
@@ -85,63 +77,57 @@ const page = () => {
     address = teacherdetails.address;
     basic = teacherdetails.basic;
     mbasic = teacherdetails.mbasic;
-    da = teacherdetails.da;
-    mda = teacherdetails.mda;
-    hra = teacherdetails.hra;
-    mhra = teacherdetails.mhra;
     ma = teacherdetails.ma;
     addl = teacherdetails.addl;
-    gross = teacherdetails.gross;
-    mgross = teacherdetails.mgross;
     gpf = teacherdetails.gpf;
-    ptax = teacherdetails.ptax;
+    gpfprev = teacherdetails.gpfprev;
+
     gsli = teacherdetails.gsli;
-    netpay = teacherdetails.netpay;
-    mnetpay = teacherdetails.mnetpay;
     fname = teacherdetails.fname;
-    dataYear = teacherdetails.dataYear;
   }
 
   let date = new Date();
-  let setda, sethra, setgross, setbasicpay, setnetpay;
+  let setda, sethra, setgross, setbasicpay, setnetpay, pfund;
   let junelast = new Date(`${date.getFullYear()}-07-31`);
-  let nextjunelast = new Date(`${date.getFullYear() + 1}-07-31`);
   if (date >= junelast) {
     setbasicpay = basic;
+    pfund = gpf;
   } else if (
-    date.getMonth() == 0 ||
-    date.getMonth() == 1 ||
-    date.getMonth() == 3
+    date.getMonth() === 0 ||
+    date.getMonth() === 1 ||
+    date.getMonth() === 3
   ) {
     setbasicpay = basic;
+
+    pfund = gpf;
   } else {
     setbasicpay = mbasic;
-  }
 
-  if (dataYear === date.getFullYear()) {
-    if (date >= junelast) {
-      setbasicpay = basic;
-    } else {
-      setbasicpay = mbasic;
-    }
-  } else {
-    if (date >= nextjunelast) {
-      setbasicpay = RoundTo(basic + basic * 0.03, 100);
-    } else {
-      setbasicpay = basic;
-    }
+    pfund = gpfprev;
   }
-
   setda = Math.round(setbasicpay * DA);
   sethra = Math.round(setbasicpay * HRA);
   setgross = setbasicpay + setda + sethra + addl + ma;
-  setnetpay = setgross - gpf - ptax - gsli;
+  if (setgross > 40000) {
+    ptax = 200;
+  } else if (setgross > 25000) {
+    ptax = 150;
+  } else if (setgross > 15000) {
+    ptax = 130;
+  } else if (setgross > 10000) {
+    ptax = 110;
+  } else {
+    ptax = 0;
+  }
+
+  if (disability === "YES") {
+    ptax = 0;
+  }
+  setnetpay = setgross - pfund - ptax - gsli;
 
   const [hide, setHide] = useState(false);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.title = "WBTPTA AMTA WEST:Dashboard";
-    }
+    document.title = "WBTPTA AMTA WEST:Dashboard";
 
     const typed = new Typed(el.current, {
       strings: [`Welcome ${tname},<br /> ${desig}, of <br /> ${school}`],
@@ -440,16 +426,33 @@ const page = () => {
               </div>
             </div>
 
-            {gpf > 0 && (
-              <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-                <div>
-                  <label>GPF: </label>
+            {gpf > 0 ? (
+              gpf === gpfprev ? (
+                <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                  <div>
+                    <label>GPF: </label>
+                  </div>
+                  <div>
+                    <p>{gpf}</p>
+                  </div>
                 </div>
-                <div>
-                  <p>{gpf}</p>
+              ) : (
+                <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                  <div>
+                    <label>March GPF: </label>
+                  </div>
+                  <div>
+                    <p>{gpfprev}</p>
+                  </div>
+                  <div>
+                    <label>April GPF: </label>
+                  </div>
+                  <div>
+                    <p>{gpf}</p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )
+            ) : null}
 
             <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
               <div>

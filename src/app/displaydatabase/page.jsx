@@ -412,7 +412,7 @@ const DisplayDatabase = () => {
   };
 
   const getUserData = () => {
-    const userDifference = (Date.now() - userUpdateTime) / 1000 / 60 / 15;
+    const userDifference = (Date.now() - userUpdateTime) / 1000 / 60 / 3;
     if (userState.length === 0 || userDifference >= 1) {
       userData();
     } else {

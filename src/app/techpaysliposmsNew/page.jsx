@@ -20,6 +20,7 @@ const PaySlipOsmsNew = () => {
     disability,
     empid,
     pan,
+    dataYear,
     basic,
     mbasic,
     addl,
@@ -27,7 +28,9 @@ const PaySlipOsmsNew = () => {
     hra,
     ma,
     gross,
+    prevmbasic,
     gpf,
+    gpfprev,
     ptax,
     gsli,
     udise,
@@ -46,30 +49,55 @@ const PaySlipOsmsNew = () => {
   addl = parseInt(details.addl);
   ma = parseInt(details.ma);
   gpf = parseInt(details.gpf);
+  gpfprev = parseInt(details.gpfprev);
   gsli = parseInt(details.gsli);
   udise = details.udise;
   bank = details.bank;
   account = details.account;
   ifsc = details.ifsc;
+  dataYear = details.dataYear;
 
   let netpay;
 
   let basicpay;
+  let pfund;
   let date = new Date();
   let today = new Date();
   // let date = new Date();
   const [index, setIndex] = useState(today.getMonth());
   const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
   // let junelast = new Date(`${date.getFullYear()}-07-31`);
-
-  if (date.getMonth() === 0 || date.getMonth() === 1 || date.getMonth() === 3) {
-    basicpay = basic;
+  if (dataYear === date.getFullYear()) {
+    if (index > 6) {
+      basicpay = basic;
+      da = Math.round(basicpay * DA);
+      pfund = gpf;
+    } else {
+      basicpay = mbasic;
+      pfund = gpfprev;
+      if (index < 4) {
+        da = Math.round(basicpay * PREVDA);
+      } else {
+        da = Math.round(basicpay * DA);
+      }
+    }
+  } else if (dataYear === date.getFullYear() - 1) {
+    basicpay = prevmbasic;
+    da = Math.round(basicpay * PREV6DA);
+    pfund = gpfprev;
   } else {
-    basicpay = mbasic;
+    pfund = gpfprev;
+    if (index > 6) {
+      basicpay = RoundTo(basic + basic * 0.03, 100);
+      da = Math.round(basicpay * NEXTDA);
+    } else {
+      basicpay = basic;
+      da = Math.round(basicpay * DA);
+    }
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
-  da = Math.round(basicpay * DA);
+
   hra = Math.round(basicpay * HRA);
 
   gross = basicpay + da + hra + addl + ma;
@@ -90,7 +118,7 @@ const PaySlipOsmsNew = () => {
     ptax = 0;
   }
 
-  let deduction = gsli + gpf + ptax;
+  let deduction = gsli + pfund + ptax;
 
   netpay = gross - deduction;
 
@@ -404,7 +432,7 @@ const PaySlipOsmsNew = () => {
                     >
                       <table style={{ marginRight: "5px" }}>
                         <tr>
-                          <td style={{ textAlign: "right" }}>{gpf}</td>
+                          <td style={{ textAlign: "right" }}>{pfund}</td>
                         </tr>
                         <tr>
                           <td style={{ textAlign: "right" }}>0</td>
