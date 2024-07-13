@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { decryptObjData, getCookie } from "../modules/encryption";
 import { firestore } from "../context/FirbaseContext";
@@ -33,7 +33,7 @@ const Navbar = () => {
     userdetails = decryptObjData("uid");
     loggedAt = getCookie("loggedAt");
   }
-
+  const [isAccepting, setIsAccepting] = useState(false);
   const handleNavCollapse = () => {
     if (typeof window !== "undefined") {
       // browser code
@@ -115,6 +115,17 @@ const Navbar = () => {
       router.push("/logout");
     }
   };
+  const getAcceptingData = async () => {
+    const collectionRef = collection(firestore, "questionRequisition");
+    const q = query(collectionRef, where("id", "==", "qKMMuy5GY8yEA3mORthA"));
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs.map((doc) => doc.data())[0];
+    if (data.isAccepting) {
+      setIsAccepting(true);
+    } else {
+      setIsAccepting(false);
+    }
+  };
   useEffect(() => {
     if (details) {
       if ((Date.now() - loggedAt) / 1000 / 60 / 15 < 1) {
@@ -131,9 +142,10 @@ const Navbar = () => {
     if (schDifference >= 1 || schoolState.length === 0) {
       storeSchoolData();
     }
+    getAcceptingData();
     // eslint-disable-next-line
   }, []);
-
+  useEffect(() => {}, [isAccepting]);
   const RenderMenu = () => {
     if (state === "admin") {
       return (
@@ -464,6 +476,17 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
+          {isAccepting && (
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                href="/QuestionRequisition"
+                onClick={handleNavCollapse}
+              >
+                Question Requisition
+              </Link>
+            </li>
+          )}
           <div className="row">
             <li className="nav-item">
               <img
@@ -737,6 +760,17 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
+          {isAccepting && (
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                href="/QuestionRequisition"
+                onClick={handleNavCollapse}
+              >
+                Question Requisition
+              </Link>
+            </li>
+          )}
           <div className="row">
             <li className="nav-item">
               <img
@@ -890,6 +924,17 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
+          {isAccepting && (
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                href="/QuestionRequisition"
+                onClick={handleNavCollapse}
+              >
+                Question Requisition
+              </Link>
+            </li>
+          )}
           <li className="nav-item">
             <Link
               className="nav-link"

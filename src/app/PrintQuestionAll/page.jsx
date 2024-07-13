@@ -5,7 +5,7 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { NumInWords, round2dec } from "../../modules/calculatefunctions";
 const PrintQuestionAll = () => {
-  const { state, stateArray } = useGlobalContext();
+  const { state, stateObject, questionRateState } = useGlobalContext();
   const router = useRouter();
 
   const [allData, setAllData] = useState([]);
@@ -29,8 +29,8 @@ const PrintQuestionAll = () => {
   let year = qRate.year;
 
   useEffect(() => {
-    setAllData(stateArray[0]);
-    setQRate(stateArray[1]);
+    setAllData(stateObject);
+    setQRate(questionRateState);
     document.title = "WBTPTA AMTA WEST:Print All Question Invoice";
     if (!state) {
       router.push("/login");

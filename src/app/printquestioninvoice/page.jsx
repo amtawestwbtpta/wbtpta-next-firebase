@@ -54,9 +54,6 @@ const PrintQuestionInvoice = () => {
     document.title = `Question Invoice of ${school}`;
     setAllData(stateObject);
     setQRate(questionRateState);
-    if (!state) {
-      router.push("/login");
-    }
   }, [stateObject, questionRateState]);
   return (
     <Suspense>

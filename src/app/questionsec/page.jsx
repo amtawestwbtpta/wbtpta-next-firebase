@@ -36,6 +36,7 @@ function QuestionSec() {
   const router = useRouter();
   const [docId, setDocId] = useState(uuid().split("-")[0]);
   const [serial, setSerial] = useState(0);
+  const [isAccepting, setIsAccepting] = useState(true);
   let details = getCookie("tid");
   if (details) {
     details = decryptObjData("tid");
@@ -494,7 +495,7 @@ function QuestionSec() {
           onClick={() => {
             router.push("/PrintQuestionAll");
 
-            setStateArray([data, qRateData]);
+            setStateObject(data);
           }}
         >
           Print All Invoice
@@ -504,7 +505,7 @@ function QuestionSec() {
           className="btn btn-sm btn-info"
           onClick={() => {
             router.push("/PrintQuestionAllCompact");
-            setStateArray([data, qRateData]);
+            setStateObject(data);
           }}
         >
           Print Question All Compact
