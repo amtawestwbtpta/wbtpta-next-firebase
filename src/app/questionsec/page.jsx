@@ -51,7 +51,6 @@ function QuestionSec() {
     questionRateState,
     setQuestionRateState,
     schoolState,
-    setStateArray,
     setStateObject,
   } = useGlobalContext();
 
@@ -69,6 +68,7 @@ function QuestionSec() {
     year: new Date().getFullYear(),
   });
   const [selectedSchool, setSelectedSchool] = useState({});
+
   const [inputField, setInputField] = useState({});
   const [addInputField, setAddInputField] = useState({
     id: docId,
@@ -345,6 +345,90 @@ function QuestionSec() {
       });
     }
   };
+  const getAcceptingData = async () => {
+    const collectionRef = collection(firestore, "questionRequisition");
+    const q = query(collectionRef, where("id", "==", "qKMMuy5GY8yEA3mORthA"));
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs.map((doc) => doc.data())[0];
+    if (data.isAccepting) {
+      setIsAccepting(true);
+    } else {
+      setIsAccepting(false);
+    }
+  };
+
+  const closeAccepting = async () => {
+    const docRef = doc(
+      firestore,
+      "questionRequisition",
+      "qKMMuy5GY8yEA3mORthA"
+    );
+    await updateDoc(docRef, {
+      isAccepting: false,
+    })
+      .then(() => {
+        setIsAccepting(false);
+        toast.success("Accepting Status Updated Successfully!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((e) => {
+        toast.error("Something Went Wrong in Server!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.log(e);
+      });
+  };
+  const openAccepting = async () => {
+    const docRef = doc(
+      firestore,
+      "questionRequisition",
+      "qKMMuy5GY8yEA3mORthA"
+    );
+    await updateDoc(docRef, {
+      isAccepting: true,
+    })
+      .then(() => {
+        setIsAccepting(true);
+        toast.success("Accepting Status Updated Successfully!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((e) => {
+        toast.error("Something Went Wrong in Server!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Section";
@@ -352,7 +436,7 @@ function QuestionSec() {
       router.push("/login");
     }
     getQuestionData();
-
+    getAcceptingData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -530,6 +614,18 @@ function QuestionSec() {
             >
               Download Question Rate Data
             </button>
+            <div>
+              <p className="text-center text-primary">Accepting Section</p>
+              {isAccepting ? (
+                <button type="button" className="btn">
+                  {<ImSwitch color={"green"} onClick={closeAccepting} />}
+                </button>
+              ) : (
+                <button type="button" className="btn">
+                  {<ImSwitch color={"red"} onClick={openAccepting} />}
+                </button>
+              )}
+            </div>
           </div>
         )}
 
