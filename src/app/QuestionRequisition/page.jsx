@@ -164,7 +164,7 @@ const QuestionRequisition = () => {
         await setDoc(doc(firestore, "questions", docId), addInputField)
           .then(() => {
             setSubmitted(true);
-            let x = setQuestionState(
+            setQuestionState(
               [...questionState, addInputField].sort((a, b) => {
                 // First, compare the "school" keys
                 if (a.gp < b.gp) {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
@@ -32,16 +33,9 @@ import {
   createDownloadLink,
   round2dec,
 } from "../../modules/calculatefunctions";
+import Loader from "../../components/Loader";
 function QuestionSec() {
   const router = useRouter();
-  const [docId, setDocId] = useState(uuid().split("-")[0]);
-  const [serial, setSerial] = useState(0);
-  const [isAccepting, setIsAccepting] = useState(true);
-  let details = getCookie("tid");
-  if (details) {
-    details = decryptObjData("tid");
-  }
-  const questionadmin = details?.question;
   const {
     state,
     questionState,
@@ -53,22 +47,19 @@ function QuestionSec() {
     schoolState,
     setStateObject,
   } = useGlobalContext();
-
+  const [docId, setDocId] = useState(uuid().split("-")[0]);
+  const [serial, setSerial] = useState(0);
+  let details = getCookie("tid");
+  if (details) {
+    details = decryptObjData("tid");
+  }
+  const questionadmin = details?.question;
+  const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
+  const [isAccepting, setIsAccepting] = useState(true);
   const [showSlide, setShowSlide] = useState(false);
-  const [qData, setQData] = useState([]);
-  const [qRateData, setQRateData] = useState({
-    question_pp_rate: 0,
-    question_1_rate: 0,
-    question_2_rate: 0,
-    question_3_rate: 0,
-    question_4_rate: 0,
-    question_5_rate: 0,
-    term: "1st",
-    year: new Date().getFullYear(),
-  });
-  const [selectedSchool, setSelectedSchool] = useState({});
 
+  const [selectedSchool, setSelectedSchool] = useState({});
   const [inputField, setInputField] = useState({});
   const [addInputField, setAddInputField] = useState({
     id: docId,
@@ -87,7 +78,6 @@ function QuestionSec() {
     total_student: 0,
     total_rate: 0,
   });
-  const [schoolData, setSchoolData] = useState([]);
   const [questionInputField, setQuestionInputField] = useState({
     question_pp_rate: 0,
     question_1_rate: 0,
@@ -102,19 +92,28 @@ function QuestionSec() {
     const q = query(collection(firestore, "questions"));
 
     const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setQData(data);
+    const data = querySnapshot.docs
+      .map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .sort((b, a) => {
+        // First, compare the "school" keys
+        if (a.gp < b.gp) {
+          return -1;
+        }
+        if (a.gp > b.gp) {
+          return 1;
+        }
+      });
+
     setQuestionState(data);
     setQuestionUpdateTime(Date.now());
     setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
     setSerial(data.length + 1);
     setShowSlide(true);
     setData(data);
-    setSchoolData(schoolState);
     const q2 = query(collection(firestore, "question_rate"));
 
     const querySnapshot2 = await getDocs(q2);
@@ -123,7 +122,6 @@ function QuestionSec() {
       ...doc.data(),
       id: doc.id,
     }));
-    setQRateData(data2[0]);
     setQuestionRateState(data2[0]);
     setQuestionInputField({
       id: data2[0].id,
@@ -138,62 +136,98 @@ function QuestionSec() {
     });
   };
   const changeData = (e) => {
-    setSelectedSchool(qData.filter((el) => el.udise.match(e.target.value))[0]);
+    setSelectedSchool(
+      questionState.filter((el) => el.udise.match(e.target.value))[0]
+    );
+    setInputField(
+      questionState.filter((el) => el.udise.match(e.target.value))[0]
+    );
   };
 
   const addSchool = async () => {
-    try {
-      await setDoc(doc(firestore, "questions", docId), addInputField)
-        .then(() => {
-          setQuestionState([...questionState, addInputField]);
-          setQuestionUpdateTime(Date.now());
-          toast.success("School Successfully Added!!!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
+    setLoader(true);
+    const collectionRef = collection(firestore, "questions");
+    const q = query(collectionRef, where("udise", "==", addInputField.udise));
+    const querySnapshot = await getDocs(q);
 
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+    if (querySnapshot.docs.length === 0) {
+      try {
+        await setDoc(doc(firestore, "questions", docId), addInputField)
+          .then(() => {
+            setQuestionState(
+              [...questionState, addInputField].sort((b, a) => {
+                // First, compare the "school" keys
+                if (a.gp < b.gp) {
+                  return -1;
+                }
+                if (a.gp > b.gp) {
+                  return 1;
+                }
+              })
+            );
+            setQuestionUpdateTime(Date.now());
+            toast.success("School Successfully Added!!!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setAddInputField({
+              id: docId,
+              school: "",
+              gp: "",
+              udise: "",
+              cl_pp_student: 0,
+              cl_1_student: 0,
+              cl_2_student: 0,
+              cl_3_student: 0,
+              cl_4_student: 0,
+              cl_5_student: 0,
+              payment: "Due",
+              paid: 0,
+              total_student: 0,
+              total_rate: 0,
+            });
+            setLoader(false);
+            if (typeof window !== undefined) {
+              document.getElementById("school").value = "";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoader(false);
+            toast.error("Something Went Wrong in Server!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           });
-          setAddInputField({
-            id: docId,
-            school: "",
-            gp: "",
-            udise: "",
-            cl_pp_student: 0,
-            cl_1_student: 0,
-            cl_2_student: 0,
-            cl_3_student: 0,
-            cl_4_student: 0,
-            cl_5_student: 0,
-            payment: "Due",
-            paid: 0,
-            total_student: 0,
-            total_rate: 0,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error("Something Went Wrong in Server!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+      } catch (e) {
+        setLoader(false);
+        toast.error("Something Went Wrong in Server!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
-    } catch (e) {
-      toast.error("Something Went Wrong in Server!", {
+      }
+    } else {
+      setLoader(false);
+      toast.error("School Question Requisition Already Submitted!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -219,7 +253,6 @@ function QuestionSec() {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -232,7 +265,6 @@ function QuestionSec() {
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
-
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -244,7 +276,6 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -255,7 +286,6 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -263,35 +293,74 @@ function QuestionSec() {
     }
   };
   const handleSelection = (e) => {
-    setAddInputField({
-      ...addInputField,
-      school: e.target.value.split("-")[0],
-      udise: e.target.value.split("-")[1],
-      gp: e.target.value.split("-")[2],
-      id: docId,
-      sl: serial,
-    });
+    let selectedData;
+    if (e.target.value) {
+      selectedData = JSON.parse(e.target.value);
+      setAddInputField({
+        ...addInputField,
+        school: selectedData.school,
+        udise: selectedData.udise,
+        gp: selectedData.gp,
+        id: docId,
+        sl: serial,
+        cl_pp_student: selectedData.pp,
+        cl_1_student: selectedData.i,
+        cl_2_student: selectedData.ii,
+        cl_3_student: selectedData.iii,
+        cl_4_student: selectedData.iv,
+        cl_5_student: selectedData.v,
+        total_student: selectedData.total_student,
+        total_rate: Math.floor(
+          selectedData.pp * questionRateState.pp_rate +
+            selectedData.i * questionRateState.i_rate +
+            selectedData.ii * questionRateState.ii_rate +
+            selectedData.iii * questionRateState.iii_rate +
+            selectedData.iv * questionRateState.iv_rate +
+            selectedData.v * questionRateState.v_rate
+        ),
+        payment: "Due",
+        paid: 0,
+      });
+    } else {
+      setAddInputField({
+        id: docId,
+        sl: serial,
+        school: "",
+        gp: "",
+        udise: "",
+        cl_pp_student: 0,
+        cl_1_student: 0,
+        cl_2_student: 0,
+        cl_3_student: 0,
+        cl_4_student: 0,
+        cl_5_student: 0,
+        payment: "Due",
+        paid: 0,
+        total_student: 0,
+        total_rate: 0,
+      });
+    }
   };
   const updateQrateData = async () => {
     try {
       const docRef = doc(firestore, "question_rate", questionInputField.id);
       await updateDoc(docRef, {
-        pp_rate: parseFloat(questionInputField.question_pp_rate).toFixed(2),
-        i_rate: parseFloat(questionInputField.question_1_rate).toFixed(2),
-        ii_rate: parseFloat(questionInputField.question_2_rate).toFixed(2),
-        iii_rate: parseFloat(questionInputField.question_3_rate).toFixed(2),
-        iv_rate: parseFloat(questionInputField.question_4_rate).toFixed(2),
-        v_rate: parseFloat(questionInputField.question_5_rate).toFixed(2),
+        pp_rate: parseFloat(questionInputField.question_pp_rate),
+        i_rate: parseFloat(questionInputField.question_1_rate),
+        ii_rate: parseFloat(questionInputField.question_2_rate),
+        iii_rate: parseFloat(questionInputField.question_3_rate),
+        iv_rate: parseFloat(questionInputField.question_4_rate),
+        v_rate: parseFloat(questionInputField.question_5_rate),
         term: questionInputField.term,
         year: parseInt(questionInputField.year),
       });
       setQuestionRateState({
-        pp_rate: parseFloat(questionInputField.question_pp_rate).toFixed(2),
-        i_rate: parseFloat(questionInputField.question_1_rate).toFixed(2),
-        ii_rate: parseFloat(questionInputField.question_2_rate).toFixed(2),
-        iii_rate: parseFloat(questionInputField.question_3_rate).toFixed(2),
-        iv_rate: parseFloat(questionInputField.question_4_rate).toFixed(2),
-        v_rate: parseFloat(questionInputField.question_5_rate).toFixed(2),
+        pp_rate: parseFloat(questionInputField.question_pp_rate),
+        i_rate: parseFloat(questionInputField.question_1_rate),
+        ii_rate: parseFloat(questionInputField.question_2_rate),
+        iii_rate: parseFloat(questionInputField.question_3_rate),
+        iv_rate: parseFloat(questionInputField.question_4_rate),
+        v_rate: parseFloat(questionInputField.question_5_rate),
         term: questionInputField.term,
         year: parseInt(questionInputField.year),
       });
@@ -300,7 +369,6 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -311,7 +379,6 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -324,14 +391,19 @@ function QuestionSec() {
     if (questionState.length === 0 || difference >= 1) {
       userData();
     } else {
-      const data = questionState;
-      setQData(data);
+      const data = questionState.sort((b, a) => {
+        // First, compare the "school" keys
+        if (a.gp < b.gp) {
+          return -1;
+        }
+        if (a.gp > b.gp) {
+          return 1;
+        }
+      });
       setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
       setSerial(data.length + 1);
       setShowSlide(true);
       setData(data);
-      setSchoolData(schoolState);
-      setQRateData(questionRateState);
       setQuestionInputField({
         id: questionRateState.id,
         question_pp_rate: questionRateState.pp_rate,
@@ -368,12 +440,11 @@ function QuestionSec() {
     })
       .then(() => {
         setIsAccepting(false);
-        toast.success("Accepting Status Updated Successfully!", {
+        toast.success("Accepting Status Set Closed Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -385,7 +456,6 @@ function QuestionSec() {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -404,12 +474,11 @@ function QuestionSec() {
     })
       .then(() => {
         setIsAccepting(true);
-        toast.success("Accepting Status Updated Successfully!", {
+        toast.success("Accepting Status Set Open Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -421,7 +490,6 @@ function QuestionSec() {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -429,7 +497,6 @@ function QuestionSec() {
         console.log(e);
       });
   };
-
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Section";
     if (!state && questionadmin !== "admin") {
@@ -437,39 +504,24 @@ function QuestionSec() {
     }
     getQuestionData();
     getAcceptingData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    setInputField({
-      cl_pp_student: selectedSchool.cl_pp_student,
-      cl_1_student: selectedSchool.cl_1_student,
-      cl_2_student: selectedSchool.cl_2_student,
-      cl_3_student: selectedSchool.cl_3_student,
-      cl_4_student: selectedSchool.cl_4_student,
-      cl_5_student: selectedSchool.cl_5_student,
-      payment: selectedSchool.payment,
-      paid: selectedSchool.paid,
-      total_student: selectedSchool.total_student,
-      total_rate: selectedSchool.total_rate,
-    });
-  }, [selectedSchool, addInputField]);
-  useEffect(() => {}, [questionInputField]);
+  useEffect(() => {}, [selectedSchool, questionInputField, addInputField]);
   return (
     <div className="container my-5">
-      <h3 className="text-primary my-2">Question Section</h3>
       <ToastContainer
+        limit={1}
         position="top-right"
         autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
         theme="light"
       />
+      {loader ? <Loader /> : null}
       <div className="col-md-6 mx-auto">
         {showSlide ? (
           <Swiper
@@ -522,8 +574,10 @@ function QuestionSec() {
                     <h6 className="text-primary">
                       TOTAL AMOUNT: {el.total_rate}
                     </h6>
-                    <h6 className="text-primary">PAYMENT STATUS: {el.paid}</h6>
-                    <h6 className="text-primary">PAID AMOUNT: {el.payment}</h6>
+                    <h6 className="text-primary">
+                      PAYMENT STATUS: {el.payment}
+                    </h6>
+                    <h6 className="text-primary">PAID AMOUNT: {el.paid}</h6>
                   </div>
                 </SwiperSlide>
               );
@@ -548,9 +602,7 @@ function QuestionSec() {
           data-bs-target="#myModal4"
           onClick={() =>
             setTimeout(() => {
-              if (typeof window !== undefined) {
-                document.getElementById("term").value = questionInputField.term;
-              }
+              document.getElementById("term").value = questionInputField.term;
             }, 300)
           }
         >
@@ -565,35 +617,24 @@ function QuestionSec() {
           }
         </button>
         {/* Add School modal */}
-        {/* <Link
+        <Link
           className="btn btn-sm btn-success m-2"
-          href={`/PrintQuestionAll?allData=${JSON.stringify(
-            data
-          )}&qRate=${JSON.stringify(qRateData)}`}
-        >
-          Print All Invoice
-        </Link> */}
-        <button
-          type="button"
-          className="btn btn-sm btn-success m-2"
+          href={`/PrintQuestionAll`}
           onClick={() => {
-            router.push("/PrintQuestionAll");
-
             setStateObject(data);
           }}
         >
           Print All Invoice
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-info"
+        </Link>
+        <Link
+          className="btn btn-sm btn-info "
+          href={`/PrintQuestionAllCompact`}
           onClick={() => {
-            router.push("/PrintQuestionAllCompact");
             setStateObject(data);
           }}
         >
           Print Question All Compact
-        </button>
+        </Link>
         {state === "admin" && (
           <div>
             <button
@@ -615,20 +656,38 @@ function QuestionSec() {
               Download Question Rate Data
             </button>
             <div>
-              <p className="text-center text-primary">Accepting Section</p>
-              {isAccepting ? (
-                <button type="button" className="btn">
-                  {<ImSwitch color={"green"} onClick={closeAccepting} />}
-                </button>
-              ) : (
-                <button type="button" className="btn">
-                  {<ImSwitch color={"red"} onClick={openAccepting} />}
-                </button>
-              )}
+              <p className="text-center text-primary">Question Requisition</p>
+
+              <div className="d-flex justify-content-center align-items-center form-check form-switch mx-auto text-center">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked"
+                  checked={isAccepting}
+                  onChange={() => {
+                    setIsAccepting(!isAccepting);
+                    if (isAccepting) {
+                      closeAccepting();
+                    } else {
+                      openAccepting();
+                    }
+                  }}
+                />
+                <label
+                  className={`form-check-label mx-2 ${
+                    isAccepting ? "text-success" : "text-danger"
+                  }`}
+                  htmlFor="flexSwitchCheckChecked"
+                >
+                  {isAccepting
+                    ? "Question Requisition Accepting Allowed"
+                    : "Question Requisition Accepting Closed"}
+                </label>
+              </div>
             </div>
           </div>
         )}
-
         <div
           className="modal fade"
           id="myModal3"
@@ -669,6 +728,9 @@ function QuestionSec() {
                       total_student: 0,
                       total_rate: 0,
                     });
+                    if (typeof window !== undefined) {
+                      document.getElementById("school").value = "";
+                    }
                   }}
                 ></button>
               </div>
@@ -681,18 +743,14 @@ function QuestionSec() {
                         className="form-select"
                         defaultValue={inputField.school}
                         name="school"
+                        id="school"
                         onChange={handleSelection}
                       >
                         <option value="">Select School Name</option>
-                        {schoolData.length > 0
-                          ? schoolData.map((el) => {
+                        {schoolState.length > 0
+                          ? schoolState.map((el) => {
                               return (
-                                <option
-                                  key={el.id}
-                                  value={
-                                    el.school + "-" + el.udise + "-" + el.gp
-                                  }
-                                >
+                                <option key={el.id} value={JSON.stringify(el)}>
                                   {el.school}
                                 </option>
                               );
@@ -701,36 +759,23 @@ function QuestionSec() {
                       </select>
                     </div>
                   </div>
-                  <div className="mb-3 col-lg-6">
-                    <label className="form-label">GP Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="gp"
-                      value={addInputField.gp}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          gp: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="mb-3 col-lg-6">
-                    <label className="form-label">UDISE</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="udise"
-                      value={addInputField.udise}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          udise: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
+                  {addInputField.school && (
+                    <div className="mb-3 col-lg-6">
+                      <p className="text-primary">
+                        School Name: {addInputField.school}
+                      </p>
+
+                      <p className="text-primary">
+                        GP Name: {addInputField.gp}
+                      </p>
+
+                      <p className="text-primary">
+                        UDISE:
+                        {addInputField.udise}
+                      </p>
+                    </div>
+                  )}
+
                   <div className="mb-3 col-lg-6">
                     <label className="form-label">PP</label>
                     <input
@@ -738,12 +783,40 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_pp_student"
                       value={addInputField.cl_pp_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_pp_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_pp_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_1_student +
+                              addInputField.cl_2_student +
+                              addInputField.cl_3_student +
+                              addInputField.cl_4_student +
+                              addInputField.cl_5_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.pp_rate +
+                                addInputField.cl_1_student *
+                                  questionRateState.i_rate +
+                                addInputField.cl_2_student *
+                                  questionRateState.ii_rate +
+                                addInputField.cl_3_student *
+                                  questionRateState.iii_rate +
+                                addInputField.cl_4_student *
+                                  questionRateState.iv_rate +
+                                addInputField.cl_5_student *
+                                  questionRateState.v_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_pp_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
@@ -754,12 +827,40 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_1_student"
                       value={addInputField.cl_1_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_1_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_1_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_pp_student +
+                              addInputField.cl_2_student +
+                              addInputField.cl_3_student +
+                              addInputField.cl_4_student +
+                              addInputField.cl_5_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.i_rate +
+                                addInputField.cl_pp_student *
+                                  questionRateState.pp_rate +
+                                addInputField.cl_2_student *
+                                  questionRateState.ii_rate +
+                                addInputField.cl_3_student *
+                                  questionRateState.iii_rate +
+                                addInputField.cl_4_student *
+                                  questionRateState.iv_rate +
+                                addInputField.cl_5_student *
+                                  questionRateState.v_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_1_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
@@ -770,12 +871,40 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_2_student"
                       value={addInputField.cl_2_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_2_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_2_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_pp_student +
+                              addInputField.cl_1_student +
+                              addInputField.cl_3_student +
+                              addInputField.cl_4_student +
+                              addInputField.cl_5_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.ii_rate +
+                                addInputField.cl_pp_student *
+                                  questionRateState.pp_rate +
+                                addInputField.cl_1_student *
+                                  questionRateState.i_rate +
+                                addInputField.cl_3_student *
+                                  questionRateState.iii_rate +
+                                addInputField.cl_4_student *
+                                  questionRateState.iv_rate +
+                                addInputField.cl_5_student *
+                                  questionRateState.v_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_2_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
@@ -786,12 +915,40 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_3_student"
                       value={addInputField.cl_3_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_3_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_3_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_pp_student +
+                              addInputField.cl_2_student +
+                              addInputField.cl_1_student +
+                              addInputField.cl_4_student +
+                              addInputField.cl_5_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.iii_rate +
+                                addInputField.cl_pp_student *
+                                  questionRateState.pp_rate +
+                                addInputField.cl_2_student *
+                                  questionRateState.ii_rate +
+                                addInputField.cl_1_student *
+                                  questionRateState.i_rate +
+                                addInputField.cl_4_student *
+                                  questionRateState.iv_rate +
+                                addInputField.cl_5_student *
+                                  questionRateState.v_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_3_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
@@ -802,12 +959,40 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_4_student"
                       value={addInputField.cl_4_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_4_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_4_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_pp_student +
+                              addInputField.cl_2_student +
+                              addInputField.cl_3_student +
+                              addInputField.cl_1_student +
+                              addInputField.cl_5_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.iv_rate +
+                                addInputField.cl_pp_student *
+                                  questionRateState.pp_rate +
+                                addInputField.cl_2_student *
+                                  questionRateState.ii_rate +
+                                addInputField.cl_3_student *
+                                  questionRateState.iii_rate +
+                                addInputField.cl_1_student *
+                                  questionRateState.i_rate +
+                                addInputField.cl_5_student *
+                                  questionRateState.v_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_4_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
@@ -818,73 +1003,54 @@ function QuestionSec() {
                       className="form-control"
                       name="cl_5_student"
                       value={addInputField.cl_5_student}
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          cl_5_student: parseInt(e.target.value),
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_5_student: parseInt(e.target.value),
+                            total_student:
+                              parseInt(e.target.value) +
+                              addInputField.cl_pp_student +
+                              addInputField.cl_2_student +
+                              addInputField.cl_3_student +
+                              addInputField.cl_4_student +
+                              addInputField.cl_1_student,
+                            total_rate: Math.floor(
+                              parseInt(e.target.value) *
+                                questionRateState.v_rate +
+                                addInputField.cl_pp_student *
+                                  questionRateState.pp_rate +
+                                addInputField.cl_2_student *
+                                  questionRateState.ii_rate +
+                                addInputField.cl_3_student *
+                                  questionRateState.iii_rate +
+                                addInputField.cl_4_student *
+                                  questionRateState.iv_rate +
+                                addInputField.cl_1_student *
+                                  questionRateState.i_rate
+                            ),
+                          });
+                        } else {
+                          setAddInputField({
+                            ...addInputField,
+                            cl_5_student: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
 
-                  <div className="mb-3 col-lg-6">
-                    <label className="form-label">Total Student</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      name="total_student"
-                      value={
-                        addInputField.cl_pp_student +
-                        addInputField.cl_1_student +
-                        addInputField.cl_2_student +
-                        addInputField.cl_3_student +
-                        addInputField.cl_4_student +
-                        addInputField.cl_5_student
-                      }
-                      onMouseLeave={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          total_student: parseInt(e.target.value),
-                        })
-                      }
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          total_student: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    <span className="text-danger">Hover</span>
-                  </div>
-                  <div className="mb-3 col-lg-6">
-                    <label className="form-label">Total Rate</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      name="total_rate"
-                      value={Math.floor(
-                        addInputField.cl_pp_student * qRateData.pp_rate +
-                          addInputField.cl_1_student * qRateData.i_rate +
-                          addInputField.cl_2_student * qRateData.ii_rate +
-                          addInputField.cl_3_student * qRateData.iii_rate +
-                          addInputField.cl_4_student * qRateData.iv_rate +
-                          addInputField.cl_5_student * qRateData.v_rate
-                      )}
-                      onMouseLeave={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          total_rate: parseInt(e.target.value),
-                        })
-                      }
-                      onChange={(e) =>
-                        setAddInputField({
-                          ...addInputField,
-                          total_rate: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    <span className="text-danger">Hover</span>
-                  </div>
+                  {addInputField.total_student > 0 && (
+                    <div className="mb-3 col-lg-6">
+                      <p className="text-primary">
+                        Total Student: {addInputField.total_student}
+                      </p>
+
+                      <p className="text-success">
+                        Total Estimated Amount: ₹{addInputField.total_rate}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="modal-footer">
@@ -895,6 +1061,7 @@ function QuestionSec() {
                   onClick={() => {
                     setAddInputField({
                       id: docId,
+                      sl: serial,
                       school: "",
                       gp: "",
                       udise: "",
@@ -909,19 +1076,25 @@ function QuestionSec() {
                       total_student: 0,
                       total_rate: 0,
                     });
+                    if (typeof window !== undefined) {
+                      document.getElementById("school").value = "";
+                    }
                   }}
                 >
                   Close
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  name="submit"
-                  onClick={addSchool}
-                  data-bs-dismiss="modal"
-                >
-                  Add School
-                </button>
+                {addInputField.total_rate > 0 && (
+                  <button
+                    type="button"
+                    disabled={addInputField.total_rate === 0}
+                    className="btn btn-primary"
+                    name="submit"
+                    onClick={addSchool}
+                    data-bs-dismiss="modal"
+                  >
+                    Add School
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -956,7 +1129,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">PP Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="pp_rate"
                       value={questionInputField.question_pp_rate}
@@ -971,7 +1144,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">Class I Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="i_rate"
                       value={questionInputField.question_1_rate}
@@ -986,7 +1159,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">Class II Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="i_rate"
                       value={questionInputField.question_2_rate}
@@ -1001,7 +1174,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">Class III Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="i_rate"
                       value={questionInputField.question_3_rate}
@@ -1016,7 +1189,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">Class IV Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="i_rate"
                       value={questionInputField.question_4_rate}
@@ -1031,7 +1204,7 @@ function QuestionSec() {
                   <div className="mb-3 col-md-6">
                     <label className="form-label">Class V Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="i_rate"
                       value={questionInputField.question_5_rate}
@@ -1060,7 +1233,7 @@ function QuestionSec() {
                   </div>
                   <div className="mb-3 col-md-6">
                     <h6 className="form-label">
-                      Current Term: {qRateData.term}
+                      Current Term: {questionRateState.term}
                     </h6>
                     <h6 className="form-label">
                       Selected Term: {questionInputField.term}
@@ -1096,14 +1269,14 @@ function QuestionSec() {
                   data-bs-dismiss="modal"
                   onClick={() => {
                     setQuestionInputField({
-                      question_pp_rate: qRateData.pp_rate,
-                      question_1_rate: qRateData.i_rate,
-                      question_2_rate: qRateData.ii_rate,
-                      question_3_rate: qRateData.iii_rate,
-                      question_4_rate: qRateData.iv_rate,
-                      question_5_rate: qRateData.v_rate,
-                      term: qRateData.term,
-                      year: qRateData.year,
+                      question_pp_rate: questionRateState.pp_rate,
+                      question_1_rate: questionRateState.i_rate,
+                      question_2_rate: questionRateState.ii_rate,
+                      question_3_rate: questionRateState.iii_rate,
+                      question_4_rate: questionRateState.iv_rate,
+                      question_5_rate: questionRateState.v_rate,
+                      term: questionRateState.term,
+                      year: questionRateState.year,
                     });
                   }}
                 >
@@ -1132,8 +1305,8 @@ function QuestionSec() {
           aria-label="Default select example"
         >
           <option value="">Select School Name</option>
-          {qData.length > 0
-            ? qData.map((el) => {
+          {questionState.length > 0
+            ? questionState.map((el) => {
                 return (
                   <option key={el.id} value={el.udise}>
                     {el.school}
@@ -1145,149 +1318,159 @@ function QuestionSec() {
       </div>
       {Object.keys(selectedSchool).length > 0 ? (
         <div className="col-md-6 mx-auto p-2 my-3">
-          <table className="container">
+          <table className="container mx-auto">
             <tr>
-              <th colSpan="2">
-                Amta West Circle, {qRateData.term} Summative Exam,{" "}
-                {qRateData.year}
+              <th colSpan="2" className="text-center fs-4">
+                Amta West Circle, {questionRateState.term} Summative Exam,{" "}
+                {questionRateState.year}
               </th>
             </tr>
             <tr>
-              <th>School Name</th>
-              <th>
+              <th className="text-center">School Name</th>
+              <th className="text-center">
                 <span>{selectedSchool.school}</span>
               </th>
             </tr>
             <tr>
-              <th>Gram Panchayet</th>
-              <th>
+              <th className="text-center">Gram Panchayet</th>
+              <th className="text-center">
                 <span id="gp">{selectedSchool.gp}</span>
               </th>
             </tr>
             <tr>
-              <th>PP Students</th>
-              <th>
+              <th className="text-center">PP Students</th>
+              <th className="text-center">
                 <span id="pp">{selectedSchool.cl_pp_student}</span>
               </th>
             </tr>
             <tr>
-              <th>I Students</th>
-              <th>
+              <th className="text-center">I Students</th>
+              <th className="text-center">
                 <span id="i">{selectedSchool.cl_1_student}</span>
               </th>
             </tr>
             <tr>
-              <th>II Students</th>
-              <th>
+              <th className="text-center">II Students</th>
+              <th className="text-center">
                 <span id="ii">{selectedSchool.cl_2_student}</span>
               </th>
             </tr>
             <tr>
-              <th>III Students</th>
-              <th>
+              <th className="text-center">III Students</th>
+              <th className="text-center">
                 <span id="iii">{selectedSchool.cl_3_student}</span>
               </th>
             </tr>
             <tr>
-              <th>IV Students</th>
-              <th>
+              <th className="text-center">IV Students</th>
+              <th className="text-center">
                 <span id="iv">{selectedSchool.cl_4_student}</span>
               </th>
             </tr>
             {selectedSchool.cl_5_student > 0 ? (
-              <tr className="v_hide">
-                <th className="v_hide">V Students</th>
-                <th className="v_hide">
+              <tr className="v_hide text-center">
+                <th className="v_hide text-center">V Students</th>
+                <th className="v_hide text-center">
                   <span id="v">{selectedSchool.cl_5_student}</span>
                 </th>
               </tr>
             ) : null}
             <tr>
-              <th>Total</th>
-              <th>
+              <th className="text-center">Total</th>
+              <th className="text-center">
                 <span id="total">{selectedSchool.total_student}</span>
               </th>
             </tr>
             <tr>
-              <th>PP Cost</th>
-              <th>
+              <th className="text-center">PP Cost</th>
+              <th className="text-center">
                 <span id="pp_rate">
-                  {round2dec(selectedSchool.cl_pp_student * qRateData.pp_rate)}
-                </span>
-              </th>
-            </tr>
-            <tr>
-              <th>I Cost</th>
-              <th>
-                <span id="i_rate">
-                  {round2dec(selectedSchool.cl_1_student * qRateData.i_rate)}
-                </span>
-              </th>
-            </tr>
-            <tr>
-              <th>II Cost</th>
-              <th>
-                <span id="ii_rate">
-                  {round2dec(selectedSchool.cl_2_student * qRateData.ii_rate)}
-                </span>
-              </th>
-            </tr>
-            <tr>
-              <th>III Cost</th>
-              <th>
-                <span id="iii_rate">
-                  {round2dec(selectedSchool.cl_3_student * qRateData.iii_rate)}
-                </span>
-              </th>
-            </tr>
-            <tr>
-              <th>IV Cost</th>
-              <th>
-                <span id="iv_rate">
-                  {round2dec(selectedSchool.cl_4_student * qRateData.iv_rate)}
-                </span>
-              </th>
-            </tr>
-
-            {selectedSchool.cl_5_rate > 0 ? (
-              <tr className="v_hide">
-                <th className="v_hide">V Cost</th>
-                <th className="v_hide">
-                  <span id="v_rate">
-                    {round2dec(selectedSchool.cl_5_student * qRateData.v_rate)}
-                  </span>
-                </th>
-              </tr>
-            ) : null}
-            <tr>
-              <th>Total Cost</th>
-              <th>
-                <span id="total_rate">
-                  {Math.floor(
-                    selectedSchool.cl_pp_student * qRateData.pp_rate +
-                      selectedSchool.cl_1_student * qRateData.i_rate +
-                      selectedSchool.cl_2_student * qRateData.ii_rate +
-                      selectedSchool.cl_3_student * qRateData.iii_rate +
-                      selectedSchool.cl_4_student * qRateData.iv_rate +
-                      selectedSchool.cl_5_student * qRateData.v_rate
+                  {round2dec(
+                    selectedSchool.cl_pp_student * questionRateState.pp_rate
                   )}
                 </span>
               </th>
             </tr>
             <tr>
-              <th>Payment Status</th>
-              <th>
+              <th className="text-center">I Cost</th>
+              <th className="text-center">
+                <span id="i_rate">
+                  {round2dec(
+                    selectedSchool.cl_1_student * questionRateState.i_rate
+                  )}
+                </span>
+              </th>
+            </tr>
+            <tr>
+              <th className="text-center">II Cost</th>
+              <th className="text-center">
+                <span id="ii_rate">
+                  {round2dec(
+                    selectedSchool.cl_2_student * questionRateState.ii_rate
+                  )}
+                </span>
+              </th>
+            </tr>
+            <tr>
+              <th className="text-center">III Cost</th>
+              <th className="text-center">
+                <span id="iii_rate">
+                  {round2dec(
+                    selectedSchool.cl_3_student * questionRateState.iii_rate
+                  )}
+                </span>
+              </th>
+            </tr>
+            <tr>
+              <th className="text-center">IV Cost</th>
+              <th className="text-center">
+                <span id="iv_rate">
+                  {round2dec(
+                    selectedSchool.cl_4_student * questionRateState.iv_rate
+                  )}
+                </span>
+              </th>
+            </tr>
+
+            {selectedSchool.cl_5_rate > 0 ? (
+              <tr className="v_hide text-center">
+                <th className="v_hide text-center">V Cost</th>
+                <th className="v_hide text-center">
+                  <span id="v_rate">
+                    {round2dec(
+                      selectedSchool.cl_5_student * questionRateState.v_rate
+                    )}
+                  </span>
+                </th>
+              </tr>
+            ) : null}
+            <tr>
+              <th className="text-center">Total Cost</th>
+              <th className="text-center">
+                <span id="total_rate">
+                  {Math.floor(
+                    selectedSchool.cl_pp_student * questionRateState.pp_rate +
+                      selectedSchool.cl_1_student * questionRateState.i_rate +
+                      selectedSchool.cl_2_student * questionRateState.ii_rate +
+                      selectedSchool.cl_3_student * questionRateState.iii_rate +
+                      selectedSchool.cl_4_student * questionRateState.iv_rate +
+                      selectedSchool.cl_5_student * questionRateState.v_rate
+                  )}
+                </span>
+              </th>
+            </tr>
+            <tr>
+              <th className="text-center">Payment Status</th>
+              <th className="text-center">
                 <span id="payment">{selectedSchool.payment}</span>
               </th>
             </tr>
             <tr>
-              <td>
+              <td className="text-center">
                 <Link
                   className="btn btn-sm m-1 btn-info"
                   href={`/printquestioninvoice`}
-                  onClick={() => {
-                    setStateObject(selectedSchool);
-                  }}
+                  onClick={() => setStateObject(selectedSchool)}
                 >
                   Print Invoice
                 </Link>
@@ -1304,18 +1487,22 @@ function QuestionSec() {
                     if (confmessage) {
                       try {
                         await deleteDoc(doc(firestore, "questions", schId));
-
+                        setQuestionState(
+                          questionState.filter((q) => q.id !== schId)
+                        );
+                        setQuestionUpdateTime(Date.now());
                         toast.success("Successfully Deleted School!!!", {
                           position: "top-right",
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-
                           draggable: true,
                           progress: undefined,
                           theme: "light",
                         });
-
+                        if (typeof window !== undefined) {
+                          document.getElementById("selectForm").value = "";
+                        }
                         setSelectedSchool({});
                       } catch (e) {
                         toast.error("Something Went Wrong in Server!", {
@@ -1323,7 +1510,6 @@ function QuestionSec() {
                           autoClose: 1500,
                           hideProgressBar: false,
                           closeOnClick: true,
-
                           draggable: true,
                           progress: undefined,
                           theme: "light",
@@ -1335,7 +1521,7 @@ function QuestionSec() {
                   Delete
                 </button>
               </td>
-              <td>
+              <td className="text-center">
                 {/* <!-- Button trigger modal --> */}
                 <button
                   type="button"
@@ -1343,7 +1529,7 @@ function QuestionSec() {
                   data-bs-toggle="modal"
                   data-bs-target="#myModal2"
                 >
-                  Update Student Number & Payment Status
+                  Update School Data
                 </button>
               </td>
             </tr>
@@ -1377,144 +1563,297 @@ function QuestionSec() {
                   </div>
                   <div className="modal-body text-dark text-center">
                     <div className="container-fluid p-0 row text-dark text-center">
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">
-                          School Name
-                        </label>
-                        <p id="school_student">{selectedSchool.school}</p>
+                      <div className="mb-3 mx-auto">
+                        <p className="text-primary">
+                          School Name: {inputField.school}
+                        </p>
+
+                        <p className="text-primary">GP Name: {inputField.gp}</p>
+
+                        <p className="text-primary">
+                          UDISE:
+                          {inputField.udise}
+                        </p>
                       </div>
 
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">PP</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_pp_student_inp"
-                          name="cl_pp_student"
-                          value={inputField.cl_pp_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_pp_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_pp_student}</p>
+                      <div className="mb-3 mx-auto row">
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">PP</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_pp_student"
+                            value={inputField.cl_pp_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_pp_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_1_student +
+                                    inputField.cl_2_student +
+                                    inputField.cl_3_student +
+                                    inputField.cl_4_student +
+                                    inputField.cl_5_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.pp_rate +
+                                      inputField.cl_1_student *
+                                        questionRateState.i_rate +
+                                      inputField.cl_2_student *
+                                        questionRateState.ii_rate +
+                                      inputField.cl_3_student *
+                                        questionRateState.iii_rate +
+                                      inputField.cl_4_student *
+                                        questionRateState.iv_rate +
+                                      inputField.cl_5_student *
+                                        questionRateState.v_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_pp_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">Class I</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_1_student"
+                            value={inputField.cl_1_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_1_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_pp_student +
+                                    inputField.cl_2_student +
+                                    inputField.cl_3_student +
+                                    inputField.cl_4_student +
+                                    inputField.cl_5_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.i_rate +
+                                      inputField.cl_pp_student *
+                                        questionRateState.pp_rate +
+                                      inputField.cl_2_student *
+                                        questionRateState.ii_rate +
+                                      inputField.cl_3_student *
+                                        questionRateState.iii_rate +
+                                      inputField.cl_4_student *
+                                        questionRateState.iv_rate +
+                                      inputField.cl_5_student *
+                                        questionRateState.v_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_1_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">Class II</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_2_student"
+                            value={inputField.cl_2_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_2_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_pp_student +
+                                    inputField.cl_1_student +
+                                    inputField.cl_3_student +
+                                    inputField.cl_4_student +
+                                    inputField.cl_5_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.ii_rate +
+                                      inputField.cl_pp_student *
+                                        questionRateState.pp_rate +
+                                      inputField.cl_1_student *
+                                        questionRateState.i_rate +
+                                      inputField.cl_3_student *
+                                        questionRateState.iii_rate +
+                                      inputField.cl_4_student *
+                                        questionRateState.iv_rate +
+                                      inputField.cl_5_student *
+                                        questionRateState.v_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_2_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">Class III</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_3_student"
+                            value={inputField.cl_3_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_3_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_pp_student +
+                                    inputField.cl_2_student +
+                                    inputField.cl_1_student +
+                                    inputField.cl_4_student +
+                                    inputField.cl_5_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.iii_rate +
+                                      inputField.cl_pp_student *
+                                        questionRateState.pp_rate +
+                                      inputField.cl_2_student *
+                                        questionRateState.ii_rate +
+                                      inputField.cl_1_student *
+                                        questionRateState.i_rate +
+                                      inputField.cl_4_student *
+                                        questionRateState.iv_rate +
+                                      inputField.cl_5_student *
+                                        questionRateState.v_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_3_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">Class IV</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_4_student"
+                            value={inputField.cl_4_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_4_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_pp_student +
+                                    inputField.cl_2_student +
+                                    inputField.cl_3_student +
+                                    inputField.cl_1_student +
+                                    inputField.cl_5_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.iv_rate +
+                                      inputField.cl_pp_student *
+                                        questionRateState.pp_rate +
+                                      inputField.cl_2_student *
+                                        questionRateState.ii_rate +
+                                      inputField.cl_3_student *
+                                        questionRateState.iii_rate +
+                                      inputField.cl_1_student *
+                                        questionRateState.i_rate +
+                                      inputField.cl_5_student *
+                                        questionRateState.v_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_4_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        <div className="mb-3 col-lg-6 w-50">
+                          <label className="form-label">Class V</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="cl_5_student"
+                            value={inputField.cl_5_student}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setInputField({
+                                  ...inputField,
+                                  cl_5_student: parseInt(e.target.value),
+                                  total_student:
+                                    parseInt(e.target.value) +
+                                    inputField.cl_pp_student +
+                                    inputField.cl_2_student +
+                                    inputField.cl_3_student +
+                                    inputField.cl_4_student +
+                                    inputField.cl_1_student,
+                                  total_rate: Math.floor(
+                                    parseInt(e.target.value) *
+                                      questionRateState.v_rate +
+                                      inputField.cl_pp_student *
+                                        questionRateState.pp_rate +
+                                      inputField.cl_2_student *
+                                        questionRateState.ii_rate +
+                                      inputField.cl_3_student *
+                                        questionRateState.iii_rate +
+                                      inputField.cl_4_student *
+                                        questionRateState.iv_rate +
+                                      inputField.cl_1_student *
+                                        questionRateState.i_rate
+                                  ),
+                                });
+                              } else {
+                                setInputField({
+                                  ...inputField,
+                                  cl_5_student: "",
+                                });
+                              }
+                            }}
+                          />
+                        </div>
+
+                        {inputField.total_student > 0 && (
+                          <div className="mb-3 col-lg-6 mx-auto">
+                            <p className="text-primary">
+                              Total Student: {inputField.total_student}
+                            </p>
+
+                            <p className="text-success">
+                              Total Estimated Amount: ₹{inputField.total_rate}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">Class I</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_1_student_inp"
-                          name="cl_1_student"
-                          value={inputField.cl_1_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_1_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_1_student}</p>
-                      </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">Class II</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_2_student_inp"
-                          name="cl_2_student"
-                          value={inputField.cl_2_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_2_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_2_student}</p>
-                      </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">Class III</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_3_student_inp"
-                          name="cl_3_student"
-                          value={inputField.cl_3_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_3_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_3_student}</p>
-                      </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">Class IV</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_4_student_inp"
-                          name="cl_4_student"
-                          value={inputField.cl_4_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_4_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_4_student}</p>
-                      </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">Class V</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="cl_5_student_inp"
-                          name="cl_5_student"
-                          value={inputField.cl_5_student}
-                          onChange={(e) =>
-                            setInputField({
-                              ...inputField,
-                              cl_5_student: parseInt(e.target.value),
-                            })
-                          }
-                        />
-                        <p>{selectedSchool.cl_5_student}</p>
-                      </div>
-                      <div className="mb-3 col-lg-6">
-                        <label className="form-label fw-bold">
-                          Total Student
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="total_student_inp"
-                          name="total_student"
-                          value={
-                            inputField.cl_pp_student +
-                            inputField.cl_1_student +
-                            inputField.cl_2_student +
-                            inputField.cl_3_student +
-                            inputField.cl_4_student +
-                            inputField.cl_5_student
-                          }
-                          onMouseLeave={(e) =>
-                            setInputField({
-                              ...inputField,
-                              total_student: parseInt(e.target.value),
-                            })
-                          }
-                          readOnly
-                        />
-                        <p>{selectedSchool.total_student}</p>
-                        <h6 className="text-danger">Hover</h6>
-                      </div>
-                      <div className="mb-3 col-md-6">
+                      <div className="mb-3 col-md-6 w-50">
                         <label className="form-label fw-bold">Payment</label>
                         <select
                           name="payment"
@@ -1530,12 +1869,11 @@ function QuestionSec() {
                           }
                         >
                           <option value="">Select From Below</option>
-                          <option value="Due">Due</option>
-                          <option value="Paid">Paid</option>
+                          <option value="DUE">DUE</option>
+                          <option value="PAID">PAID</option>
                         </select>
-                        <p>{selectedSchool.payment}</p>
                       </div>
-                      <div className="mb-3 col-lg-6">
+                      <div className="mb-3 col-lg-6 w-50">
                         <label className="form-label fw-bold">
                           Paid Amount
                         </label>
@@ -1552,9 +1890,8 @@ function QuestionSec() {
                             })
                           }
                         />
-                        <p>{selectedSchool.paid}</p>
                       </div>
-                      <div className="mb-3 col-lg-6">
+                      <div className="mb-3 col-lg-6 w-50">
                         <label className="form-label fw-bold">
                           Net Bill(Rs.)
                         </label>
@@ -1563,42 +1900,19 @@ function QuestionSec() {
                           className="form-control"
                           id="total_rate_inp"
                           name="total_rate"
-                          value={Math.floor(
-                            inputField.cl_pp_student * qRateData.pp_rate +
-                              inputField.cl_1_student * qRateData.i_rate +
-                              inputField.cl_2_student * qRateData.ii_rate +
-                              inputField.cl_3_student * qRateData.iii_rate +
-                              inputField.cl_4_student * qRateData.iv_rate +
-                              inputField.cl_5_student * qRateData.v_rate
-                          )}
-                          onMouseLeave={(e) =>
-                            setInputField({
-                              ...inputField,
-                              total_rate: parseInt(e.target.value),
-                            })
-                          }
+                          value={inputField.total_rate}
                           readOnly
                         />
-                        <p>{selectedSchool.total_rate}</p>
-                        <h6 className="text-danger">Hover</h6>
+                        <p>{inputField.total_rate}</p>
                       </div>
-                      <div className="mb-3 col-lg-6">
+                      <div className="mb-3 col-lg-6 w-50">
                         <label className="form-label fw-bold">ID</label>
                         <input
                           type="text"
                           className="form-control"
                           name="id"
-                          value={selectedSchool.id}
-                          onMouseLeave={(e) =>
-                            setInputField({
-                              ...inputField,
-                              id: e.target.value,
-                            })
-                          }
-                          readOnly
+                          value={inputField.id}
                         />
-                        <p>{selectedSchool.id}</p>
-                        <h6 className="text-danger">Hover</h6>
                       </div>
                     </div>
                   </div>
@@ -1610,6 +1924,7 @@ function QuestionSec() {
                       onClick={(e) => {
                         document.getElementById("selectForm").selectedIndex = 0;
                         setSelectedSchool({});
+                        setInputField({});
                       }}
                     >
                       Close
