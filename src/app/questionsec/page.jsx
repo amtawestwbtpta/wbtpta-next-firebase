@@ -30,6 +30,7 @@ import { ImSwitch } from "react-icons/im";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { v4 as uuid } from "uuid";
 import {
+  compareObjects,
   createDownloadLink,
   round2dec,
 } from "../../modules/calculatefunctions";
@@ -1935,7 +1936,19 @@ function QuestionSec() {
                       id="submit"
                       name="submit"
                       data-bs-dismiss="modal"
-                      onClick={updateQuestionStudentValue}
+                      onClick={() => {
+                        if (!compareObjects(inputField, selectedSchool)) {
+                          if (inputField.total_student > 0) {
+                            updateQuestionStudentValue();
+                          } else {
+                            toast.error(
+                              "Total Students should be greater than 0"
+                            );
+                          }
+                        } else {
+                          toast.error("No Changes Detected!!!");
+                        }
+                      }}
                     >
                       Save changes
                     </button>
