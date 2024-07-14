@@ -21,6 +21,10 @@ const Navbar = () => {
     setSchoolUpdateTime,
     setStateObject,
     setStateArray,
+    questionRateState,
+    questionRateUpdateTime,
+    setQuestionRateState,
+    setQuestionRateUpdateTime,
   } = useGlobalContext();
   const router = useRouter();
   // let navbarSupportedContent = document.querySelector(
@@ -33,7 +37,7 @@ const Navbar = () => {
     userdetails = decryptObjData("uid");
     loggedAt = getCookie("loggedAt");
   }
-  const [isAccepting, setIsAccepting] = useState(false);
+
   const handleNavCollapse = () => {
     if (typeof window !== "undefined") {
       // browser code
@@ -116,15 +120,15 @@ const Navbar = () => {
     }
   };
   const getAcceptingData = async () => {
-    const collectionRef = collection(firestore, "questionRequisition");
-    const q = query(collectionRef, where("id", "==", "qKMMuy5GY8yEA3mORthA"));
+    const q = query(collection(firestore, "question_rate"));
     const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => doc.data())[0];
-    if (data.isAccepting) {
-      setIsAccepting(true);
-    } else {
-      setIsAccepting(false);
-    }
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }))[0];
+    setQuestionRateState(data);
+    setQuestionRateUpdateTime(Date.now());
   };
   useEffect(() => {
     if (details) {
@@ -142,10 +146,14 @@ const Navbar = () => {
     if (schDifference >= 1 || schoolState.length === 0) {
       storeSchoolData();
     }
-    getAcceptingData();
+    const questionRateDifference =
+      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    if (questionRateDifference >= 1 || questionRateState.length === 0) {
+      getAcceptingData();
+    }
     // eslint-disable-next-line
   }, []);
-  useEffect(() => {}, [isAccepting]);
+
   const RenderMenu = () => {
     if (state === "admin") {
       return (
@@ -476,7 +484,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {isAccepting && (
+          {questionRateState.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -760,7 +768,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {isAccepting && (
+          {questionRateState.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -924,7 +932,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {isAccepting && (
+          {questionRateState.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"

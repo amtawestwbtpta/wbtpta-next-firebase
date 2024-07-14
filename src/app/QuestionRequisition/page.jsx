@@ -37,8 +37,9 @@ const QuestionRequisition = () => {
     questionRateState,
     setQuestionRateState,
     schoolState,
-
     setStateObject,
+    questionRateUpdateTime,
+    setQuestionRateUpdateTime,
   } = useGlobalContext();
   const router = useRouter();
   const [docId, setDocId] = useState(uuid().split("-")[0]);
@@ -151,6 +152,14 @@ const QuestionRequisition = () => {
       setSerial(data.length + 1);
 
       setLoader(false);
+    }
+
+    const questionRateDifference =
+      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    if (questionRateDifference >= 1 || questionRateState.length === 0) {
+      getAcceptingData();
+    } else {
+      setIsAccepting(questionRateState.isAccepting);
     }
   };
   const addSchool = async () => {
@@ -385,15 +394,16 @@ const QuestionRequisition = () => {
   };
 
   const getAcceptingData = async () => {
-    const collectionRef = collection(firestore, "questionRequisition");
-    const q = query(collectionRef, where("id", "==", "qKMMuy5GY8yEA3mORthA"));
+    const q = query(collection(firestore, "question_rate"));
     const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => doc.data())[0];
-    if (data.isAccepting) {
-      setIsAccepting(true);
-    } else {
-      setIsAccepting(false);
-    }
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }))[0];
+    setQuestionRateState(data);
+    setQuestionRateUpdateTime(Date.now());
+    setIsAccepting(data.isAccepting);
   };
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Requisition Section";

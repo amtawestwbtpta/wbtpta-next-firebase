@@ -47,6 +47,8 @@ function QuestionSec() {
     setQuestionRateState,
     schoolState,
     setStateObject,
+    questionRateUpdateTime,
+    setQuestionRateUpdateTime,
   } = useGlobalContext();
   const [docId, setDocId] = useState(uuid().split("-")[0]);
   const [serial, setSerial] = useState(0);
@@ -80,14 +82,15 @@ function QuestionSec() {
     total_rate: 0,
   });
   const [questionInputField, setQuestionInputField] = useState({
-    question_pp_rate: 0,
-    question_1_rate: 0,
-    question_2_rate: 0,
-    question_3_rate: 0,
-    question_4_rate: 0,
-    question_5_rate: 0,
+    pp_rate: 0,
+    i_rate: 0,
+    ii_rate: 0,
+    iii_rate: 0,
+    iv_rate: 0,
+    v_rate: 0,
     term: "1st",
     year: 2024,
+    isAccepting: false,
   });
   const userData = async () => {
     const q = query(collection(firestore, "questions"));
@@ -126,14 +129,15 @@ function QuestionSec() {
     setQuestionRateState(data2[0]);
     setQuestionInputField({
       id: data2[0].id,
-      question_pp_rate: data2[0].pp_rate,
-      question_1_rate: data2[0].i_rate,
-      question_2_rate: data2[0].ii_rate,
-      question_3_rate: data2[0].iii_rate,
-      question_4_rate: data2[0].iv_rate,
-      question_5_rate: data2[0].v_rate,
+      pp_rate: data2[0].pp_rate,
+      i_rate: data2[0].i_rate,
+      ii_rate: data2[0].ii_rate,
+      iii_rate: data2[0].iii_rate,
+      iv_rate: data2[0].iv_rate,
+      v_rate: data2[0].v_rate,
       term: data2[0].term,
       year: data2[0].year,
+      isAccepting: data2[0].isAccepting,
     });
   };
   const changeData = (e) => {
@@ -345,31 +349,14 @@ function QuestionSec() {
   const updateQrateData = async () => {
     try {
       const docRef = doc(firestore, "question_rate", questionInputField.id);
-      await updateDoc(docRef, {
-        pp_rate: parseFloat(questionInputField.question_pp_rate),
-        i_rate: parseFloat(questionInputField.question_1_rate),
-        ii_rate: parseFloat(questionInputField.question_2_rate),
-        iii_rate: parseFloat(questionInputField.question_3_rate),
-        iv_rate: parseFloat(questionInputField.question_4_rate),
-        v_rate: parseFloat(questionInputField.question_5_rate),
-        term: questionInputField.term,
-        year: parseInt(questionInputField.year),
-      });
-      setQuestionRateState({
-        pp_rate: parseFloat(questionInputField.question_pp_rate),
-        i_rate: parseFloat(questionInputField.question_1_rate),
-        ii_rate: parseFloat(questionInputField.question_2_rate),
-        iii_rate: parseFloat(questionInputField.question_3_rate),
-        iv_rate: parseFloat(questionInputField.question_4_rate),
-        v_rate: parseFloat(questionInputField.question_5_rate),
-        term: questionInputField.term,
-        year: parseInt(questionInputField.year),
-      });
+      await updateDoc(docRef, questionInputField);
+      setQuestionRateState(questionInputField);
       toast.success("Data Successfully Updated!!!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
+        pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -380,6 +367,7 @@ function QuestionSec() {
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
+        pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -407,45 +395,42 @@ function QuestionSec() {
       setData(data);
       setQuestionInputField({
         id: questionRateState.id,
-        question_pp_rate: questionRateState.pp_rate,
-        question_1_rate: questionRateState.i_rate,
-        question_2_rate: questionRateState.ii_rate,
-        question_3_rate: questionRateState.iii_rate,
-        question_4_rate: questionRateState.iv_rate,
-        question_5_rate: questionRateState.v_rate,
+        pp_rate: questionRateState.pp_rate,
+        i_rate: questionRateState.i_rate,
+        ii_rate: questionRateState.ii_rate,
+        iii_rate: questionRateState.iii_rate,
+        iv_rate: questionRateState.iv_rate,
+        v_rate: questionRateState.v_rate,
         term: questionRateState.term,
         year: questionRateState.year,
+        isAccepting: questionRateState.isAccepting,
       });
     }
-  };
-  const getAcceptingData = async () => {
-    const collectionRef = collection(firestore, "questionRequisition");
-    const q = query(collectionRef, where("id", "==", "qKMMuy5GY8yEA3mORthA"));
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => doc.data())[0];
-    if (data.isAccepting) {
-      setIsAccepting(true);
+    const questionRateDifference =
+      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    if (questionRateDifference >= 1 || questionRateState.length === 0) {
+      getAcceptingData();
     } else {
-      setIsAccepting(false);
+      setQuestionInputField(questionRateState);
+      setIsAccepting(questionRateState.isAccepting);
     }
   };
 
   const closeAccepting = async () => {
-    const docRef = doc(
-      firestore,
-      "questionRequisition",
-      "qKMMuy5GY8yEA3mORthA"
-    );
+    const docRef = doc(firestore, "question_rate", questionRateState.id);
     await updateDoc(docRef, {
       isAccepting: false,
     })
       .then(() => {
+        setQuestionRateState({ ...questionRateState, isAccepting: false });
+        setQuestionRateUpdateTime(Date.now());
         setIsAccepting(false);
         toast.success("Accepting Status Set Closed Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -457,6 +442,7 @@ function QuestionSec() {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -465,21 +451,20 @@ function QuestionSec() {
       });
   };
   const openAccepting = async () => {
-    const docRef = doc(
-      firestore,
-      "questionRequisition",
-      "qKMMuy5GY8yEA3mORthA"
-    );
+    const docRef = doc(firestore, "question_rate", questionRateState.id);
     await updateDoc(docRef, {
       isAccepting: true,
     })
       .then(() => {
+        setQuestionRateState({ ...questionRateState, isAccepting: true });
+        setQuestionRateUpdateTime(Date.now());
         setIsAccepting(true);
         toast.success("Accepting Status Set Open Successfully!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -491,6 +476,7 @@ function QuestionSec() {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
@@ -504,7 +490,7 @@ function QuestionSec() {
       router.push("/login");
     }
     getQuestionData();
-    getAcceptingData();
+
     // eslint-disable-next-line
   }, []);
 
@@ -1133,13 +1119,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="pp_rate"
-                      value={questionInputField.question_pp_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_pp_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.pp_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            pp_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            pp_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1148,13 +1141,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="i_rate"
-                      value={questionInputField.question_1_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_1_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.i_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            i_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            i_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1163,13 +1163,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="i_rate"
-                      value={questionInputField.question_2_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_2_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.ii_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            ii_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            ii_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1178,13 +1185,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="i_rate"
-                      value={questionInputField.question_3_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_3_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.iii_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            iii_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            iii_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1193,13 +1207,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="i_rate"
-                      value={questionInputField.question_4_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_4_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.iv_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            iv_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            iv_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1208,13 +1229,20 @@ function QuestionSec() {
                       type="number"
                       className="form-control"
                       name="i_rate"
-                      value={questionInputField.question_5_rate}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          question_5_rate: e.target.value,
-                        })
-                      }
+                      value={questionInputField.v_rate}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            v_rate: parseFloat(e.target.value),
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            v_rate: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1224,12 +1252,19 @@ function QuestionSec() {
                       className="form-control"
                       name="year"
                       value={questionInputField.year}
-                      onChange={(e) =>
-                        setQuestionInputField({
-                          ...questionInputField,
-                          year: e.target.value,
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            year: e.target.value,
+                          });
+                        } else {
+                          setQuestionInputField({
+                            ...questionInputField,
+                            year: "",
+                          });
+                        }
+                      }}
                     />
                   </div>
                   <div className="mb-3 col-md-6">
@@ -1269,16 +1304,7 @@ function QuestionSec() {
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                   onClick={() => {
-                    setQuestionInputField({
-                      question_pp_rate: questionRateState.pp_rate,
-                      question_1_rate: questionRateState.i_rate,
-                      question_2_rate: questionRateState.ii_rate,
-                      question_3_rate: questionRateState.iii_rate,
-                      question_4_rate: questionRateState.iv_rate,
-                      question_5_rate: questionRateState.v_rate,
-                      term: questionRateState.term,
-                      year: questionRateState.year,
-                    });
+                    setQuestionInputField(questionRateState);
                   }}
                 >
                   Close
