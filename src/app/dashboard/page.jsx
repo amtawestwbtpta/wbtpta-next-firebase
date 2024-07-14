@@ -47,6 +47,7 @@ const page = () => {
     ma,
     gpf,
     gpfprev,
+    julyGpf,
     ptax,
     gsli,
     addl,
@@ -81,28 +82,23 @@ const page = () => {
     addl = teacherdetails.addl;
     gpf = teacherdetails.gpf;
     gpfprev = teacherdetails.gpfprev;
+    julyGpf = teacherdetails.julyGpf;
 
     gsli = teacherdetails.gsli;
     fname = teacherdetails.fname;
   }
 
   let date = new Date();
+  const month = date.getMonth();
   let setda, sethra, setgross, setbasicpay, setnetpay, pfund;
-  let junelast = new Date(`${date.getFullYear()}-07-31`);
-  if (date >= junelast) {
+  if (month >= 6) {
     setbasicpay = basic;
-    pfund = gpf;
-  } else if (
-    date.getMonth() === 0 ||
-    date.getMonth() === 1 ||
-    date.getMonth() === 3
-  ) {
-    setbasicpay = basic;
-
+    pfund = julyGpf;
+  } else if (month >= 3 || month <= 5) {
+    setbasicpay = mbasic;
     pfund = gpf;
   } else {
     setbasicpay = mbasic;
-
     pfund = gpfprev;
   }
   setda = Math.round(setbasicpay * DA);
@@ -427,7 +423,22 @@ const page = () => {
             </div>
 
             {gpf > 0 ? (
-              gpf === gpfprev ? (
+              gpf !== julyGpf && gpf === gpfprev ? (
+                <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+                  <div>
+                    <label>June GPF: </label>
+                  </div>
+                  <div>
+                    <p>{gpf}</p>
+                  </div>
+                  <div>
+                    <label>July GPF: </label>
+                  </div>
+                  <div>
+                    <p>{julyGpf}</p>
+                  </div>
+                </div>
+              ) : gpf === julyGpf && gpf === gpfprev ? (
                 <div className="bg-info rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
                   <div>
                     <label>GPF: </label>

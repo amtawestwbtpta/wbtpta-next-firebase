@@ -555,6 +555,7 @@ const TechAccuitance = () => {
                         let ma = el.ma;
                         let gpf = el.gpf;
                         let gpfprev = el.gpfprev;
+                        let julyGpf = el.julyGpf;
                         let gsli = el.gsli;
                         let disability = el.disability;
                         let date = new Date();
@@ -580,18 +581,17 @@ const TechAccuitance = () => {
                             da = Math.round(basicpay * PREV6DA);
                           }
                         } else {
-                          if (index <= 5) {
-                            basicpay = mbasic;
-                            pfund = gpfprev;
-                            if (index <= 2) {
-                              da = Math.round(basicpay * PREVDA);
-                            } else {
-                              da = Math.round(basicpay * DA);
-                            }
-                          } else {
+                          if (index >= 6) {
                             basicpay = basic;
+                            pfund = julyGpf;
+                            da = Math.round(basicpay * DA);
+                          } else if (index >= 3 || index <= 5) {
+                            basicpay = mbasic;
                             pfund = gpf;
                             da = Math.round(basicpay * DA);
+                          } else {
+                            da = Math.round(basicpay * PREVDA);
+                            pfund = gpfprev;
                           }
                         }
 

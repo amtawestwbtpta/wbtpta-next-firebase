@@ -44,6 +44,7 @@ const PayslipWbtpta = () => {
     gross,
     gpf,
     gpfprev,
+    julyGpf,
     ptax,
     gsli,
     udise,
@@ -64,15 +65,15 @@ const PayslipWbtpta = () => {
     if (index > 6) {
       basicpay = basic;
       da = Math.round(basicpay * DA);
+      pfund = julyGpf;
+    } else if (index < 7 || index > 3) {
+      basicpay = basic;
+      da = Math.round(basicpay * DA);
       pfund = gpf;
     } else {
       basicpay = mbasic;
       pfund = gpfprev;
-      if (index < 4) {
-        da = Math.round(basicpay * PREVDA);
-      } else {
-        da = Math.round(basicpay * DA);
-      }
+      da = Math.round(basicpay * PREVDA);
     }
   } else if (dataYear === date.getFullYear() - 1) {
     basicpay = prevmbasic;

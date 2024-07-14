@@ -99,7 +99,7 @@ const JulySalary = () => {
               let addl = el.addl;
               let ma = el.ma;
               let gross = basic + da + hra + addl + ma;
-              let gpf = el.gpf;
+              let gpf = el.julyGpf;
               let gsli = el.gsli;
               let disability = el.disability;
               let ptax;
