@@ -143,7 +143,7 @@ const TechSalary = () => {
                       da = Math.round(basicpay * DA);
                       pfund = julyGpf;
                     } else if (index < 7 || index > 3) {
-                      basicpay = basic;
+                      basicpay = mbasic;
                       da = Math.round(basicpay * DA);
                       pfund = gpf;
                     } else {
