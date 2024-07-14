@@ -34,6 +34,7 @@ import {
   createDownloadLink,
   round2dec,
 } from "../../modules/calculatefunctions";
+import { notifyAll } from "../../modules/notification";
 import Loader from "../../components/Loader";
 function QuestionSec() {
   const router = useRouter();
@@ -421,20 +422,30 @@ function QuestionSec() {
     await updateDoc(docRef, {
       isAccepting: false,
     })
-      .then(() => {
-        setQuestionRateState({ ...questionRateState, isAccepting: false });
-        setQuestionRateUpdateTime(Date.now());
-        setIsAccepting(false);
-        toast.success("Accepting Status Set Closed Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+      .then(async () => {
+        let title = `Question Requisition Closed!`;
+        let body = "Question Requisition Accepting Status has been Closed!";
+        await notifyAll(title, body)
+          .then(async () => {
+            setQuestionRateState({ ...questionRateState, isAccepting: false });
+            setQuestionRateUpdateTime(Date.now());
+            setIsAccepting(false);
+            toast.success("Accepting Status Set Closed Successfully!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          })
+          .catch((e) => {
+            console.log(e);
+            setLoader(false);
+            toast.error("Error Sending Notification");
+          });
       })
       .catch((e) => {
         toast.error("Something Went Wrong in Server!", {
@@ -455,20 +466,33 @@ function QuestionSec() {
     await updateDoc(docRef, {
       isAccepting: true,
     })
-      .then(() => {
-        setQuestionRateState({ ...questionRateState, isAccepting: true });
-        setQuestionRateUpdateTime(Date.now());
-        setIsAccepting(true);
-        toast.success("Accepting Status Set Open Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+      .then(async () => {
+        let title = `Question Requisition Opened!`;
+        let body = "Question Requisition Accepting Status has been Opened!";
+        await notifyAll(title, body)
+          .then(async () => {
+            setQuestionRateState({ ...questionRateState, isAccepting: true });
+            setQuestionRateUpdateTime(Date.now());
+            setIsAccepting(true);
+            toast.success(
+              "Question Accepting Status Set Opened Successfully!",
+              {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              }
+            );
+          })
+          .catch((e) => {
+            console.log(e);
+            setLoader(false);
+            toast.error("Error Sending Notification");
+          });
       })
       .catch((e) => {
         toast.error("Something Went Wrong in Server!", {
