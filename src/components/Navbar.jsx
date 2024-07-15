@@ -268,7 +268,7 @@ const Navbar = () => {
                 );
               }}
             >
-              Accuitance Register
+              Acquittance Register
             </Link>
           </li>
           <li className="nav-item">
@@ -644,7 +644,7 @@ const Navbar = () => {
                 );
               }}
             >
-              Accuitance Register
+              Acquittance Register
             </Link>
           </li>
           <li className="nav-item">

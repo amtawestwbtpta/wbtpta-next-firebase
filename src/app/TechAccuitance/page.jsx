@@ -68,7 +68,7 @@ const TechAccuitance = () => {
           <div className="table-resposive text-center my-2">
             <div className="noprint my-3 mx-auto">
               <h3 className="text-center text-primary">
-                Accuitance Register of {titleCase(school)} for the Year {year}
+                Acquittance Register of {titleCase(school)} for the Year {year}
               </h3>
               <div
                 className="rounded p-2 col-md-4 mx-auto"
@@ -415,10 +415,16 @@ const TechAccuitance = () => {
                   className={`container-fluid nobreak my-2 ${month}-table`}
                   key={index}
                 >
+                  <h3 className="text-black font-weight-bold m-2">
+                    HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
+                  </h3>
+                  <h5 className="text-black m-2">
+                    ACQUITTANCE ROLL OF {school}, AMTA WEST CIRCLE
+                  </h5>
+                  <h5 className="text-black m-2">
+                    FOR THE MONTH OF {month.toUpperCase()}, {year}
+                  </h5>
                   <div className="d-flex flex-row text-center mx-auto justify-content-center align-items-center my-1">
-                    <h4 className="text-black m-2">
-                      {titleCase(month)}, {year}
-                    </h4>
                     <div className="noprint m-2">
                       <button
                         type="button"
