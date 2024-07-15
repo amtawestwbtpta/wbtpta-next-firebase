@@ -42,6 +42,8 @@ const ViewDetails = () => {
     addl,
     ma,
     gpf,
+    gpfprev,
+    julyGpf,
     gsli,
     fname,
     question,
@@ -363,14 +365,48 @@ const ViewDetails = () => {
           </div>
         </div>
 
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>GPF: </label>
-          </div>
-          <div>
-            <p>{gpf}</p>
-          </div>
-        </div>
+        {gpf > 0 ? (
+          gpf !== julyGpf && gpf === gpfprev ? (
+            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+              <div>
+                <label>June GPF: </label>
+              </div>
+              <div>
+                <p>{gpf}</p>
+              </div>
+              <div>
+                <label>July GPF: </label>
+              </div>
+              <div>
+                <p>{julyGpf}</p>
+              </div>
+            </div>
+          ) : gpf === julyGpf && gpf === gpfprev ? (
+            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+              <div>
+                <label>GPF: </label>
+              </div>
+              <div>
+                <p>{gpf}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+              <div>
+                <label>March GPF: </label>
+              </div>
+              <div>
+                <p>{gpfprev}</p>
+              </div>
+              <div>
+                <label>April GPF: </label>
+              </div>
+              <div>
+                <p>{gpf}</p>
+              </div>
+            </div>
+          )
+        ) : null}
 
         <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
           <div>
