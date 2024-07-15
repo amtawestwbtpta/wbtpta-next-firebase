@@ -90,6 +90,7 @@ const TeacherDatabase = () => {
       (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
     );
     setData(newDatas);
+    setFilteredData(newDatas);
     setLoader(false);
     setShowTable(true);
   };
@@ -99,32 +100,6 @@ const TeacherDatabase = () => {
     userData();
     // eslint-disable-next-line
   }, []);
-  useEffect(() => {
-    // console.log(data);
-    const result = data.filter((el) => {
-      return el.tname.toLowerCase().match(search.toLowerCase());
-    });
-    setFilteredData(result);
-
-    // eslint-disable-next-line
-  }, [search, schSearch, data]);
-  useEffect(() => {
-    // console.log(data);
-    const result = data.filter((el) => {
-      return el.school.toLowerCase().match(schSearch.toLowerCase());
-    });
-    setFilteredData(result);
-    // eslint-disable-next-line
-  }, [search, schSearch, data]);
-  useEffect(() => {
-    // console.log(data);
-    const delResult = allDelTeachers.filter((el) => {
-      return el.tname.toLowerCase().match(delSearch.toLowerCase());
-    });
-    setFilteredDelTeachers(delResult);
-
-    // eslint-disable-next-line
-  }, [delSearch]);
 
   const getDeletedTeachers = async () => {
     setLoader(true);
@@ -664,7 +639,14 @@ const TeacherDatabase = () => {
     );
   };
 
-  useEffect(() => {}, [user, teachersState]);
+  useEffect(() => {}, [
+    user,
+    teachersState,
+    filteredData,
+    data,
+    filteredDelTeachers,
+    allDelTeachers,
+  ]);
 
   return (
     <div className="container text-center my-3">
@@ -731,7 +713,16 @@ const TeacherDatabase = () => {
                     placeholder="Search by Teacher"
                     className="form-control"
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                      setFilteredData(
+                        teachersState.filter((el) =>
+                          el.tname
+                            .toLowerCase()
+                            .includes(e.target.value.toLowerCase())
+                        )
+                      );
+                    }}
                   />
                 </div>
                 <div className="mb-2">
@@ -740,7 +731,16 @@ const TeacherDatabase = () => {
                     placeholder="Search by School"
                     className="form-control"
                     value={schSearch}
-                    onChange={(e) => setSchSearch(e.target.value)}
+                    onChange={(e) => {
+                      setSchSearch(e.target.value);
+                      setFilteredData(
+                        teachersState.filter((el) =>
+                          el.school
+                            .toLowerCase()
+                            .includes(e.target.value.toLowerCase())
+                        )
+                      );
+                    }}
                   />
                 </div>
               </div>
