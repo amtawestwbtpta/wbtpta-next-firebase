@@ -56,6 +56,7 @@ const teacherSchema = new mongoose.Schema(
     question: String,
     service: String,
     gpfprev: Number,
+    julyGpf: Number,
     registered: Boolean,
     phone: String,
     netpayword: String,

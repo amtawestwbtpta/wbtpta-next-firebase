@@ -20,6 +20,7 @@ import {
   getCurrentDateInput,
   getSubmitDateInput,
   getSubmitDateSlashInput,
+  generateID,
 } from "../../modules/calculatefunctions";
 import { DA, HRA } from "../../modules/constants";
 
@@ -51,9 +52,9 @@ const AddTeacher = () => {
     school: "",
     udise: "",
     tname: "",
-    gender: "",
+    gender: "male",
     ph: 0,
-    desig: "",
+    desig: "AT",
     fname: "",
     circle: "taw",
     sis: "AMTA WEST CIRCLE",
@@ -61,20 +62,20 @@ const AddTeacher = () => {
     association: "WBTPTA",
     phone: "",
     email: "",
-    dob: "01-01-1980",
+    dob: "01-01-1990",
     doj: getSubmitDateSlashInput(new Date().toLocaleDateString()),
     dojnow: getSubmitDateSlashInput(new Date().toLocaleDateString()),
-    dor: "01-01-2040",
+    dor: "01-01-2050",
     bank: "",
     account: "",
     ifsc: "",
-    empid: "",
+    empid: generateID(),
     training: "TRAINED",
     pan: "",
     address: "",
-    basic: 0,
-    mbasic: 0,
-    prevmbasic: 0,
+    basic: 28900,
+    mbasic: 28900,
+    prevmbasic: 28900,
     addl: 0,
     da: 0,
     mda: 0,
@@ -86,6 +87,7 @@ const AddTeacher = () => {
     mptax: 0,
     gpf: 0,
     gpfprev: 0,
+    julyGpf: 0,
     ptax: 150,
     gsli: 0,
     jptax: 0,
@@ -94,11 +96,12 @@ const AddTeacher = () => {
     bonus: 0,
     arrear: 0,
     question: "taw",
-    hoi: "",
+    hoi: "No",
     service: "inservice",
     id: "",
     rank: 3,
     newHt: false,
+    registered: false,
     dataYear: new Date().getFullYear(),
   });
   const [errField, setErrField] = useState({
@@ -533,38 +536,62 @@ const AddTeacher = () => {
       school: "",
       udise: "",
       tname: "",
-      gender: "",
+      gender: "male",
       ph: 0,
       desig: "AT",
       fname: "",
+      circle: "taw",
+      sis: "AMTA WEST CIRCLE",
       gp: "",
       association: "WBTPTA",
       phone: "",
       email: "",
-      dob: "01-01-1980",
-      doj: "01-01-2010",
-      dojnow: "01-01-2023",
-      dor: "01-01-2040",
+      dob: "01-01-1990",
+      doj: getSubmitDateSlashInput(new Date().toLocaleDateString()),
+      dojnow: getSubmitDateSlashInput(new Date().toLocaleDateString()),
+      dor: "01-01-2050",
       bank: "",
       account: "",
       ifsc: "",
-      empid: "",
+      empid: generateID(),
       training: "TRAINED",
       pan: "",
       address: "",
-      basic: 0,
-      mbasic: 0,
+      basic: 28900,
+      mbasic: 28900,
+      prevmbasic: 28900,
+      addl: 0,
+      da: 0,
+      mda: 0,
+      hra: 0,
+      mhra: 0,
       ma: 500,
+      gross: 0,
+      mgross: 0,
+      mptax: 0,
       gpf: 0,
+      gpfprev: 0,
+      julyGpf: 0,
+      ptax: 150,
       gsli: 0,
-      arrear: 0,
+      jptax: 0,
+      netpay: 0,
+      mnetpay: 0,
       bonus: 0,
+      arrear: 0,
       question: "taw",
       hoi: "No",
       service: "inservice",
       id: "",
+      rank: 3,
+      newHt: false,
+      registered: false,
+      dataYear: new Date().getFullYear(),
     });
     setShowForm(false);
+    if (typeof window !== undefined) {
+      document.getElementById("school").value = "";
+    }
   };
   useEffect(() => {
     sch_search();
@@ -595,15 +622,16 @@ const AddTeacher = () => {
         </div>
         {loader ? <Loader /> : null}
         <div className="container fw-bold">
-          <form action="" autoComplete="off" method="post">
+          <form action="" autoComplete="off" method="post" id="form">
             <div className="row align-items-center">
               <div className="mb-3 col-md-6">
                 <label className="form-label">School Name</label>
                 <div className="mx-auto mb-3">
                   <select
                     className="form-select"
-                    defaultValue={inputField.school}
+                    defaultValue=""
                     name="school"
+                    id="school"
                     onChange={(e) => {
                       setInputField({
                         ...inputField,
@@ -806,6 +834,22 @@ const AddTeacher = () => {
                     {errField.errassociation.length > 0 && (
                       <span className="error">{errField.errassociation}</span>
                     )}
+                  </div>
+                  <div className="mb-3 col-md-3">
+                    <label className="form-label">Is Registered?</label>
+
+                    <select
+                      className="form-select form-select-sm mb-3"
+                      aria-label=".form-select-sm example"
+                      name="registered"
+                      id="registered"
+                      defaultValue={inputField.registered}
+                      onChange={formHandler}
+                    >
+                      <option value="">Select Is Registered</option>
+                      <option value={true}>Yes</option>
+                      <option value={false}>No</option>
+                    </select>
                   </div>
                   <div className="mb-3 col-md-3">
                     <label className="form-label">Mobile No.</label>
@@ -1135,6 +1179,7 @@ const AddTeacher = () => {
                           ...inputField,
                           gpf: parseInt(e.target.value),
                           gpfprev: parseInt(e.target.value),
+                          julyGpf: parseInt(e.target.value),
                         })
                       }
                     />

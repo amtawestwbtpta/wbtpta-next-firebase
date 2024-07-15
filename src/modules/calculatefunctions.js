@@ -7,7 +7,24 @@ export function round2dec(value) {
     return value;
   }
 }
+export const generateID = () => {
+  const capitalAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers = "0123456789";
 
+  let randomCode = "";
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * capitalAlphabets.length);
+    randomCode += capitalAlphabets[randomIndex];
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * numbers.length);
+    randomCode += numbers[randomIndex];
+  }
+
+  return randomCode;
+};
 export function NumInWords(number) {
   const first = [
     "",

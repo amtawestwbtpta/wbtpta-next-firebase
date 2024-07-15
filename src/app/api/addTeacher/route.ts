@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
       mgross,
       gpf,
       gpfprev,
+      julyGpf,
       mptax,
       jptax,
       gsli,
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
       service,
       id,
       rank,
+      registered,
       dataYear,
     }: any = reqBody;
 
@@ -99,6 +101,7 @@ export async function POST(request: NextRequest) {
       mgross,
       gpf,
       gpfprev,
+      julyGpf,
       mptax,
       jptax,
       gsli,
@@ -113,6 +116,7 @@ export async function POST(request: NextRequest) {
       service,
       id,
       rank,
+      registered,
       dataYear,
     });
     const savedTeacher = await newTeacher.save();

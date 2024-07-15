@@ -7,6 +7,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
+import { Loader } from "rsuite";
 const Navbar = () => {
   const {
     state,
@@ -20,6 +21,10 @@ const Navbar = () => {
     schoolUpdateTime,
     setSchoolUpdateTime,
     setStateObject,
+    setMemoUpdateTime,
+    setNoticeUpdateTime,
+    setQuestionUpdateTime,
+    setSlideUpdateTime,
     setStateArray,
     questionRateState,
     questionRateUpdateTime,
@@ -37,7 +42,7 @@ const Navbar = () => {
     userdetails = decryptObjData("uid");
     loggedAt = getCookie("loggedAt");
   }
-
+  const [showLoader, setShowLoader] = useState(false);
   const handleNavCollapse = () => {
     if (typeof window !== "undefined") {
       // browser code
@@ -60,6 +65,7 @@ const Navbar = () => {
   }
 
   const storeTeachersData = async () => {
+    setShowLoader(true);
     const q = query(collection(firestore, "teachers"));
     const querySnapshot = await getDocs(q);
     const datas = querySnapshot.docs.map((doc) => ({
@@ -78,10 +84,12 @@ const Navbar = () => {
       // If "school" keys are equal, compare the "rank" keys
       return a.rank - b.rank;
     });
+    setShowLoader(false);
     setTeachersState(newDatas);
     setTeacherUpdateTime(Date.now());
   };
   const storeSchoolData = async () => {
+    setShowLoader(true);
     const q2 = query(collection(firestore, "schools"));
 
     const querySnapshot2 = await getDocs(q2);
@@ -92,9 +100,11 @@ const Navbar = () => {
     }));
     setSchoolState(data2);
     setSchoolUpdateTime(Date.now());
+    setShowLoader(false);
   };
 
   const checkLogin = async () => {
+    setShowLoader(true);
     const collectionRef = collection(firestore, "userteachers");
     const q = query(
       collectionRef,
@@ -104,22 +114,24 @@ const Navbar = () => {
     let fdata = querySnapshot.docs[0].data();
     if (!fdata.disabled) {
       setState(teacherdetails.circle);
+      setShowLoader(false);
     } else {
+      setShowLoader(false);
       toast.error("Your Account is Disabled!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
-
+        pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
       });
-      localStorage.clear();
       router.push("/logout");
     }
   };
   const getAcceptingData = async () => {
+    setShowLoader(true);
     const q = query(collection(firestore, "question_rate"));
     const querySnapshot = await getDocs(q);
     const data = querySnapshot.docs.map((doc) => ({
@@ -129,6 +141,7 @@ const Navbar = () => {
     }))[0];
     setQuestionRateState(data);
     setQuestionRateUpdateTime(Date.now());
+    setShowLoader(false);
   };
   useEffect(() => {
     if (details) {
@@ -151,6 +164,7 @@ const Navbar = () => {
     if (questionRateDifference >= 1 || questionRateState.length === 0) {
       getAcceptingData();
     }
+
     // eslint-disable-next-line
   }, []);
 
@@ -518,10 +532,25 @@ const Navbar = () => {
             </li>
           </div>
           <li className="nav-item">
-            <i
-              className="bi bi-arrow-clockwise text-success fs-3"
-              style={{ cursor: "pointer" }}
-            ></i>
+            <Link
+              href="#"
+              className="nav-link"
+              onClick={() => {
+                handleNavCollapse();
+                storeSchoolData();
+                storeTeachersData();
+                getAcceptingData();
+                setTeacherUpdateTime(Date.now() - 1000 * 60 * 15);
+                setSchoolUpdateTime(Date.now() - 1000 * 60 * 15);
+                setSlideUpdateTime(Date.now() - 1000 * 60 * 15);
+                setNoticeUpdateTime(Date.now() - 1000 * 60 * 15);
+                setMemoUpdateTime(Date.now() - 1000 * 60 * 15);
+                setQuestionUpdateTime(Date.now() - 1000 * 60 * 15);
+                setQuestionRateUpdateTime(Date.now() - 1000 * 60 * 15);
+              }}
+            >
+              <i className="bi bi-arrow-clockwise text-success fs-3 cursor-pointer"></i>
+            </Link>
           </li>
         </>
       );
@@ -799,10 +828,25 @@ const Navbar = () => {
             </li>
           </div>
           <li className="nav-item">
-            <i
-              className="bi bi-arrow-clockwise text-success fs-3"
-              style={{ cursor: "pointer" }}
-            ></i>
+            <Link
+              href="#"
+              className="nav-link"
+              onClick={() => {
+                handleNavCollapse();
+                storeSchoolData();
+                storeTeachersData();
+                getAcceptingData();
+                setTeacherUpdateTime(Date.now() - 1000 * 60 * 15);
+                setSchoolUpdateTime(Date.now() - 1000 * 60 * 15);
+                setSlideUpdateTime(Date.now() - 1000 * 60 * 15);
+                setNoticeUpdateTime(Date.now() - 1000 * 60 * 15);
+                setMemoUpdateTime(Date.now() - 1000 * 60 * 15);
+                setQuestionUpdateTime(Date.now() - 1000 * 60 * 15);
+                setQuestionRateUpdateTime(Date.now() - 1000 * 60 * 15);
+              }}
+            >
+              <i className="bi bi-arrow-clockwise text-success fs-3 cursor-pointer"></i>
+            </Link>
           </li>
         </>
       );
@@ -996,6 +1040,7 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      {showLoader && <Loader />}
     </nav>
   );
 };

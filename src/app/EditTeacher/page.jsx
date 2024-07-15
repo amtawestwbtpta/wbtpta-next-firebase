@@ -1010,7 +1010,7 @@ const EditTeacher = () => {
           />
         </div>
         <div className="mb-3 col-md-3">
-          <label className="form-label">Previous Year GPF</label>
+          <label className="form-label">March GPF</label>
           <input
             type="text"
             className="form-control"
@@ -1028,6 +1028,30 @@ const EditTeacher = () => {
                 setinputField({
                   ...inputField,
                   gpfprev: "",
+                });
+              }
+            }}
+          />
+        </div>
+        <div className="mb-3 col-md-3">
+          <label className="form-label">July GPF</label>
+          <input
+            type="text"
+            className="form-control"
+            id="julyGpf"
+            name="julyGpf"
+            placeholder="GPF"
+            value={inputField?.julyGpf}
+            onChange={(e) => {
+              if (e.target.value !== "") {
+                setinputField({
+                  ...inputField,
+                  julyGpf: parseInt(e.target.value),
+                });
+              } else {
+                setinputField({
+                  ...inputField,
+                  julyGpf: "",
                 });
               }
             }}
