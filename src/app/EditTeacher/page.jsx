@@ -433,6 +433,27 @@ const EditTeacher = () => {
           </select>
         </div>
         <div className="mb-0 col-md-3">
+          <label className="form-label">Is Registered</label>
+          <br />
+          <select
+            className="form-select form-select-sm mb-3"
+            aria-label=".form-select-lg example"
+            name="registered"
+            id="registered"
+            value={inputField?.registered}
+            onChange={(e) => {
+              setinputField({
+                ...inputField,
+                registered: e.target.value,
+              });
+            }}
+          >
+            <option value="taw">Select Registration Status</option>
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </select>
+        </div>
+        <div className="mb-0 col-md-3">
           <label className="form-label">Question Access Type</label>
           <br />
           <select
@@ -986,30 +1007,6 @@ const EditTeacher = () => {
           />
         </div>
         <div className="mb-3 col-md-3">
-          <label className="form-label">GPF</label>
-          <input
-            type="text"
-            className="form-control"
-            id="gpf"
-            name="gpf"
-            placeholder="GPF"
-            value={inputField?.gpf}
-            onChange={(e) => {
-              if (e.target.value !== "") {
-                setinputField({
-                  ...inputField,
-                  gpf: parseInt(e.target.value),
-                });
-              } else {
-                setinputField({
-                  ...inputField,
-                  gpf: "",
-                });
-              }
-            }}
-          />
-        </div>
-        <div className="mb-3 col-md-3">
           <label className="form-label">March GPF</label>
           <input
             type="text"
@@ -1033,6 +1030,31 @@ const EditTeacher = () => {
             }}
           />
         </div>
+        <div className="mb-3 col-md-3">
+          <label className="form-label">April GPF</label>
+          <input
+            type="text"
+            className="form-control"
+            id="gpf"
+            name="gpf"
+            placeholder="GPF"
+            value={inputField?.gpf}
+            onChange={(e) => {
+              if (e.target.value !== "") {
+                setinputField({
+                  ...inputField,
+                  gpf: parseInt(e.target.value),
+                });
+              } else {
+                setinputField({
+                  ...inputField,
+                  gpf: "",
+                });
+              }
+            }}
+          />
+        </div>
+
         <div className="mb-3 col-md-3">
           <label className="form-label">July GPF</label>
           <input
