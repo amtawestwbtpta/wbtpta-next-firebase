@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import {
-  NumInWords,
+  INR,
   GetMonthName,
   printDate,
   months,
@@ -75,7 +75,7 @@ const PaySlipOsmsNew = () => {
       da = Math.round(basicpay * DA);
       pfund = julyGpf;
     } else if (index < 7 || index > 3) {
-      basicpay = basic;
+      basicpay = mbasic;
       da = Math.round(basicpay * DA);
       pfund = gpf;
     } else {
@@ -175,36 +175,38 @@ const PaySlipOsmsNew = () => {
           style={{
             margin: 0,
             padding: 0,
-            fontFamily: "Times",
             maxWidth: "960px",
             zoom: 0.9,
             whiteSpace: "nowrap",
             color: "#000",
           }}
         >
-          <div ClassName="main" style={{ zoom: "1.3" }}>
+          <div className="main" style={{ zoom: "1.3" }}>
             <div
-              ClassName="top"
+              className="top"
               style={{ fontSize: "smaller", margin: "10px auto" }}
             >
               <div>
                 <img
-                  ClassName="img2"
+                  className="img2"
                   src="https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=f21c8d21-ac4e-4f2e-b416-2064d91ffe4f"
                   style={{ position: "absolute", width: 80, left: 10 }}
                   alt="OSMS LOGO"
                 />
               </div>
               <div
-                ClassName="heading"
-                style={{ margin: "auto", width: "100%" }}
+                className="heading dejavu"
+                style={{
+                  margin: "auto",
+                  width: "100%",
+                }}
               >
                 <h5 style={{ textAlign: "center", marginLeft: -54 }}>
                   GOVT. OF WEST BENGAL
                 </h5>
-                <h5 style={{ textAlign: "center", marginLeft: -54 }}>
+                <h6 style={{ textAlign: "center", marginLeft: -54 }}>
                   OFFICE OF THE SUB INSPECTOR OF SCHOOLS
-                </h5>
+                </h6>
                 <h6
                   style={{
                     textAlign: "center",
@@ -214,10 +216,10 @@ const PaySlipOsmsNew = () => {
                 >
                   AMTA WEST CIRCLE, HAORA
                 </h6>
-                <h5 style={{ textAlign: "center", marginLeft: -54 }}>
+                <h7 style={{ textAlign: "center", marginLeft: -54 }}>
                   PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
                   {today.getFullYear()}
-                </h5>
+                </h7>
               </div>
             </div>
 
@@ -234,7 +236,7 @@ const PaySlipOsmsNew = () => {
             </button>
 
             <div
-              ClassName="details"
+              className="details dejaVuCondensed"
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -267,7 +269,7 @@ const PaySlipOsmsNew = () => {
                 </p>
               </div>
               <div
-                ClassName="idDiv"
+                className="idDiv"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -290,20 +292,24 @@ const PaySlipOsmsNew = () => {
             </div>
 
             <table
-              ClassName="myTable"
+              className="myTable"
               style={{
-                border: "1px solid",
+                border: "1px solid gray",
                 fontSize: "0.9rem",
-                borderCollapse: "collapse",
+                borderCollapse: "separate",
+                borderSpacing: 1,
+                fontFamily: "DejaVuSerifCondensed",
               }}
             >
-              <tr>
+              <tr className="dejavu">
                 <th
                   style={{
-                    borderRight: "1px solid",
-                    borderBottom: "1px solid",
+                    borderRight: "1px solid gray",
+                    borderBottom: "1px solid gray",
                     padding: "2px 0 2px 0",
                     textAlign: "center",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
                   }}
                   colSpan="2"
                 >
@@ -311,10 +317,12 @@ const PaySlipOsmsNew = () => {
                 </th>
                 <th
                   style={{
-                    borderRight: "1px solid",
-                    borderBottom: "1px solid",
+                    borderRight: "1px solid gray",
+                    borderBottom: "1px solid gray",
                     padding: "2px 0 2px 0",
                     textAlign: "center",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
                   }}
                   colSpan="2"
                 >
@@ -322,10 +330,12 @@ const PaySlipOsmsNew = () => {
                 </th>
                 <th
                   style={{
-                    borderRight: "1px solid",
-                    borderBottom: "1px solid",
+                    borderRight: "1px solid gray",
+                    borderBottom: "1px solid gray",
                     padding: "2px 0 2px 0",
                     textAlign: "center",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
                   }}
                   colSpan="2"
                 >
@@ -333,9 +343,11 @@ const PaySlipOsmsNew = () => {
                 </th>
                 <th
                   style={{
-                    borderBottom: "1px solid",
+                    borderBottom: "1px solid gray",
                     padding: "2px 0 2px 0",
                     textAlign: "center",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
                   }}
                   colSpan="2"
                 >
@@ -346,7 +358,7 @@ const PaySlipOsmsNew = () => {
                 {desig === "AT" ? (
                   <>
                     <th style={{ textAlign: "left" }}>
-                      <table>
+                      <table className="dejavu">
                         <tr>
                           <th>BASIC</th>
                         </tr>
@@ -374,10 +386,12 @@ const PaySlipOsmsNew = () => {
                       style={{
                         textAlign: "left",
                         paddingRight: "10pt",
-                        borderRight: "1px solid",
+                        borderRight: "1px solid gray",
+                        borderCollapse: "separate",
+                        borderSpacing: 1,
                       }}
                     >
-                      <table style={{ marginRight: -30 }}>
+                      <table style={{ marginRight: -10 }}>
                         <tr>
                           <td style={{ textAlign: "right" }}>{basicpay}</td>
                         </tr>
@@ -402,7 +416,7 @@ const PaySlipOsmsNew = () => {
                       </table>
                     </td>
                     <th style={{ textAlign: "left" }}>
-                      <table>
+                      <table className="dejavu">
                         <tr>
                           <th>GPF</th>
                         </tr>
@@ -429,7 +443,9 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "center",
-                        borderRight: "1px solid",
+                        borderRight: "1px solid gray",
+                        borderCollapse: "separate",
+                        borderSpacing: 1,
                       }}
                     >
                       <table style={{ marginRight: "5px" }}>
@@ -457,7 +473,10 @@ const PaySlipOsmsNew = () => {
                       </table>
                     </td>
                     <td
-                      style={{ textAlign: "right", borderRight: "1px solid" }}
+                      style={{
+                        textAlign: "right",
+                        borderRight: "1px solid gray",
+                      }}
                     >
                       <table style={{ marginRight: 1 }}></table>
                     </td>
@@ -465,7 +484,7 @@ const PaySlipOsmsNew = () => {
                 ) : (
                   <>
                     <th style={{ textAlign: "left", padding: "6pt" }}>
-                      <table>
+                      <table className="dejavu">
                         <tr>
                           <th>BASIC</th>
                         </tr>
@@ -494,12 +513,14 @@ const PaySlipOsmsNew = () => {
                     </th>
                     <td
                       style={{
-                        textAlign: "right",
-                        borderRight: "1px solid",
-                        paddingRight: "14pt",
+                        textAlign: "left",
+                        borderRight: "1px solid gray",
+                        paddingRight: "16pt",
+                        borderCollapse: "separate",
+                        borderSpacing: 1,
                       }}
                     >
-                      <table style={{ marginRight: -30 }}>
+                      <table style={{ marginRight: -15 }}>
                         <tr>
                           <td style={{ textAlign: "right" }}>{basicpay}</td>
                         </tr>
@@ -533,7 +554,7 @@ const PaySlipOsmsNew = () => {
                         paddingTop: "20pt",
                       }}
                     >
-                      <table>
+                      <table className="dejavu">
                         <tr>
                           <th>GPF</th>
                         </tr>
@@ -562,7 +583,8 @@ const PaySlipOsmsNew = () => {
                         textAlign: "right",
                         // paddingInline: "6pt",
                         paddingTop: "20pt",
-                        borderRight: "1px solid",
+                        borderRight: "1px solid gray",
+                        paddingRight: 6,
                       }}
                     >
                       <table>
@@ -592,7 +614,7 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "right",
-                        borderRight: "1px solid",
+                        borderRight: "1px solid gray",
                       }}
                     >
                       <table style={{ marginRight: 1 }}></table>
@@ -601,8 +623,15 @@ const PaySlipOsmsNew = () => {
                 )}
               </tr>
               <tr>
-                <th colSpan="2" style={{ borderTop: "1px solid" }}>
-                  <table>
+                <th
+                  colSpan="2"
+                  style={{
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
+                  }}
+                >
+                  <table className="dejavu">
                     <tr>
                       <th style={{ textAlign: "left" }}>Total:</th>
                       <th style={{ textAlign: "right" }}>{gross}</th>
@@ -615,18 +644,42 @@ const PaySlipOsmsNew = () => {
                   style={{
                     textAlign: "right",
                     paddingRight: "6pt",
-                    borderTop: "1px solid",
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
                   }}
+                  className="dejavu"
                 >
                   {deduction}
                 </th>
 
-                <th colSpan="2" style={{ borderTop: "1px solid" }}></th>
-                <th colSpan="2" style={{ borderTop: "1px solid" }}></th>
+                <th
+                  colSpan="2"
+                  style={{
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
+                  }}
+                ></th>
+                <th
+                  colSpan="2"
+                  style={{
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
+                  }}
+                ></th>
               </tr>
               <tr>
-                <td colSpan="8" style={{ borderTop: "1px solid" }}>
-                  <table>
+                <td
+                  colSpan="8"
+                  style={{
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
+                  }}
+                >
+                  <table className="dejavu">
                     <tr>
                       <th style={{ textAlign: "left", width: 85 }}>
                         GROSS PAY:
@@ -637,12 +690,19 @@ const PaySlipOsmsNew = () => {
                 </td>
               </tr>
               <tr>
-                <td colSpan="8" style={{ borderTop: "1px solid" }}>
-                  <table>
+                <td
+                  colSpan="8"
+                  style={{
+                    borderTop: "1px solid gray",
+                    borderCollapse: "separate",
+                    borderSpacing: 1,
+                  }}
+                >
+                  <table className="dejavu">
                     <tr>
                       <th style={{ textAlign: "left", width: 85 }}>NET PAY:</th>
                       <th style={{ textAlign: "left" }}>
-                        {netpay} {NumInWords(netpay)} Only
+                        {netpay} ({INR(netpay)})
                       </th>
                     </tr>
                   </table>
@@ -650,7 +710,7 @@ const PaySlipOsmsNew = () => {
               </tr>
               <tr>
                 <td colSpan="8">
-                  <table>
+                  <table className="dejavu">
                     <tr>
                       <th>
                         Transferred to {bank} Account no {account} &emsp; IFS
@@ -663,7 +723,7 @@ const PaySlipOsmsNew = () => {
             </table>
           </div>
           <div
-            ClassName="disclaimer"
+            className="disclaimer dejaVuCondensed"
             style={{ margin: "50px auto 300px 2px", textAlign: "left" }}
           >
             <p style={{ margin: "10px" }}>
@@ -679,16 +739,19 @@ const PaySlipOsmsNew = () => {
             </p>
           </div>
           <div
-            ClassName="disclaimer2"
+            className="disclaimer2 dejaVuCondensed"
             style={{ margin: "20px auto 10px 10px", textAlign: "left" }}
           >
-            <p>
-              Disclaimer: This is a computer generated Pay Slip and hence does
-              not require any signature.
+            <p style={{ fontSize: "medium" }}>
+              <span className="dejavu" style={{ fontSize: "medium" }}>
+                Disclaimer:
+              </span>{" "}
+              This is a computer generated Pay Slip and hence does not require
+              any signature.
             </p>
           </div>
           <div
-            ClassName="hr"
+            className="hr"
             style={{
               height: 2,
               borderTop: "0.5px solid",
@@ -697,7 +760,7 @@ const PaySlipOsmsNew = () => {
             }}
           ></div>
           <div
-            ClassName="footer"
+            className="footer dejavu"
             style={{
               margin: "auto",
               width: "100%",

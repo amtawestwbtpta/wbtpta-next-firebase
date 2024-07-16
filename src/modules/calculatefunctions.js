@@ -1,5 +1,4 @@
 import { DA, HRA } from "./constants";
-
 export function round2dec(value) {
   if (value % 1 !== 0) {
     return Number(Math.round(value + "e" + 2) + "e-" + 2).toFixed(2);
@@ -7,24 +6,7 @@ export function round2dec(value) {
     return value;
   }
 }
-export const generateID = () => {
-  const capitalAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const numbers = "0123456789";
 
-  let randomCode = "";
-
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = Math.floor(Math.random() * capitalAlphabets.length);
-    randomCode += capitalAlphabets[randomIndex];
-  }
-
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = Math.floor(Math.random() * numbers.length);
-    randomCode += numbers[randomIndex];
-  }
-
-  return randomCode;
-};
 export function NumInWords(number) {
   const first = [
     "",
@@ -97,15 +79,11 @@ export function NumInWords(number) {
 }
 
 export function titleCase(str) {
-  if (str) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
-  } else {
-    return "";
+  str = str.toLowerCase().split(" ");
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
   }
+  return str.join(" ");
 }
 
 export function percentTotal(value) {
@@ -356,22 +334,22 @@ export function INR(input) {
   } else {
     const crores = Math.floor(rupees / 10000000) % 100;
     if (crores > 0) {
-      output.push(`${getHundreds(crores)} crore`);
+      output.push(`${getHundreds(crores)} Crore`);
     }
 
     const lakhs = Math.floor(rupees / 100000) % 100;
     if (lakhs > 0) {
-      output.push(`${getHundreds(lakhs)} lakh`);
+      output.push(`${getHundreds(lakhs)} Lakh`);
     }
 
     const thousands = Math.floor(rupees / 1000) % 100;
     if (thousands > 0) {
-      output.push(`${getHundreds(thousands)} thousand`);
+      output.push(`${getHundreds(thousands)} Thousand`);
     }
 
     const hundreds = Math.floor((rupees % 1000) / 100);
     if (hundreds > 0 && hundreds < 10) {
-      output.push(`${getOnes(hundreds)} hundred`);
+      output.push(`${getOnes(hundreds)} Hundred`);
     }
 
     const tens = rupees % 100;
@@ -385,38 +363,38 @@ export function INR(input) {
     .join(" ")
     .split(/\s/)
     .filter((e) => e)
-    .map((e) => e.substr(0, 1).toUpperCase() + e.substr(1))
+    .map((e) => e.substr(0, 1) + e.substr(1))
     .join(" ");
 }
 
 function getOnes(number) {
   const ones = [
     "",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
   ];
   return ones[number] || "";
 }
 
 function getTeens(number) {
   const teens = [
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
   ];
   return teens[number] || "";
 }
@@ -425,14 +403,14 @@ function getTens(number) {
   const tens = [
     "",
     "",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety",
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety",
   ];
   return tens[number] || "";
 }
@@ -445,7 +423,9 @@ function getHundreds(num) {
     return getTeens(num % 10);
   }
   if (num >= 20 && num < 100) {
-    return `${getTens(Math.floor(num / 10))} ${getOnes(num % 10)}`;
+    return `${getTens(Math.floor(num / 10))}${
+      getOnes(num % 10) !== "" ? "-" : " "
+    }${getOnes(num % 10)}`;
   }
   return "";
 }
@@ -504,7 +484,24 @@ export const finMonths = [
   "March",
 ];
 export const getMonthDays = [31, 30, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+export const generateID = () => {
+  const capitalAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers = "0123456789";
 
+  let randomCode = "";
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * capitalAlphabets.length);
+    randomCode += capitalAlphabets[randomIndex];
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * numbers.length);
+    randomCode += numbers[randomIndex];
+  }
+
+  return randomCode;
+};
 export function compareObjects(x, y) {
   if (x === y) return true;
   // if both x and y are null or undefined and exactly the same

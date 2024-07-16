@@ -7,7 +7,23 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Tiro_Bangla, Roboto } from "next/font/google";
-
+import localFont from "next/font/local";
+const dejaVuBold = localFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/DejaVuSerifCondensed-Bold.ttf",
+    },
+  ],
+  variable: "--font-dejaVuBold",
+});
+const dejaVuCondensed = localFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/DejaVuSerifCondensed.ttf",
+    },
+  ],
+  variable: "--font-dejaVuCondensed",
+});
 const tiro_bangla = Tiro_Bangla({
   subsets: ["latin"],
   weight: ["400"],
@@ -34,7 +50,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable}`}
+        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable}`}
       >
         <div
           className="alert alert-success alert-dismissible fade show noprint"

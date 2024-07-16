@@ -139,6 +139,12 @@ body {
 /* .timesFont {
   font-family: "Times New Roman", Times, serif;
 } */
+.dejavu {
+  font-family: var(--font-dejaVuBold);
+}
+.dejaVuCondensed {
+  font-family: var(--font-dejaVuCondensed);
+}
 .timesFont {
   font-family: var(--font-roboto);
 }
