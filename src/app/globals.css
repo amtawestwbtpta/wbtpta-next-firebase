@@ -140,11 +140,22 @@ body {
   font-family: "Times New Roman", Times, serif;
 } */
 .dejavu {
-  font-family: var(--font-dejaVuBold);
+  font-family: var(--font-dejaVuBold) !important;
+  font-size: smaller;
 }
 .dejaVuCondensed {
-  font-family: var(--font-dejaVuCondensed);
+  font-family: var(--font-dejaVuCondensed) !important;
+  font-size: smaller;
 }
+
+.dejaVuCondensed p,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+
 .timesFont {
   font-family: var(--font-roboto);
 }

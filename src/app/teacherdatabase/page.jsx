@@ -702,6 +702,7 @@ const TeacherDatabase = () => {
             columns={columns}
             data={filteredData}
             pagination
+            paginationPerPage={30}
             highlightOnHover
             fixedHeader
             subHeader
