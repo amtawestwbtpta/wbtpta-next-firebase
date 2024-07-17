@@ -174,7 +174,7 @@ const PaySlipOsmsNew = () => {
           className="containermain"
           style={{
             margin: 0,
-            padding: 0,
+            padding: 50,
             maxWidth: "960px",
             zoom: 0.9,
             whiteSpace: "nowrap",
@@ -190,15 +190,16 @@ const PaySlipOsmsNew = () => {
                 <img
                   className="img2"
                   src="https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=f21c8d21-ac4e-4f2e-b416-2064d91ffe4f"
-                  style={{ position: "absolute", width: 80, left: 10 }}
+                  style={{ position: "absolute", width: 80, left: 51 }}
                   alt="OSMS LOGO"
                 />
               </div>
               <div
-                className="heading dejavu"
+                className="heading"
                 style={{
                   margin: "auto",
                   width: "100%",
+                  fontFamily: "dejaVuBold",
                 }}
               >
                 <h5 style={{ textAlign: "center", marginLeft: -54 }}>
@@ -227,7 +228,7 @@ const PaySlipOsmsNew = () => {
               type="button"
               className="btn btn-primary text-white font-weight-bold p-2 rounded noprint"
               onClick={() => {
-                if (typeof window !== "undefined") {
+                if (typeof window !== undefined) {
                   window.print();
                 }
               }}
@@ -241,7 +242,7 @@ const PaySlipOsmsNew = () => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                fontSize: "0.8rem",
+                fontSize: "0.6rem",
                 marginTop: 15,
                 marginBottom: 10,
               }}
@@ -292,13 +293,12 @@ const PaySlipOsmsNew = () => {
             </div>
 
             <table
-              className="myTable"
+              className="myTable dejaVuCondensed"
               style={{
                 border: "1px solid gray",
                 fontSize: "0.9rem",
                 borderCollapse: "separate",
                 borderSpacing: 1,
-                fontFamily: "DejaVuSerifCondensed",
               }}
             >
               <tr className="dejavu">
@@ -385,13 +385,17 @@ const PaySlipOsmsNew = () => {
                     <td
                       style={{
                         textAlign: "left",
-                        paddingRight: "10pt",
+                        paddingRight: "16pt",
                         borderRight: "1px solid gray",
                         borderCollapse: "separate",
                         borderSpacing: 1,
                       }}
                     >
-                      <table style={{ marginRight: -10 }}>
+                      <table
+                        style={{
+                          marginRight: -30,
+                        }}
+                      >
                         <tr>
                           <td style={{ textAlign: "right" }}>{basicpay}</td>
                         </tr>
@@ -483,8 +487,11 @@ const PaySlipOsmsNew = () => {
                   </>
                 ) : (
                   <>
-                    <th style={{ textAlign: "left", padding: "6pt" }}>
-                      <table className="dejavu">
+                    <th
+                      className="dejavu"
+                      style={{ textAlign: "left", padding: "6pt" }}
+                    >
+                      <table>
                         <tr>
                           <th>BASIC</th>
                         </tr>
@@ -512,15 +519,16 @@ const PaySlipOsmsNew = () => {
                       </table>
                     </th>
                     <td
+                      className="dejaVuCondensed"
                       style={{
                         textAlign: "left",
                         borderRight: "1px solid gray",
-                        paddingRight: "16pt",
+                        paddingRight: "20pt",
                         borderCollapse: "separate",
                         borderSpacing: 1,
                       }}
                     >
-                      <table style={{ marginRight: -15 }}>
+                      <table style={{ marginRight: -30 }}>
                         <tr>
                           <td style={{ textAlign: "right" }}>{basicpay}</td>
                         </tr>
@@ -584,7 +592,6 @@ const PaySlipOsmsNew = () => {
                         // paddingInline: "6pt",
                         paddingTop: "20pt",
                         borderRight: "1px solid gray",
-                        paddingRight: 6,
                       }}
                     >
                       <table>
@@ -622,7 +629,7 @@ const PaySlipOsmsNew = () => {
                   </>
                 )}
               </tr>
-              <tr>
+              <tr className="dejavu">
                 <th
                   colSpan="2"
                   style={{
@@ -648,7 +655,6 @@ const PaySlipOsmsNew = () => {
                     borderCollapse: "separate",
                     borderSpacing: 1,
                   }}
-                  className="dejavu"
                 >
                   {deduction}
                 </th>
