@@ -3,7 +3,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { NumInWords, round2dec } from "../../modules/calculatefunctions";
+import {
+  NumInWords,
+  round2dec,
+  round5,
+} from "../../modules/calculatefunctions";
 const PrintQuestionInvoice = () => {
   const router = useRouter();
   const { state, stateObject, questionRateState } = useGlobalContext();
@@ -42,7 +46,7 @@ const PrintQuestionInvoice = () => {
   let cl_3_rate = round2dec(cl_3_student * iii_rate);
   let cl_4_rate = round2dec(cl_4_student * iv_rate);
   let cl_5_rate = round2dec(cl_5_student * v_rate);
-  let total_rate = Math.round(
+  let total_rate = round5(
     cl_pp_student * pp_rate +
       cl_1_student * i_rate +
       cl_2_student * ii_rate +

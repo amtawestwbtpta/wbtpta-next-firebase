@@ -680,3 +680,6 @@ export const createDownloadLink = (myData, fileName) => {
   document.body.removeChild(link);
   URL.revokeObjectURL(href);
 };
+export function round5(x) {
+  return Math.ceil(x / 5) * 5;
+}

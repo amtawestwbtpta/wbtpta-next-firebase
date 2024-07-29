@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { NumInWords } from "../../modules/calculatefunctions";
+import { NumInWords, round5 } from "../../modules/calculatefunctions";
 const PrintQuestionAll = () => {
   const { state, stateObject, questionRateState } = useGlobalContext();
   const router = useRouter();
@@ -63,7 +63,7 @@ const PrintQuestionAll = () => {
         <table className="table table-resposive table-bordered border-dark border-1 text-center">
           <tbody>
             {allData.map((el, ind) => {
-              let total_rate = Math.round(
+              let total_rate = round5(
                 el.cl_pp_student * pp_rate +
                   el.cl_1_student * i_rate +
                   el.cl_2_student * ii_rate +

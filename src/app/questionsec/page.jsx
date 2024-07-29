@@ -33,6 +33,7 @@ import {
   compareObjects,
   createDownloadLink,
   round2dec,
+  round5,
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import Loader from "../../components/Loader";
@@ -1499,7 +1500,7 @@ function QuestionSec() {
               <th className="text-center">Total Cost</th>
               <th className="text-center">
                 <span id="total_rate">
-                  {Math.floor(
+                  {round5(
                     selectedSchool.cl_pp_student * questionRateState.pp_rate +
                       selectedSchool.cl_1_student * questionRateState.i_rate +
                       selectedSchool.cl_2_student * questionRateState.ii_rate +
