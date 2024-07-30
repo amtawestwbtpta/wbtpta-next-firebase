@@ -136,51 +136,69 @@ const MemoSection = () => {
                 type: file.type,
               })
                 .then(async () => {
-                  setMemoState([
-                    ...memoState,
-                    {
-                      id: docId,
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: title,
-                      memoText: memoText,
-                      memoNumber: memoNumber,
-                      memoDate: memoDate,
-                      url: photourl,
-                      photoName: docId + "-" + file.name,
-                      type: file.type,
-                    },
-                  ]);
-                  setAllData([
-                    ...memoState,
-                    {
-                      id: docId,
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: title,
-                      memoText: memoText,
-                      memoNumber: memoNumber,
-                      memoDate: memoDate,
-                      url: photourl,
-                      photoName: docId + "-" + file.name,
-                      type: file.type,
-                    },
-                  ]);
-                  setFilteredData([
-                    ...memoState,
-                    {
-                      id: docId,
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: title,
-                      memoText: memoText,
-                      memoNumber: memoNumber,
-                      memoDate: memoDate,
-                      url: photourl,
-                      photoName: docId + "-" + file.name,
-                      type: file.type,
-                    },
-                  ]);
+                  setMemoState(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        photoName: docId + "-" + file.name,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
+                  setAllData(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        photoName: docId + "-" + file.name,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
+                  setFilteredData(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        photoName: docId + "-" + file.name,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
                   setMemoUpdateTime(Date.now());
                   let memoTitle = `New memo added By ${teacherdetails.tname}`;
                   let body = memoText;
@@ -193,6 +211,7 @@ const MemoSection = () => {
                       setLoader(false);
                       setAddImage(false);
                       toast.success("memo Added Successfully!");
+                      // getData();
                       setFile({});
                       setSrc("");
                       setShowPercent(false);
@@ -216,7 +235,7 @@ const MemoSection = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-
+                pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -240,48 +259,66 @@ const MemoSection = () => {
           photoName: "",
         })
           .then(async () => {
-            setMemoState([
-              ...memoState,
-              {
-                id: docId,
-                date: Date.now(),
-                addedBy: teacherdetails.tname,
-                title: title,
-                memoText: memoText,
-                memoNumber: memoNumber,
-                memoDate: memoDate,
-                url: "",
-                photoName: "",
-              },
-            ]);
-            setAllData([
-              ...memoState,
-              {
-                id: docId,
-                date: Date.now(),
-                addedBy: teacherdetails.tname,
-                title: title,
-                memoText: memoText,
-                memoNumber: memoNumber,
-                memoDate: memoDate,
-                url: "",
-                photoName: "",
-              },
-            ]);
-            setFilteredData([
-              ...memoState,
-              {
-                id: docId,
-                date: Date.now(),
-                addedBy: teacherdetails.tname,
-                title: title,
-                memoText: memoText,
-                memoNumber: memoNumber,
-                memoDate: memoDate,
-                url: "",
-                photoName: "",
-              },
-            ]);
+            setMemoState(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
+            setAllData(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
+            setFilteredData(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
             setMemoUpdateTime(Date.now());
             let memoTitle = `New memo added By ${teacherdetails.tname}`;
             let body = memoText;
@@ -294,6 +331,7 @@ const MemoSection = () => {
                 setLoader(false);
                 setAddImage(false);
                 toast.success("memo Added Successfully!");
+                // getData();
                 setFile({});
                 setSrc("");
               })
@@ -315,7 +353,7 @@ const MemoSection = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",

@@ -114,31 +114,35 @@ const Notification = () => {
                 type: file.type,
               })
                 .then(async () => {
-                  setNoticeState([
-                    ...noticeState,
-                    {
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: title,
-                      noticeText: noticeText,
-                      url: photourl,
-                      photoName: docId + "-" + file.name,
-                      type: file.type,
-                    },
-                  ]);
+                  setNoticeState(
+                    [
+                      ...noticeState,
+                      {
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        noticeText: noticeText,
+                        url: photourl,
+                        photoName: docId + "-" + file.name,
+                        type: file.type,
+                      },
+                    ].sort((a, b) => b.date - a.date)
+                  );
                   setNoticeUpdateTime(Date.now());
-                  setAllData([
-                    ...noticeState,
-                    {
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: title,
-                      noticeText: noticeText,
-                      url: photourl,
-                      photoName: docId + "-" + file.name,
-                      type: file.type,
-                    },
-                  ]);
+                  setAllData(
+                    [
+                      ...noticeState,
+                      {
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        noticeText: noticeText,
+                        url: photourl,
+                        photoName: docId + "-" + file.name,
+                        type: file.type,
+                      },
+                    ].sort((a, b) => b.date - a.date)
+                  );
                   let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
                   let body = noticeText;
                   await notifyAll(noticeTitle, body)
@@ -172,7 +176,7 @@ const Notification = () => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
-
+                pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "light",
@@ -254,7 +258,7 @@ const Notification = () => {
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
-
+          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
