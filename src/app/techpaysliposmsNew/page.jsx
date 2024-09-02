@@ -8,8 +8,9 @@ import {
   GetMonthName,
   printDate,
   months,
+  RoundTo,
 } from "../../modules/calculatefunctions";
-import { DA, HRA } from "../../modules/constants";
+import { DA, HRA, NEXTDA } from "../../modules/constants";
 const PaySlipOsmsNew = () => {
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();

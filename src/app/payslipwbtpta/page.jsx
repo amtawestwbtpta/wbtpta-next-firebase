@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { decryptObjData, getCookie } from "../../modules/encryption";
-import { DA, HRA } from "../../modules/constants";
+import { DA, HRA, NEXTDA } from "../../modules/constants";
 import {
   GetMonthName,
   NumInWords,
