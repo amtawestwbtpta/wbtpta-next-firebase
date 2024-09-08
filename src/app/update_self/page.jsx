@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -7,10 +7,7 @@ import { firestore } from "../../context/FirbaseContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { decryptObjData, getCookie } from "../../modules/encryption";
-import {
-  getCurrentDateInput,
-  getSubmitDateInput,
-} from "../../modules/calculatefunctions";
+import { compareObjects } from "../../modules/calculatefunctions";
 const UpdateSelf = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
@@ -28,48 +25,33 @@ const UpdateSelf = () => {
   let teachersID = userdetails?.teachersID;
   let id = userdetails?.id;
   let tname = userdetails?.tname;
+  let fname = userdetails?.fname;
   let school = userdetails?.school;
   let phone = userdetails?.phone;
   let email = userdetails?.email;
-  let dob = userdetails?.dob;
-  let doj = userdetails?.doj;
-  let dojnow = userdetails?.dojnow;
-  let dor = userdetails?.dor;
-  let account = userdetails?.account;
-  let empid = userdetails?.empid;
-  let pan = userdetails?.pan;
   let address = userdetails?.address;
-  let bonus = userdetails?.bonus;
-  let arrear = userdetails?.arrear;
-
-  let fname = userdetails?.fname;
 
   const [inputField, setInputField] = useState({
     id: id,
-    empid: empid,
     tname: tname,
     fname: fname,
     email: email,
     phone: phone,
-    account: account,
-    pan: pan,
-    dob: dob,
-    doj: doj,
-    dojnow: dojnow,
-    dor: dor,
-    arrear: arrear,
-    bonus: bonus,
     address: address,
   });
+  const orginputField = {
+    id: id,
+    tname: tname,
+    fname: fname,
+    email: email,
+    phone: phone,
+    address: address,
+  };
   const [errField, setErrField] = useState({
     errtname: "",
     errfname: "",
     erremail: "",
     errphone: "",
-    erraccount: "",
-    errpan: "",
-    errarrear: "",
-    errbonus: "",
     erraddress: "",
   });
   const validForm = () => {
@@ -80,14 +62,6 @@ const UpdateSelf = () => {
       errfname: "",
       erremail: "",
       errphone: "",
-      erraccount: "",
-      errpan: "",
-      errdob: "",
-      errdoj: "",
-      errdojnow: "",
-      errdor: "",
-      errarrear: "",
-      errbonus: "",
       erraddress: "",
     });
     if (inputField.tname === "") {
@@ -119,35 +93,6 @@ const UpdateSelf = () => {
       }));
     }
 
-    if (inputField.account === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        erraccount: "Please Enter Account No.",
-      }));
-    }
-    if (inputField.pan === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errpan: "Please Enter PAN No.",
-      }));
-    }
-
-    if (inputField.arrear === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errarrear: "Please Enter Arrear Amount.",
-      }));
-    }
-    if (inputField.bonus === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errbonus: "Please Enter Bonus Amount.",
-      }));
-    }
     if (inputField.address === "") {
       formIsValid = false;
       setErrField((prevState) => ({
@@ -178,11 +123,9 @@ const UpdateSelf = () => {
           await updateDoc(docRef, inputField);
           const docRef2 = doc(firestore, "userteachers", id);
           await updateDoc(docRef2, {
-            empid: empid,
             tname: tname,
             email: email,
             phone: phone,
-            pan: pan,
           });
           toast.success("Congrats! You Profile Datas Chaged Successfully!", {
             position: "top-right",
@@ -328,149 +271,6 @@ const UpdateSelf = () => {
             )}
           </div>
           <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Salary Account No.</label>
-            <input
-              onChange={(e) =>
-                setInputField({ ...inputField, account: e.target.value })
-              }
-              type="text"
-              className="form-control"
-              id="account"
-              name="account"
-              placeholder="Salary Account No."
-              defaultValue={account}
-            />
-            {errField.erraccount.length > 0 && (
-              <span className="error">{errField.erraccount}</span>
-            )}
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">PAN No.</label>
-            <input
-              onChange={(e) =>
-                setInputField({ ...inputField, pan: e.target.value })
-              }
-              type="text"
-              className="form-control"
-              id="pan"
-              name="pan"
-              placeholder="PAN No."
-              defaultValue={pan}
-            />
-            {errField.errpan.length > 0 && (
-              <span className="error">{errField.errpan}</span>
-            )}
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Date Of Birth:</label>
-
-            <input
-              onChange={(e) =>
-                setInputField({
-                  ...inputField,
-                  dob: getSubmitDateInput(e.target.value),
-                })
-              }
-              type="date"
-              className="form-control"
-              id="dob"
-              name="dob"
-              defaultValue={getCurrentDateInput(dob)}
-              required
-            />
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Date Of Joining:</label>
-
-            <input
-              onChange={(e) =>
-                setInputField({
-                  ...inputField,
-                  doj: e.target.value,
-                })
-              }
-              type="date"
-              className="form-control"
-              id="doj"
-              name="doj"
-              defaultValue={getCurrentDateInput(doj)}
-              required
-            />
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">
-              Date Of Joining in Current School:
-            </label>
-
-            <input
-              onChange={(e) =>
-                setInputField({
-                  ...inputField,
-                  dojnow: getSubmitDateInput(e.target.value),
-                })
-              }
-              type="date"
-              className="form-control"
-              id="dojnow"
-              name="dojnow"
-              defaultValue={getCurrentDateInput(dojnow)}
-              required
-            />
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Date Of Retirement:</label>
-
-            <input
-              onChange={(e) =>
-                setInputField({
-                  ...inputField,
-                  dor: getSubmitDateInput(e.target.value),
-                })
-              }
-              type="date"
-              className="form-control"
-              id="dor"
-              name="dor"
-              defaultValue={getCurrentDateInput(dor)}
-              required
-            />
-          </div>
-
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Total Arrear Received</label>
-            <input
-              onChange={(e) =>
-                setInputField({ ...inputField, arrear: e.target.value })
-              }
-              type="number"
-              className="form-control"
-              id="arrear"
-              name="arrear"
-              placeholder="Total Arrear Received"
-              defaultValue={arrear}
-            />
-            {errField.errarrear.length > 0 && (
-              <span className="error">{errField.errarrear}</span>
-            )}
-          </div>
-          <div className="input-group mb-3 col-md-4">
-            <label className="input-group-text">Bonus Recived</label>
-            <input
-              onChange={(e) =>
-                setInputField({ ...inputField, bonus: e.target.value })
-              }
-              type="number"
-              className="form-control"
-              id="bonus"
-              name="bonus"
-              placeholder="Bonus Recived"
-              defaultValue={bonus}
-            />
-            {errField.errbonus.length > 0 && (
-              <span className="error">{errField.errbonus}</span>
-            )}
-          </div>
-          <div className="input-group mb-3 col-md-4">
             <label className="input-group-text">Address</label>
             <textarea
               onChange={(e) =>
@@ -492,6 +292,7 @@ const UpdateSelf = () => {
         </div>
         <button
           type="button"
+          disabled={compareObjects(orginputField, inputField)}
           className="btn btn-primary m-1"
           onClick={updateBtn}
         >
