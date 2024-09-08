@@ -7,7 +7,6 @@ import { firestore } from "../../context/FirbaseContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { decryptObjData, getCookie } from "../../modules/encryption";
-import { compareObjects } from "../../modules/calculatefunctions";
 const UpdateSelf = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
@@ -292,7 +291,6 @@ const UpdateSelf = () => {
         </div>
         <button
           type="button"
-          disabled={compareObjects(orginputField, inputField)}
           className="btn btn-primary m-1"
           onClick={updateBtn}
         >
