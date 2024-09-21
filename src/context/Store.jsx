@@ -54,6 +54,10 @@ const GlobalContext = createContext({
   setQuestionRateState: () => {},
   questionRateUpdateTime: "",
   setQuestionRateUpdateTime: () => {},
+  floodReliefState: [],
+  setfloodReliefState: () => [],
+  floodReliefUpdateTime: "",
+  setfloodReliefUpdateTime: () => "",
 });
 
 export const GlobalContextProvider = ({ children }) => {
@@ -90,6 +94,10 @@ export const GlobalContextProvider = ({ children }) => {
   });
   const [questionRateUpdateTime, setQuestionRateUpdateTime] = useState("");
   const [userUpdateTime, setUserUpdateTime] = useState(Date.now() - 1000);
+  const [floodReliefState, setfloodReliefState] = useState([]);
+  const [floodReliefUpdateTime, setfloodReliefUpdateTime] = useState(
+    Date.now() - 1000
+  );
   return (
     <GlobalContext.Provider
       value={{
@@ -131,6 +139,10 @@ export const GlobalContextProvider = ({ children }) => {
         setQuestionRateUpdateTime,
         userUpdateTime,
         setUserUpdateTime,
+        floodReliefState,
+        setfloodReliefState,
+        floodReliefUpdateTime,
+        setfloodReliefUpdateTime,
       }}
     >
       <FirebaseProvider>{children}</FirebaseProvider>

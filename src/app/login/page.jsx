@@ -9,7 +9,12 @@ import { firestore, firbaseAuth } from "../../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
-import { encryptObjData, getCookie, setCookie } from "../../modules/encryption";
+import {
+  decryptAuthCookie,
+  encryptObjData,
+  getCookie,
+  setCookie,
+} from "../../modules/encryption";
 import Link from "next/link";
 
 const page = () => {
@@ -17,6 +22,7 @@ const page = () => {
   const { state, setState } = useGlobalContext();
   const [loader, setLoader] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const CheckAuth = process.env.NEXT_PUBLIC_AUTHKEY;
   const [inputField, setInputField] = useState({
     username: "",
     password: "",
@@ -30,15 +36,6 @@ const page = () => {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
     // console.log(inputField);
   };
-  useEffect(() => {
-    document.title = "WBTPTA AMTA WEST:Login Page";
-    let t = getCookie("t");
-    if (t) {
-      router.push("/dashboard");
-    }
-
-    // eslint-disable-next-line
-  }, []);
 
   const validForm = () => {
     let formIsValid = true;
@@ -113,6 +110,7 @@ const page = () => {
             setState(fdata2.circle);
             encryptObjData("uid", fdata, 10080);
             encryptObjData("tid", fdata2, 10080);
+            encryptObjData("CheckAuth", CheckAuth, 10080);
             setCookie("t", fdata2.tname, 10080);
             setCookie("loggedAt", Date.now(), 10080);
             router.push("/dashboard");
@@ -177,6 +175,14 @@ const page = () => {
     return inputString.replace(/\s/g, "");
   }
 
+  useEffect(() => {
+    document.title = "WBTPTA AMTA WEST:Login Page";
+    if (decryptAuthCookie()) {
+      router.push("/dashboard");
+    }
+
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="container text-black p-2 ">
       <ToastContainer

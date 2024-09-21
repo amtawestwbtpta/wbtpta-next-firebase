@@ -1,4 +1,12 @@
 import { DA, HRA } from "./constants";
+import bcrypt from "bcryptjs";
+export const comparePassword = (userPassword, serverPassword) => {
+  let match = bcrypt.compareSync(userPassword, serverPassword);
+
+  return match;
+};
+export const encryptPassword = async (password) =>
+  await bcrypt.hashSync(password, 10);
 export function round2dec(value) {
   if (value % 1 !== 0) {
     return Number(Math.round(value + "e" + 2) + "e-" + 2).toFixed(2);
@@ -310,17 +318,21 @@ export const todayInString = () => {
 };
 
 export const IndianFormat = (x) => {
-  x = x.toString();
-  var afterPoint = "";
-  if (x.indexOf(".") > 0) afterPoint = x.substring(x.indexOf("."), x.length);
-  x = Math.floor(x);
-  x = x.toString();
-  var lastThree = x.substring(x.length - 3);
-  var otherNumbers = x.substring(0, x.length - 3);
-  if (otherNumbers !== "") lastThree = "," + lastThree;
-  return (
-    otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint
-  );
+  if (x !== undefined) {
+    x = x.toString();
+    var afterPoint = "";
+    if (x.indexOf(".") > 0) afterPoint = x.substring(x.indexOf("."), x.length);
+    x = Math.floor(x);
+    x = x.toString();
+    var lastThree = x.substring(x.length - 3);
+    var otherNumbers = x.substring(0, x.length - 3);
+    if (otherNumbers !== "") lastThree = "," + lastThree;
+    return (
+      otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") +
+      lastThree +
+      afterPoint
+    );
+  } else return;
 };
 
 export function INR(input) {
@@ -537,12 +549,14 @@ export function compareObjects(x, y) {
 }
 
 export const DateValueToSring = (dateValue) => {
-  let date = new Date(dateValue);
-  return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} At ${
-    date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
-  }:${date.getMinutes()}:${date.getSeconds()} ${
-    date.getHours() > 12 ? "PM" : "AM"
-  }`;
+  if (dateValue) {
+    let date = new Date(dateValue);
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} At ${
+      date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
+    }:${date.getMinutes()}:${date.getSeconds()} ${
+      date.getHours() > 12 ? "PM" : "AM"
+    }`;
+  }
 };
 export function removeDuplicates(books) {
   // Create an array of objects
@@ -683,3 +697,42 @@ export const createDownloadLink = (myData, fileName) => {
 export function round5(x) {
   return Math.ceil(x / 5) * 5;
 }
+
+export const setInputNumberMaxLength = (value, maxLength) => {
+  if (value) {
+    if (value.length > maxLength) {
+      return value.slice(0, maxLength);
+    } else {
+      return value;
+    }
+  }
+};
+
+export const btnArray = [
+  { label: "Add", color: "success" },
+  { label: "Edit", color: "warning" },
+  { label: "Delete", color: "danger" },
+  { label: "View", color: "info" },
+  { label: "Print", color: "primary" },
+  { label: "Export", color: "dark" },
+  { label: "Import", color: "light" },
+  { label: "Save", color: "secondary" },
+  { label: "Reset", color: "light" },
+  { label: "Search", color: "info" },
+  { label: "Refresh", color: "warning" },
+  { label: "Download", color: "primary" },
+  { label: "Upload", color: "success" },
+  { label: "Send", color: "info" },
+  { label: "Receive", color: "warning" },
+  { label: "Forward", color: "danger" },
+];
+
+export const sortMonthwise = (arr) => {
+  return arr.sort((a, b) => {
+    // Assuming 'month' is the key in the object which contains the month name
+    const monthA = months.indexOf(a.month);
+    const monthB = months.indexOf(b.month);
+
+    return monthA - monthB;
+  });
+};

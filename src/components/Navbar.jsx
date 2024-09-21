@@ -1,13 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { decryptObjData, getCookie } from "../modules/encryption";
+import {
+  decryptAuthCookie,
+  decryptObjData,
+  getCookie,
+} from "../modules/encryption";
 import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
 import { Loader } from "rsuite";
+import Image from "next/image";
 const Navbar = () => {
   const {
     state,
@@ -37,12 +42,10 @@ const Navbar = () => {
   // );
   let teacherdetails, userdetails, loggedAt;
   let details = getCookie("tid");
-  if (details) {
-    teacherdetails = decryptObjData("tid");
-    userdetails = decryptObjData("uid");
-    loggedAt = getCookie("loggedAt");
-  }
+
   const [showLoader, setShowLoader] = useState(false);
+  const [url, setUrl] = useState("");
+  const [question, setQuestion] = useState("");
   const handleNavCollapse = () => {
     if (typeof window !== "undefined") {
       // browser code
@@ -57,12 +60,6 @@ const Navbar = () => {
       }
     }
   };
-
-  let url, question;
-  if (details) {
-    url = userdetails.url;
-    question = userdetails.question;
-  }
 
   const storeTeachersData = async () => {
     setShowLoader(true);
@@ -145,7 +142,12 @@ const Navbar = () => {
   };
   useEffect(() => {
     if (details) {
-      if ((Date.now() - loggedAt) / 1000 / 60 / 15 < 1) {
+      teacherdetails = decryptObjData("tid");
+      userdetails = decryptObjData("uid");
+      loggedAt = getCookie("loggedAt");
+      setUrl(userdetails.url);
+      setQuestion(userdetails.question);
+      if (decryptAuthCookie()) {
         setState(teacherdetails.circle);
       } else {
         checkLogin();
@@ -167,6 +169,9 @@ const Navbar = () => {
 
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [url, question]);
 
   const RenderMenu = () => {
     if (state === "admin") {
@@ -436,6 +441,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/FloodRelief"
+              onClick={handleNavCollapse}
+            >
+              Flood Relief
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/FlexibleComp"
               onClick={handleNavCollapse}
             >
@@ -511,8 +525,10 @@ const Navbar = () => {
           )}
           <div className="row">
             <li className="nav-item">
-              <img
+              <Image
                 src={url}
+                height={50}
+                width={50}
                 alt="profile"
                 className="navprofileImage"
                 onClick={() => {
@@ -810,8 +826,10 @@ const Navbar = () => {
           )}
           <div className="row">
             <li className="nav-item">
-              <img
+              <Image
                 src={url}
+                height={50}
+                width={50}
                 alt="profile"
                 className="navprofileImage"
                 onClick={() => router.push("/ChangePhoto")}
@@ -917,7 +935,15 @@ const Navbar = () => {
               Downloads
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/FloodRelief"
+              onClick={handleNavCollapse}
+            >
+              Flood Relief
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"

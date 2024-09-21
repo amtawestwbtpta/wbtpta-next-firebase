@@ -21,6 +21,20 @@ export const decryptData = (value) => {
   let mainObj = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   return mainObj;
 };
+export const decryptAuthCookie = () => {
+  const cookieText = getCookie("CheckAuth");
+  if (cookieText) {
+    let bytes = CryptoJS.AES.decrypt(cookieText, secretKey);
+    let mainText = bytes.toString(CryptoJS.enc.Utf8);
+    if (mainText === process.env.NEXT_PUBLIC_AUTHKEY) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
 export const decryptObjData = (name) => {
   let cookieObj = getCookie(name);
   let bytes = CryptoJS.AES.decrypt(cookieObj, secretKey);

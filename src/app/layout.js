@@ -52,11 +52,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable}`}
+        suppressHydrationWarning={true}
       >
         <AppLink />
         <GlobalContextProvider>
           <Navbar />
-          {children}
+          <div className="my-3">{children}</div>
           <Footer />
           <BootstrapClient />
         </GlobalContextProvider>
