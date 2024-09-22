@@ -76,7 +76,7 @@ const Navbar = () => {
     const url = `/api/getTeachers`;
     const response = await axios.post(url);
     const data = response.data.data;
-    let newDatas = data.sort((a, b) => {
+    const newDatas = data.sort((a, b) => {
       // First, compare the "school" keys
       if (a.school < b.school) {
         return -1;
