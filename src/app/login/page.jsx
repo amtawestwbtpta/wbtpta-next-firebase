@@ -4,13 +4,14 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
-
+import axios from "axios";
 import { firestore, firbaseAuth } from "../../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
 import {
   decryptAuthCookie,
+  decryptObjData,
   encryptObjData,
   getCookie,
   setCookie,
@@ -19,7 +20,7 @@ import Link from "next/link";
 
 const page = () => {
   const router = useRouter();
-  const { state, setState } = useGlobalContext();
+  const { state, setState, setUSER } = useGlobalContext();
   const [loader, setLoader] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const CheckAuth = process.env.NEXT_PUBLIC_AUTHKEY;
@@ -75,45 +76,49 @@ const page = () => {
     // console.log(inputField);
     if (validForm()) {
       setLoader(true);
-      const collectionRef = collection(firestore, "userteachers");
-      const q = query(
-        collectionRef,
-        where("username", "==", inputField.username.toLowerCase())
-      );
-      const querySnapshot = await getDocs(q);
-      // console.log(querySnapshot.docs[0].data().pan);
-      if (querySnapshot.docs.length > 0) {
-        let fdata = querySnapshot.docs[0].data();
-
+      // const collectionRef = collection(firestore, "userteachers");
+      // const q = query(
+      //   collectionRef,
+      //   where("username", "==", inputField.username.toLowerCase())
+      // );
+      // const querySnapshot = await getDocs(q);
+      // // console.log(querySnapshot.docs[0].data().pan);
+      const url = `/api/login`;
+      const response = await axios.post(url, inputField);
+      // if (querySnapshot.docs.length > 0) {
+      //   const fdata = querySnapshot.docs[0].data();
+      const record = response.data;
+      const userData = record.data;
+      if (record.success) {
         // if (fdata.password === inputField.password) {
-        if (compare(inputField.password, fdata.password)) {
-          if (!fdata.disabled) {
+        if (compare(inputField.password, userData.password)) {
+          if (!userData.disabled) {
             setLoader(false);
-            toast.success("Congrats! You are Logined Successfully!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
+            toast.success("Congrats! You are Logined Successfully!");
+            // signInUser(fdata.email, inputField.password);
+            // const collectionRef2 = collection(firestore, "teachers");
+            // const q2 = query(collectionRef2, where("pan", "==", fdata.pan));
+            // const querySnapshot2 = await getDocs(q2);
+            // // console.log(querySnapshot.docs[0].data().pan);
 
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            signInUser(fdata.email, inputField.password);
-            const collectionRef2 = collection(firestore, "teachers");
-            const q2 = query(collectionRef2, where("pan", "==", fdata.pan));
-            const querySnapshot2 = await getDocs(q2);
-            // console.log(querySnapshot.docs[0].data().pan);
-
-            let fdata2 = querySnapshot2.docs[0].data();
-
-            setState(fdata2.circle);
-            encryptObjData("uid", fdata, 10080);
-            encryptObjData("tid", fdata2, 10080);
-            encryptObjData("CheckAuth", CheckAuth, 10080);
-            setCookie("t", fdata2.tname, 10080);
-            setCookie("loggedAt", Date.now(), 10080);
-            router.push("/dashboard");
+            // const fdata2 = querySnapshot2.docs[0].data();
+            const url2 = `/api/getTeacher`;
+            const response2 = await axios.post(url2, { pan: userData.pan });
+            const record2 = response2.data;
+            const teacherData = record2.data;
+            if (record2.success) {
+              setState(teacherData.circle);
+              setUSER(teacherData);
+              encryptObjData("uid", userData, 10080);
+              encryptObjData("tid", teacherData, 10080);
+              encryptObjData("CheckAuth", CheckAuth, 10080);
+              setCookie("t", teacherData.tname, 10080);
+              setCookie("loggedAt", Date.now(), 10080);
+              router.push("/dashboard");
+            } else {
+              setLoader(false);
+              toast.error("Invalid Username or Password!");
+            }
           } else {
             setLoader(false);
             toast.error("Your Account is Disabled!", {
@@ -175,11 +180,24 @@ const page = () => {
     return inputString.replace(/\s/g, "");
   }
 
+  const processSignIn = () => {
+    const isCookies = getCookie("t");
+    if (isCookies) {
+      const userData = decryptObjData("uid");
+      const teacherData = decryptObjData("tid");
+      const access = teacherData?.circle;
+      setUSER(userData);
+      setState(access);
+      router.push("/dashboard");
+    } else {
+      console.log("No Cookie");
+    }
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Login Page";
-    if (decryptAuthCookie()) {
-      router.push("/dashboard");
-    }
+
+    processSignIn();
 
     // eslint-disable-next-line
   }, []);

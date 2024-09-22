@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  decryptAuthCookie,
-  decryptObjData,
+  // decryptAuthCookie,
+  // decryptObjData,
   getCookie,
 } from "../modules/encryption";
 import { firestore } from "../context/FirbaseContext";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { ToastContainer, toast } from "react-toastify";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
 import { Loader } from "rsuite";
@@ -16,7 +15,7 @@ import Image from "next/image";
 const Navbar = () => {
   const {
     state,
-    setState,
+    USER,
     teachersState,
     setTeachersState,
     schoolState,
@@ -44,8 +43,8 @@ const Navbar = () => {
   let details = getCookie("tid");
 
   const [showLoader, setShowLoader] = useState(false);
-  const [url, setUrl] = useState("");
-  const [question, setQuestion] = useState("");
+  const url = USER?.url;
+  const question = USER?.question;
   const handleNavCollapse = () => {
     if (typeof window !== "undefined") {
       // browser code
@@ -100,33 +99,33 @@ const Navbar = () => {
     setShowLoader(false);
   };
 
-  const checkLogin = async () => {
-    setShowLoader(true);
-    const collectionRef = collection(firestore, "userteachers");
-    const q = query(
-      collectionRef,
-      where("username", "==", userdetails.username)
-    );
-    const querySnapshot = await getDocs(q);
-    let fdata = querySnapshot.docs[0].data();
-    if (!fdata.disabled) {
-      setState(teacherdetails.circle);
-      setShowLoader(false);
-    } else {
-      setShowLoader(false);
-      toast.error("Your Account is Disabled!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      router.push("/logout");
-    }
-  };
+  // const checkLogin = async () => {
+  //   setShowLoader(true);
+  //   const collectionRef = collection(firestore, "userteachers");
+  //   const q = query(
+  //     collectionRef,
+  //     where("username", "==", userdetails.username)
+  //   );
+  //   const querySnapshot = await getDocs(q);
+  //   let fdata = querySnapshot.docs[0].data();
+  //   if (!fdata.disabled) {
+  //     setState(teacherdetails.circle);
+  //     setShowLoader(false);
+  //   } else {
+  //     setShowLoader(false);
+  //     toast.error("Your Account is Disabled!", {
+  //       position: "top-right",
+  //       autoClose: 1500,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //     router.push("/logout");
+  //   }
+  // };
   const getAcceptingData = async () => {
     setShowLoader(true);
     const q = query(collection(firestore, "question_rate"));
@@ -140,38 +139,38 @@ const Navbar = () => {
     setQuestionRateUpdateTime(Date.now());
     setShowLoader(false);
   };
-  useEffect(() => {
-    if (details) {
-      teacherdetails = decryptObjData("tid");
-      userdetails = decryptObjData("uid");
-      loggedAt = getCookie("loggedAt");
-      setUrl(userdetails.url);
-      setQuestion(userdetails.question);
-      if (decryptAuthCookie()) {
-        setState(teacherdetails.circle);
-      } else {
-        checkLogin();
-      }
-    }
-    const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
-    if (teacherDifference >= 1 || teachersState.length === 0) {
-      storeTeachersData();
-    }
-    const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
-    if (schDifference >= 1 || schoolState.length === 0) {
-      storeSchoolData();
-    }
-    const questionRateDifference =
-      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
-    if (questionRateDifference >= 1 || questionRateState.length === 0) {
-      getAcceptingData();
-    }
+  // useEffect(() => {
+  //   // if (details) {
+  //   //   teacherdetails = decryptObjData("tid");
+  //   //   userdetails = decryptObjData("uid");
+  //   //   loggedAt = getCookie("loggedAt");
+  //   //   setUrl(userdetails.url);
+  //   //   setQuestion(userdetails.question);
+  //   //   if (decryptAuthCookie()) {
+  //   //     setState(teacherdetails.circle);
+  //   //   } else {
+  //   //     checkLogin();
+  //   //   }
+  //   // }
+  //   const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
+  //   if (teacherDifference >= 1 || teachersState.length === 0) {
+  //     storeTeachersData();
+  //   }
+  //   const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
+  //   if (schDifference >= 1 || schoolState.length === 0) {
+  //     storeSchoolData();
+  //   }
+  //   const questionRateDifference =
+  //     (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+  //   if (questionRateDifference >= 1 || questionRateState.length === 0) {
+  //     getAcceptingData();
+  //   }
 
-    // eslint-disable-next-line
-  }, []);
+  //   // eslint-disable-next-line
+  // }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [url, question]);
+  }, [url, question, state]);
 
   const RenderMenu = () => {
     if (state === "admin") {
@@ -195,6 +194,15 @@ const Navbar = () => {
               onClick={handleNavCollapse}
             >
               Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/FloodRelief"
+              onClick={handleNavCollapse}
+            >
+              Flood Relief
             </Link>
           </li>
           <li className="nav-item">
@@ -438,15 +446,7 @@ const Navbar = () => {
               Downloads
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              href="/FloodRelief"
-              onClick={handleNavCollapse}
-            >
-              Flood Relief
-            </Link>
-          </li>
+
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -1029,18 +1029,6 @@ const Navbar = () => {
 
   return (
     <nav className="navbar align-items-end navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top p-2 overflow-auto bg-body-tertiary noprint">
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <div className="container-fluid">
         <Link className="navbar-brand" href="/">
           <img
