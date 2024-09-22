@@ -89,7 +89,7 @@ export default function FloodRelief() {
   const submitData = async () => {
     setShowLoader(true);
     try {
-      await setDoc(doc(firestore, "floodrelief", inputField.id), inputField);
+      // await setDoc(doc(firestore, "floodrelief", inputField.id), inputField);
       setAddDonation(false);
       const url = `/api/addRelief`;
       const response = await axios.post(url);
