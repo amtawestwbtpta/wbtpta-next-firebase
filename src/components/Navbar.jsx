@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
 import { Loader } from "rsuite";
 import Image from "next/image";
+import axios from "axios";
 const Navbar = () => {
   const {
     state,
@@ -62,14 +63,20 @@ const Navbar = () => {
 
   const storeTeachersData = async () => {
     setShowLoader(true);
-    const q = query(collection(firestore, "teachers"));
-    const querySnapshot = await getDocs(q);
-    const datas = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    let newDatas = datas.sort((a, b) => {
+    // const q = query(collection(firestore, "teachers"));
+    // const querySnapshot = await getDocs(q);
+    // const datas = querySnapshot.docs.map((doc) => ({
+    //   // doc.data() is never undefined for query doc snapshots
+    //   ...doc.data(),
+    //   id: doc.id,
+    // }));
+    // setTeachersState(datas);
+    // setTeacherUpdateTime(Date.now());
+    // setShowLoader(false);
+    const url = `/api/getTeachers`;
+    const response = await axios.post(url);
+    const data = response.data.data;
+    let newDatas = data.sort((a, b) => {
       // First, compare the "school" keys
       if (a.school < b.school) {
         return -1;
@@ -86,15 +93,19 @@ const Navbar = () => {
   };
   const storeSchoolData = async () => {
     setShowLoader(true);
-    const q2 = query(collection(firestore, "schools"));
+    // const q2 = query(collection(firestore, "schools"));
 
-    const querySnapshot2 = await getDocs(q2);
-    const data2 = querySnapshot2.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setSchoolState(data2);
+    // const querySnapshot2 = await getDocs(q2);
+    // const data2 = querySnapshot2.docs.map((doc) => ({
+    //   // doc.data() is never undefined for query doc snapshots
+    //   ...doc.data(),
+    //   id: doc.id,
+    // }));
+
+    const url = `/api/getSchools`;
+    const response = await axios.post(url);
+    const data = response.data.data;
+    setSchoolState(data);
     setSchoolUpdateTime(Date.now());
     setShowLoader(false);
   };
@@ -139,35 +150,35 @@ const Navbar = () => {
     setQuestionRateUpdateTime(Date.now());
     setShowLoader(false);
   };
-  // useEffect(() => {
-  //   // if (details) {
-  //   //   teacherdetails = decryptObjData("tid");
-  //   //   userdetails = decryptObjData("uid");
-  //   //   loggedAt = getCookie("loggedAt");
-  //   //   setUrl(userdetails.url);
-  //   //   setQuestion(userdetails.question);
-  //   //   if (decryptAuthCookie()) {
-  //   //     setState(teacherdetails.circle);
-  //   //   } else {
-  //   //     checkLogin();
-  //   //   }
-  //   // }
-  //   const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
-  //   if (teacherDifference >= 1 || teachersState.length === 0) {
-  //     storeTeachersData();
-  //   }
-  //   const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
-  //   if (schDifference >= 1 || schoolState.length === 0) {
-  //     storeSchoolData();
-  //   }
-  //   const questionRateDifference =
-  //     (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
-  //   if (questionRateDifference >= 1 || questionRateState.length === 0) {
-  //     getAcceptingData();
-  //   }
+  useEffect(() => {
+    // if (details) {
+    //   teacherdetails = decryptObjData("tid");
+    //   userdetails = decryptObjData("uid");
+    //   loggedAt = getCookie("loggedAt");
+    //   setUrl(userdetails.url);
+    //   setQuestion(userdetails.question);
+    //   if (decryptAuthCookie()) {
+    //     setState(teacherdetails.circle);
+    //   } else {
+    //     checkLogin();
+    //   }
+    // }
+    const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
+    if (teacherDifference >= 1 || teachersState.length === 0) {
+      storeTeachersData();
+    }
+    const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
+    if (schDifference >= 1 || schoolState.length === 0) {
+      storeSchoolData();
+    }
+    // const questionRateDifference =
+    //   (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    // if (questionRateDifference >= 1 || questionRateState.length === 0) {
+    //   getAcceptingData();
+    // }
 
-  //   // eslint-disable-next-line
-  // }, []);
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     // eslint-disable-next-line
   }, [url, question, state]);
