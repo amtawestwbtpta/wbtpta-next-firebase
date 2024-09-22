@@ -92,7 +92,7 @@ export default function FloodRelief() {
       // await setDoc(doc(firestore, "floodrelief", inputField.id), inputField);
       setAddDonation(false);
       const url = `/api/addRelief`;
-      const response = await axios.post(url);
+      const response = await axios.post(url, inputField);
       const record = response.data;
       if (record.success) {
         let x = floodReliefState;
@@ -158,7 +158,7 @@ export default function FloodRelief() {
     try {
       // await setDoc(doc(firestore, "floodrelief", editField.id), editField);
       const url = `/api/updateRelief`;
-      const response = await axios.post(url);
+      const response = await axios.post(url, editField);
       const record = response.data;
       if (record.success) {
         let x = floodReliefState;
@@ -183,7 +183,7 @@ export default function FloodRelief() {
     try {
       // await deleteDoc(doc(firestore, "floodrelief", id));
       const url = `/api/delRelief`;
-      const response = await axios.post(url);
+      const response = await axios.post(url, { id });
       const record = response.data;
       if (record.success) {
         let x = floodReliefState;
