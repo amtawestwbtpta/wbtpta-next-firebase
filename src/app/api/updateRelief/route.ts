@@ -6,7 +6,7 @@ dbConnect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { amount, id, bank, date, sl }: any = reqBody;
+    const { amount, id, bank, date, name }: any = reqBody;
 
     let reliefData = await FloodRelief.findOne({ id });
 
@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
       reliefData.amount = amount;
       reliefData.bank = bank;
       reliefData.date = date;
+      reliefData.name = name;
       await reliefData.save();
       return NextResponse.json(
         {

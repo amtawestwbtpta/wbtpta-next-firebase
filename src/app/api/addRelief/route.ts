@@ -6,9 +6,16 @@ dbConnect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { amount, id, bank, date, sl }: any = reqBody;
+    const { amount, id, bank, date, sl, name }: any = reqBody;
 
-    const newFloodRelief = new FloodRelief({ amount, id, bank, date, sl });
+    const newFloodRelief = new FloodRelief({
+      amount,
+      id,
+      bank,
+      date,
+      sl,
+      name,
+    });
     const savedRelief = await newFloodRelief.save();
 
     return NextResponse.json(
