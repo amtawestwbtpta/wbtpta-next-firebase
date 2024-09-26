@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/Loader";
+import axios from "axios";
 const DisplayComplain = () => {
   const { state, setState } = useGlobalContext();
   const router = useRouter();
@@ -170,17 +171,20 @@ const DisplayComplain = () => {
       solvedOn: Date.now(),
       remarks: remark,
     });
-    toast.success("Complain Noticed!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-
-      draggable: true,
-      progress: undefined,
-      theme: "light",
+    const url = `/api/updateComplain`;
+    const response = await axios.post(url, {
+      id,
+      status: "Solved",
+      solvedOn: Date.now(),
+      remarks: remark,
     });
-    userData();
+    const record = response.data;
+    if (record.success) {
+      toast.success("Complain Noticed!");
+      userData();
+    } else {
+      toast.error("Failed to Notice Complain!");
+    }
   };
 
   const userData = async () => {
@@ -199,18 +203,24 @@ const DisplayComplain = () => {
   const deleteComplain = async (id) => {
     // console.log(id);
     await deleteDoc(doc(firestore, "complains", id));
-    toast.success("Complain Deleted Successfully!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-
-      draggable: true,
-      progress: undefined,
-      theme: "light",
+    const url = `/api/delComplain`;
+    const response = await axios.post(url, {
+      id,
     });
-    userData();
+    const record = response.data;
+    if (record.success) {
+      toast.success("Complain Deleted Successfully!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
 
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      userData();
+    }
     // console.log(user.teachersID);
     // console.log(res);
   };

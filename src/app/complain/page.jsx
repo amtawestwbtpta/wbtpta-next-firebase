@@ -9,6 +9,7 @@ import { BsClipboard, BsClipboard2Check } from "react-icons/bs";
 import Loader from "../../components/Loader";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { DateValueToSring } from "../../modules/calculatefunctions";
+import axios from "axios";
 const Complain = () => {
   let teacherdetails, userdetails;
   let details = getCookie("tid");
@@ -121,43 +122,22 @@ const Complain = () => {
       try {
         setLoader(true);
         await setDoc(doc(firestore, "complains", docId), inputField);
-
-        // console.log(result.id);
-        setLoader(false);
-        toast.success("Congrats! Request Has Been Registered Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setShowMessage(false);
+        const url = `/api/addComplain`;
+        const response = await axios.post(url, inputField);
+        const record = response.data;
+        if (record.success) {
+          // console.log(result.id);
+          setLoader(false);
+          toast.success("Congrats! Request Has Been Registered Successfully!");
+          setShowMessage(false);
+        } else {
+          toast.error("Error in Adding Complain Data");
+        }
       } catch (e) {
-        toast.error("Something went Wrong", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Something went Wrong");
       }
     } else {
-      toast.error("Form is Invalid!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Form is Invalid!");
     }
   };
   const [complainSearch, setComplainSearch] = useState(false);

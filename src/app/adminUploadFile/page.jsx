@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import {
@@ -27,6 +27,7 @@ import AdminNavBar from "../../components/AdminNavBar";
 import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
 import { decryptObjData, getCookie } from "../../modules/encryption";
+
 const AdminUploadFile = () => {
   const { state, setState } = useGlobalContext();
   const router = useRouter();
@@ -54,14 +55,17 @@ const AdminUploadFile = () => {
   const [allData, setAllData] = useState([]);
   const getData = async () => {
     setData(true);
-    const q = query(collection(firestore, "downloads"));
+    // const q = query(collection(firestore, "downloads"));
 
-    const querySnapshot = await getDocs(q);
-    const datas = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
+    // const querySnapshot = await getDocs(q);
+    // const datas = querySnapshot.docs.map((doc) => ({
+    //   // doc.data() is never undefined for query doc snapshots
+    //   ...doc.data(),
+    //   id: doc.id,
+    // }));
+    const url = `/api/getDownloads`;
+    const response = await axios.post(url);
+    const datas = response.data.data;
     setAllData(datas);
   };
 
@@ -96,31 +100,27 @@ const AdminUploadFile = () => {
                 originalFileName: file.name,
                 fileType: file.type,
               });
-
-              toast.success("Congrats! File Uploaded Successfully!", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-
-                draggable: true,
-                progress: undefined,
-                theme: "light",
+              const url = `/api/addDownload`;
+              const response = await axios.post(url, {
+                id: docId,
+                date: Date.now(),
+                addedBy: userdetails.tname,
+                url: url,
+                fileName: fileName,
+                originalFileName: file.name,
+                fileType: file.type,
               });
-              setLoader(false);
-              getData();
-              setFile({});
+              const record = response.data;
+              if (record.success) {
+                toast.success("Congrats! File Uploaded Successfully!");
+                setLoader(false);
+                getData();
+                setFile({});
+              } else {
+                toast.error("File Upload Failed!");
+              }
             } catch (e) {
-              toast.success("File Upload Failed!", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+              toast.success("File Upload Failed!");
               setLoader(false);
             }
           });
@@ -133,19 +133,19 @@ const AdminUploadFile = () => {
     await updateDoc(docRef, {
       fileName: editFileName,
     });
-
-    toast.success("Congrats! File Name Changed Successfully!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-
-      draggable: true,
-      progress: undefined,
-      theme: "light",
+    const url = `/api/updateDownload`;
+    const response = await axios.post(url, {
+      fileName: editFileName,
+      id: editFileId,
     });
-    setLoader(false);
-    getData();
+    const record = response.data;
+    if (record.success) {
+      toast.success("Congrats! File Name Changed Successfully!");
+      setLoader(false);
+      getData();
+    } else {
+      toast.error("File Name Change Failed!");
+    }
   };
   const deleteFile = (name, id) => {
     setLoader(true);
@@ -154,18 +154,16 @@ const AdminUploadFile = () => {
       .then(async () => {
         await deleteDoc(doc(firestore, "downloads", id));
         // File deleted successfully
-        toast.success("Congrats! File Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setLoader(false);
-        getData();
+        const url = `/api/delDownload`;
+        const response = await axios.post(url, { id });
+        const record = response.data;
+        if (record.success) {
+          toast.success("Congrats! File Deleted Successfully!");
+          setLoader(false);
+          getData();
+        } else {
+          toast.error("File Delete Failed!");
+        }
       })
       .catch((error) => {
         setLoader(false);

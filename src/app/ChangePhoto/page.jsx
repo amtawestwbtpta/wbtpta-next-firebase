@@ -19,6 +19,8 @@ import {
   getCookie,
 } from "../../modules/encryption";
 import { useGlobalContext } from "../../context/Store";
+import axios from "axios";
+
 const ChangePhoto = () => {
   const { state, setState } = useGlobalContext();
   const router = useRouter();
@@ -102,36 +104,37 @@ const ChangePhoto = () => {
                         url: photourl,
                         fileName: teachersID + "-" + file.name,
                       });
-                      toast.success(
-                        "Congrats! Profile Image Changed Successfully!",
-                        {
-                          position: "top-right",
-                          autoClose: 1500,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-
-                          draggable: true,
-                          progress: undefined,
-                          theme: "light",
-                        }
-                      );
-
-                      setSrc(null);
-                      setResult(null);
-                      setLoader(false);
-                      setDisabled(true);
-                      setProgress(0);
-
-                      let userdetails = decryptObjData("uid");
-                      let newUserDetails = {
-                        ...userdetails,
+                      const url = `/api/updateProfileImage`;
+                      const response = await axios.post(url, {
+                        id,
                         url: photourl,
                         photoName: teachersID + "-" + file.name,
-                      };
-                      encryptObjData("uid", newUserDetails, 10080);
-                      if (typeof window !== "undefined") {
-                        // browser code
-                        document.getElementById("file-upload").value = "";
+                      });
+                      const record = response.data;
+                      if (record.success) {
+                        toast.success(
+                          "Congrats! Profile Image Changed Successfully!"
+                        );
+
+                        setSrc(null);
+                        setResult(null);
+                        setLoader(false);
+                        setDisabled(true);
+                        setProgress(0);
+
+                        let userdetails = decryptObjData("uid");
+                        let newUserDetails = {
+                          ...userdetails,
+                          url: photourl,
+                          photoName: teachersID + "-" + file.name,
+                        };
+                        encryptObjData("uid", newUserDetails, 10080);
+                        if (typeof window !== "undefined") {
+                          // browser code
+                          document.getElementById("file-upload").value = "";
+                        }
+                      } else {
+                        toast.error("Failed to Change Image!");
                       }
                     } catch (e) {
                       toast.success("File Upload Failed!", {

@@ -36,6 +36,7 @@ const DisplayDatabase = () => {
   const [showTable, setShowTable] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
+  const [profileImageData, setProfileImageData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loader, setLoader] = useState(false);
   const userData = async () => {
@@ -54,7 +55,17 @@ const DisplayDatabase = () => {
     setShowTable(true);
     setUserUpdateTime(Date.now());
   };
-
+  const getProfileImageData = async () => {
+    const querySnapshot = await getDocs(
+      query(collection(firestore, "profileImage"))
+    );
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setProfileImageData(data);
+  };
   useEffect(() => {
     const result = data.filter((el) => {
       return el.tname.toLowerCase().match(search.toLowerCase());
@@ -215,7 +226,7 @@ const DisplayDatabase = () => {
   ];
   // console.log(inputField);
   const deleteUser = async (user) => {
-    const url = `https://awwbtpta.vercel.app/api/delteacher`;
+    const url = `/api/delteacher`;
     try {
       setLoader(true);
       let response = await axios.post(url, {
@@ -244,41 +255,14 @@ const DisplayDatabase = () => {
         await delTokens(user);
 
         setLoader(false);
-        toast.success(`User Deleted Successfully`, {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success(`User Deleted Successfully`);
       } else {
         setLoader(false);
-        toast.error("Something Went Wrong!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Something Went Wrong!");
       }
     } catch (e) {
       setLoader(false);
-      toast.error("Something Went Wrong!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Something Went Wrong!");
     }
   };
 
@@ -304,36 +288,28 @@ const DisplayDatabase = () => {
     await updateDoc(docRef, {
       disabled: true,
     })
-      .then(() => {
-        let x = userState.filter((el) => el.id === id)[0];
-        let y = userState.filter((el) => el.id !== id);
-        x.disabled = true;
-        y = [...y, x];
-        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
-        setUserState(newData);
-        setUserUpdateTime(Date.now());
-        toast.success("Congrats! User Login is Disabled Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+      .then(async () => {
+        const url = `/api/disableUser`;
+        const response = await axios.post(url, {
+          id,
+          disabled: true,
         });
+        const record = response.data;
+        if (record.success) {
+          let x = userState.filter((el) => el.id === id)[0];
+          let y = userState.filter((el) => el.id !== id);
+          x.disabled = true;
+          y = [...y, x];
+          let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+          setUserState(newData);
+          setUserUpdateTime(Date.now());
+          toast.success("Congrats! User Login is Disabled Successfully!");
+        } else {
+          toast.error("User Login Disable Updation Failed!");
+        }
       })
       .catch((e) => {
-        toast.success("Congrats! User Login Disable Updation Failed!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("User Login Disable Updation Failed!");
       });
   };
   const restoreUser = async (id) => {
@@ -341,36 +317,28 @@ const DisplayDatabase = () => {
     await updateDoc(docRef, {
       disabled: false,
     })
-      .then(() => {
-        let x = userState.filter((el) => el.id === id)[0];
-        let y = userState.filter((el) => el.id !== id);
-        x.disabled = false;
-        y = [...y, x];
-        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
-        setUserState(newData);
-        setUserUpdateTime(Date.now());
-        toast.success("Congrats! User Login is Enabled Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+      .then(async () => {
+        const url = `/api/disableUser`;
+        const response = await axios.post(url, {
+          id,
+          disabled: false,
         });
+        const record = response.data;
+        if (record.success) {
+          let x = userState.filter((el) => el.id === id)[0];
+          let y = userState.filter((el) => el.id !== id);
+          x.disabled = false;
+          y = [...y, x];
+          let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+          setUserState(newData);
+          setUserUpdateTime(Date.now());
+          toast.success("Congrats! User Login is Enabled Successfully!");
+        } else {
+          toast.error("User Login Enable Updation Failed!");
+        }
       })
       .catch((e) => {
-        toast.success("Congrats! User Login Enable Updation Failed!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("User Login Enable Updation Failed!");
       });
   };
   const resetPassword = async (user) => {
@@ -378,36 +346,26 @@ const DisplayDatabase = () => {
     await updateDoc(docRef, {
       password: bcrypt.hashSync(user.empid.toLowerCase(), 10),
     })
-      .then(() => {
-        let x = userState.filter((el) => el.id === user.id)[0];
-        let y = userState.filter((el) => el.id !== user.id);
-        x.password = bcrypt.hashSync(user.empid.toLowerCase(), 10);
-        y = [...y, x];
-        let newData = y.sort((a, b) => a.createdAt - b.createdAt);
-        setUserState(newData);
-        setUserUpdateTime(Date.now());
-        toast.success("Congrats! User Password Reset was Successful!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+      .then(async () => {
+        const url = `/api/resetPassword`;
+        const response = await axios.post(url, {
+          id,
+          password: bcrypt.hashSync(user.empid.toLowerCase(), 10),
         });
+        const record = response.data;
+        if (record.success) {
+          let x = userState.filter((el) => el.id === user.id)[0];
+          let y = userState.filter((el) => el.id !== user.id);
+          x.password = bcrypt.hashSync(user.empid.toLowerCase(), 10);
+          y = [...y, x];
+          let newData = y.sort((a, b) => a.createdAt - b.createdAt);
+          setUserState(newData);
+          setUserUpdateTime(Date.now());
+          toast.success("Congrats! User Password Reset was Successful!");
+        }
       })
       .catch((e) => {
-        toast.success("Congrats! User Password Reset Failed!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Congrats! User Password Reset Failed!");
       });
   };
 
@@ -429,6 +387,7 @@ const DisplayDatabase = () => {
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:User Databse";
     getUserData();
+    // getProfileImageData();
     //eslint-disable-next-line
   }, []);
   useEffect(() => {}, [userState]);
@@ -466,6 +425,15 @@ const DisplayDatabase = () => {
           >
             Download User Data
           </button>
+          {/* <button
+            type="button"
+            className="btn btn-sm m-3 btn-primary"
+            onClick={() => {
+              createDownloadLink(profileImageData, "profileImage");
+            }}
+          >
+            Download Profile Image Data
+          </button> */}
           <DataTable
             columns={columns}
             data={filteredData}

@@ -1,6 +1,7 @@
 import dbConnect from "../../../lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import User from "../../../models/user";
+import profileImage from "../../../models/profileImage";
 dbConnect();
 export async function POST(request: NextRequest) {
   try {
@@ -8,7 +9,8 @@ export async function POST(request: NextRequest) {
     const { id }: any = reqBody;
 
     let response = await User.deleteOne({ id });
-    if (response.acknowledged) {
+    let profileImageresponse = await profileImage.deleteOne({ id });
+    if (response.acknowledged || profileImageresponse.acknowledged) {
       return NextResponse.json(
         {
           message: "User deleted successfully",

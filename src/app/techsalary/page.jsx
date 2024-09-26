@@ -17,6 +17,7 @@ const TechSalary = () => {
   const [school, setSchool] = useState("");
   const today = new Date();
   const date = new Date();
+  const year = today.getFullYear();
   const [index, setIndex] = useState(today.getMonth() + 1);
   const [month, setMonth] = useState(GetMonthName(today.getMonth()));
   const thisMonth = GetMonthName(today.getMonth());
@@ -123,9 +124,11 @@ const TechSalary = () => {
                 {filteredData.map((el, ind) => {
                   let basic = el.basic;
                   let mbasic = el.mbasic;
+                  let ir = Math.round(mbasic * 0.04);
                   let addl = el.addl;
                   let ma = el.ma;
                   let gpf = el.gpf;
+                  let julyGpf = el.julyGpf;
                   let gpfprev = el.gpfprev;
                   let gsli = el.gsli;
                   let disability = el.disability;
@@ -169,7 +172,12 @@ const TechSalary = () => {
                   // let da = Math.round(basicpay * DA);
                   let hra = Math.round(basicpay * HRA);
 
-                  let gross = basicpay + da + hra + addl + ma;
+                  let gross;
+                  if (year === 2024 && index === 7) {
+                    gross = basic + da + ir + hra + addl + ma;
+                  } else {
+                    gross = basic + da + hra + addl + ma;
+                  }
                   // console.log(gross)
 
                   if (gross > 40000) {

@@ -9,6 +9,8 @@ import AppLink from "../components/AppLink";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Tiro_Bangla, Roboto } from "next/font/google";
 import localFont from "next/font/local";
+import "../components/CloudinaryScript"
+import { ToastContainer } from "react-toastify";
 const dejaVuBold = localFont({
   src: [
     {
@@ -54,11 +56,23 @@ export default function RootLayout({ children }) {
         className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable}`}
         suppressHydrationWarning={true}
       >
-        <AppLink />
+        {/* <AppLink /> */}
         <GlobalContextProvider>
           <Navbar />
           <div className="my-3">{children}</div>
           <Footer />
+          <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
           <BootstrapClient />
         </GlobalContextProvider>
       </body>

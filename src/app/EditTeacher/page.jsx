@@ -42,7 +42,7 @@ const EditTeacher = () => {
       setLoader(true);
       try {
         const docRef = doc(firestore, "teachers", inputField.id);
-        const url = `https://awwbtpta.vercel.app/api/updteacher`;
+        const url = `/api/updteacher`;
         let response = await axios.post(url, inputField);
         let record = response.data;
         if (record.success) {

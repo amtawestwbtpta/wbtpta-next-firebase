@@ -1,22 +1,28 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
-  // decryptAuthCookie,
-  // decryptObjData,
+  decryptAuthCookie,
+  decryptObjData,
   getCookie,
 } from "../modules/encryption";
 import { firestore } from "../context/FirbaseContext";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
 import { Loader } from "rsuite";
 import Image from "next/image";
 import axios from "axios";
+
+import { toast } from "react-toastify";
+
 const Navbar = () => {
   const {
     state,
+    setState,
     USER,
+    setUSER,
     teachersState,
     setTeachersState,
     schoolState,
@@ -37,45 +43,51 @@ const Navbar = () => {
     setQuestionRateUpdateTime,
   } = useGlobalContext();
   const router = useRouter();
-  // let navbarSupportedContent = document.querySelector(
-  //   "#navbarSupportedContent"
-  // );
+
   let teacherdetails, userdetails, loggedAt;
   let details = getCookie("tid");
 
   const [showLoader, setShowLoader] = useState(false);
-  const url = USER?.url;
-  const question = USER?.question;
+  const [url, setUrl] = useState(USER?.url);
+  const [question, setQuestion] = useState(USER?.question);
+  const navbarSupportedContent = document.querySelector(
+    "#navbarSupportedContent"
+  );
   const handleNavCollapse = () => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== undefined) {
       // browser code
-      if (
-        document
-          .querySelector("#navbarSupportedContent")
-          .classList.contains("show")
-      ) {
-        document
-          .querySelector("#navbarSupportedContent")
-          .classList.remove("show");
+      if (navbarSupportedContent) {
+        if (
+          document
+            .querySelector("#navbarSupportedContent")
+            .classList.contains("show")
+        ) {
+          document
+            .querySelector("#navbarSupportedContent")
+            .classList.remove("show");
+        }
       }
     }
   };
 
   const storeTeachersData = async () => {
     setShowLoader(true);
-    // const q = query(collection(firestore, "teachers"));
-    // const querySnapshot = await getDocs(q);
-    // const datas = querySnapshot.docs.map((doc) => ({
-    //   // doc.data() is never undefined for query doc snapshots
-    //   ...doc.data(),
-    //   id: doc.id,
-    // }));
-    // setTeachersState(datas);
-    // setTeacherUpdateTime(Date.now());
-    // setShowLoader(false);
-    const url = `/api/getTeachers`;
-    const response = await axios.post(url);
-    const data = response.data.data;
+    let data = [];
+    try {
+      const q = query(collection(firestore, "teachers"));
+      const querySnapshot = await getDocs(q);
+      data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+    } catch (error) {
+      console.error("Error fetching teachers data: ", error);
+      const url = `/api/getTeachers`;
+      const response = await axios.post(url);
+      data = response.data.data;
+    }
+
     const newDatas = data.sort((a, b) => {
       // First, compare the "school" keys
       if (a.school < b.school) {
@@ -93,76 +105,90 @@ const Navbar = () => {
   };
   const storeSchoolData = async () => {
     setShowLoader(true);
-    // const q2 = query(collection(firestore, "schools"));
+    let data = [];
+    try {
+      const q = query(collection(firestore, "schools"));
 
-    // const querySnapshot2 = await getDocs(q2);
-    // const data2 = querySnapshot2.docs.map((doc) => ({
-    //   // doc.data() is never undefined for query doc snapshots
-    //   ...doc.data(),
-    //   id: doc.id,
-    // }));
-
-    const url = `/api/getSchools`;
-    const response = await axios.post(url);
-    const data = response.data.data;
+      const querySnapshot = await getDocs(q);
+      data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+    } catch (error) {
+      const url = `/api/getSchools`;
+      const response = await axios.post(url);
+      data = response.data.data;
+    }
     setSchoolState(data);
     setSchoolUpdateTime(Date.now());
     setShowLoader(false);
   };
 
-  // const checkLogin = async () => {
-  //   setShowLoader(true);
-  //   const collectionRef = collection(firestore, "userteachers");
-  //   const q = query(
-  //     collectionRef,
-  //     where("username", "==", userdetails.username)
-  //   );
-  //   const querySnapshot = await getDocs(q);
-  //   let fdata = querySnapshot.docs[0].data();
-  //   if (!fdata.disabled) {
-  //     setState(teacherdetails.circle);
-  //     setShowLoader(false);
-  //   } else {
-  //     setShowLoader(false);
-  //     toast.error("Your Account is Disabled!", {
-  //       position: "top-right",
-  //       autoClose: 1500,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //     });
-  //     router.push("/logout");
-  //   }
-  // };
+  if (details) {
+    userdetails = decryptObjData("uid");
+    teacherdetails = decryptObjData("tid");
+  }
+
+  const checkLogin = async () => {
+    if (details) {
+      setShowLoader(true);
+
+      let data = [];
+      try {
+        const collectionRef = collection(firestore, "userteachers");
+        const q = query(
+          collectionRef,
+          where("username", "==", userdetails?.username)
+        );
+        const querySnapshot = await getDocs(q);
+        data = querySnapshot.docs[0]?.data();
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+        const url = `/api/getUser`;
+        const response = await axios.post(url, {
+          username: userdetails?.username,
+        });
+        data = response.data.data;
+      }
+      if (!data?.disabled) {
+        setState(data?.circle);
+        setUSER(data);
+        setUrl(data?.url);
+        setQuestion(data?.question);
+        setShowLoader(false);
+      } else {
+        setShowLoader(false);
+        toast.error("Your Account is Disabled!");
+        router.push("/logout");
+      }
+    }
+  };
   const getAcceptingData = async () => {
     setShowLoader(true);
-    const q = query(collection(firestore, "question_rate"));
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }))[0];
+    let data = [];
+    try {
+      const q = query(collection(firestore, "question_rate"));
+      const querySnapshot = await getDocs(q);
+      data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }))[0];
+    } catch (error) {
+      console.error("Error fetching accepting data: ", error);
+      const url = `/api/getQuestionRate`;
+      const response = await axios.post(url);
+      data = response.data.data;
+    }
     setQuestionRateState(data);
     setQuestionRateUpdateTime(Date.now());
     setShowLoader(false);
   };
+
   useEffect(() => {
-    // if (details) {
-    //   teacherdetails = decryptObjData("tid");
-    //   userdetails = decryptObjData("uid");
-    //   loggedAt = getCookie("loggedAt");
-    //   setUrl(userdetails.url);
-    //   setQuestion(userdetails.question);
-    //   if (decryptAuthCookie()) {
-    //     setState(teacherdetails.circle);
-    //   } else {
-    //     checkLogin();
-    //   }
-    // }
+    checkLogin();
+
     const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
     if (teacherDifference >= 1 || teachersState.length === 0) {
       storeTeachersData();
@@ -171,12 +197,11 @@ const Navbar = () => {
     if (schDifference >= 1 || schoolState.length === 0) {
       storeSchoolData();
     }
-    // const questionRateDifference =
-    //   (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
-    // if (questionRateDifference >= 1 || questionRateState.length === 0) {
-    //   getAcceptingData();
-    // }
-
+    const questionRateDifference =
+      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    if (questionRateDifference >= 1 || questionRateState.length === 0) {
+      getAcceptingData();
+    }
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
@@ -186,7 +211,7 @@ const Navbar = () => {
   const RenderMenu = () => {
     if (state === "admin") {
       return (
-        <>
+        <Suspense>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -271,7 +296,7 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails.udise
+                    (el) => el.udise === teacherdetails?.udise
                   )
                 );
               }}
@@ -287,7 +312,7 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails.udise
+                    (el) => el.udise === teacherdetails?.udise
                   )
                 );
               }}
@@ -523,7 +548,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {questionRateState.isAccepting && (
+          {questionRateState?.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -579,7 +604,7 @@ const Navbar = () => {
               <i className="bi bi-arrow-clockwise text-success fs-3 cursor-pointer"></i>
             </Link>
           </li>
-        </>
+        </Suspense>
       );
     } else if (state === "taw") {
       return (
@@ -650,7 +675,7 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails.udise
+                    (el) => el.udise === teacherdetails?.udise
                   )
                 );
               }}
@@ -666,7 +691,7 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails.udise
+                    (el) => el.udise === teacherdetails?.udise
                   )
                 );
               }}
@@ -824,7 +849,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {questionRateState.isAccepting && (
+          {questionRateState?.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -1013,7 +1038,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {questionRateState.isAccepting && (
+          {questionRateState?.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -1070,4 +1095,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

@@ -1,14 +1,28 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import SwiperSlides from "../components/SwiperSlides";
 import Typed from "typed.js";
 import { useGlobalContext } from "../context/Store";
 import { createDownloadLink } from "../modules/calculatefunctions";
 export default function Home() {
   const { state, slideState } = useGlobalContext();
-  const el = React.useRef(null);
+  const el = useRef(null);
   const [width, setWidth] = useState(100);
+  const childRef = useRef(null);
+  const removeChild = () => {
+    const parentNode = childRef.current?.parentNode;
 
+    if (parentNode && childRef.current) {
+        try {
+            parentNode.removeChild(childRef.current);
+            console.log("Child node removed.");
+        } catch (error) {
+            console.error("Error removing child node:", error);
+        }
+    } else {
+        console.error("Child node is not a child of the parent node.");
+    }
+};
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Homepage";
     const typed = new Typed(el.current, {
@@ -29,8 +43,9 @@ export default function Home() {
     };
   }, []);
   return (
-    <div className="container my-5">
-      <div className="my-3" style={{ height: "70px" }}>
+    <div className="container my-3">
+      <div id="parent">
+      <div ref={childRef} id="child" className="my-3" style={{ height: "70px" }}>
         {width < 780 ? (
           <span
             className="text-primary text-center fs-6 mb-3 web-message"
@@ -44,7 +59,7 @@ export default function Home() {
         )}
       </div>
 
-      {/* <SwiperSlides /> */}
+      <SwiperSlides />
       {state === "admin" && slideState.length > 0 && (
         <button
           type="button"
@@ -56,6 +71,8 @@ export default function Home() {
           Download Slide Data
         </button>
       )}
+      <button style={{display:"none"}} onClick={removeChild}>Remove Child</button>
+      </div>
     </div>
   );
 }

@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import { firestore } from "../../context/FirbaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
 import Loader from "../../components/Loader";
+import { createDownloadLink } from "../../modules/calculatefunctions";
+import { useGlobalContext } from "../../context/Store";
+
 const Downloads = () => {
   const [data, setData] = useState(false);
-
+  const { state } = useGlobalContext();
   const [allData, setAllData] = useState([]);
 
   const getData = async () => {
@@ -30,7 +33,17 @@ const Downloads = () => {
   return (
     <div className="container-fluid my-5">
       <h3 className="text-primary text-center">Downloads</h3>
-
+      {state === "admin" && (
+        <button
+          type="button"
+          className="btn btn-sm m-3 btn-warning"
+          onClick={() => {
+            createDownloadLink(allData, "downloads");
+          }}
+        >
+          Download Data
+        </button>
+      )}
       {data ? (
         <div className="container-fluid overflow-auto col-md-6 d-flex">
           <table className="table table-responsive table-hover table-striped table-success rounded-2 container-fluid px-lg-3 py-lg-2 ">

@@ -3,9 +3,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
-import { firestore } from "../../context/FirbaseContext";
-import { collection, getDocs, query } from "firebase/firestore";
-
 export default function GPWiseTeacher() {
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();

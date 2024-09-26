@@ -30,14 +30,21 @@ const SwiperSlides = () => {
     setIsViewerOpen(false);
   };
   const getSlides = async () => {
-    const q = query(collection(firestore, "slides"));
-
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
+    let data = [];
+    try {
+      const q = query(collection(firestore, "slides"));
+      const querySnapshot = await getDocs(q);
+      data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+    } catch (error) {
+      console.error("Error fetching slides data: ", error);
+      const url = `/api/getSlides`;
+      const response = await axios.post(url);
+      data = response.data.data;
+    }
     data.map((el) => images.push(el.url));
     setData(data);
     setSlideState(data);

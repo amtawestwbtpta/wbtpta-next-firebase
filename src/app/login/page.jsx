@@ -193,12 +193,9 @@ const page = () => {
       console.log("No Cookie");
     }
   };
-
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Login Page";
-
     processSignIn();
-
     // eslint-disable-next-line
   }, []);
   return (

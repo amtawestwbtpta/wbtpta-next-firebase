@@ -24,6 +24,7 @@ import { storage } from "../../context/FirbaseContext";
 import AdminNavBar from "../../components/AdminNavBar";
 import { v4 as uuid } from "uuid";
 import Loader from "../../components/Loader";
+import axios from "axios";
 const AdminUploadImage = () => {
   const { state, slideState, setSlideState, setSlideUpdateTime } =
     useGlobalContext();
@@ -45,6 +46,7 @@ const AdminUploadImage = () => {
   const [data, setData] = useState(false);
   const [datas, setDatas] = useState([]);
   const [folder, setFolder] = useState("galaryimages");
+  const [cloudinaryUrl, setCloudinaryUrl] = useState("");
   const getData = async () => {
     setLoader(true);
     setData(true);
@@ -114,7 +116,31 @@ const AdminUploadImage = () => {
             // download url
             getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
               // console.log(url);
+              try {
+                const formData = new FormData();
+                formData.append("file", file);
+                // const apiurl = `/api/img_upload`;
+                // let response = await axios.post(apiurl, formData);
+                // let record = response.data;
+                const res = await fetch("/api/cloudinary_upload", {
+                  method: "POST",
+                  body: formData,
+                });
 
+                const data = await res.json();
+                if (data.success) {
+                  setCloudinaryUrl(data.data.secure_url); // Cloudinary returns secure_url
+                  toast.success(
+                    "Congrats! File Uploaded Successfully to Clodinary!"
+                  );
+                } else {
+                  console.error("Upload failed:", data.error);
+                  toast.error("Failed to Upload File to Clodinary!");
+                }
+              } catch (error) {
+                console.error("Error:", error);
+                toast.error("Failed to Upload File to Cloudinary!");
+              }
               try {
                 await setDoc(doc(firestore, folder, docId), {
                   title: inputField.title,
@@ -122,6 +148,7 @@ const AdminUploadImage = () => {
                   url: url,
                   id: docId,
                   fileName: file.name,
+                  cloudinaryUrl: cloudinaryUrl,
                 });
                 if (folder === "slides") {
                   setSlideState([
@@ -132,20 +159,12 @@ const AdminUploadImage = () => {
                       url: url,
                       id: docId,
                       fileName: file.name,
+                      cloudinaryUrl: cloudinaryUrl,
                     },
                   ]);
                   setSlideUpdateTime(Date.now());
                 }
-                toast.success("Congrats! File Uploaded Successfully!", {
-                  position: "top-right",
-                  autoClose: 1500,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
+                toast.success("Congrats! File Uploaded Successfully!");
 
                 setLoader(false);
 
@@ -154,6 +173,7 @@ const AdminUploadImage = () => {
                   description: "",
                   url: "",
                 });
+
                 setData(false);
                 getData();
                 if (typeof window !== "undefined") {

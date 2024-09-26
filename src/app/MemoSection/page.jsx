@@ -33,6 +33,7 @@ import {
 import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
 import { useGlobalContext } from "../../context/Store";
+import axios from "axios";
 const MemoSection = () => {
   const { memoState, memoUpdateTime, setMemoState, setMemoUpdateTime } =
     useGlobalContext();
@@ -136,92 +137,111 @@ const MemoSection = () => {
                 type: file.type,
               })
                 .then(async () => {
-                  setMemoState(
-                    [
-                      ...memoState,
-                      {
-                        id: docId,
-                        date: Date.now(),
-                        addedBy: teacherdetails.tname,
-                        title: title,
-                        memoText: memoText,
-                        memoNumber: memoNumber,
-                        memoDate: memoDate,
-                        url: photourl,
-                        photoName: docId + "-" + file.name,
-                        type: file.type,
-                      },
-                    ].sort(
-                      (a, b) =>
-                        Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
-                  );
-                  setAllData(
-                    [
-                      ...memoState,
-                      {
-                        id: docId,
-                        date: Date.now(),
-                        addedBy: teacherdetails.tname,
-                        title: title,
-                        memoText: memoText,
-                        memoNumber: memoNumber,
-                        memoDate: memoDate,
-                        url: photourl,
-                        photoName: docId + "-" + file.name,
-                        type: file.type,
-                      },
-                    ].sort(
-                      (a, b) =>
-                        Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
-                  );
-                  setFilteredData(
-                    [
-                      ...memoState,
-                      {
-                        id: docId,
-                        date: Date.now(),
-                        addedBy: teacherdetails.tname,
-                        title: title,
-                        memoText: memoText,
-                        memoNumber: memoNumber,
-                        memoDate: memoDate,
-                        url: photourl,
-                        photoName: docId + "-" + file.name,
-                        type: file.type,
-                      },
-                    ].sort(
-                      (a, b) =>
-                        Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
-                  );
-                  setMemoUpdateTime(Date.now());
-                  let memoTitle = `New memo added By ${teacherdetails.tname}`;
-                  let body = memoText;
-                  await notifyAll(memoTitle, body)
-                    .then(async () => {
-                      setmemoText("");
-                      setTitle("");
-                      setMemoNumber("");
-                      setMemoDate(todayInString());
-                      setLoader(false);
-                      setAddImage(false);
-                      toast.success("memo Added Successfully!");
-                      // getData();
-                      setFile({});
-                      setSrc("");
-                      setShowPercent(false);
-                      setProgress(0);
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                      setLoader(false);
-                      toast.error("Error Sending Notification");
-                    });
+                  const url = `/api/addMemo`;
+                  const response = await axios.post(url, {
+                    id: docId,
+                    date: Date.now(),
+                    addedBy: teacherdetails.tname,
+                    title: title,
+                    memoText: memoText,
+                    memoNumber: memoNumber,
+                    memoDate: memoDate,
+                    url: photourl,
+                    photoName: docId + "-" + file.name,
+                    type: file.type,
+                  });
+                  const record = response.data;
+                  if (record.success) {
+                    setMemoState(
+                      [
+                        ...memoState,
+                        {
+                          id: docId,
+                          date: Date.now(),
+                          addedBy: teacherdetails.tname,
+                          title: title,
+                          memoText: memoText,
+                          memoNumber: memoNumber,
+                          memoDate: memoDate,
+                          url: photourl,
+                          photoName: docId + "-" + file.name,
+                          type: file.type,
+                        },
+                      ].sort(
+                        (a, b) =>
+                          Date.parse(getCurrentDateInput(b.memoDate)) -
+                          Date.parse(getCurrentDateInput(a.memoDate))
+                      )
+                    );
+                    setAllData(
+                      [
+                        ...memoState,
+                        {
+                          id: docId,
+                          date: Date.now(),
+                          addedBy: teacherdetails.tname,
+                          title: title,
+                          memoText: memoText,
+                          memoNumber: memoNumber,
+                          memoDate: memoDate,
+                          url: photourl,
+                          photoName: docId + "-" + file.name,
+                          type: file.type,
+                        },
+                      ].sort(
+                        (a, b) =>
+                          Date.parse(getCurrentDateInput(b.memoDate)) -
+                          Date.parse(getCurrentDateInput(a.memoDate))
+                      )
+                    );
+                    setFilteredData(
+                      [
+                        ...memoState,
+                        {
+                          id: docId,
+                          date: Date.now(),
+                          addedBy: teacherdetails.tname,
+                          title: title,
+                          memoText: memoText,
+                          memoNumber: memoNumber,
+                          memoDate: memoDate,
+                          url: photourl,
+                          photoName: docId + "-" + file.name,
+                          type: file.type,
+                        },
+                      ].sort(
+                        (a, b) =>
+                          Date.parse(getCurrentDateInput(b.memoDate)) -
+                          Date.parse(getCurrentDateInput(a.memoDate))
+                      )
+                    );
+                    setMemoUpdateTime(Date.now());
+                    let memoTitle = `New memo added By ${teacherdetails.tname}`;
+                    let body = memoText;
+                    await notifyAll(memoTitle, body)
+                      .then(async () => {
+                        setmemoText("");
+                        setTitle("");
+                        setMemoNumber("");
+                        setMemoDate(todayInString());
+                        setLoader(false);
+                        setAddImage(false);
+                        toast.success("memo Added Successfully!");
+                        // getData();
+                        setFile({});
+                        setSrc("");
+                        setShowPercent(false);
+                        setProgress(0);
+                      })
+                      .catch((e) => {
+                        console.log(e);
+                        setLoader(false);
+                        toast.error("Error Sending Notification");
+                      });
+                  } else {
+                    toast.error("Error Adding memo to Mongo");
+                    setLoader(false);
+                  }
                 })
                 .catch((e) => {
                   setLoader(false);
@@ -259,87 +279,105 @@ const MemoSection = () => {
           photoName: "",
         })
           .then(async () => {
-            setMemoState(
-              [
-                ...memoState,
-                {
-                  id: docId,
-                  date: Date.now(),
-                  addedBy: teacherdetails.tname,
-                  title: title,
-                  memoText: memoText,
-                  memoNumber: memoNumber,
-                  memoDate: memoDate,
-                  url: "",
-                  photoName: "",
-                },
-              ].sort(
-                (a, b) =>
-                  Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
-            );
-            setAllData(
-              [
-                ...memoState,
-                {
-                  id: docId,
-                  date: Date.now(),
-                  addedBy: teacherdetails.tname,
-                  title: title,
-                  memoText: memoText,
-                  memoNumber: memoNumber,
-                  memoDate: memoDate,
-                  url: "",
-                  photoName: "",
-                },
-              ].sort(
-                (a, b) =>
-                  Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
-            );
-            setFilteredData(
-              [
-                ...memoState,
-                {
-                  id: docId,
-                  date: Date.now(),
-                  addedBy: teacherdetails.tname,
-                  title: title,
-                  memoText: memoText,
-                  memoNumber: memoNumber,
-                  memoDate: memoDate,
-                  url: "",
-                  photoName: "",
-                },
-              ].sort(
-                (a, b) =>
-                  Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
-            );
-            setMemoUpdateTime(Date.now());
-            let memoTitle = `New memo added By ${teacherdetails.tname}`;
-            let body = memoText;
-            await notifyAll(memoTitle, body)
-              .then(async () => {
-                setmemoText("");
-                setTitle("");
-                setMemoNumber("");
-                setMemoDate(todayInString());
-                setLoader(false);
-                setAddImage(false);
-                toast.success("memo Added Successfully!");
-                // getData();
-                setFile({});
-                setSrc("");
-              })
-              .catch((e) => {
-                console.log(e);
-                setLoader(false);
-                toast.error("Error Sending Notification");
-              });
+            const url = `/api/addMemo`;
+            const response = await axios.post(url, {
+              id: docId,
+              date: Date.now(),
+              addedBy: teacherdetails.tname,
+              title: title,
+              memoText: memoText,
+              memoNumber: memoNumber,
+              memoDate: memoDate,
+              url: "",
+              photoName: "",
+            });
+            const record = response.data;
+            if (record.success) {
+              setMemoState(
+                [
+                  ...memoState,
+                  {
+                    id: docId,
+                    date: Date.now(),
+                    addedBy: teacherdetails.tname,
+                    title: title,
+                    memoText: memoText,
+                    memoNumber: memoNumber,
+                    memoDate: memoDate,
+                    url: "",
+                    photoName: "",
+                  },
+                ].sort(
+                  (a, b) =>
+                    Date.parse(getCurrentDateInput(b.memoDate)) -
+                    Date.parse(getCurrentDateInput(a.memoDate))
+                )
+              );
+              setAllData(
+                [
+                  ...memoState,
+                  {
+                    id: docId,
+                    date: Date.now(),
+                    addedBy: teacherdetails.tname,
+                    title: title,
+                    memoText: memoText,
+                    memoNumber: memoNumber,
+                    memoDate: memoDate,
+                    url: "",
+                    photoName: "",
+                  },
+                ].sort(
+                  (a, b) =>
+                    Date.parse(getCurrentDateInput(b.memoDate)) -
+                    Date.parse(getCurrentDateInput(a.memoDate))
+                )
+              );
+              setFilteredData(
+                [
+                  ...memoState,
+                  {
+                    id: docId,
+                    date: Date.now(),
+                    addedBy: teacherdetails.tname,
+                    title: title,
+                    memoText: memoText,
+                    memoNumber: memoNumber,
+                    memoDate: memoDate,
+                    url: "",
+                    photoName: "",
+                  },
+                ].sort(
+                  (a, b) =>
+                    Date.parse(getCurrentDateInput(b.memoDate)) -
+                    Date.parse(getCurrentDateInput(a.memoDate))
+                )
+              );
+              setMemoUpdateTime(Date.now());
+              let memoTitle = `New memo added By ${teacherdetails.tname}`;
+              let body = memoText;
+              await notifyAll(memoTitle, body)
+                .then(async () => {
+                  setmemoText("");
+                  setTitle("");
+                  setMemoNumber("");
+                  setMemoDate(todayInString());
+                  setLoader(false);
+                  setAddImage(false);
+                  toast.success("memo Added Successfully!");
+                  // getData();
+                  setFile({});
+                  setSrc("");
+                })
+                .catch((e) => {
+                  console.log(e);
+                  setLoader(false);
+                  toast.error("Error Sending Notification");
+                });
+            } else {
+              toast.error("Error Adding memo to Mongo");
+              setLoader(false);
+            }
           })
           .catch((e) => {
             setLoader(false);
@@ -375,44 +413,59 @@ const MemoSection = () => {
       addedBy: teacherdetails.tname,
     })
       .then(async () => {
-        let x = memoState.filter((el) => el.id === editID)[0];
-        let y = memoState.filter((el) => el.id !== editID);
-        y = [
-          ...y,
-          {
-            id: editID,
-            date: Date.now(),
-            addedBy: teacherdetails.tname,
-            title: editTitle,
-            memoText: editmemoText,
-            memoNumber: editMemoNumber,
-            memoDate: editMemoDate,
-            url: x.url,
-            photoName: x.photoName,
-            type: x.type,
-          },
-        ];
+        const url = `/api/updateMemo`;
+        const response = await axios.post(url, {
+          id: editID,
+          title: editTitle,
+          memoText: editmemoText,
+          memoNumber: editMemoNumber,
+          memoDate: editMemoDate,
+          date: Date.now(),
+          addedBy: teacherdetails.tname,
+        });
+        const record = response.data;
+        if (record.success) {
+          let x = memoState.filter((el) => el.id === editID)[0];
+          let y = memoState.filter((el) => el.id !== editID);
+          y = [
+            ...y,
+            {
+              id: editID,
+              date: Date.now(),
+              addedBy: teacherdetails.tname,
+              title: editTitle,
+              memoText: editmemoText,
+              memoNumber: editMemoNumber,
+              memoDate: editMemoDate,
+              url: x.url,
+              photoName: x.photoName,
+              type: x.type,
+            },
+          ];
 
-        let newData = y.sort(
-          (a, b) =>
-            Date.parse(getCurrentDateInput(b.memoDate)) -
-            Date.parse(getCurrentDateInput(a.memoDate))
-        );
-        setMemoState(newData);
-        setAllData(newData);
-        setFilteredData(newData);
-        setMemoUpdateTime(Date.now());
-        setLoader(false);
-        setEditTitle("");
-        setEditmemoText("");
-        setEditMemoNumber("");
-        setEditMemoDate(todayInString());
-        setMemo({});
-        setOrgTitle("");
-        setOrgmemoText("");
-        setOrgMemoNumber("");
-        setOrgMemoDate(todayInString());
-        toast.success("Details Updated Successfully");
+          let newData = y.sort(
+            (a, b) =>
+              Date.parse(getCurrentDateInput(b.memoDate)) -
+              Date.parse(getCurrentDateInput(a.memoDate))
+          );
+          setMemoState(newData);
+          setAllData(newData);
+          setFilteredData(newData);
+          setMemoUpdateTime(Date.now());
+          setLoader(false);
+          setEditTitle("");
+          setEditmemoText("");
+          setEditMemoNumber("");
+          setEditMemoDate(todayInString());
+          setMemo({});
+          setOrgTitle("");
+          setOrgmemoText("");
+          setOrgMemoNumber("");
+          setOrgMemoDate(todayInString());
+          toast.success("Details Updated Successfully");
+        } else {
+          toast.error("Error Updating memo in Mongo");
+        }
       })
       .catch((err) => {
         toast.error("Memo Updation Failed!");
@@ -427,14 +480,25 @@ const MemoSection = () => {
         setAllData(memoState.filter((item) => item.id !== el.id));
         setFilteredData(memoState.filter((item) => item.id !== el.id));
         setMemoUpdateTime(Date.now());
-        try {
-          const desertRef = ref(storage, `memoFiles/${el.photoName}`);
-          await deleteObject(desertRef);
-        } catch (e) {
-          console.log(e);
+        const url = `/api/delMemo`;
+        const response = await axios.post(url, {
+          id: el.id,
+        });
+        const record = response.data;
+        if (record.success) {
+          try {
+            const desertRef = ref(storage, `memoFiles/${el.photoName}`);
+            await deleteObject(desertRef);
+
+            toast.success("File deleted successfully!");
+          } catch (e) {
+            console.log(e);
+          }
+          setLoader(false);
+          toast.success("memo Deleted Successfully!");
+        } else {
+          toast.error("Error Deleting memo from Mongo");
         }
-        setLoader(false);
-        toast.success("memo Deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
