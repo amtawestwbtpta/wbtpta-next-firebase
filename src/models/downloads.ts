@@ -9,6 +9,7 @@ let downloadSchema = new mongoose.Schema(
     fileName: String,
     fileType: String,
     addedBy: String,
+    cloudinaryUrl: String,
   },
   {
     timestamps: true,

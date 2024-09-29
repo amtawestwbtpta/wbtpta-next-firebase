@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
       fileName,
       fileType,
       addedBy,
+      cloudinaryUrl,
     }: any = reqBody;
 
     const newDownload = new Download({
@@ -24,6 +25,7 @@ export async function POST(request: NextRequest) {
       fileName,
       fileType,
       addedBy,
+      cloudinaryUrl,
     });
     await newDownload.save();
 

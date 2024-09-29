@@ -3,36 +3,33 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../context/Store";
+import { SHA1 } from "crypto-js";
 const page = () => {
   const { USER } = useGlobalContext();
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const [public_id, setPublic_id] = useState("");
   const saveImage = async () => {
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "slides");
     data.append("cloud_name", cloudName);
-    data.append("file_name", USER.id + "-" + image.name);
+    data.append("public_id", USER.id + "-" + image.name);
 
     try {
       if (image === null) {
         return toast.error("Please Upload image");
       }
-
-      // const res = await fetch(
-      //   `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-      //   {
-      //     method: "POST",
-      //     body: data,
-      //   }
-      // );
       const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
       await axios
         .post(url, data)
         .then((data) => {
-          setUrl(data.data.secure_url);
+          const result = data.data;
+          console.log(result);
+          setUrl(result.secure_url);
+          setPublic_id(result.public_id);
           toast.success("Image uploaded successfully");
         })
         .catch((error) => {
@@ -44,10 +41,50 @@ const page = () => {
       toast.error("Failed to Upload Image");
     }
   };
+
+  const uploadImage = async () => {
+    try {
+      if (image === null) {
+        return toast.error("Please Upload image");
+      }
+      const data = new FormData();
+      data.append("file", image);
+      const url = `/api/addCloudinary`;
+
+      await axios
+        .post(url, data)
+        .then((data) => {
+          const result = data.data.data;
+          setUrl(result.secure_url);
+          setPublic_id(result.public_id);
+          toast.success("Image uploaded successfully");
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Failed to Upload Image");
+        });
+    } catch (error) {}
+  };
+
+  const deleteImage = async () => {
+    console.log(public_id);
+    try {
+      await axios
+        .post("/api/delFromCloudinary", { public_id })
+        .then(() => toast.success("Image deleted successfully"))
+        .catch((e) => {
+          toast.error("Failed to delete image");
+          console.log(e);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error deleting image");
+    }
+  };
+
   useEffect(() => {
-    console.log(USER);
     // eslint-disable-next-line
-  }, []);
+  }, [url, public_id]);
   return (
     <div className="container">
       <div className="col-md-6 mx-auto">
@@ -59,12 +96,22 @@ const page = () => {
         >
           {image ? (
             <div>
-              <img
-                src={image ? URL.createObjectURL(image) : ""}
-                alt="img"
-                style={{ width: "40vw", height: "auto" }}
-              />
-              <button className="btn btn-primary my-3" onClick={saveImage}>
+              {image.type.split("image")[0] === "image" ? (
+                <img
+                  src={image ? URL.createObjectURL(image) : ""}
+                  alt="img"
+                  style={{ width: "40vw", height: "auto" }}
+                />
+              ) : (
+                <h3>Non Image</h3>
+              )}
+              <button
+                className="btn btn-primary my-3"
+                onClick={() => {
+                  saveImage();
+                  // uploadImage();
+                }}
+              >
                 Send
               </button>
             </div>
@@ -82,7 +129,27 @@ const page = () => {
           onChange={(e) => setImage(e.target.files[0])}
         />
 
-        {url && <img src={url} style={{ width: "40vw", height: "auto" }} />}
+        {url && (
+          <>
+            {image.type.split("image")[0] === "image" && (
+              <img
+                src={url}
+                style={{ width: "40vw", height: "auto" }}
+                className="mb-3"
+              />
+            )}
+
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                deleteImage();
+              }}
+              type="button"
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

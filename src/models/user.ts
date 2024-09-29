@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
     teacher: String,
     photoName: String,
     url: String,
+    cloudinaryUrl: String,
     // aadhaar: Number,  //Removed For Firebase
     loggedin: String,
     dpscst: String,

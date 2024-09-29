@@ -7,6 +7,7 @@ let slideSchema = new mongoose.Schema(
     description: String,
     id: String,
     fileName: String,
+    cloudinaryUrl: String,
   },
   {
     timestamps: true,

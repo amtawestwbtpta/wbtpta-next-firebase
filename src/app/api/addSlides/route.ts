@@ -1,43 +1,27 @@
 import dbConnect from "../../../lib/dbConnect";
-import Memo from "../../../models/memos";
+import slide from "../../../models/slides";
 import { NextRequest, NextResponse } from "next/server";
 
 dbConnect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const {
-      photoName,
-      url,
-      addedBy,
-      type,
-      id,
-      title,
-      memoText,
-      memoNumber,
-      memoDate,
-      date,
-      cloudinaryUrl,
-    }: any = reqBody;
+    const { title, url, description, id, fileName, cloudinaryUrl }: any =
+      reqBody;
 
-    const newMemo = new Memo({
-      photoName,
-      url,
-      addedBy,
-      type,
-      id,
+    const newslide = new slide({
       title,
-      memoText,
-      memoNumber,
-      memoDate,
-      date,
+      url,
+      description,
+      id,
+      fileName,
       cloudinaryUrl,
     });
-    await newMemo.save();
+    await newslide.save();
 
     return NextResponse.json(
       {
-        message: "New Memo saved successfully",
+        message: "New slide saved successfully",
         success: true,
       },
       { status: 200 }

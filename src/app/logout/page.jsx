@@ -10,22 +10,26 @@ import { useRouter } from "next/navigation";
 const LogOut = () => {
   const router = useRouter();
   // eslint-disable-next-line
-  const { state, setState } = useGlobalContext();
+  const { setState } = useGlobalContext();
   // eslint-disable-next-line
   const [user, setUser] = useState(null);
   const signOutFirebase = () => {
-    signOut(firbaseAuth);
-    onAuthStateChanged(firbaseAuth, (user) => {
-      if (user) {
-        // Yes, You Are Looged In
-        // console.log("Yes, You Are Looged In");
-        setUser(user);
-      } else {
-        // User is Logged out
-        // console.log("You are Logged Out");
-        setUser(null);
-      }
-    });
+    try {
+      signOut(firbaseAuth);
+      onAuthStateChanged(firbaseAuth, (user) => {
+        if (user) {
+          // Yes, You Are Looged In
+          // console.log("Yes, You Are Looged In");
+          setUser(user);
+        } else {
+          // User is Logged out
+          // console.log("You are Logged Out");
+          setUser(null);
+        }
+      });
+    } catch (error) {
+      console.error("Error signing out from Firebase:", error);
+    }
   };
   useEffect(() => {
     signOutFirebase();

@@ -7,6 +7,7 @@ let profileImageSchema = new mongoose.Schema(
     fileName: String,
     url: String,
     id: String,
+    cloudinaryUrl: String,
   },
   {
     timestamps: true,

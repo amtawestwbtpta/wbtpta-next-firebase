@@ -9,6 +9,7 @@ let noticeSchema = new mongoose.Schema(
     id: String,
     title: String,
     noticeText: String,
+    cloudinaryUrl: String,
     date: Number,
   },
   {

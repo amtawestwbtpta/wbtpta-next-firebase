@@ -10,7 +10,7 @@ let memoSchema = new mongoose.Schema(
     title: String,
     memoText: String,
     memoNumber: String,
-    memoDate: String,
+    cloudinaryUrl: String,
     date: Number,
   },
   {

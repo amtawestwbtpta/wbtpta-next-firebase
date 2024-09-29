@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
       memoNumber,
       memoDate,
       date,
+      cloudinaryUrl,
     }: any = reqBody;
 
     let memoData = await Memos.findOne({ id });
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest) {
       memoData.memoNumber = memoNumber;
       memoData.memoDate = memoDate;
       memoData.date = date;
+      memoData.cloudinaryUrl = cloudinaryUrl;
 
       await memoData.save();
       return NextResponse.json(

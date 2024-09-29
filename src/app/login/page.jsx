@@ -76,37 +76,30 @@ const page = () => {
     // console.log(inputField);
     if (validForm()) {
       setLoader(true);
-      // const collectionRef = collection(firestore, "userteachers");
-      // const q = query(
-      //   collectionRef,
-      //   where("username", "==", inputField.username.toLowerCase())
-      // );
-      // const querySnapshot = await getDocs(q);
-      // // console.log(querySnapshot.docs[0].data().pan);
-      const url = `/api/login`;
-      const response = await axios.post(url, inputField);
-      // if (querySnapshot.docs.length > 0) {
-      //   const fdata = querySnapshot.docs[0].data();
-      const record = response.data;
-      const userData = record.data;
-      if (record.success) {
-        // if (fdata.password === inputField.password) {
-        if (compare(inputField.password, userData.password)) {
-          if (!userData.disabled) {
-            setLoader(false);
-            toast.success("Congrats! You are Logined Successfully!");
-            // signInUser(fdata.email, inputField.password);
-            // const collectionRef2 = collection(firestore, "teachers");
-            // const q2 = query(collectionRef2, where("pan", "==", fdata.pan));
-            // const querySnapshot2 = await getDocs(q2);
-            // // console.log(querySnapshot.docs[0].data().pan);
+      try {
+        const collectionRef = collection(firestore, "userteachers");
+        const q = query(
+          collectionRef,
+          where("username", "==", inputField.username.toLowerCase())
+        );
+        const querySnapshot = await getDocs(q);
+        // console.log(querySnapshot.docs[0].data().pan);
+        if (querySnapshot.docs.length > 0) {
+          const userData = querySnapshot.docs[0].data();
 
-            // const fdata2 = querySnapshot2.docs[0].data();
-            const url2 = `/api/getTeacher`;
-            const response2 = await axios.post(url2, { pan: userData.pan });
-            const record2 = response2.data;
-            const teacherData = record2.data;
-            if (record2.success) {
+          if (compare(inputField.password, userData.password)) {
+            if (!userData.disabled) {
+              setLoader(false);
+              toast.success("Congrats! You are Logined Successfully!");
+              signInUser(userData.email, inputField.password);
+              const collectionRef2 = collection(firestore, "teachers");
+              const q2 = query(
+                collectionRef2,
+                where("pan", "==", userData.pan)
+              );
+              const querySnapshot2 = await getDocs(q2);
+              const teacherData = querySnapshot2.docs[0].data();
+              console.log(teacherData);
               setState(teacherData.circle);
               setUSER(teacherData);
               encryptObjData("uid", userData, 10080);
@@ -117,11 +110,20 @@ const page = () => {
               router.push("/dashboard");
             } else {
               setLoader(false);
-              toast.error("Invalid Username or Password!");
+              toast.error("Your Account is Disabled!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             }
           } else {
             setLoader(false);
-            toast.error("Your Account is Disabled!", {
+            toast.error("Wrong Password!", {
               position: "top-right",
               autoClose: 1500,
               hideProgressBar: false,
@@ -134,7 +136,7 @@ const page = () => {
           }
         } else {
           setLoader(false);
-          toast.error("Wrong Password!", {
+          toast.error("Invalid Username!", {
             position: "top-right",
             autoClose: 1500,
             hideProgressBar: false,
@@ -145,18 +147,75 @@ const page = () => {
             theme: "light",
           });
         }
-      } else {
-        setLoader(false);
-        toast.error("Invalid Username!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
+      } catch (error) {
+        console.log(error);
 
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        const url = `/api/login`;
+        const response = await axios.post(url, inputField);
+        const record = response.data;
+        const userData = record.data;
+        if (record.success) {
+          if (compare(inputField.password, userData.password)) {
+            if (!userData.disabled) {
+              setLoader(false);
+              toast.success("Congrats! You are Logined Successfully!");
+
+              const url2 = `/api/getTeacher`;
+              const response2 = await axios.post(url2, { pan: userData.pan });
+              const record2 = response2.data;
+              const teacherData = record2.data;
+              if (record2.success) {
+                setState(teacherData.circle);
+                setUSER(teacherData);
+                encryptObjData("uid", userData, 10080);
+                encryptObjData("tid", teacherData, 10080);
+                encryptObjData("CheckAuth", CheckAuth, 10080);
+                setCookie("t", teacherData.tname, 10080);
+                setCookie("loggedAt", Date.now(), 10080);
+                router.push("/dashboard");
+              } else {
+                setLoader(false);
+                toast.error("Invalid Username or Password!");
+              }
+            } else {
+              setLoader(false);
+              toast.error("Your Account is Disabled!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+            }
+          } else {
+            setLoader(false);
+            toast.error("Wrong Password!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        } else {
+          setLoader(false);
+          toast.error("Invalid Username!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       }
     } else {
       toast.error("Form Is Invalid", {

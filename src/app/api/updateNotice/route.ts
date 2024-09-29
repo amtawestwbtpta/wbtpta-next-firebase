@@ -6,8 +6,17 @@ dbConnect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { photoName, url, addedBy, type, id, title, noticeText, date }: any =
-      reqBody;
+    const {
+      photoName,
+      url,
+      addedBy,
+      type,
+      id,
+      title,
+      noticeText,
+      date,
+      cloudinaryUrl,
+    }: any = reqBody;
 
     let noticeData = await Notices.findOne({ id });
 
@@ -19,6 +28,7 @@ export async function POST(request: NextRequest) {
       noticeData.title = title;
       noticeData.noticeText = noticeText;
       noticeData.date = date;
+      noticeData.cloudinaryUrl = cloudinaryUrl;
 
       await noticeData.save();
       return NextResponse.json(

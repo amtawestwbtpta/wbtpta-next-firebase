@@ -7,7 +7,7 @@ dbConnect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { photoName, url, id }: any = reqBody;
+    const { photoName, url, id, cloudinaryUrl }: any = reqBody;
 
     let profileImageData = await profileImage.findOne({ id });
     let userData = await user.findOne({ id });
@@ -15,9 +15,11 @@ export async function POST(request: NextRequest) {
     if (profileImageData) {
       profileImageData.fileName = photoName;
       profileImageData.url = url;
+      profileImageData.cloudinaryUrl = cloudinaryUrl;
       await profileImageData.save();
       userData.photoName = photoName;
       userData.url = url;
+      userData.cloudinaryUrl = cloudinaryUrl;
       await userData.save();
 
       return NextResponse.json(

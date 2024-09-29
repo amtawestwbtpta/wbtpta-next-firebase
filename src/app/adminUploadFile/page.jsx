@@ -38,7 +38,39 @@ const AdminUploadFile = () => {
   const [editFileName, setEditFileName] = useState("");
   const [editFileId, setEditFileId] = useState("");
   const docId = uuid();
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const [cloudinaryUrl, setCloudinaryUrl] = useState("");
   let details = getCookie("uid");
+  let userdetails = {
+    circle: "",
+    createdAt: "",
+    desig: "",
+    disabled: "",
+    dpsc: "",
+    dpsc1: "",
+    dpsc2: "",
+    dpsc3: "",
+    dpsc4: "",
+    dpscst: "",
+    email: "",
+    empid: "",
+    id: "",
+    pan: "",
+    password: "",
+    phone: "",
+    photoName: "",
+    question: "",
+    school: "",
+    showAccount: "",
+    sis: "",
+    tan: "",
+    teachersID: "",
+    tname: "",
+    tsname: "",
+    udise: "",
+    url: "",
+    username: "",
+  };
   if (details) {
     userdetails = decryptObjData("uid");
   }
@@ -55,17 +87,22 @@ const AdminUploadFile = () => {
   const [allData, setAllData] = useState([]);
   const getData = async () => {
     setData(true);
-    // const q = query(collection(firestore, "downloads"));
+    let datas = [];
+    try {
+      const q = query(collection(firestore, "downloads"));
 
-    // const querySnapshot = await getDocs(q);
-    // const datas = querySnapshot.docs.map((doc) => ({
-    //   // doc.data() is never undefined for query doc snapshots
-    //   ...doc.data(),
-    //   id: doc.id,
-    // }));
-    const url = `/api/getDownloads`;
-    const response = await axios.post(url);
-    const datas = response.data.data;
+      const querySnapshot = await getDocs(q);
+      datas = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+    } catch (error) {
+      const url = `/api/getDownloads`;
+      const response = await axios.post(url);
+      datas = response.data.data;
+      console.log(error);
+    }
     setAllData(datas);
   };
 
@@ -87,41 +124,67 @@ const AdminUploadFile = () => {
         (err) => console.log(err),
         () => {
           // download url
-          getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (fburl) => {
             // console.log(url);
-
             try {
-              await setDoc(doc(firestore, "downloads", docId), {
-                id: docId,
-                date: Date.now(),
-                addedBy: userdetails.tname,
-                url: url,
-                fileName: fileName,
-                originalFileName: file.name,
-                fileType: file.type,
-              });
-              const url = `/api/addDownload`;
-              const response = await axios.post(url, {
-                id: docId,
-                date: Date.now(),
-                addedBy: userdetails.tname,
-                url: url,
-                fileName: fileName,
-                originalFileName: file.name,
-                fileType: file.type,
-              });
-              const record = response.data;
-              if (record.success) {
-                toast.success("Congrats! File Uploaded Successfully!");
-                setLoader(false);
-                getData();
-                setFile({});
-              } else {
-                toast.error("File Upload Failed!");
-              }
-            } catch (e) {
-              toast.success("File Upload Failed!");
-              setLoader(false);
+              const data = new FormData();
+              data.append("file", file);
+              data.append("upload_preset", "myfiles");
+              data.append("cloud_name", cloudName);
+              data.append("public_id", file.name);
+              const cldUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+              await axios
+                .post(cldUrl, data)
+                .then(async (data) => {
+                  const cdurl = data.data.secure_url;
+                  toast.success(
+                    "Congrats! File Uploaded Successfully to Clodinary!"
+                  );
+                  try {
+                    await setDoc(doc(firestore, "downloads", docId), {
+                      id: docId,
+                      date: Date.now(),
+                      addedBy: userdetails.tname,
+                      url: fburl,
+                      fileName: fileName,
+                      originalFileName: file.name,
+                      fileType: file.type,
+                      cloudinaryUrl: cdurl,
+                    });
+                    const url = `/api/addDownload`;
+                    const response = await axios.post(url, {
+                      id: docId,
+                      date: Date.now(),
+                      addedBy: userdetails.tname,
+                      url: fburl,
+                      fileName: fileName,
+                      originalFileName: file.name,
+                      fileType: file.type,
+                      cloudinaryUrl: cdurl,
+                    });
+                    const record = response.data;
+                    if (record.success) {
+                      toast.success("Congrats! File Uploaded Successfully!");
+                      setLoader(false);
+                      getData();
+                      setFile(null);
+                    } else {
+                      toast.error("File Upload Failed!");
+                    }
+                  } catch (e) {
+                    console.log(e);
+                    toast.error("File Upload Failed!");
+                    setLoader(false);
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                  toast.error("Failed to Upload Image");
+                });
+            } catch (error) {
+              console.error("Error:", error);
+              toast.error("Failed to Upload File to Cloudinary!");
             }
           });
         }
@@ -147,7 +210,7 @@ const AdminUploadFile = () => {
       toast.error("File Name Change Failed!");
     }
   };
-  const deleteFile = (name, id) => {
+  const deleteFile = (name, id, cloudinaryUrl) => {
     setLoader(true);
     const desertRef = ref(storage, `${folder}/${name}`);
     deleteObject(desertRef)
@@ -157,6 +220,14 @@ const AdminUploadFile = () => {
         const url = `/api/delDownload`;
         const response = await axios.post(url, { id });
         const record = response.data;
+        if (cloudinaryUrl) {
+          try {
+            deleteImage(name);
+          } catch (error) {
+            console.error("Error:", error);
+            toast.error("Failed to Delete Image From Cloudinary");
+          }
+        }
         if (record.success) {
           toast.success("Congrats! File Deleted Successfully!");
           setLoader(false);
@@ -180,6 +251,22 @@ const AdminUploadFile = () => {
         });
       });
   };
+
+  const deleteImage = async (public_id) => {
+    try {
+      await axios
+        .post("/api/delFromCloudinary", { public_id })
+        .then(() => toast.success("File deleted successfully"))
+        .catch((e) => {
+          toast.error("Failed to delete File");
+          console.log(e);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error deleting File");
+    }
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Admin Upload File";
     if (state !== "admin") {
@@ -271,147 +358,152 @@ const AdminUploadFile = () => {
               Upload File
             </button>
           </div>
-
-          <div className="container-fluid">
-            {!data ? (
-              <button
-                type="button"
-                className="btn btn-success mb-3"
-                onClick={getData}
-              >
-                Get Uploaded Files
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="btn btn-success mb-3"
-                onClick={() => setData(false)}
-              >
-                Hide Uploaded Files
-              </button>
-            )}
-            {data ? (
-              <div className="container overflow-auto  d-flex">
-                <table className="table table-responsive table-hover table-striped table-success  px-lg-3 py-lg-2 ">
-                  <thead>
-                    <tr>
-                      <th>Sl</th>
-                      <th>Format</th>
-                      <th>File Name</th>
-                      <th>Download</th>
-                      <th>Edit File Name</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allData.map((el, ind) => {
-                      return (
-                        <>
-                          <tr key={ind}>
-                            <td>{ind + 1}</td>
-                            <td>
-                              {el.fileType === "application/pdf"
-                                ? "PDF"
-                                : el.fileType === "application/msword"
-                                ? "WORD"
-                                : el.fileType ===
-                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                ? "WORD"
-                                : el.fileType ===
-                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                                ? "POWERPOINT"
-                                : el.fileType === "application/vnd.ms-excel"
-                                ? "EXCEL"
-                                : el.fileType ===
-                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                ? "EXCEL"
-                                : el.fileType ===
-                                  "application/vnd.ms-excel.sheet.macroEnabled.12"
-                                ? "EXCEL"
-                                : el.fileType ===
-                                  "application/vnd.ms-powerpoint"
-                                ? "EXCEL"
-                                : el.fileType === "application/zip"
-                                ? "ZIP"
-                                : el.fileType === "application/vnd.rar"
-                                ? "RAR"
-                                : el.fileType === "text/csv"
-                                ? "CSV"
-                                : el.fileType ===
-                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                                ? "POWERPOINT"
-                                : ""}
-                            </td>
-                            <td>{el.fileName}</td>
-                            <td>
-                              <a
-                                href={el.url}
-                                className="btn btn-success rounded text-decoration-none"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                Download
-                              </a>
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="btn btn-warning "
-                                data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop"
-                                onClick={() => {
-                                  setEditFileId(el.id);
-                                  setEditFileName(el.fileName);
-                                }}
-                              >
-                                Edit File Name
-                              </button>
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="btn btn-danger "
-                                onClick={() =>
-                                  deleteFile(el.originalFileName, el.id)
-                                }
-                              >
-                                Delete Uploaded Files
-                              </button>
-                            </td>
-                          </tr>
-                        </>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : null}
-            <div
-              ClassName="modal fade"
-              id="staticBackdrop"
-              data-bs-backdrop="static"
-              data-bs-keyboard="false"
-              tabindex="-1"
-              aria-labelledby="staticBackdropLabel"
-              aria-hidden="true"
+        </div>
+        <div className="container-fluid">
+          {!data ? (
+            <button
+              type="button"
+              className="btn btn-success mb-3"
+              onClick={getData}
             >
-              <div ClassName="modal-dialog">
-                <div ClassName="modal-content">
-                  <div ClassName="modal-header">
-                    <h1 ClassName="modal-title fs-5" id="staticBackdropLabel">
-                      Edit File Name
-                    </h1>
-                    <button
-                      type="button"
-                      ClassName="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                      onClick={() => {
-                        setEditFileId("");
-                        setEditFileName("");
-                      }}
-                    ></button>
-                  </div>
+              Get Uploaded Files
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-success mb-3"
+              onClick={() => setData(false)}
+            >
+              Hide Uploaded Files
+            </button>
+          )}
+          {data ? (
+            <div className="container overflow-auto d-flex">
+              <table className="table table-responsive table-hover table-striped table-success  px-lg-3 py-lg-2 ">
+                <thead>
+                  <tr>
+                    <th>Sl</th>
+                    <th>Format</th>
+                    <th>File Name</th>
+                    <th>Download</th>
+                    <th>Edit File Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allData.map((el, ind) => {
+                    return (
+                      <>
+                        <tr key={ind}>
+                          <td>{ind + 1}</td>
+                          <td>
+                            {el.fileType === "application/pdf"
+                              ? "PDF"
+                              : el.fileType === "application/msword"
+                              ? "WORD"
+                              : el.fileType ===
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                              ? "WORD"
+                              : el.fileType ===
+                                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                              ? "POWERPOINT"
+                              : el.fileType === "application/vnd.ms-excel"
+                              ? "EXCEL"
+                              : el.fileType ===
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                              ? "EXCEL"
+                              : el.fileType ===
+                                "application/vnd.ms-excel.sheet.macroEnabled.12"
+                              ? "EXCEL"
+                              : el.fileType === "application/vnd.ms-powerpoint"
+                              ? "EXCEL"
+                              : el.fileType === "application/zip"
+                              ? "ZIP"
+                              : el.fileType === "application/vnd.rar"
+                              ? "RAR"
+                              : el.fileType === "text/csv"
+                              ? "CSV"
+                              : el.fileType ===
+                                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                              ? "POWERPOINT"
+                              : ""}
+                          </td>
+                          <td>{el.fileName}</td>
+                          <td>
+                            <a
+                              href={el.url}
+                              className="btn btn-success rounded text-decoration-none"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Download
+                            </a>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-warning "
+                              data-bs-toggle="modal"
+                              data-bs-target="#staticBackdrop"
+                              onClick={() => {
+                                setEditFileId(el.id);
+                                setEditFileName(el.fileName);
+                              }}
+                            >
+                              Edit File Name
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-danger "
+                              onClick={() =>
+                                deleteFile(
+                                  el.originalFileName,
+                                  el.id,
+                                  el.cloudinaryUrl
+                                )
+                              }
+                            >
+                              Delete Uploaded Files
+                            </button>
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+
+          <div
+            className="modal fade"
+            id="staticBackdrop"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 ClassName="modal-title fs-5" id="staticBackdropLabel">
+                    Edit File Name
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    onClick={() => {
+                      setEditFileId("");
+                      setEditFileName("");
+                    }}
+                  ></button>
+                </div>
+                <div className="modal-body">
                   <div ClassName="modal-body">
                     <div className="mb-3">
                       <input
@@ -425,7 +517,7 @@ const AdminUploadFile = () => {
                     <div className="my-3">
                       <button
                         type="button"
-                        className="btn btn-success my-3"
+                        className="btn btn-success m-3"
                         data-bs-dismiss="modal"
                         onClick={() => {
                           if (editFileName !== "") {
@@ -446,9 +538,10 @@ const AdminUploadFile = () => {
                       >
                         Update File Name
                       </button>
+
                       <button
                         type="button"
-                        ClassName="btn btn-danger  mx-3"
+                        className="btn btn-danger m-3"
                         data-bs-dismiss="modal"
                         onClick={() => {
                           setEditFileId("");

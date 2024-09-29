@@ -2,12 +2,19 @@
 import React, { useEffect, useState } from "react";
 
 export default function AppLink() {
-  const [showAlert, setShowAlert] = useState(true);
+  const [visible, setVisible] = useState(true);
   useEffect(() => {
-    setTimeout(() => setShowAlert(false), 15000);
-  }, []);
+    if (visible) {
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 10000); // 10000 ms = 10 seconds
+
+      // Cleanup the timeout if the component unmounts or visibility changes
+      return () => clearTimeout(timer);
+    }
+  }, [visible]);
   return (
-    showAlert && (
+    visible && (
       <div
         className="alert alert-success alert-dismissible fade show noprint"
         role="alert"
