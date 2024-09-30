@@ -39,7 +39,6 @@ const AdminUploadFile = () => {
   const [editFileId, setEditFileId] = useState("");
   const docId = uuid();
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const [cloudinaryUrl, setCloudinaryUrl] = useState("");
   let details = getCookie("uid");
   let userdetails = {
     circle: "",

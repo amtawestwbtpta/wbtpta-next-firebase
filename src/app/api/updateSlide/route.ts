@@ -13,10 +13,12 @@ export async function POST(request: NextRequest) {
 
     if (slideData) {
       slideData.title = title;
-      slideData.url = url;
       slideData.description = description;
-      slideData.fileName = fileName;
-      slideData.cloudinaryUrl = cloudinaryUrl;
+      if (url) {
+        slideData.url = url;
+        slideData.fileName = fileName;
+        slideData.cloudinaryUrl = cloudinaryUrl;
+      }
 
       await slideData.save();
       return NextResponse.json(

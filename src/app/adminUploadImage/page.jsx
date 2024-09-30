@@ -71,7 +71,6 @@ const AdminUploadImage = () => {
   const [data, setData] = useState(false);
   const [datas, setDatas] = useState([]);
   const [folder, setFolder] = useState("galaryimages");
-  const [cloudinaryUrl, setCloudinaryUrl] = useState("");
   const getData = async () => {
     setLoader(true);
     setData(true);
@@ -130,18 +129,23 @@ const AdminUploadImage = () => {
       });
       isvalid = false;
     }
-    if (editFile === null) {
-      setErrEditField({
-        ...errEditField,
-        errFile: "Please Select a File",
-      });
-      isvalid = false;
-    }
+
     if (compareObjects(editField, orgEditField)) {
       if (editFile !== null) {
         isvalid = true;
+      } else if (
+        (editField.title !== orgEditField.title ||
+          editField.description !== orgEditField.description) &&
+        editFile === null
+      ) {
+        isvalid = true;
       } else {
         isvalid = false;
+
+        setErrEditField({
+          ...errEditField,
+          errFile: "Please Select a File",
+        });
       }
     }
     return isvalid;
@@ -319,152 +323,213 @@ const AdminUploadImage = () => {
   const updateSlide = async () => {
     if (validEditForm()) {
       setLoader(true);
-      const desertRef = ref(storage, `${folder}/${editField.fileName}`);
+      if (editFile) {
+        try {
+          const desertRef = ref(storage, `${folder}/${editField.fileName}`);
+          await deleteObject(desertRef);
+          const filestorageRef = ref(storage, `/${folder}/${editFile.name}`);
+          const uploadTask = uploadBytesResumable(filestorageRef, editFile);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const percent = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
 
-      try {
-        setLoader(true);
-        await deleteObject(desertRef);
-        const filestorageRef = ref(storage, `/${folder}/${editFile.name}`);
-        const uploadTask = uploadBytesResumable(filestorageRef, editFile);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const percent = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
+              // // update progress
+              setProgress(percent);
+            },
+            (err) => console.log(err),
+            () => {
+              // download url
+              getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+                // console.log(url);
+                if (editField.cloudinaryUrl) {
+                  try {
+                    const data = new FormData();
+                    data.append("file", editFile);
+                    data.append("public_id", editField.fileName);
+                    data.append("folder", folder);
+                    const cloudinaryUpDel = `/api/cloudinaryUpDel`;
 
-            // // update progress
-            setProgress(percent);
-          },
-          (err) => console.log(err),
-          () => {
-            // download url
-            getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-              // console.log(url);
-              if (editField.cloudinaryUrl) {
-                try {
-                  const data = new FormData();
-                  data.append("file", editFile);
-                  data.append("public_id", editField.fileName);
-                  data.append("folder", folder);
-                  const cloudinaryUpDel = `/api/cloudinaryUpDel`;
-
-                  await axios
-                    .post(cloudinaryUpDel, data)
-                    .then((data) => {
-                      toast.success(
-                        "Congrats! File Updated Successfully on Clodinary!"
-                      );
-                    })
-                    .catch((error) => {
-                      console.error(error);
-                      toast.error("Failed to Upload Image");
-                    });
-                } catch (error) {
-                  console.error("Error:", error);
-                  toast.error("Failed to Upload File to Cloudinary!");
+                    await axios
+                      .post(cloudinaryUpDel, data)
+                      .then((data) => {
+                        toast.success(
+                          "Congrats! File Updated Successfully on Clodinary!"
+                        );
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                        toast.error("Failed to Upload Image");
+                      });
+                  } catch (error) {
+                    console.error("Error:", error);
+                    toast.error("Failed to Upload File to Cloudinary!");
+                  }
                 }
-              }
-              const data = new FormData();
-              data.append("file", editFile);
-              data.append("upload_preset", folder);
-              data.append("cloud_name", cloudName);
-              data.append("public_id", editFile.name);
-              const cldUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+                const data = new FormData();
+                data.append("file", editFile);
+                data.append("upload_preset", folder);
+                data.append("cloud_name", cloudName);
+                data.append("public_id", editFile.name);
+                const cldUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-              await axios.post(cldUrl, data).then(async (data) => {
-                const cdurl = data.data.secure_url;
-                try {
-                  await updateDoc(doc(firestore, folder, editField.id), {
-                    title: editField.title,
-                    description: editField.description,
-                    url: url,
-                    fileName: editFile.name,
-                    cloudinaryUrl: cdurl,
-                  });
-                  if (folder === "slides") {
-                    let x = slideState.filter(
-                      (el) => el.id === editField.id
-                    )[0];
-                    x.title = editField.title;
-                    x.description = editField.description;
-                    x.url = url;
-                    x.fileName = editFile.name;
-                    x.cloudinaryUrl = cdurl;
-                    let y = slideState.filter((el) => el.id !== editField.id);
-                    y = [...y, x];
-                    setSlideState(y);
-                    setSlideUpdateTime(Date.now());
-                    const nextApi = `/api/updateSlide`;
-                    const response = await axios.post(nextApi, {
+                await axios.post(cldUrl, data).then(async (data) => {
+                  const cdurl = data.data.secure_url;
+                  try {
+                    await updateDoc(doc(firestore, folder, editField.id), {
                       title: editField.title,
                       description: editField.description,
                       url: url,
-                      id: editField.id,
                       fileName: editFile.name,
                       cloudinaryUrl: cdurl,
                     });
-                    const record = response.data;
-                    if (record.success) {
-                      toast.success(
-                        "Congrats! Slide Image added Successfully to MongoDB!"
-                      );
-                    } else {
-                      toast.error("Failed to Upload Image");
+                    if (folder === "slides") {
+                      let x = slideState.filter(
+                        (el) => el.id === editField.id
+                      )[0];
+                      x.title = editField.title;
+                      x.description = editField.description;
+                      x.url = url;
+                      x.fileName = editFile.name;
+                      x.cloudinaryUrl = cdurl;
+                      let y = slideState.filter((el) => el.id !== editField.id);
+                      y = [...y, x];
+                      setSlideState(y);
+                      setSlideUpdateTime(Date.now());
+                      const nextApi = `/api/updateSlide`;
+                      const response = await axios.post(nextApi, {
+                        title: editField.title,
+                        description: editField.description,
+                        url: url,
+                        id: editField.id,
+                        fileName: editFile.name,
+                        cloudinaryUrl: cdurl,
+                      });
+                      const record = response.data;
+                      if (record.success) {
+                        toast.success(
+                          "Congrats! Slide Image added Successfully to MongoDB!"
+                        );
+                      } else {
+                        toast.error("Failed to Upload Image");
+                      }
                     }
+                    toast.success("Congrats! File Uploaded Successfully!");
+
+                    setLoader(false);
+
+                    setInputField({
+                      title: "",
+                      description: "",
+                      url: "",
+                    });
+
+                    setData(false);
+                    setFile(null);
+                    getData();
+                    if (typeof window !== "undefined") {
+                      // browser code
+                      document.getElementById("file-upload").value = "";
+                      document.getElementById("progress-bar").style.width = 0;
+                    }
+                  } catch (e) {
+                    console.log(e);
+                    toast.success("File Upload Failed!", {
+                      position: "top-right",
+                      autoClose: 1500,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                    setLoader(false);
                   }
-                  toast.success("Congrats! File Uploaded Successfully!");
-
-                  setLoader(false);
-
-                  setInputField({
-                    title: "",
-                    description: "",
-                    url: "",
-                  });
-
-                  setData(false);
-                  setFile(null);
-                  getData();
-                  if (typeof window !== "undefined") {
-                    // browser code
-                    document.getElementById("file-upload").value = "";
-                    document.getElementById("progress-bar").style.width = 0;
-                  }
-                } catch (e) {
-                  console.log(e);
-                  toast.success("File Upload Failed!", {
-                    position: "top-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                  });
-                  setLoader(false);
-                }
+                });
               });
-            });
-          }
-        );
-      } catch (error) {
-        console.log(error);
-        setLoader(false);
-        toast.error("Failed to Update Slide Image!");
-        setEditField({
-          title: "",
-          description: "",
-          url: "",
-          id: "",
-          fileName: "",
-          cloudinaryUrl: "",
-        });
+            }
+          );
+        } catch (error) {
+          console.log(error);
+          setLoader(false);
+          toast.error("Failed to Update Slide Image!");
+          setEditField({
+            title: "",
+            description: "",
+            url: "",
+            id: "",
+            fileName: "",
+            cloudinaryUrl: "",
+          });
 
-        if (typeof window !== "undefined") {
-          // browser code
-          document.getElementById("file-upload").value = "";
+          if (typeof window !== "undefined") {
+            // browser code
+            document.getElementById("file-upload").value = "";
+          }
+        }
+      } else {
+        try {
+          await updateDoc(doc(firestore, folder, editField.id), {
+            title: editField.title,
+            description: editField.description,
+          });
+          if (folder === "slides") {
+            let x = slideState.filter((el) => el.id === editField.id)[0];
+            x.title = editField.title;
+            x.description = editField.description;
+            let y = slideState.filter((el) => el.id !== editField.id);
+            y = [...y, x];
+            setSlideState(y);
+            setSlideUpdateTime(Date.now());
+            const nextApi = `/api/updateSlide`;
+            const response = await axios.post(nextApi, {
+              title: editField.title,
+              description: editField.description,
+              id: editField.id,
+            });
+            const record = response.data;
+            if (record.success) {
+              toast.success(
+                "Congrats! Slide Image added Successfully to MongoDB!"
+              );
+            } else {
+              toast.error("Failed to Upload Image");
+            }
+          }
+          toast.success("Congrats! File Uploaded Successfully!");
+
+          setLoader(false);
+
+          setInputField({
+            title: "",
+            description: "",
+            url: "",
+          });
+
+          setData(false);
+          setFile(null);
+          getData();
+          if (typeof window !== "undefined") {
+            // browser code
+            document.getElementById("file-upload").value = "";
+            document.getElementById("progress-bar").style.width = 0;
+          }
+        } catch (e) {
+          console.log(e);
+          toast.success("File Upload Failed!", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setLoader(false);
         }
       }
     } else {
@@ -497,7 +562,7 @@ const AdminUploadImage = () => {
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [inputField, progress, folder, cloudinaryUrl]);
+  }, [inputField, progress, folder]);
 
   return (
     <>
