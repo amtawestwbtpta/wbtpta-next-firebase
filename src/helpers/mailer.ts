@@ -1,21 +1,15 @@
 import nodemailer from "nodemailer";
-import smtpTransport from "nodemailer-smtp-transport";
-export const sendEmail = async ({ email, otp }: any) => {
+const sendEmail = async ({ email, code, name }: any) => {
   try {
     const mail = process.env.WBTPTA_GMAIL_ID;
     const mailpassword = process.env.WBTPTA_GMAIL_PASSWORD;
-    const transport = nodemailer.createTransport(
-      smtpTransport({
-        service: "gmail",
-        auth: {
-          user: mail,
-          pass: mailpassword,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      })
-    );
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: mail,
+        pass: mailpassword,
+      },
+    });
 
     const mailOptions = {
       from: mail,
@@ -23,7 +17,9 @@ export const sendEmail = async ({ email, otp }: any) => {
       subject: `Reset your Password: Mail no ${Math.floor(
         Math.random() * 1000 + 1
       )}`,
-      text: `Your OTP is ${otp}`,
+      // text: `Your OTP is ${otp}`,
+      html: `<h1 style="text-align:center; color:blue; ">Hello Dear ${name}!</h1>
+        <h2 style="text-align:center; color:blue;">Your OTP is ${code}. Please use this OTP to reset your password.</h2>`,
     };
     const mailResponse = await transport.sendMail(
       mailOptions,
@@ -41,3 +37,5 @@ export const sendEmail = async ({ email, otp }: any) => {
     console.log(error);
   }
 };
+
+export default sendEmail;

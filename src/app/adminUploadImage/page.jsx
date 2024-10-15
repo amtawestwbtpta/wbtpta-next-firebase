@@ -26,7 +26,6 @@ import { v4 as uuid } from "uuid";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { compareObjects } from "../../modules/calculatefunctions";
-import { SHA1 } from "crypto-js";
 const AdminUploadImage = () => {
   const { state, slideState, setSlideState, setSlideUpdateTime } =
     useGlobalContext();

@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     if (teacherData) {
       return NextResponse.json(
         {
-          message: "Please login to your account.",
+          message: "Here is the Data.",
           success: true,
           data: teacherData[0],
         },

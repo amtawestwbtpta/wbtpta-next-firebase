@@ -1,6 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
-import { sendEmail } from "../../../helpers/mailer";
+import sendEmail from "../../../helpers/mailer";
 import Otp from "../../../models/otp";
 import User from "../../../models/user";
 dbConnect();
@@ -8,20 +8,19 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { email }: any = reqBody;
+    const data = await User.findOne({ email });
 
-    let data = await User.findOne({ email });
+    const name = data.tname;
 
-    const otp = Math.floor(Math.random() * 1000000 + 1);
     if (data) {
-      let otpdata = new Otp({
+      const otp = Math.floor(Math.random() * 1000000 + 1);
+      const result = await Otp.create({
         email: email,
         code: otp,
         expiresIn: new Date().getTime() + 300 * 1000,
       });
+      await sendEmail({ email, code: otp, name });
 
-      await sendEmail({ email, otp });
-
-      await otpdata.save();
       return NextResponse.json(
         {
           message: "OTP Sent, Please check your Email",
