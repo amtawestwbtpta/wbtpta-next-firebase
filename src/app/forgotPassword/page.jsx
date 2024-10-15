@@ -13,11 +13,11 @@ const OtpForm = () => {
     e.preventDefault();
     try {
       setLoader(true);
-      let response = await axios.post("/api/forgotpassword", {
+      const response = await axios.post("/api/forgotpassword", {
         email: emailRef.current.value,
       });
-      let record = response.data;
-      if (response.status === 200) {
+      const record = response.data;
+      if (record.success) {
         toast.success(record.message, {
           position: "top-right",
           autoClose: 5000,
