@@ -53,7 +53,9 @@ const sendEmail = async ({ email, code, name }: any) => {
       },
       replyTo: email,
       to: email,
-      subject: `form message`,
+      subject: `Reset your Password: Mail no ${Math.floor(
+        Math.random() * 1000 + 1
+      )}`,
       text: `Hello Dear ${name}!`,
       html: `<h1 style="text-align:center; color:blue; ">Hello Dear ${name}!</h1>
         <h2 style="text-align:center; color:blue;">Your OTP is ${code}. Please use this OTP to reset your password.</h2>`,

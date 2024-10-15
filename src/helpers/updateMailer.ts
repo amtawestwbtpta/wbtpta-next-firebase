@@ -54,7 +54,9 @@ export const sendUpdateEmail = async ({ reqBody }: any) => {
       },
       replyTo: mail,
       to: mail,
-      subject: `form message`,
+      subject: `${reqBody?.tname} has Updated his Details: Mail no ${Math.floor(
+        Math.random() * 1000 + 1
+      )}`,
       text: `Hello Admin!`,
       html: `<h1 style="text-align:center; color:blue; ">Hello Dear Admin!</h1>
         <h2 style="text-align:center; color:blue;">${
