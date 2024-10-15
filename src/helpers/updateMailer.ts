@@ -1,21 +1,15 @@
 import nodemailer from "nodemailer";
-import smtpTransport from "nodemailer-smtp-transport";
 export const sendUpdateEmail = async ({ reqBody }: any) => {
   try {
     const mail = process.env.WBTPTA_GMAIL_ID;
     const mailpassword = process.env.WBTPTA_GMAIL_PASSWORD;
-    const transport = nodemailer.createTransport(
-      smtpTransport({
-        service: "gmail",
-        auth: {
-          user: mail,
-          pass: mailpassword,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      })
-    );
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: mail,
+        pass: mailpassword,
+      },
+    });
 
     const mailOptions = {
       from: mail,
