@@ -48,9 +48,9 @@ const OtpForm = () => {
   }, []);
   return (
     <div className="container my-5">
+      {loader ? <Loader /> : null}
+      <h3 className="text-center text-primary mb-3">Reset Password</h3>
       <div className="col-md-6 mx-auto">
-        <h3 className="text-center text-primary mb-3">Reset Password</h3>
-        {loader ? <Loader /> : null}
         {otpform ? (
           <form autoComplete="off" id="otpForm" method="post">
             <div className="mb-3">
