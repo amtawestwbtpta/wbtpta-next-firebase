@@ -60,6 +60,8 @@ const OtpForm = () => {
               <input
                 type="email"
                 name="email"
+                id="email"
+                placeholder="Enter your email"
                 className="form-control"
                 autoComplete="off"
                 ref={emailRef}

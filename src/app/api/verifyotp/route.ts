@@ -21,14 +21,14 @@ export async function POST(request: NextRequest) {
             success: false,
             statusText: "error",
           },
-          { status: 500 }
+          { status: 200 }
         );
       } else {
         let user = await User.findOne({ email });
         user.password = password;
         user.save();
 
-        await Otp.deleteOne({ email, code });
+        await Otp.deleteMany({ email });
 
         return NextResponse.json(
           {
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
           message: "Invalid OTP Code",
           success: false,
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
   } catch (error: any) {
