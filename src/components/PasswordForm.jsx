@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import "react-toastify/dist/ReactToastify.css";
 import { firestore } from "../context/FirbaseContext";
@@ -16,10 +16,10 @@ import {
 import Loader from "./Loader";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CustomInput from "./CustomInput";
 const PasswordForm = (props) => {
   const router = useRouter();
   const [loader, setLoader] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [inputField, setInputField] = useState({
     otpCode: "",
     password: "",
@@ -74,7 +74,7 @@ const PasswordForm = (props) => {
   };
 
   const submitBtn = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     // console.log(inputField);
     if (validForm()) {
       Object.assign(inputField, props);
@@ -87,8 +87,8 @@ const PasswordForm = (props) => {
           email: inputField.email,
           password: bcrypt.hashSync(inputField.password, 10),
         });
-
-        if (response.status === 200) {
+        const record = response.data;
+        if (record.success) {
           const q = query(
             collection(firestore, "userteachers"),
             where("email", "==", inputField.email)
@@ -158,18 +158,6 @@ const PasswordForm = (props) => {
 
   return (
     <div className="container p-2">
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {loader ? <Loader /> : null}
       <div className="row m-auto login p-2">
         <form autoComplete="off" method="post">
@@ -185,7 +173,7 @@ const PasswordForm = (props) => {
               value={inputField.otpCode}
               onChange={inputHandler}
               maxLength={6}
-              placeholder="Enter Your 4-digit OTP"
+              placeholder="Enter Your 6-digit OTP"
               autoComplete="off"
             />
             {errField.otpCodeErr.length > 0 && (
@@ -193,47 +181,44 @@ const PasswordForm = (props) => {
             )}
           </div>
           <div className="mb-3">
-            <label htmlFor="" className="form-label">
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              name="password"
-              id="password"
+            <CustomInput
+              title={"Password"}
+              type={"password"}
+              placeholder={"Enter Password"}
               value={inputField.password}
-              onChange={inputHandler}
+              onChange={(e) => {
+                setInputField({
+                  ...inputField,
+                  password: e.target.value,
+                });
+              }}
             />
             {errField.passwordErr.length > 0 && (
               <span className="error">{errField.passwordErr}</span>
             )}
           </div>
-          <button
-            type="button"
-            className="btn btn-warning btn-sm mt-2"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "Hide Password" : "Show Password"}
-          </button>
+
           <div className="mb-3">
-            <label htmlFor="" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              name="cpassword"
-              id="cpassword"
+            <CustomInput
+              title={"Confirm Password"}
+              type={"password"}
+              placeholder={"Enter Confirm Password"}
               value={inputField.cpassword}
-              onChange={inputHandler}
+              onChange={(e) => {
+                setInputField({
+                  ...inputField,
+                  cpassword: e.target.value,
+                });
+              }}
             />
+
             {errField.cpasswordErr.length > 0 && (
               <span className="error">{errField.cpasswordErr}</span>
             )}
           </div>
           <div>
             <button
-              type="button"
+              type="submit"
               className="btn btn-primary m-1"
               onClick={submitBtn}
             >

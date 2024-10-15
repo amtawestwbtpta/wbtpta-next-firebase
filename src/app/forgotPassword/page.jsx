@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import PasswordForm from "../../components/PasswordForm";
 import Loader from "../../components/Loader";
@@ -9,7 +9,8 @@ const OtpForm = () => {
   const [otpform, showform] = useState(true);
   const [loader, setLoader] = useState(false);
   const emailRef = useRef();
-  const sendOtp = async () => {
+  const sendOtp = async (e) => {
+    e.preventDefault();
     try {
       setLoader(true);
       let response = await axios.post("/api/forgotpassword", {
@@ -60,54 +61,40 @@ const OtpForm = () => {
     document.title = "WBTPTA AMTA WEST:Forgot Password";
   }, []);
   return (
-    <div className="container mt-5">
-      <div className="row mx-auto col-md-8 login p-2">
+    <div className="container my-5">
+      <div className="col-md-6 mx-auto">
         <h3 className="text-center text-primary mb-3">Reset Password</h3>
-        <div className="col-md-8">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          {loader ? <Loader /> : null}
-          {otpform ? (
-            <form autoComplete="off" id="otpForm" method="post">
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  autoComplete="off"
-                  ref={emailRef}
-                />
-              </div>
-              <div className="mb-3">
-                <button
-                  type="button"
-                  className="btn btn-primary m-1"
-                  onClick={sendOtp}
-                >
-                  Send OTP
-                </button>
-                <Link href="/login">
-                  <button className="btn btn-danger m-1 px-4">Back</button>
-                </Link>
-              </div>
-            </form>
-          ) : (
-            <PasswordForm email={emailRef.current.value} />
-          )}
-        </div>
+        {loader ? <Loader /> : null}
+        {otpform ? (
+          <form autoComplete="off" id="otpForm" method="post">
+            <div className="mb-3">
+              <label htmlFor="" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                autoComplete="off"
+                ref={emailRef}
+              />
+            </div>
+            <div className="mb-3">
+              <button
+                type="submit"
+                className="btn btn-primary m-1"
+                onClick={sendOtp}
+              >
+                Send OTP
+              </button>
+              <Link href="/login">
+                <button className="btn btn-danger m-1 px-4">Back</button>
+              </Link>
+            </div>
+          </form>
+        ) : (
+          <PasswordForm email={emailRef.current.value} />
+        )}
       </div>
     </div>
   );

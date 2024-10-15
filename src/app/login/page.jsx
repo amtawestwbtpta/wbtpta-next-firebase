@@ -17,7 +17,7 @@ import {
   setCookie,
 } from "../../modules/encryption";
 import Link from "next/link";
-
+import CustomInput from "../../components/CustomInput";
 const page = () => {
   const router = useRouter();
   const { state, setState, setUSER } = useGlobalContext();
@@ -306,27 +306,21 @@ const page = () => {
             )}
           </div>
           <div className="mb-3">
-            <label htmlFor="" className="form-label">
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              name="password"
-              id="password"
+            <CustomInput
+              title={"Password"}
+              type={"password"}
+              placeholder={"Enter Password"}
               value={inputField.password}
-              onChange={inputHandler}
+              onChange={(e) => {
+                setInputField({
+                  ...inputField,
+                  password: e.target.value,
+                });
+              }}
             />
             {errField.passwordErr.length > 0 && (
               <span className="error">{errField.passwordErr}</span>
             )}
-            <button
-              type="button"
-              className="btn btn-warning btn-sm mt-2"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide Password" : "Show Password"}
-            </button>
           </div>
           <div className="mb-3">
             <Link style={{ textDecoration: "none" }} href={"/forgotPassword"}>
