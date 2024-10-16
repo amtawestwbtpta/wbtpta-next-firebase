@@ -4,6 +4,11 @@ import sendEmail from "../../../helpers/mailer";
 import Otp from "../../../models/otp";
 import User from "../../../models/user";
 dbConnect();
+function generateOTP() {
+  // Generate a random number between 100000 and 999999
+  let otp = Math.floor(100000 + Math.random() * 900000);
+  return otp.toString(); // Convert it to string if you need the OTP as a string
+}
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
@@ -13,8 +18,8 @@ export async function POST(request: NextRequest) {
     const name = data.tname;
 
     if (data) {
-      const otp = Math.floor(Math.random() * 1000000 + 1);
-      const result = await Otp.create({
+      const otp = generateOTP();
+      await Otp.create({
         email: email,
         code: otp,
         expiresIn: new Date().getTime() + 300 * 1000,
