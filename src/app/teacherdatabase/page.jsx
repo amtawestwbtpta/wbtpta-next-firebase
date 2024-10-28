@@ -76,6 +76,7 @@ const TeacherDatabase = () => {
   const [file, setFile] = useState({});
   const [user, setUser] = useState({
     tname: "",
+    tsname: "",
     school: "",
     pan: "",
     empid: "",
@@ -546,7 +547,7 @@ const TeacherDatabase = () => {
                   udise: techerData.udise,
                   sis: techerData.sis,
                   circle: techerData.circle,
-                  showAccount: techerData.showAccount,
+                  showAccount: techerData.showAccount || false,
                   empid: techerData.empid,
                   question: techerData.question,
                   email: techerData.email,
