@@ -433,6 +433,34 @@ const EditTeacher = () => {
           </select>
         </div>
         <div className="mb-0 col-md-3">
+          <label className="form-label">Show Account</label>
+          <br />
+          <select
+            className="form-select form-select-sm mb-3"
+            aria-label=".form-select-lg example"
+            name="circle"
+            id="circle"
+            value={inputField?.showAccount}
+            onChange={(e) => {
+              if(e.target.value!==""){
+                setinputField({
+                  ...inputField,
+                  showAccount: Boolean(e.target.value),
+                });
+              }else{
+                setinputField({
+                  ...inputField,
+                  showAccount: false,
+                });
+              }
+            }}
+          >
+            <option value="">Select Account Visibility</option>
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </select>
+        </div>
+        <div className="mb-0 col-md-3">
           <label className="form-label">Is Registered</label>
           <br />
           <select
@@ -442,10 +470,17 @@ const EditTeacher = () => {
             id="registered"
             value={inputField?.registered}
             onChange={(e) => {
-              setinputField({
-                ...inputField,
-                registered: e.target.value,
-              });
+              if(e.target.value!==""){
+                setinputField({
+                  ...inputField,
+                  registered: Boolean(e.target.value),
+                });
+              }else{
+                setinputField({
+                  ...inputField,
+                  registered: false,
+                });
+              }
             }}
           >
             <option value="taw">Select Registration Status</option>
