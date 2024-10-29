@@ -115,14 +115,24 @@ const QuestionRequisition = () => {
         ...doc.data(),
         id: doc.id,
       }))
-      .sort((b, a) => {
-        // First, compare the "school" keys
+      .sort((a, b) => {
+        // Compare by 'gp'
         if (a.gp < b.gp) {
-          return -1;
+          return -1; // a comes first
         }
         if (a.gp > b.gp) {
-          return 1;
+          return 1; // b comes first
         }
+
+        // If 'gp' is the same, compare by 'school'
+        if (a.school < b.school) {
+          return -1; // a comes first
+        }
+        if (a.school > b.school) {
+          return 1; // b comes first
+        }
+
+        return 0; // They are equal
       });
     setQuestionState(data);
     setQuestionUpdateTime(Date.now());
@@ -174,13 +184,23 @@ const QuestionRequisition = () => {
           .then(() => {
             setSubmitted(true);
             const qState = [...questionState, addInputField].sort((a, b) => {
-              // First, compare the "school" keys
+              // Compare by 'gp'
               if (a.gp < b.gp) {
-                return -1;
+                return -1; // a comes first
               }
               if (a.gp > b.gp) {
-                return 1;
+                return 1; // b comes first
               }
+
+              // If 'gp' is the same, compare by 'school'
+              if (a.school < b.school) {
+                return -1; // a comes first
+              }
+              if (a.school > b.school) {
+                return 1; // b comes first
+              }
+
+              return 0; // They are equal
             });
             setQuestionState(qState);
             setQuestionUpdateTime(Date.now());
@@ -282,7 +302,7 @@ const QuestionRequisition = () => {
             })
           );
           setQuestionUpdateTime(Date.now());
-          toast.success("Data Successfully Updated!!!", );
+          toast.success("Data Successfully Updated!!!");
           setToken("");
           setUdise("");
           setInputField({
@@ -323,10 +343,10 @@ const QuestionRequisition = () => {
         })
         .catch((e) => {
           console.log(e);
-          toast.error("Something Went Wrong in Server!", );
+          toast.error("Something Went Wrong in Server!");
         });
     } catch (e) {
-      toast.error("Something Went Wrong in Server!", );
+      toast.error("Something Went Wrong in Server!");
     }
   };
 

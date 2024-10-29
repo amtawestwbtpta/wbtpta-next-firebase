@@ -104,14 +104,24 @@ function QuestionSec() {
         ...doc.data(),
         id: doc.id,
       }))
-      .sort((b, a) => {
-        // First, compare the "school" keys
+      .sort((a, b) => {
+        // Compare by 'gp'
         if (a.gp < b.gp) {
-          return -1;
+          return -1; // a comes first
         }
         if (a.gp > b.gp) {
-          return 1;
+          return 1; // b comes first
         }
+
+        // If 'gp' is the same, compare by 'school'
+        if (a.school < b.school) {
+          return -1; // a comes first
+        }
+        if (a.school > b.school) {
+          return 1; // b comes first
+        }
+
+        return 0; // They are equal
       });
 
     setQuestionState(data);
@@ -162,14 +172,24 @@ function QuestionSec() {
         await setDoc(doc(firestore, "questions", docId), addInputField)
           .then(() => {
             setQuestionState(
-              [...questionState, addInputField].sort((b, a) => {
-                // First, compare the "school" keys
+              [...questionState, addInputField].sort((a, b) => {
+                // Compare by 'gp'
                 if (a.gp < b.gp) {
-                  return -1;
+                  return -1; // a comes first
                 }
                 if (a.gp > b.gp) {
-                  return 1;
+                  return 1; // b comes first
                 }
+
+                // If 'gp' is the same, compare by 'school'
+                if (a.school < b.school) {
+                  return -1; // a comes first
+                }
+                if (a.school > b.school) {
+                  return 1; // b comes first
+                }
+
+                return 0; // They are equal
               })
             );
             setQuestionUpdateTime(Date.now());
@@ -382,14 +402,24 @@ function QuestionSec() {
     if (questionState.length === 0 || difference >= 1) {
       userData();
     } else {
-      const data = questionState.sort((b, a) => {
-        // First, compare the "school" keys
+      const data = questionState.sort((a, b) => {
+        // Compare by 'gp'
         if (a.gp < b.gp) {
-          return -1;
+          return -1; // a comes first
         }
         if (a.gp > b.gp) {
-          return 1;
+          return 1; // b comes first
         }
+
+        // If 'gp' is the same, compare by 'school'
+        if (a.school < b.school) {
+          return -1; // a comes first
+        }
+        if (a.school > b.school) {
+          return 1; // b comes first
+        }
+
+        return 0; // They are equal
       });
       setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
       setSerial(data.length + 1);
