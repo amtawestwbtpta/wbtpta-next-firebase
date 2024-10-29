@@ -540,6 +540,7 @@ const AddTeacher = () => {
       tname: "",
       gender: "male",
       ph: 0,
+      disability: "MO",
       desig: "AT",
       fname: "",
       circle: "taw",
@@ -588,6 +589,7 @@ const AddTeacher = () => {
       rank: 3,
       newHt: false,
       registered: false,
+      showAccount: false,
       dataYear: new Date().getFullYear(),
     });
     setShowForm(false);
