@@ -173,30 +173,21 @@ const QuestionRequisition = () => {
         await setDoc(doc(firestore, "questions", docId), addInputField)
           .then(() => {
             setSubmitted(true);
-            setQuestionState(
-              [...questionState, addInputField].sort((a, b) => {
-                // First, compare the "school" keys
-                if (a.gp < b.gp) {
-                  return -1;
-                }
-                if (a.gp > b.gp) {
-                  return 1;
-                }
-              })
-            );
-            setQuestionUpdateTime(Date.now());
-            toast.success("School Successfully Added!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
+            const qState = [...questionState, addInputField].sort((a, b) => {
+              // First, compare the "school" keys
+              if (a.gp < b.gp) {
+                return -1;
+              }
+              if (a.gp > b.gp) {
+                return 1;
+              }
             });
+            setQuestionState(qState);
+            setQuestionUpdateTime(Date.now());
+            toast.success("School Successfully Added!!!");
+            setDocId(`questions${qState.length + 101}-${uuid().split("-")[0]}`);
             setAddInputField({
-              id: docId,
+              id: `questions${qState.length + 101}-${uuid().split("-")[0]}`,
               school: "",
               gp: "",
               udise: "",
@@ -216,42 +207,15 @@ const QuestionRequisition = () => {
           .catch((err) => {
             console.log(err);
             setLoader(false);
-            toast.error("Something Went Wrong in Server!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.error("Something Went Wrong in Server!");
           });
       } catch (e) {
         setLoader(false);
-        toast.error("Something Went Wrong in Server!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Something Went Wrong in Server!");
       }
     } else {
       setLoader(false);
-      toast.error("School Question Requisition Already Submitted!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("School Question Requisition Already Submitted!");
     }
   };
 
@@ -318,16 +282,7 @@ const QuestionRequisition = () => {
             })
           );
           setQuestionUpdateTime(Date.now());
-          toast.success("Data Successfully Updated!!!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Data Successfully Updated!!!", );
           setToken("");
           setUdise("");
           setInputField({
@@ -368,28 +323,10 @@ const QuestionRequisition = () => {
         })
         .catch((e) => {
           console.log(e);
-          toast.error("Something Went Wrong in Server!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("Something Went Wrong in Server!", );
         });
     } catch (e) {
-      toast.error("Something Went Wrong in Server!", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Something Went Wrong in Server!", );
     }
   };
 
