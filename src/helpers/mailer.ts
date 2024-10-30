@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-const sendEmail = async ({ email, code, name }: any) => {
+const sendEmail = async ({ email, code, name,username }: any) => {
   try {
     const mail = process.env.WBTPTA_GMAIL_ID;
     const mailpassword = process.env.WBTPTA_GMAIL_PASSWORD;
@@ -57,7 +57,7 @@ const sendEmail = async ({ email, code, name }: any) => {
         Math.random() * 1000 + 1
       )}`,
       text: `Hello Dear ${name}!`,
-      html: `<h1 style="text-align:center; color:blue; ">Hello Dear ${name}!</h1>
+      html: `<h1 style="text-align:center; color:blue; ">Hello Dear ${name} and Username is ${username}</h1>
         <h2 style="text-align:center; color:blue;">Your OTP is ${code}. Please use this OTP to reset your password.</h2>`,
     };
 

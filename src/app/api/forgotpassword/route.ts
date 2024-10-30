@@ -12,10 +12,11 @@ function generateOTP() {
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { email }: any = reqBody;
-    const data = await User.findOne({ email });
+    const { email, empid }: any = reqBody;
+    const data = await User.findOne({ email, empid });
 
     const name = data.tname;
+    const username = data.username;
 
     if (data) {
       const otp = generateOTP();
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
         code: otp,
         expiresIn: new Date().getTime() + 300 * 1000,
       });
-      await sendEmail({ email, code: otp, name });
+      await sendEmail({ email, code: otp, name, username });
 
       return NextResponse.json(
         {
@@ -36,7 +37,7 @@ export async function POST(request: NextRequest) {
     } else {
       return NextResponse.json(
         {
-          message: "User Email Not Found",
+          message: "User Not Found",
           success: false,
         },
         { status: 400 }

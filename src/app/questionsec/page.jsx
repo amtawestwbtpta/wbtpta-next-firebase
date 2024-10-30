@@ -396,7 +396,18 @@ function QuestionSec() {
       });
     }
   };
-
+  const getAcceptingData = async () => {
+    const q = query(collection(firestore, "question_rate"));
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }))[0];
+    setQuestionRateState(data);
+    setQuestionRateUpdateTime(Date.now());
+    setIsAccepting(data.isAccepting);
+  };
   const getQuestionData = async () => {
     const difference = (Date.now() - questionUpdateTime) / 1000 / 60 / 15;
     if (questionState.length === 0 || difference >= 1) {

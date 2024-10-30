@@ -8,6 +8,7 @@ import Link from "next/link";
 const OtpForm = () => {
   const [otpform, showform] = useState(true);
   const [loader, setLoader] = useState(false);
+  const [empid, setEmpid] = useState("");
   const emailRef = useRef();
   const sendOtp = async (e) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ const OtpForm = () => {
         setLoader(true);
         const response = await axios.post("/api/forgotpassword", {
           email: emailRef.current.value,
+          empid
         });
         const record = response.data;
         if (record.success) {
@@ -65,6 +67,23 @@ const OtpForm = () => {
                 className="form-control"
                 autoComplete="off"
                 ref={emailRef}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="" className="form-label">
+                Employee ID
+              </label>
+              <input
+                type="text"
+                name="empid"
+                id="empid"
+                placeholder="Enter your Employee ID"
+                className="form-control"
+                autoComplete="off"
+                value={empid}
+                onChange={(e) => {
+                  setEmpid(e.target.value.toUpperCase());
+                }}
               />
             </div>
             <div className="mb-3">

@@ -123,7 +123,7 @@ const DisplayDatabase = () => {
     },
     {
       name: "Pan",
-      selector: (row) => row.pan,
+      selector: (row) => row.pan.toLowerCase(),
       wrap: true,
     },
     {

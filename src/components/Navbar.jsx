@@ -1038,7 +1038,7 @@ const Navbar = () => {
               Complain or Suggest Us
             </Link>
           </li>
-          {questionRateState?.isAccepting && (
+          {/* {questionRateState?.isAccepting && (
             <li className="nav-item">
               <Link
                 className="nav-link"
@@ -1048,7 +1048,7 @@ const Navbar = () => {
                 Question Requisition
               </Link>
             </li>
-          )}
+          )} */}
           <li className="nav-item">
             <Link
               className="nav-link"

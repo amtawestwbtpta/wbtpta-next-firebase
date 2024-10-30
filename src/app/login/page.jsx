@@ -324,7 +324,7 @@ const page = () => {
           </div>
           <div className="mb-3">
             <Link style={{ textDecoration: "none" }} href={"/forgotPassword"}>
-              Forgot Password?
+              Forgot Username or Password?
             </Link>
           </div>
           <div>

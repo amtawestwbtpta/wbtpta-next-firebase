@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { firestore } from "../../context/FirbaseContext";
 import {
   collection,
@@ -28,6 +28,7 @@ import { v4 as uuid } from "uuid";
 import Loader from "../../components/Loader";
 import { BsClipboard, BsClipboard2Check } from "react-icons/bs";
 import { compareObjects } from "../../modules/calculatefunctions";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 const QuestionRequisition = () => {
   const {
     questionState,
@@ -42,6 +43,8 @@ const QuestionRequisition = () => {
     setQuestionRateUpdateTime,
   } = useGlobalContext();
   const router = useRouter();
+  let details = getCookie("tid");
+
   const [docId, setDocId] = useState(uuid().split("-")[0]);
   const [serial, setSerial] = useState(0);
   const [loader, setLoader] = useState(false);
@@ -52,6 +55,8 @@ const QuestionRequisition = () => {
   const [udise, setUdise] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [showErrorText, setShowErrorText] = useState(false);
+  const [schData, setSchData] = useState([]);
+  const [enteryDone, setEnteryDone] = useState(false);
   const [addInputField, setAddInputField] = useState({
     id: docId,
     sl: serial,
@@ -268,6 +273,14 @@ const QuestionRequisition = () => {
         payment: "Due",
         paid: 0,
       });
+      const findSch = questionState.filter(
+        (sch) => sch.udise === selectedData.udise
+      );
+      if (findSch.length > 0) {
+        setEnteryDone(true);
+      } else {
+        setEnteryDone(false);
+      }
     } else {
       setAddInputField({
         id: docId,
@@ -362,29 +375,40 @@ const QuestionRequisition = () => {
     setQuestionRateUpdateTime(Date.now());
     setIsAccepting(data.isAccepting);
   };
+
+  const settleQuestionData = () => {
+    if (details) {
+      const tdata = decryptObjData("tid");
+      if (tdata?.circle === "admin") {
+        setSchData(schoolState);
+      } else if (tdata?.circle !== "admin" && tdata?.question === "admin") {
+        setSchData(schoolState.filter((school) => school.gp === tdata?.gp));
+      } else {
+        setSchData(
+          schoolState.filter((school) => school.udise === tdata?.udise)
+        );
+      }
+    }
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Requisition Section";
-
+    settleQuestionData();
     getQuestionData();
     getAcceptingData();
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    if (!details) {
+      router.push("/logout");
+    }
 
-  useEffect(() => {}, [addInputField, inputField]);
+    // eslint-disable-next-line
+  }, []);
+  useEffect(() => {}, [addInputField, inputField, schData]);
 
   return (
     <div className="container my-5 text-center">
-      <ToastContainer
-        limit={1}
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        draggable
-        theme="light"
-      />
       {loader ? <Loader /> : null}
       <div className="col-md-6 mx-auto">
         <Swiper
@@ -1095,8 +1119,8 @@ const QuestionRequisition = () => {
                             onChange={handleSelection}
                           >
                             <option value="">Select School Name</option>
-                            {schoolState.length > 0
-                              ? schoolState.map((el) => {
+                            {schData.length > 0
+                              ? schData.map((el) => {
                                   return (
                                     <option
                                       key={el.id}
@@ -1124,6 +1148,15 @@ const QuestionRequisition = () => {
                             UDISE:
                             {addInputField.udise}
                           </p>
+                          {enteryDone ? (
+                            <p className="text-danger">
+                              School Requisition Submitted
+                            </p>
+                          ) : (
+                            <p className="text-success">
+                              School Requisition Not Submitted
+                            </p>
+                          )}
                         </div>
                       )}
 
