@@ -15,6 +15,7 @@ import {
 import bcrypt from "bcryptjs";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import Link from "next/link";
+import axios from "axios";
 const UpdateUP = () => {
   const router = useRouter();
   let details = getCookie("tid");
@@ -109,41 +110,24 @@ const UpdateUP = () => {
   }
 
   const checkUsername = async () => {
-    if (inputField.username !== "") {
+    const updatedUsername = username.replace(/\s/g, "").toLowerCase();
+    if (updatedUsername !== "") {
       const collectionRef = collection(firestore, "userteachers");
-      const q = query(
-        collectionRef,
-        where("username", "==", inputField.username.toLowerCase())
-      );
+      const q = query(collectionRef, where("username", "==", updatedUsername));
       const querySnapshot = await getDocs(q);
       // console.log(querySnapshot.docs[0].data().username);
       if (querySnapshot.docs.length > 0) {
-        toast.error("Username already Exists! Please Select Another One", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Username already Exists! Please Select Another One");
       } else {
         const docRef = doc(firestore, "userteachers", id);
         await updateDoc(docRef, {
-          username: inputField.username.toLowerCase(),
+          username: updatedUsername,
         });
-
-        toast.success("Congrats! Your Username Changed Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+        await axios.post("/api/updateUsername", {
+          username: updatedUsername,
+          id: id,
         });
+        toast.success("Congrats! Your Username Changed Successfully!");
         setTimeout(() => {
           router.push("/logout");
         }, 1500);
@@ -155,14 +139,18 @@ const UpdateUP = () => {
     // console.log(inputField);
     if (validForm()) {
       try {
+        const hashedPassword = bcrypt.hashSync(inputField.password, 10);
         const docRef = doc(firestore, "userteachers", id);
         await updateDoc(docRef, {
-          password: bcrypt.hashSync(inputField.password, 10),
+          password: hashedPassword,
         });
         const auth = getAuth();
         const user = auth.currentUser;
         const newPassword = inputField.password;
-
+        axios.post("/api/resetPassword", {
+          id: id,
+          password: hashedPassword,
+        });
         updatePassword(user, newPassword)
           .then(() => {
             // Update successful.
@@ -173,47 +161,20 @@ const UpdateUP = () => {
             // ...
             console.log("An error ocurred", error);
           });
-        toast.success("Congrats! Your Password Changed Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Congrats! Your Password Changed Successfully!");
         setTimeout(() => {
           router.push("/logout");
         }, 1500);
       } catch (e) {
-        toast.error("Server Error! Unable to Change Password!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Server Error! Unable to Change Password!");
       }
     } else {
-      toast.error("Form Is Invalid", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Form Is Invalid");
     }
   };
 
   const deleteAccount = async () => {
-    const url = `https://awwbtpta.vercel.app/api/delteacher`;
+    const url = `/api/delteacher`;
     try {
       setLoader(true);
       let response = await axios.post(url, {

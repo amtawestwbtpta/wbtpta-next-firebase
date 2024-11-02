@@ -77,10 +77,11 @@ const page = () => {
     if (validForm()) {
       setLoader(true);
       try {
+        const username = inputField.username.replace(/\s/g, '').toLowerCase();
         const collectionRef = collection(firestore, "userteachers");
         const q = query(
           collectionRef,
-          where("username", "==", inputField.username.toLowerCase())
+          where("username", "==", username)
         );
         const querySnapshot = await getDocs(q);
         // console.log(querySnapshot.docs[0].data().pan);
@@ -110,47 +111,22 @@ const page = () => {
               router.push("/dashboard");
             } else {
               setLoader(false);
-              toast.error("Your Account is Disabled!", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+              toast.error("Your Account is Disabled!", );
             }
           } else {
             setLoader(false);
-            toast.error("Wrong Password!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.error("Wrong Password!", );
           }
         } else {
           setLoader(false);
-          toast.error("Invalid Username!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("Invalid Username!", );
         }
       } catch (error) {
         console.log(error);
 
         const url = `/api/login`;
+        const username = inputField.username.replace(/\s/g, '').toLowerCase();
+        inputField.username = username
         const response = await axios.post(url, inputField);
         const record = response.data;
         const userData = record.data;

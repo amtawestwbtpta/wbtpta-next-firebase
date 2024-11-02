@@ -90,27 +90,18 @@ const Registration = ({ data, setSignUpTrue }) => {
     // console.log(inputField);
     if (validForm()) {
       try {
+        const username = inputField.username.replace(/\s/g, '').toLowerCase();
         setDisplayLoader(true);
         const collectionRef = collection(firestore, "userteachers");
         const q = query(
           collectionRef,
-          where("username", "==", inputField.username.toLowerCase())
+          where("username", "==", username)
         );
         const querySnapshot = await getDocs(q);
         // console.log(querySnapshot.docs[0].data().pan);
         if (querySnapshot.docs.length > 0) {
           toast.error(
-            `Dear ${inputField.tname}, User ID Already Taken,Choose Another One.`,
-            {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            }
+            `Dear ${inputField.tname}, User ID Already Taken,Choose Another One.`
           );
           setTimeout(() => {
             setInputField({ ...inputField, username: "" });
@@ -141,7 +132,7 @@ const Registration = ({ data, setSignUpTrue }) => {
               dpsc3: inputField.dpsc3,
               dpsc4: inputField.dpsc4,
               tan: inputField.tan,
-              username: inputField.username.toLowerCase(),
+              username: username,
               password: bcrypt.hashSync(inputField.password, 10),
               createdAt: inputField.createdAt,
             });
@@ -196,7 +187,7 @@ const Registration = ({ data, setSignUpTrue }) => {
                           dpsc3: inputField.dpsc3,
                           dpsc4: inputField.dpsc4,
                           tan: inputField.tan,
-                          username: inputField.username.toLowerCase(),
+                          username: username,
                           password: bcrypt.hashSync(inputField.password, 10),
                           createdAt: inputField.createdAt,
                           disabled: false,
