@@ -561,11 +561,22 @@ const Navbar = () => {
           )}
           <div className="row">
             <li className="nav-item">
-              <Image
+              {/* <Image
                 src={url}
                 height={50}
                 width={50}
                 alt="profile"
+                className="navprofileImage"
+                onClick={() => {
+                  router.push("/ChangePhoto");
+                  handleNavCollapse();
+                }}
+              /> */}
+              <img
+                src={url}
+                alt="profile"
+                height={50}
+                width={50}
                 className="navprofileImage"
                 onClick={() => {
                   router.push("/ChangePhoto");
@@ -862,13 +873,16 @@ const Navbar = () => {
           )}
           <div className="row">
             <li className="nav-item">
-              <Image
+              <img
                 src={url}
+                alt="profile"
                 height={50}
                 width={50}
-                alt="profile"
                 className="navprofileImage"
-                onClick={() => router.push("/ChangePhoto")}
+                onClick={() => {
+                  router.push("/ChangePhoto");
+                  handleNavCollapse();
+                }}
               />
             </li>
             <li className="nav-item">
