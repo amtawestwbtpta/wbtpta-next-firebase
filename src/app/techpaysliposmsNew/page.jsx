@@ -15,7 +15,8 @@ import OSMSPaySLip from "../../components/OSMSPaySLip";
 import dynamic from "next/dynamic";
 const PaySlipOsmsNew = () => {
   const PDFDownloadLink = dynamic(
-    () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
@@ -157,60 +158,61 @@ const PaySlipOsmsNew = () => {
             Go Back
           </button>
           <PDFDownloadLink
-              document={
-                <OSMSPaySLip
-                  data={{
-                    tname,
-                    desig,
-                    school,
-                    disability,
-                    empid,
-                    pan,
-                    dataYear,
-                    basic,
-                    mbasic,
-                    addl,
-                    da,
-                    hra,
-                    ma,
-                    gross,
-                    prevmbasic,
-                    gpf,
-                    gpfprev,
-                    julyGpf,
-                    ptax,
-                    gsli,
-                    udise,
-                    bank,
-                    account,
-                    ifsc,
-                    lastmonth,
-                    month,
-                    netpay,
-                    basicpay,
-                    pfund,
-                    today,
-                    level,
-                    cell,
-                    deduction,
-                  }}
-                />
-              }
-              fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: 11,
-                color: "#fff",
-                backgroundColor: "darkgreen",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10, margin:20
-              }}
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download Payslip"
-              }
-            </PDFDownloadLink>
+            document={
+              <OSMSPaySLip
+                data={{
+                  tname,
+                  desig,
+                  school,
+                  disability,
+                  empid,
+                  pan,
+                  dataYear,
+                  basic,
+                  mbasic,
+                  addl,
+                  da,
+                  hra,
+                  ma,
+                  gross,
+                  prevmbasic,
+                  gpf,
+                  gpfprev,
+                  julyGpf,
+                  ptax,
+                  gsli,
+                  udise,
+                  bank,
+                  account,
+                  ifsc,
+                  lastmonth,
+                  month,
+                  netpay,
+                  basicpay,
+                  pfund,
+                  today,
+                  level,
+                  cell,
+                  deduction,
+                }}
+              />
+            }
+            fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
+            style={{
+              textDecoration: "none",
+              padding: 11,
+              color: "#fff",
+              backgroundColor: "darkgreen",
+              border: "1px solid #4a4a4a",
+              width: "40%",
+              borderRadius: 10,
+              margin: 20,
+            }}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Please Wait..." : "Download Payslip"
+            }
+          </PDFDownloadLink>
         </div>
         <div className="mx-auto my-3 col-md-2 noprint">
           <h6 className="text-primary">Select Salary Month:</h6>
@@ -235,7 +237,7 @@ const PaySlipOsmsNew = () => {
             })}
           </select>
         </div>
-        
+
         <div
           className="containermain"
           style={{
@@ -301,7 +303,6 @@ const PaySlipOsmsNew = () => {
             >
               Print Payslip
             </button>
-            
 
             <div
               className="dejaVuCondensed"

@@ -26,6 +26,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+    serverComponentsExternalPackages: ['@react-pdf/renderer'],
+  },
 };
 
 export default nextConfig;

@@ -14,7 +14,8 @@ import dynamic from "next/dynamic";
 
 export default function Page() {
   const PDFDownloadLink = dynamic(
-    () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
