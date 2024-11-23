@@ -1,7 +1,6 @@
 "use client";
 import ropa from "../../modules/ropa";
 import React, { Suspense, useEffect, useState } from "react";
-import { useGlobalContext } from "../../context/Store";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   GetMonthName,
@@ -23,9 +22,7 @@ export default function Page() {
   );
   const searchParams = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
-  const { state, stateObject } = useGlobalContext();
   const router = useRouter();
-  // const data = stateObject;
   let details = data;
   let tname,
     desig,
@@ -140,9 +137,7 @@ export default function Page() {
   let lastmonth = GetMonthName(today.getMonth() - 1);
   useEffect(() => {
     document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    if (!state) {
-      router.push("/login");
-    }
+
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
