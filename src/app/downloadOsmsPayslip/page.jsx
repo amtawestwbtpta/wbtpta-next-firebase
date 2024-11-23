@@ -142,7 +142,7 @@ export default function Page() {
   let lastmonth = GetMonthName(today.getMonth() - 1);
   useEffect(() => {
     document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    if (state !== "admin" || key === serverKey) {
+    if (state !== "admin" || key !== serverKey) {
       router.push("/login");
     }
     // eslint-disable-next-line

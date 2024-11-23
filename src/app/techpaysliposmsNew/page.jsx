@@ -157,16 +157,6 @@ const PaySlipOsmsNew = () => {
           >
             Go Back
           </button>
-          <button
-            type="button"
-            className="btn btn-primary text-white font-weight-bold p-2 m-2 rounded"
-            onClick={() => {
-              router.push(`/downloadOsmsPayslip?data${JSON.stringify(stateObject)}&key=a5t2y8q9w0e6r4u1i7o3p5d7f2s3g1h`)
-            }}
-          >
-            Go To Download
-          </button>
-          
           <PDFDownloadLink
             document={
               <OSMSPaySLip
