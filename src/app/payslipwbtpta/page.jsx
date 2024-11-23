@@ -15,7 +15,17 @@ import {
   months,
   printDate,
 } from "../../modules/calculatefunctions";
+import dynamic from "next/dynamic";
+import WBTPTAPaySLip from "../../components/WBTPTAPaySLip";
 const PayslipWbtpta = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
 
@@ -150,11 +160,69 @@ const PayslipWbtpta = () => {
         <div className="mx-auto noprint mb-5">
           <button
             type="button"
-            className="btn btn-info text-white font-weight-bold p-2 rounded"
+            className="btn btn-info text-white font-weight-bold m-2 p-2 rounded"
             onClick={() => router.back()}
           >
             Go Back
           </button>
+          <PDFDownloadLink
+            document={
+              <WBTPTAPaySLip
+                data={{
+                  tname,
+                  desig,
+                  school,
+                  disability,
+                  empid,
+                  pan,
+                  basic,
+                  mbasic,
+                  prevmbasic,
+                  addl,
+                  da,
+                  hra,
+                  ma,
+                  gross,
+                  gpf,
+                  gpfprev,
+                  julyGpf,
+                  ptax,
+                  gsli,
+                  udise,
+                  dataYear,
+                  netpay,
+                  pfund,
+                  basicpay,
+                  today,
+                  date,
+                  lastmonth,
+                  month,
+                  netpay,
+                  basicpay,
+                  pfund,
+                  today,
+                  level,
+                  cell,
+                  deduction,
+                }}
+              />
+            }
+            fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
+            style={{
+              textDecoration: "none",
+              padding: 11,
+              color: "#fff",
+              backgroundColor: "darkgreen",
+              border: "1px solid #4a4a4a",
+              width: "40%",
+              borderRadius: 10,
+              margin: 20,
+            }}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Please Wait..." : "Download Payslip"
+            }
+          </PDFDownloadLink>
         </div>
         <div className="mx-auto my-3 col-md-2 noprint">
           <h6 className="text-primary">Select Salary Month:</h6>
@@ -179,6 +247,7 @@ const PayslipWbtpta = () => {
             })}
           </select>
         </div>
+
         <div>
           <h4 className="mb-2">
             WEST BENGAL TRAINAMOOL PRIMARY TEACHERS' ASSOCIATION
