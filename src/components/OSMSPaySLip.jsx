@@ -363,7 +363,7 @@ export default function OSMSPaySLip({ data }) {
                     ]}
                   >
                     <Text style={styles.text2}>NET PAY:</Text>
-                    <Text style={[styles.text2, { marginLeft: 57 }]}>
+                    <Text style={[styles.text2, { marginLeft: 50 }]}>
                       {netpay} ({INR(netpay)})
                     </Text>
                   </View>
