@@ -23,6 +23,8 @@ export default function Page() {
   );
   const searchParams = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
+  const key = searchParams.get("key");
+  const serverKey = process.env.NEXT_PUBLIC_ANYKEY;
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
   // const data = stateObject;
@@ -52,25 +54,25 @@ export default function Page() {
     account,
     ifsc;
 
-  tname = details.tname;
-  desig = details.desig;
-  school = details.school;
-  disability = details.disability;
-  empid = details.empid;
-  pan = details.pan;
-  basic = parseInt(details.basic);
-  mbasic = parseInt(details.mbasic);
-  addl = parseInt(details.addl);
-  ma = parseInt(details.ma);
-  gpf = parseInt(details.gpf);
-  gpfprev = parseInt(details.gpfprev);
-  julyGpf = parseInt(details.julyGpf);
-  gsli = parseInt(details.gsli);
-  udise = details.udise;
-  bank = details.bank;
-  account = details.account;
-  ifsc = details.ifsc;
-  dataYear = details.dataYear;
+  tname = details?.tname;
+  desig = details?.desig;
+  school = details?.school;
+  disability = details?.disability;
+  empid = details?.empid;
+  pan = details?.pan;
+  basic = parseInt(details?.basic);
+  mbasic = parseInt(details?.mbasic);
+  addl = parseInt(details?.addl);
+  ma = parseInt(details?.ma);
+  gpf = parseInt(details?.gpf);
+  gpfprev = parseInt(details?.gpfprev);
+  julyGpf = parseInt(details?.julyGpf);
+  gsli = parseInt(details?.gsli);
+  udise = details?.udise;
+  bank = details?.bank;
+  account = details?.account;
+  ifsc = details?.ifsc;
+  dataYear = details?.dataYear;
 
   let netpay;
 
@@ -140,7 +142,7 @@ export default function Page() {
   let lastmonth = GetMonthName(today.getMonth() - 1);
   useEffect(() => {
     document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    if (state !== "admin") {
+    if (state !== "admin" || key === serverKey) {
       router.push("/login");
     }
     // eslint-disable-next-line

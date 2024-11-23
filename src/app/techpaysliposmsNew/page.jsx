@@ -157,6 +157,16 @@ const PaySlipOsmsNew = () => {
           >
             Go Back
           </button>
+          <button
+            type="button"
+            className="btn btn-primary text-white font-weight-bold p-2 m-2 rounded"
+            onClick={() => {
+              router.push(`/downloadOsmsPayslip?data${JSON.stringify(stateObject)}&key=a5t2y8q9w0e6r4u1i7o3p5d7f2s3g1h`)
+            }}
+          >
+            Go To Download
+          </button>
+          
           <PDFDownloadLink
             document={
               <OSMSPaySLip
@@ -285,10 +295,10 @@ const PaySlipOsmsNew = () => {
                 >
                   AMTA WEST CIRCLE, HAORA
                 </h6>
-                <h7 style={{ textAlign: "center", marginLeft: -54 }}>
+                <h6 style={{ textAlign: "center", marginLeft: -54 }}>
                   PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
                   {today.getFullYear()}
-                </h7>
+                </h6>
               </div>
             </div>
 
