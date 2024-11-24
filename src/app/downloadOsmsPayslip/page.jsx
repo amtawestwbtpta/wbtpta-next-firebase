@@ -241,6 +241,43 @@ export default function Page() {
             loading ? "Please Wait..." : "Download Payslip"
           }
         </PDFDownloadLink>
+        {/* <OSMSPaySLip
+          data={{
+            tname,
+            desig,
+            school,
+            disability,
+            empid,
+            pan,
+            dataYear,
+            basic,
+            mbasic,
+            addl,
+            da,
+            hra,
+            ma,
+            gross,
+            prevmbasic,
+            gpf,
+            gpfprev,
+            julyGpf,
+            ptax,
+            gsli,
+            udise,
+            bank,
+            account,
+            ifsc,
+            lastmonth,
+            month,
+            netpay,
+            basicpay,
+            pfund,
+            today,
+            level,
+            cell,
+            deduction,
+          }}
+        /> */}
       </div>
     </Suspense>
   );

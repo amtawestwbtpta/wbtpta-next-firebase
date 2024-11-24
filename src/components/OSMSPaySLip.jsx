@@ -18,21 +18,13 @@ export default function OSMSPaySLip({ data }) {
     tname,
     desig,
     school,
-    disability,
     empid,
     pan,
-    dataYear,
-    basic,
-    mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
-    prevmbasic,
-    gpf,
-    gpfprev,
-    julyGpf,
     ptax,
     gsli,
     udise,
@@ -59,7 +51,7 @@ export default function OSMSPaySLip({ data }) {
           <View style={styles.rowFlexView}>
             <Image
               src={`https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=f21c8d21-ac4e-4f2e-b416-2064d91ffe4f`}
-              style={{ width: 70 }}
+              style={{ width: 70, marginTop: -45 }}
               alt="qr-code"
             />
             <View style={styles.columnFlexView}>
@@ -118,33 +110,43 @@ export default function OSMSPaySLip({ data }) {
               </View>
             </View>
           </View>
-          <View style={{ borderWidth: 1, marginTop: 20 }}>
+          <View style={{ borderWidth: 0.5, marginTop: 20 }}>
             <View style={styles.tableStartBorderView}>
-              <View style={styles.view25}>
+              <View style={[styles.view25, { borderBottomWidth: 0.5 }]}>
                 <Text style={styles.text2}>EARNING(Rs)</Text>
               </View>
-              <View style={styles.view25}>
+              <View style={[styles.view25, { borderBottomWidth: 0.5 }]}>
                 <Text style={styles.text2}>DEDUCTION(Rs)</Text>
               </View>
-              <View style={styles.view25}>
-                <Text style={styles.text2}>RECOVERIES OF LOAN(Rs)</Text>
+              <View style={[styles.view25, { borderBottomWidth: 0.5 }]}>
+                <Text style={[styles.text2]}>RECOVERIES OF LOAN(Rs)</Text>
               </View>
-              <View style={[styles.view25, { borderRightWidth: 0 }]}>
+              <View
+                style={[
+                  styles.view25,
+                  { borderBottomWidth: 0.5, borderRightWidth: 0 },
+                ]}
+              >
                 <Text style={styles.text2}>OUT/ACCT.DED (Rs)</Text>
               </View>
             </View>
-            <View style={styles.rowStartBorderView}>
-              <View style={styles.view25}>
+            <View
+              style={[
+                styles.rowStartBorderView,
+                { borderBottomWidth: 0, marginBottom: 0.5 },
+              ]}
+            >
+              <View style={[styles.view25, { alignItems: "baseline" }]}>
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
+                    padding: 2,
                   }}
                 >
-                  <View style={styles.salaryView}>
+                  <View style={[styles.salaryView]}>
                     <Text style={styles.text2}>BASIC</Text>
                     <Text style={styles.text}>{basicpay}</Text>
                   </View>
@@ -180,14 +182,14 @@ export default function OSMSPaySLip({ data }) {
                   </View>
                 </View>
               </View>
-              <View style={styles.view25}>
+              <View style={[styles.view25, { alignItems: "baseline" }]}>
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
+                    padding: 2,
                   }}
                 >
                   {desig === "HT" && (
@@ -226,7 +228,7 @@ export default function OSMSPaySLip({ data }) {
                 </View>
               </View>
               <View
-                style={[styles.view25, { height: desig === "HT" ? 108 : 93 }]}
+                style={[styles.view25MO, { height: desig === "HT" ? 108 : 93 }]}
               >
                 <View
                   style={{
@@ -234,11 +236,11 @@ export default function OSMSPaySLip({ data }) {
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    borderRightWidth: 1,
+                    borderRightWidth: 0.5,
                   }}
                 ></View>
               </View>
-              <View style={styles.view25}>
+              <View style={styles.view25MO}>
                 <View
                   style={{
                     justifyContent: "center",
@@ -251,31 +253,29 @@ export default function OSMSPaySLip({ data }) {
                 </View>
               </View>
             </View>
-            <View style={styles.rowStartBorderView}>
-              <View style={styles.view25}>
+            <View style={[styles.rowStartBorderView, { borderTopWidth: 0.5 }]}>
+              <View style={[styles.view25MO, { borderRightWidth: 0 }]}>
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
                   }}
                 >
-                  <View style={styles.salaryView}>
+                  <View style={[styles.salaryView, { marginLeft: -4 }]}>
                     <Text style={styles.text2}>Total:</Text>
-                    <Text style={styles.text2}>{gross}</Text>
+                    <Text style={[styles.text2,{paddingRight:-4}]}>{gross}</Text>
                   </View>
                 </View>
               </View>
-              <View style={styles.view25}>
+              <View style={[styles.view25MO, { borderRightWidth: 0 }]}>
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
                   }}
                 >
                   <View
@@ -285,18 +285,20 @@ export default function OSMSPaySLip({ data }) {
                   </View>
                 </View>
               </View>
-              <View style={[styles.view25, { height: 14 }]}>
+              <View
+                style={[styles.view25MO, { height: 14, borderRightWidth: 0 }]}
+              >
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    borderRightWidth: 1,
+                    borderRightWidth: 0.5,
                   }}
                 ></View>
               </View>
-              <View style={styles.view25}>
+              <View style={styles.view25MO}>
                 <View
                   style={{
                     justifyContent: "center",
@@ -317,7 +319,7 @@ export default function OSMSPaySLip({ data }) {
             >
               <View
                 style={[
-                  styles.view25,
+                  styles.view25MO,
                   { borderRightWidth: 0, justifyContent: "flex-start" },
                 ]}
               >
@@ -327,12 +329,10 @@ export default function OSMSPaySLip({ data }) {
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
                   }}
                 >
-                  <View style={styles.salaryView}>
-                    <Text style={styles.text2}>GROSS PAY:</Text>
-                    <Text style={styles.text2}>{gross}</Text>
+                  <View style={[styles.salaryView, { marginLeft: -4 }]}>
+                    <Text style={styles.text2}>GROSS PAY: {gross}</Text>
                   </View>
                 </View>
               </View>
@@ -352,18 +352,11 @@ export default function OSMSPaySLip({ data }) {
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
-                    flexDirection: "row",
                   }}
                 >
-                  <View
-                    style={[
-                      styles.salaryView,
-                      { justifyContent: "flex-start" },
-                    ]}
-                  >
+                  <View style={[styles.salaryView, { marginLeft: -4 }]}>
                     <Text style={styles.text2}>NET PAY:</Text>
-                    <Text style={[styles.text2, { marginLeft: 50 }]}>
+                    <Text style={[styles.text2, { marginLeft: 13 }]}>
                       {netpay} ({INR(netpay)})
                     </Text>
                   </View>
@@ -389,16 +382,9 @@ export default function OSMSPaySLip({ data }) {
                     alignItems: "center",
                     alignContent: "center",
                     width: "100%",
-                    paddingHorizontal: 2,
-                    flexDirection: "row",
                   }}
                 >
-                  <View
-                    style={[
-                      styles.salaryView,
-                      { justifyContent: "flex-start" },
-                    ]}
-                  >
+                  <View style={[styles.salaryView, { marginLeft: -3 }]}>
                     <Text style={styles.text2}>
                       Transferred to {bank} Account no {account} &emsp; IFS Code{" "}
                       {ifsc}
@@ -538,6 +524,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     width: "100%",
+    paddingHorizontal: 5,
   },
   tableStartView: {
     borderTopWidth: 0,
@@ -552,10 +539,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   tableStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -575,7 +558,7 @@ const styles = StyleSheet.create({
   view88H20: {
     borderTopWidth: 0,
     borderLeftWidth: 0,
-    borderRightWidth: 1,
+    borderRightWidth: 0.5,
     borderBottomWidth: 0,
     paddingRight: 1,
     width: "8.78%",
@@ -584,7 +567,7 @@ const styles = StyleSheet.create({
   SecondView16: {
     borderTopWidth: 0,
     borderLeftWidth: 0,
-    borderRightWidth: 1,
+    borderRightWidth: 0.5,
     borderBottomWidth: 0,
     paddingRight: 1,
     width: "16%",
@@ -593,7 +576,7 @@ const styles = StyleSheet.create({
   SecondView10: {
     borderTopWidth: 0,
     borderLeftWidth: 0,
-    borderRightWidth: 1,
+    borderRightWidth: 0.5,
     borderBottomWidth: 0,
     paddingRight: 1,
     width: "10%",
@@ -602,7 +585,7 @@ const styles = StyleSheet.create({
   view5: {
     borderTopWidth: 0,
     borderLeftWidth: 0,
-    borderRightWidth: 1,
+    borderRightWidth: 0.5,
     borderBottomWidth: 0,
     paddingRight: 1,
     width: "5%",
@@ -613,10 +596,21 @@ const styles = StyleSheet.create({
   view25: {
     borderTopWidth: 0,
     borderLeftWidth: 0,
-    borderRightWidth: 1,
+    borderRightWidth: 0.5,
     width: "25%",
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 2,
+    marginTop: 2,
+  },
+  view25MO: {
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0.5,
+    width: "25%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 2,
   },
   view50: {
     width: "50%",
@@ -679,7 +673,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   break: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     width: "100%",
     height: 5,
     flexDirection: "row",

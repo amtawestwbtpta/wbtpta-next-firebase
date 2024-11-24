@@ -157,6 +157,46 @@ const PaySlipOsmsNew = () => {
           >
             Go Back
           </button>
+          <button
+            type="button"
+            className="btn btn-success text-white font-weight-bold p-2 m-2 rounded"
+            onClick={() => {
+              const data = {
+                tname,
+                desig,
+                school,
+                empid,
+                pan,
+                addl,
+                da,
+                hra,
+                ma,
+                gross,
+                ptax,
+                gsli,
+                udise,
+                bank,
+                account,
+                ifsc,
+                lastmonth,
+                month,
+                netpay,
+                basicpay,
+                pfund,
+                today,
+                level,
+                cell,
+                deduction,
+              };
+              router.push(
+                `/downloadOsmsPayslip?data=${JSON.stringify(data)}&key=${
+                  process.env.NEXT_PUBLIC_ANYKEY
+                }`
+              );
+            }}
+          >
+            Go To Download
+          </button>
           <PDFDownloadLink
             document={
               <OSMSPaySLip
@@ -164,21 +204,13 @@ const PaySlipOsmsNew = () => {
                   tname,
                   desig,
                   school,
-                  disability,
                   empid,
                   pan,
-                  dataYear,
-                  basic,
-                  mbasic,
                   addl,
                   da,
                   hra,
                   ma,
                   gross,
-                  prevmbasic,
-                  gpf,
-                  gpfprev,
-                  julyGpf,
                   ptax,
                   gsli,
                   udise,
