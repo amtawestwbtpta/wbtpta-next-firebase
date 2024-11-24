@@ -660,6 +660,22 @@ export const getServiceLife = (date) => {
     return `${months} months`;
   }
 };
+export const getRetirementLife = (doj,dor) => {
+  if (!doj || !dor) return "";
+  let joiningDate = Date.parse(getCurrentDateInput(doj));
+  let retirementDate = Date.parse(getCurrentDateInput(dor));
+  let yearInMillis = 31556926000;
+  let monthinMillis = 2629800000;
+  let age = Math.floor((retirementDate - joiningDate) / yearInMillis);
+  let months = Math.floor(
+    ((retirementDate - joiningDate) % yearInMillis) / monthinMillis
+  );
+  if (age) {
+    return `${age} years ${months} months`;
+  } else {
+    return `${months} months`;
+  }
+};
 export const filterArrayExtraItems = (x, y) => {
   return x.filter((item) => !y.includes(item));
 };

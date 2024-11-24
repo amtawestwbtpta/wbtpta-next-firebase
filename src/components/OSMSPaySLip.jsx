@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Page,
@@ -8,7 +7,6 @@ import {
   StyleSheet,
   Image,
   Font,
-  PDFViewer,
 } from "@react-pdf/renderer";
 import { INR, printDate } from "../modules/calculatefunctions";
 const width = 2480;
@@ -228,7 +226,7 @@ export default function OSMSPaySLip({ data }) {
                 </View>
               </View>
               <View
-                style={[styles.view25MO, { height: desig === "HT" ? 108 : 93 }]}
+                style={[styles.view25MO, { height: desig === "HT" ? 108 : 98 }]}
               >
                 <View
                   style={{
@@ -265,7 +263,9 @@ export default function OSMSPaySLip({ data }) {
                 >
                   <View style={[styles.salaryView, { marginLeft: -4 }]}>
                     <Text style={styles.text2}>Total:</Text>
-                    <Text style={[styles.text2,{paddingRight:-4}]}>{gross}</Text>
+                    <Text style={[styles.text2, { paddingRight: -4 }]}>
+                      {gross}
+                    </Text>
                   </View>
                 </View>
               </View>
