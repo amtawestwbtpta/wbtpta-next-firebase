@@ -9,6 +9,7 @@ import {
   uniqArray,
 } from "../../modules/calculatefunctions";
 import ServiceConfirmation from "../../components/ServiceConfirmation";
+import BenefitProforma from "../../components/BenefitProforma";
 const YearWiseTeachers = () => {
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
@@ -21,6 +22,7 @@ const YearWiseTeachers = () => {
   const [joiningMonths, setJoiningMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
   const [showConfForm, setShowConfForm] = useState(false);
+  const [showProforma, setShowProforma] = useState(false);
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -108,10 +110,10 @@ const YearWiseTeachers = () => {
           <option className="text-center text-primary" value="">
             Select Joining Year
           </option>
-          {serviceArray.map((el) => (
+          {serviceArray.map((el, i) => (
             <option
               className="text-center text-success text-wrap"
-              key={el.id}
+              key={i}
               value={el}
             >
               {el +
@@ -355,6 +357,28 @@ const YearWiseTeachers = () => {
         showConfForm && (
           <div className="my-5">
             <ServiceConfirmation data={filteredData} />
+          </div>
+        )}
+      {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
+        new Date().getFullYear() - parseInt(selectedYear) === 20) && (
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary  p-2 rounded"
+            onClick={() => setShowProforma(!showProforma)}
+          >
+            {showProforma ? "Hide Benefit Proforma" : "Show Benefit Proforma"}
+          </button>
+        </div>
+      )}
+      {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
+        new Date().getFullYear() - parseInt(selectedYear) === 20) &&
+        showProforma && (
+          <div className="my-5">
+            <BenefitProforma
+              data={filteredData}
+              year={parseInt(selectedYear)}
+            />
           </div>
         )}
     </div>
