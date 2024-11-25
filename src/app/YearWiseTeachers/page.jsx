@@ -8,7 +8,7 @@ import {
   months,
   uniqArray,
 } from "../../modules/calculatefunctions";
-
+import ServiceConfirmation from "../../components/ServiceConfirmation";
 const YearWiseTeachers = () => {
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
@@ -20,7 +20,7 @@ const YearWiseTeachers = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [joiningMonths, setJoiningMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
-
+  const [showConfForm, setShowConfForm] = useState(false);
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -200,7 +200,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => navigate(-1)}
+                onClick={() => router.back()}
               >
                 Go Back
               </button>
@@ -332,7 +332,7 @@ const YearWiseTeachers = () => {
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
-                onClick={() => navigate(-1)}
+                onClick={() => router.back()}
               >
                 Go Back
               </button>
@@ -340,6 +340,23 @@ const YearWiseTeachers = () => {
           </div>
         </div>
       )}
+      {new Date().getFullYear() - parseInt(selectedYear) === 2 && (
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary  p-2 rounded"
+            onClick={() => setShowConfForm(!showConfForm)}
+          >
+            {showConfForm ? "Hide Confirmation Form" : "Show Confirmation Form"}
+          </button>
+        </div>
+      )}
+      {new Date().getFullYear() - parseInt(selectedYear) === 2 &&
+        showConfForm && (
+          <div className="my-5">
+            <ServiceConfirmation data={filteredData} />
+          </div>
+        )}
     </div>
   );
 };

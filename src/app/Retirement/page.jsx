@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import {
@@ -264,39 +264,43 @@ const Retirement = () => {
                   >
                     <h6 className="text-center text-black">
                       {index + 1}) Teacher's Name:
-                      <br /> {el.tname} ({`${el.desig}`})
+                      <br /> {el?.tname} ({`${el?.desig}`})
                     </h6>
                     <h6 className="text-center text-black">
                       School:
-                      <br /> {el.school}
+                      <br /> {el?.school}
+                    </h6>
+                    <h6 className="text-center text-black">
+                      Association:
+                      <br /> {el?.association}
                     </h6>
                     <h6>
                       <a
-                        href={`tel: +91${el.phone}`}
+                        href={`tel: +91${el?.phone}`}
                         className="d-inline-block  text-decoration-none text-black"
                       >
-                        Mobile: {el.phone}
+                        Mobile: {el?.phone}
                       </a>
                     </h6>
                     <h6 className="text-center text-black">
                       Service Life:
-                      <br /> {getRetirementLife(el.doj, el.dor)}
+                      <br /> {getRetirementLife(el?.doj, el?.dor)}
                     </h6>
                     <h6 className="text-center text-black">
                       Date of Joining:
-                      <br /> {el.doj}
+                      <br /> {el?.doj}
                     </h6>
                     <h6 className="text-center text-black">
                       DOJ at This Post in This School:
-                      <br /> {el.dojnow}
+                      <br /> {el?.dojnow}
                     </h6>
                     <h6 className="text-center text-black">
                       Date of Birth:
-                      <br /> {el.dob}
+                      <br /> {el?.dob}
                     </h6>
                     <h6 className="text-center text-black">
                       Date of Retirement:
-                      <br /> {el.dor}
+                      <br /> {el?.dor}
                     </h6>
                   </div>
                 );
