@@ -197,54 +197,56 @@ const PaySlipOsmsNew = () => {
           >
             Go To Download
           </button>
-          <PDFDownloadLink
-            document={
-              <OSMSPaySLip
-                data={{
-                  tname,
-                  desig,
-                  school,
-                  empid,
-                  pan,
-                  addl,
-                  da,
-                  hra,
-                  ma,
-                  gross,
-                  ptax,
-                  gsli,
-                  udise,
-                  bank,
-                  account,
-                  ifsc,
-                  lastmonth,
-                  month,
-                  netpay,
-                  basicpay,
-                  pfund,
-                  today,
-                  level,
-                  cell,
-                  deduction,
-                }}
-              />
-            }
-            fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
-            style={{
-              textDecoration: "none",
-              padding: 11,
-              color: "#fff",
-              backgroundColor: "darkgreen",
-              border: "1px solid #4a4a4a",
-              width: "40%",
-              borderRadius: 10,
-              margin: 20,
-            }}
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "Please Wait..." : "Download Payslip"
-            }
-          </PDFDownloadLink>
+          <div className="mx-auto">
+            <PDFDownloadLink
+              document={
+                <OSMSPaySLip
+                  data={{
+                    tname,
+                    desig,
+                    school,
+                    empid,
+                    pan,
+                    addl,
+                    da,
+                    hra,
+                    ma,
+                    gross,
+                    ptax,
+                    gsli,
+                    udise,
+                    bank,
+                    account,
+                    ifsc,
+                    lastmonth,
+                    month,
+                    netpay,
+                    basicpay,
+                    pfund,
+                    today,
+                    level,
+                    cell,
+                    deduction,
+                  }}
+                />
+              }
+              fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: 11,
+                color: "#fff",
+                backgroundColor: "darkgreen",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+                margin: 20,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download Payslip"
+              }
+            </PDFDownloadLink>
+          </div>
         </div>
         <div className="mx-auto my-3 col-md-2 noprint">
           <h6 className="text-primary">Select Salary Month:</h6>

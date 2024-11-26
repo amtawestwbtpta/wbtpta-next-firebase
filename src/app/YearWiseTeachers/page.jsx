@@ -10,7 +10,17 @@ import {
 } from "../../modules/calculatefunctions";
 import ServiceConfirmation from "../../components/ServiceConfirmation";
 import BenefitProforma from "../../components/BenefitProforma";
+import BenefitApplication from "../../components/BenefitApplication";
+import dynamic from "next/dynamic";
 const YearWiseTeachers = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
   const data = teachersState.filter((el) => el.association === "WBTPTA");
@@ -23,6 +33,7 @@ const YearWiseTeachers = () => {
   const [serviceArray, setServiceArray] = useState([]);
   const [showConfForm, setShowConfForm] = useState(false);
   const [showProforma, setShowProforma] = useState(false);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -342,45 +353,105 @@ const YearWiseTeachers = () => {
           </div>
         </div>
       )}
-      {new Date().getFullYear() - parseInt(selectedYear) === 2 && (
+      {state === "admin" && (
         <div>
-          <button
-            type="button"
-            className="btn btn-primary  p-2 rounded"
-            onClick={() => setShowConfForm(!showConfForm)}
-          >
-            {showConfForm ? "Hide Confirmation Form" : "Show Confirmation Form"}
-          </button>
+          {new Date().getFullYear() - parseInt(selectedYear) === 2 && (
+            <div>
+              <button
+                type="button"
+                className="btn btn-primary  p-2 rounded"
+                onClick={() => setShowConfForm(!showConfForm)}
+              >
+                {showConfForm
+                  ? "Hide Confirmation Form"
+                  : "Show Confirmation Form"}
+              </button>
+            </div>
+          )}
+          {new Date().getFullYear() - parseInt(selectedYear) === 2 &&
+            showConfForm && (
+              <div className="my-5">
+                <PDFDownloadLink
+                  document={<ServiceConfirmation data={filteredData} />}
+                  fileName={`Service Confirmation Form.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
+          {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
+            new Date().getFullYear() - parseInt(selectedYear) === 20) && (
+            <div>
+              <button
+                type="button"
+                className="btn btn-primary m-2 p-2 rounded"
+                onClick={() => setShowProforma(!showProforma)}
+              >
+                {showProforma
+                  ? "Hide Benefit Proforma"
+                  : "Show Benefit Proforma"}
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary m-2 p-2 rounded"
+                onClick={() => setShowApplicationForm(!showApplicationForm)}
+              >
+                {showApplicationForm
+                  ? "Hide Application Form"
+                  : "Show Application Form"}
+              </button>
+            </div>
+          )}
+          {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
+            new Date().getFullYear() - parseInt(selectedYear) === 20) &&
+            showProforma && (
+              <div className="my-5">
+                <PDFDownloadLink
+                  document={
+                    <BenefitProforma
+                      data={filteredData}
+                      year={parseInt(selectedYear)}
+                    />
+                  }
+                  fileName={`Benefit Proforma of Teachers.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
+          {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
+            new Date().getFullYear() - parseInt(selectedYear) === 20) &&
+            showApplicationForm && (
+              <div className="my-5">
+                <BenefitApplication data={filteredData} year={parseInt(selectedYear)} />
+              </div>
+            )}
         </div>
       )}
-      {new Date().getFullYear() - parseInt(selectedYear) === 2 &&
-        showConfForm && (
-          <div className="my-5">
-            <ServiceConfirmation data={filteredData} />
-          </div>
-        )}
-      {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
-        new Date().getFullYear() - parseInt(selectedYear) === 20) && (
-        <div>
-          <button
-            type="button"
-            className="btn btn-primary  p-2 rounded"
-            onClick={() => setShowProforma(!showProforma)}
-          >
-            {showProforma ? "Hide Benefit Proforma" : "Show Benefit Proforma"}
-          </button>
-        </div>
-      )}
-      {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
-        new Date().getFullYear() - parseInt(selectedYear) === 20) &&
-        showProforma && (
-          <div className="my-5">
-            <BenefitProforma
-              data={filteredData}
-              year={parseInt(selectedYear)}
-            />
-          </div>
-        )}
     </div>
   );
 };

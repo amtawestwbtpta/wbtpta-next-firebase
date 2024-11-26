@@ -19,7 +19,6 @@ export default function BenefitProforma({ data, year }) {
   const currentYear = new Date().getFullYear();
   const teacherYear = currentYear - year;
   return (
-    <PDFViewer style={{ height, width }}>
       <Document
         style={{ margin: 5, padding: 5 }}
         title={`Benefit Proforma of Teachers`}
@@ -721,7 +720,6 @@ export default function BenefitProforma({ data, year }) {
           );
         })}
       </Document>
-    </PDFViewer>
   );
 }
 const styles = StyleSheet.create({

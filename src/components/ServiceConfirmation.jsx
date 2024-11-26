@@ -16,16 +16,9 @@ const height = 3508;
 
 export default function ServiceConfirmation({ data }) {
   return (
-    <PDFViewer style={{ height, width }}>
       <Document
         style={{ margin: 5, padding: 5 }}
-        title={`Service Confirmation Form of ${data.map((teacher, index) => {
-          if (index !== data.length - 1) {
-            return teacher?.tname +" ";
-          } else {
-            return teacher?.tname;
-          }
-        })}`}
+        title={`Service Confirmation Form`}
       >
         {data.map((teacher, index) => {
           const level = ropa(teacher?.basic).lv;
@@ -254,7 +247,6 @@ export default function ServiceConfirmation({ data }) {
           );
         })}
       </Document>
-    </PDFViewer>
   );
 }
 const styles = StyleSheet.create({
@@ -446,7 +438,7 @@ const styles = StyleSheet.create({
 
 Font.register({
   family: "Times",
-  src: "https://raw.githubusercontent.com/usprys/usprysdata/main/times.ttf",
+  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/times.ttf",
 });
 Font.register({
   family: "Arial",
