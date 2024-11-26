@@ -447,7 +447,29 @@ const YearWiseTeachers = () => {
             new Date().getFullYear() - parseInt(selectedYear) === 20) &&
             showApplicationForm && (
               <div className="my-5">
-                <BenefitApplication data={filteredData} year={parseInt(selectedYear)} />
+                <PDFDownloadLink
+                  document={
+                    <BenefitApplication
+                      data={filteredData}
+                      year={parseInt(selectedYear)}
+                    />
+                  }
+                  fileName={`Service Confirmation Form.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Form"
+                  }
+                </PDFDownloadLink>
               </div>
             )}
         </div>
