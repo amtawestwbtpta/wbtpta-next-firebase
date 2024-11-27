@@ -31,6 +31,7 @@ const YearWiseTeachers = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [joiningMonths, setJoiningMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
+  const [showTable, setShowTable] = useState(false);
   const [showConfForm, setShowConfForm] = useState(false);
   const [showProforma, setShowProforma] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
@@ -268,62 +269,212 @@ const YearWiseTeachers = () => {
         </div>
       )}
       <div className="container text-center">
-        <div className="row d-flex justify-content-center">
-          {selectedYear ? (
-            filteredData.length > 0 ? (
-              filteredData.map((el, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2 nobreak"
-                    style={{ backgroundColor: "seashell" }}
+        {!showTable ? (
+          <div className="row d-flex justify-content-center">
+            {selectedYear ? (
+              filteredData.length > 0 ? (
+                filteredData.map((el, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2 nobreak"
+                      style={{ backgroundColor: "seashell" }}
+                    >
+                      <h6 className="text-center text-black">
+                        {index + 1}) Teacher's Name:
+                        <br /> {el.tname} ({`${el.desig}`})
+                      </h6>
+                      <h6 className="text-center text-black">
+                        School:
+                        <br /> {el.school}
+                      </h6>
+                      <h6>
+                        <a
+                          href={`tel: +91${el.phone}`}
+                          className="d-inline-block  text-decoration-none text-black"
+                        >
+                          Mobile: {el.phone}
+                        </a>
+                      </h6>
+                      <h6 className="text-center text-black">
+                        Service Life:
+                        <br /> {getServiceLife(el.doj)}
+                      </h6>
+                      <h6 className="text-center text-black">
+                        Date of Joining:
+                        <br /> {el.doj}
+                      </h6>
+                      <h6 className="text-center text-black">
+                        DOJ at This Post in This School:
+                        <br /> {el.dojnow}
+                      </h6>
+                      <h6 className="text-center text-black">
+                        Date of Birth:
+                        <br /> {el.dob}
+                      </h6>
+                      <h6 className="text-center text-black">
+                        Date of Retirement:
+                        <br /> {el.dor}
+                      </h6>
+                    </div>
+                  );
+                })
+              ) : (
+                <h4 className="text-center text-primary">
+                  No Teachers found for the selected Year.
+                </h4>
+              )
+            ) : null}
+          </div>
+        ) : (
+          <div
+            className="m-2 mx-auto"
+            style={{
+              overflowX: "auto",
+            }}
+          >
+            <table
+              className="ttable-striped table-hover text-center"
+              style={{
+                verticalAlign: "middle",
+                width: "100%",
+                overflowX: "auto",
+                border: "1px solid",
+                padding: 2,
+              }}
+            >
+              <thead>
+                <tr
+                  style={{
+                    border: "1px solid",
+                    padding: 2,
+                  }}
+                >
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
                   >
-                    <h6 className="text-center text-black">
-                      {index + 1}) Teacher's Name:
-                      <br /> {el.tname} ({`${el.desig}`})
-                    </h6>
-                    <h6 className="text-center text-black">
-                      School:
-                      <br /> {el.school}
-                    </h6>
-                    <h6>
-                      <a
-                        href={`tel: +91${el.phone}`}
-                        className="d-inline-block  text-decoration-none text-black"
+                    Sl
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
+                  >
+                    Teacher's Name
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
+                  >
+                    School
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
+                  >
+                    Date of Joining
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
+                  >
+                    Mobile
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      padding: 2,
+                    }}
+                    scope="col"
+                  >
+                    Remarks
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((el, index) => {
+                  return (
+                    <tr
+                      style={{
+                        border: "1px solid",
+                        padding: 2,
+                      }}
+                      key={index}
+                    >
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                        scope="row"
                       >
-                        Mobile: {el.phone}
-                      </a>
-                    </h6>
-                    <h6 className="text-center text-black">
-                      Service Life:
-                      <br /> {getServiceLife(el.doj)}
-                    </h6>
-                    <h6 className="text-center text-black">
-                      Date of Joining:
-                      <br /> {el.doj}
-                    </h6>
-                    <h6 className="text-center text-black">
-                      DOJ at This Post in This School:
-                      <br /> {el.dojnow}
-                    </h6>
-                    <h6 className="text-center text-black">
-                      Date of Birth:
-                      <br /> {el.dob}
-                    </h6>
-                    <h6 className="text-center text-black">
-                      Date of Retirement:
-                      <br /> {el.dor}
-                    </h6>
-                  </div>
-                );
-              })
-            ) : (
-              <h4 className="text-center text-primary">
-                No Teachers found for the selected Year.
-              </h4>
-            )
-          ) : null}
-        </div>
+                        {index + 1}
+                      </td>
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                      >
+                        {el.tname}
+                      </td>
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                      >
+                        {el.school}
+                      </td>
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                      >
+                        {el.doj}
+                      </td>
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                      >
+                        <a
+                          href={`tel: +91${el.phone}`}
+                          className="d-inline-block text-decoration-none text-black" style={{padding:2}}
+                        >
+                          {el.phone}
+                        </a>
+                      </td>
+                      <td
+                        style={{
+                          border: "1px solid",
+                          padding: 2,
+                        }}
+                      ></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>{" "}
       {filteredData.length > 0 && (
         <div>
@@ -350,16 +501,25 @@ const YearWiseTeachers = () => {
                 Go Back
               </button>
             </div>
+            <div className="m-1 noprint">
+              <button
+                type="button"
+                className="btn btn-success p-2 rounded"
+                onClick={() => setShowTable(!showTable)}
+              >
+                {showTable ? "Hide Table Format" : "Show Table Format"}
+              </button>
+            </div>
           </div>
         </div>
       )}
       {state === "admin" && (
-        <div>
+        <div className="noprint">
           {new Date().getFullYear() - parseInt(selectedYear) === 2 && (
             <div>
               <button
                 type="button"
-                className="btn btn-primary  p-2 rounded"
+                className="btn btn-primary m-2 p-2 rounded"
                 onClick={() => setShowConfForm(!showConfForm)}
               >
                 {showConfForm
@@ -470,6 +630,10 @@ const YearWiseTeachers = () => {
                     loading ? "Please Wait..." : "Download Form"
                   }
                 </PDFDownloadLink>
+                {/* <BenefitApplication
+                  data={filteredData}
+                  year={parseInt(selectedYear)}
+                /> */}
               </div>
             )}
         </div>

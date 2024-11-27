@@ -17,6 +17,7 @@ export default function ServiceConfirmation({ data, year }) {
   const currentYear = new Date().getFullYear();
   const teacherYear = currentYear - year;
   return (
+    // <PDFViewer style={{ height, width }}>
     <Document
       style={{ margin: 5, padding: 5 }}
       title={`Service Confirmation Form`}
@@ -30,7 +31,7 @@ export default function ServiceConfirmation({ data, year }) {
             key={index}
           >
             <View style={styles.pageMainView}>
-              <View style={{ margin: 15 }}>
+              <View style={{ width: "90%", padding: 10, margin: 10 }}>
                 <Text style={styles.text}>To,</Text>
                 <Text style={styles.text}>The Chairman,</Text>
                 <Text style={styles.text}>
@@ -56,7 +57,7 @@ export default function ServiceConfirmation({ data, year }) {
                         width: 10,
                         height: 10,
                         position: "absolute",
-                        marginLeft: teacherYear === 20 ? 57 : 30,
+                        marginLeft: teacherYear === 20 ? 50 : 28,
                         marginTop: -7,
                       }}
                     />
@@ -95,74 +96,24 @@ export default function ServiceConfirmation({ data, year }) {
                   <Text
                     style={[styles.text, { textAlign: "left", marginLeft: 50 }]}
                   >
-                    As per G.O. No. 437-SE(P&B)/SL/SS-408/19;{"\n"}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.text,
-                      { textAlign: "left", marginLeft: -150 },
-                    ]}
-                  >
-                    Dt.- 13/12/2019
+                    As per G.O. No. 437-SE(P&B)/SL/SS-408/19; Dt.- 13/12/2019
                   </Text>
                 </View>
                 <Text style={styles.text}>Sir,</Text>
-                <Text
-                  style={[styles.text, { textAlign: "left", textIndent: 30 }]}
-                >
+                <Text style={[styles.text, { textIndent: 30 }]}>
                   I {teacher?.tname},
                   {teacher?.desig === "AT" ? " A.T." : " H.T."} of{" "}
                   {teacher?.school} under Amta West Circle, joined my first
-                  school named{" "}
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                      },
-                    ]}
-                  >
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                  </Text>{" "}
-                  under{" "}
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                      },
-                    ]}
-                  >
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    {"\n"}
-                  </Text>{" "}
-                  on {teacher?.doj} as per DPSC Howrah’s Memo no.{" "}
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                      },
-                    ]}
-                  >
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                  </Text>
-                  {"\nDt. "}
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                      },
-                    ]}
-                  >
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                  </Text>
-                  . I had completed my
+                  school named
+                  {` ................................................................................... `}
+                  under
+                  {
+                    " .............................................................. "
+                  }
+                  on {teacher?.doj} as per DPSC Howrah&#8217;s Memo no.
+                  {" ................................................. "}
+                  {" Dt. "}
+                  {"  .................................. "}. I had completed my{" "}
                   {teacherYear === 20 ? (
                     <Text style={[styles.text]}>
                       <Text
@@ -175,7 +126,7 @@ export default function ServiceConfirmation({ data, year }) {
                       >
                         10 /
                       </Text>
-                      20 years
+                      20
                     </Text>
                   ) : (
                     <Text style={[styles.text]}>
@@ -189,17 +140,17 @@ export default function ServiceConfirmation({ data, year }) {
                           },
                         ]}
                       >
-                        / 20 years
+                        / 20
                       </Text>
                     </Text>
                   )}{" "}
-                  of continuous satisfactory service on{" "}
+                  years of continuous satisfactory service on{" "}
                   {parseInt(teacher?.doj?.slice(0, 2)) - 1 <= 9
                     ? "0" + (parseInt(teacher?.doj?.slice(0, 2)) - 1)
                     : parseInt(teacher?.doj?.slice(0, 2)) - 1}
                   -{teacher?.doj?.slice(3, 5)}-
                   {parseInt(teacher?.doj?.slice(6, 10)) + teacherYear}. I want
-                  to take my
+                  to take my{" "}
                   {teacherYear === 20 ? (
                     <Text style={[styles.text]}>
                       <Text
@@ -210,9 +161,9 @@ export default function ServiceConfirmation({ data, year }) {
                           },
                         ]}
                       >
-                        10 /
+                        10
                       </Text>
-                      20 years
+                      / 20
                     </Text>
                   ) : (
                     <Text style={[styles.text]}>
@@ -226,11 +177,11 @@ export default function ServiceConfirmation({ data, year }) {
                           },
                         ]}
                       >
-                        / 20 years
+                        / 20
                       </Text>
                     </Text>
                   )}{" "}
-                  benefit (one additional increment in the same level) on{" "}
+                  years benefit (one additional increment in the same level) on{" "}
                   {parseInt(teacher?.doj?.slice(3, 5)) >= 7 ? (
                     <Text style={[styles.text, { textAlign: "left" }]}>
                       {teacher?.doj?.slice(0, 2)}-{teacher?.doj?.slice(3, 5)}-
@@ -290,6 +241,7 @@ export default function ServiceConfirmation({ data, year }) {
         );
       })}
     </Document>
+    // </PDFViewer>
   );
 }
 const styles = StyleSheet.create({
@@ -331,9 +283,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: "Times",
-    textAlign: "left",
+    textAlign: "justify",
     lineHeight: 1.5,
   },
   text2: {
