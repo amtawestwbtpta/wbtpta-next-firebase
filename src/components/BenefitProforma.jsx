@@ -11,10 +11,10 @@ import {
   PDFViewer,
 } from "@react-pdf/renderer";
 import ropa from "../modules/ropa";
-const width = 2480;
-const height = 3508;
 import Check from "../images/check.png";
 import { RoundTo } from "../modules/calculatefunctions";
+const width = 2480;
+const height = 3508;
 export default function BenefitProforma({ data, year }) {
   const currentYear = new Date().getFullYear();
   const teacherYear = currentYear - year;
