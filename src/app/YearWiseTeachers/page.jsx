@@ -219,6 +219,15 @@ const YearWiseTeachers = () => {
                 Go Back
               </button>
             </div>
+            <div className="m-1 noprint">
+              <button
+                type="button"
+                className="btn btn-success p-2 rounded"
+                onClick={() => setShowTable(!showTable)}
+              >
+                {showTable ? "Hide Table Format" : "Show Table Format"}
+              </button>
+            </div>
           </div>
 
           {moreFilteredData.length > 1 ? (
