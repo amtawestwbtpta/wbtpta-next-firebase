@@ -500,6 +500,14 @@ const TechAccuitance = () => {
                       >
                         MA
                       </th>
+                      {year === 2024 && index === 6 ? (
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          IR
+                        </th>
+                      ) : null}
                       <th
                         className="text-center"
                         style={{ border: "1px solid" }}
@@ -557,6 +565,7 @@ const TechAccuitance = () => {
                         let prevmbasic = el.prevmbasic;
                         let basic = el.basic;
                         let mbasic = el.mbasic;
+                        let ir = Math.round(mbasic * 0.04);
                         let addl = el.addl;
                         let ma = el.ma;
                         let gpf = el.gpf;
@@ -570,6 +579,7 @@ const TechAccuitance = () => {
                         let basicpay;
                         let ptax;
                         let pfund;
+                        let gross;
                         if (year === date.getFullYear() - 1) {
                           if (index <= 5) {
                             basicpay = prevmbasic;
@@ -603,8 +613,11 @@ const TechAccuitance = () => {
 
                         let hra = Math.round(basicpay * HRA);
 
-                        let gross = basicpay + da + hra + addl + ma;
-                        // console.log(gross)
+                        if (year === 2024 && index === 6) {
+                          gross = basic + da + ir + hra + addl + ma;
+                        } else {
+                          gross = basic + da + hra + addl + ma;
+                        }
 
                         if (gross > 40000) {
                           ptax = 200;
@@ -682,6 +695,14 @@ const TechAccuitance = () => {
                               >
                                 {ma}
                               </td>
+                              {year === 2024 && index === 6 && (
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {ir}
+                                </td>
+                              )}
                               <td
                                 className="text-center"
                                 style={{ border: "1px solid" }}

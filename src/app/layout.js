@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AppLink from "../components/AppLink";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Tiro_Bangla, Roboto } from "next/font/google";
 import localFont from "next/font/local";
 import { ToastContainer } from "react-toastify";
 const dejaVuBold = localFont({
@@ -26,20 +25,31 @@ const dejaVuCondensed = localFont({
   ],
   variable: "--font-dejaVuCondensed",
 });
-const tiro_bangla = Tiro_Bangla({
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-  preload: true,
-  variable: "--font-tiro",
-});
 
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-  preload: true,
-  variable: "--font-roboto",
+
+const timesNewRoman = localFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/times.ttf",
+    },
+  ],
+  variable: "--font-timesNewRoman",
+});
+const kalpurush = localFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/times.ttf",
+    },
+  ],
+  variable: "--font-kalpurush",
+});
+const algerian = localFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/Algerian.ttf",
+    },
+  ],
+  variable: "--font-algerian",
 });
 
 export const metadata = {
@@ -52,7 +62,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`container-fluid text-center ${tiro_bangla.variable} ${roboto.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable}`}
+        className={`container-fluid text-center ${kalpurush.variable} ${timesNewRoman.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable} ${algerian.variable}`}
         suppressHydrationWarning={true}
       >
         {/* <AppLink /> */}

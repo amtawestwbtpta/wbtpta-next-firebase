@@ -62,6 +62,7 @@ export default function Page() {
   pan = details?.pan;
   basic = parseInt(details?.basic);
   mbasic = parseInt(details?.mbasic);
+  let ir = Math.round(mbasic * 0.04);
   addl = parseInt(details?.addl);
   ma = parseInt(details?.ma);
   gpf = parseInt(details?.gpf);
@@ -117,7 +118,11 @@ export default function Page() {
 
   hra = Math.round(basicpay * HRA);
 
-  gross = basicpay + da + hra + addl + ma;
+  if (dataYear === 2024 && index === 7) {
+    gross = basic + da + ir + hra + addl + ma;
+  } else {
+    gross = basic + da + hra + addl + ma;
+  }
 
   if (gross > 40000) {
     ptax = 200;
@@ -193,21 +198,13 @@ export default function Page() {
                 tname,
                 desig,
                 school,
-                disability,
                 empid,
                 pan,
-                dataYear,
-                basic,
-                mbasic,
                 addl,
                 da,
                 hra,
                 ma,
                 gross,
-                prevmbasic,
-                gpf,
-                gpfprev,
-                julyGpf,
                 ptax,
                 gsli,
                 udise,
@@ -223,6 +220,9 @@ export default function Page() {
                 level,
                 cell,
                 deduction,
+                dataYear,
+                index,
+                ir
               }}
             />
           }

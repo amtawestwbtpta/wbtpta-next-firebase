@@ -58,6 +58,7 @@ const PaySlipOsmsNew = () => {
   pan = details.pan;
   basic = parseInt(details.basic);
   mbasic = parseInt(details.mbasic);
+  let ir = Math.round(mbasic * 0.04);
   addl = parseInt(details.addl);
   ma = parseInt(details.ma);
   gpf = parseInt(details.gpf);
@@ -113,7 +114,11 @@ const PaySlipOsmsNew = () => {
 
   hra = Math.round(basicpay * HRA);
 
-  gross = basicpay + da + hra + addl + ma;
+  if (dataYear === 2024 && index === 7) {
+    gross = basic + da + ir + hra + addl + ma;
+  } else {
+    gross = basic + da + hra + addl + ma;
+  }
 
   if (gross > 40000) {
     ptax = 200;
@@ -227,6 +232,9 @@ const PaySlipOsmsNew = () => {
                     level,
                     cell,
                     deduction,
+                    dataYear,
+                    index,
+                    ir
                   }}
                 />
               }
@@ -518,7 +526,9 @@ const PaySlipOsmsNew = () => {
                           <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                         <tr>
-                          <td style={{ textAlign: "right" }}>0</td>
+                          <td style={{ textAlign: "right" }}>
+                            {dataYear === 2024 && index === 7 ? ir : 0}
+                          </td>
                         </tr>
                       </table>
                     </td>
@@ -652,7 +662,9 @@ const PaySlipOsmsNew = () => {
                           <td style={{ textAlign: "right" }}>0</td>
                         </tr>
                         <tr>
-                          <td style={{ textAlign: "right" }}>0</td>
+                          <td style={{ textAlign: "right" }}>
+                            {dataYear === 2024 && index === 7 ? ir : 0}
+                          </td>
                         </tr>
                       </table>
                     </td>

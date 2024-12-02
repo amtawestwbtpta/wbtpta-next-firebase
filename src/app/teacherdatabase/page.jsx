@@ -230,6 +230,18 @@ const TeacherDatabase = () => {
       ),
     },
     {
+      name: "Generate Form 16",
+      cell: (row) => (
+        <Link
+          className="btn btn-sm btn-success"
+          href={`/incometax`}
+          onClick={() => setStateObject(row)}
+        >
+          Generate IT Statement
+        </Link>
+      ),
+    },
+    {
       name: "Delete Teacher",
       cell: (row) => (
         <button

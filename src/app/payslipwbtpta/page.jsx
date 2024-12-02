@@ -64,7 +64,7 @@ const PayslipWbtpta = () => {
   let netpay;
   let pfund;
   let basicpay;
-
+  let ir = Math.round(mbasic * 0.04);
   let today = new Date();
   let date = new Date();
   const [index, setIndex] = useState(today.getMonth());
@@ -104,7 +104,11 @@ const PayslipWbtpta = () => {
 
   hra = Math.round(basicpay * HRA);
 
-  gross = basicpay + da + hra + addl + ma;
+  if (dataYear === 2024 && index === 7) {
+    gross = basic + da + ir + hra + addl + ma;
+  } else {
+    gross = basic + da + hra + addl + ma;
+  }
 
   if (gross > 40000) {
     ptax = 200;
@@ -190,6 +194,8 @@ const PayslipWbtpta = () => {
                   gsli,
                   udise,
                   dataYear,
+                  index,
+                  ir,
                   netpay,
                   pfund,
                   basicpay,
@@ -600,6 +606,28 @@ const PayslipWbtpta = () => {
                 {ma}
               </td>
             </tr>
+            {dataYear === 2024 && index === 7 && (
+              <tr>
+                <th
+                  style={{
+                    border: "1px solid",
+                    textAlign: "center",
+                    fontSize: "16px",
+                  }}
+                >
+                  IR
+                </th>
+                <td
+                  style={{
+                    textAlign: "center",
+                    border: "1px solid",
+                    fontSize: "16px",
+                  }}
+                >
+                  {ir}
+                </td>
+              </tr>
+            )}
             <tr>
               <th
                 style={{

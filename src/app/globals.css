@@ -115,7 +115,7 @@ body {
 } */
 
 .ben {
-  font-family: var(--font-tiro);
+  font-family: var(--font-kalpurush);
 }
 
 @media print {
@@ -157,7 +157,10 @@ td {
 }
 
 .timesFont {
-  font-family: var(--font-roboto);
+  font-family: var(--font-timesNewRoman);
+}
+.algerian {
+  font-family: var(--font-algerian);
 }
 
 .times {

@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import {
   Page,
@@ -38,6 +39,9 @@ export default function OSMSPaySLip({ data }) {
     level,
     cell,
     deduction,
+    dataYear,
+    index,
+    ir,
   } = data;
   return (
     <Document
@@ -176,7 +180,9 @@ export default function OSMSPaySLip({ data }) {
                   </View>
                   <View style={styles.salaryView}>
                     <Text style={styles.text2}>IR</Text>
-                    <Text style={styles.text}>{0}</Text>
+                    <Text style={styles.text}>
+                      {dataYear === 2024 && index === 7 ? ir : 0}
+                    </Text>
                   </View>
                 </View>
               </View>

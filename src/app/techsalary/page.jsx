@@ -97,6 +97,11 @@ const TechSalary = () => {
                   <th className="text-center" style={{ border: "1px solid" }}>
                     MA
                   </th>
+                  {year === 2024 && index === 7 && (
+                    <th className="text-center" style={{ border: "1px solid" }}>
+                      IR
+                    </th>
+                  )}
                   <th className="text-center" style={{ border: "1px solid" }}>
                     GROSS PAY
                   </th>
@@ -249,6 +254,14 @@ const TechSalary = () => {
                       >
                         {ma}
                       </td>
+                      {year === 2024 && index === 7 && (
+                        <td
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          {ir}
+                        </td>
+                      )}
                       <td
                         className="text-center"
                         style={{ border: "1px solid" }}

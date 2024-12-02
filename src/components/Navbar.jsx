@@ -344,6 +344,18 @@ const Navbar = () => {
               Generate Own Form 16
             </Link>
           </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/incometax"
+              onClick={() => {
+                handleNavCollapse();
+                setStateObject(teacherdetails);
+              }}
+            >
+              Income Tax Section
+            </Link>
+          </li>
 
           <li className="nav-item">
             <Link
