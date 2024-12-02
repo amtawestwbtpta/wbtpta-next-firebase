@@ -15,7 +15,14 @@ import november from "./november.json";
 import december from "./december.json";
 import january from "./january.json";
 import february from "./february.json";
-import { IndianFormat, ptaxCalc } from "../../modules/calculatefunctions";
+import deduction from "./deduction.json";
+import {
+  IndianFormat,
+  ptaxCalc,
+  randBetween,
+  roundSo,
+  CalculateIncomeTax,
+} from "../../modules/calculatefunctions";
 import IncomeTax from "../../components/IncomeTax";
 export default function IncomeTaxSection() {
   const router = useRouter();
@@ -290,6 +297,53 @@ export default function IncomeTaxSection() {
     decemberPTax +
     januaryPTax +
     februaryPTax;
+  const BankInterest = randBetween(500, 2000);
+  const teacherDeduction = deduction?.filter((el) => el.id === id)[0];
+  const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
+  const hbLoanInterest = teacherDeduction?.hbLoanInterest;
+  const lic = teacherDeduction?.lic;
+  const ulip = teacherDeduction?.ulip;
+  const ppf = teacherDeduction?.ppf;
+  const nsc = teacherDeduction?.nsc;
+  const nscInterest = teacherDeduction?.nscInterest;
+  const tutionFee = teacherDeduction?.tutionFee;
+  const sukanya = teacherDeduction?.sukanya;
+  const stampDuty = teacherDeduction?.stampDuty;
+  const mediclaim = teacherDeduction?.mediclaim;
+  const terminalDisease = teacherDeduction?.terminalDisease;
+  const handicapTreatment = teacherDeduction?.handicapTreatment;
+  const educationLoan = teacherDeduction?.educationLoan;
+  const charity = teacherDeduction?.charity;
+  const disabilityDeduction = teacherDeduction?.disability;
+  const rgSaving = teacherDeduction?.rgSaving;
+  const otherIncome = teacherDeduction?.otherIncome;
+  const fd = teacherDeduction?.fd;
+  const tds = teacherDeduction?.tds;
+  const GrossTotalIncome =
+    GrossPAY - grossPTax - 50000 + BankInterest - hbLoanInterest;
+  const deductionVIA =
+    grossGPF +
+    sukanya +
+    nsc +
+    ulip +
+    hbLoanPrincipal +
+    nsc +
+    ppf +
+    lic +
+    tutionFee +
+    fd +
+    grossGSLI;
+  const limitVIA = deductionVIA >= 150000 ? 150000 : deductionVIA;
+  const OtherVIA =
+    BankInterest +
+    mediclaim +
+    disabilityDeduction +
+    terminalDisease +
+    educationLoan +
+    charity;
+  const TotalIncome = GrossTotalIncome - limitVIA - OtherVIA;
+  const TotalRoundOffIncome = roundSo(TotalIncome, 10);
+  const CalculatedIT = CalculateIncomeTax(TotalRoundOffIncome);
   return (
     <div className="container-fluid timesFont">
       <table
@@ -410,29 +464,63 @@ export default function IncomeTaxSection() {
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
-            <th suppressHydrationWarning style={{ width: "70%", padding: 0 }}>
-              <table style={{ borderWidth: 0, width: "70%", padding: 5 }}>
-                <thead>
-                  <tr>
-                    <th style={{ borderRightWidth: 2,width:"30%",textAlign:"left",padding:2,paddingLeft:20 }}>PAN</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(0, 1)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(1, 2)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(2, 3)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(3, 4)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(4, 5)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(5, 6)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(6, 7)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(7, 8)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(8, 9)}</th>
-                    <th style={{ borderRightWidth: 2 }}>{pan?.slice(9, 10)}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th></th>
-                  </tr>
-                </tbody>
-              </table>
+            <th
+              suppressHydrationWarning
+              style={{ width: "70%", padding: 0, borderRightWidth: 2 }}
+            >
+              <div className="d-flex flex-row justify-content-end ">
+                <table style={{ borderWidth: 0, width: "70%", padding: 5 }}>
+                  <thead>
+                    <tr>
+                      <th
+                        style={{
+                          width: "30%",
+                          textAlign: "left",
+                          padding: 2,
+                        }}
+                        suppressHydrationWarning
+                      >
+                        PAN
+                      </th>
+                      <th style={{ borderLeftWidth: 2, borderRightWidth: 2 }}>
+                        {pan?.slice(0, 1)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(1, 2)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(2, 3)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(3, 4)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(4, 5)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(5, 6)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(6, 7)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(7, 8)}
+                      </th>
+                      <th style={{ borderRightWidth: 2 }}>
+                        {pan?.slice(8, 9)}
+                      </th>
+                      <th style={{ borderRightWidth: 0 }}>
+                        {pan?.slice(9, 10)}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
             <th rowSpan={5} style={{ borderRightWidth: 0, width: "20%" }}></th>
@@ -498,7 +586,99 @@ export default function IncomeTaxSection() {
             >
               5. Income chargeable under the head Salaries (1-2-3-4)
             </th>
-            <th>Rs. {IndianFormat(GrossPAY-grossPTax-50000)}</th>
+            <th>Rs. {IndianFormat(GrossPAY - grossPTax - 50000)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              6. Income under any head other than salaries (From Schedule OS)
+            </th>
+            <th>Rs. {IndianFormat(BankInterest)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              7. Interest on House Building Loan
+            </th>
+            <th>
+              {hbLoanInterest !== 0
+                ? `Rs. ${IndianFormat(hbLoanInterest)}`
+                : "NIL"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              8. Gross Total Income [(5+6)-7)
+            </th>
+            <th>Rs. {IndianFormat(GrossTotalIncome)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              9. Deduction under Chapter VIA (From Schedule-VIA) Aggregate
+              amount of deductions admissible U /S 80C, 80CCC and 80CCD(I)
+              (Limited to Rs.1,50,000/-)
+            </th>
+            <th>Rs. {IndianFormat(limitVIA)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              10. Amount deduction under section 80CCD(B)
+            </th>
+            <th>NIL</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              11. Amount deduction under any other provision(s) Chapter VI-A
+              (From Schedule- Other VIA)
+            </th>
+            <th>{IndianFormat(OtherVIA)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              12. Total Income (8-9-10-11)
+            </th>
+            <th>Rs. {IndianFormat(TotalIncome)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              13. Rounding Off of Total Income U/S288A (SI No 12) (If the last
+              figure of Total Income is five of more, the amount shall be
+              increased to the next higher amount which is a multiple of ten)
+            </th>
+            <th>Rs. {IndianFormat(TotalRoundOffIncome)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              14. Income Tax on Total Income
+            </th>
+            <th>
+              {CalculatedIT !== 0 ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+            </th>
           </tr>
         </thead>
         <tbody>

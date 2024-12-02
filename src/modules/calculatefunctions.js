@@ -87,14 +87,14 @@ export function NumInWords(number) {
 }
 
 export function titleCase(str) {
-  if(str){
+  if (str) {
     str = str?.toLowerCase().split(" ");
-  for (var i = 0; i < str.length; i++) {
-    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-  }
-  return str.join(" ");
-  }else{
-    return '';
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(" ");
+  } else {
+    return "";
   }
 }
 
@@ -238,7 +238,17 @@ export const RoundTo = (number, multiple) => {
     return number + multiple - remainder;
   }
 };
-
+export const CalculateIncomeTax = (totalTaxableIncome) => {
+  return totalTaxableIncome > 1000000
+    ? Math.round(12500 + 100000 + ((totalTaxableIncome - 1000000) * 30) / 100)
+    : totalTaxableIncome > 500000
+    ? Math.round(12500 + ((totalTaxableIncome - 500000) * 20) / 100)
+    : totalTaxableIncome > 250000
+    ? Math.round(((totalTaxableIncome - 250000) * 5) / 100)
+    : totalTaxableIncome < 250000
+    ? 0
+    : 0;
+};
 export function GetMonthName(monthNumber) {
   monthNumber = monthNumber < 0 ? 11 : monthNumber;
   var months = [
@@ -660,7 +670,7 @@ export const getServiceLife = (date) => {
     return `${months} months`;
   }
 };
-export const getRetirementLife = (doj,dor) => {
+export const getRetirementLife = (doj, dor) => {
   if (!doj || !dor) return "";
   let joiningDate = Date.parse(getCurrentDateInput(doj));
   let retirementDate = Date.parse(getCurrentDateInput(dor));
