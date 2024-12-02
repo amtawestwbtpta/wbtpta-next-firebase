@@ -32,6 +32,7 @@ export default function IncomeTaxSection() {
   const nextYear = new Date().getFullYear() + 1;
   const finYear = `${thisYear}-${nextYear}`;
   const marchSalary = march.filter((el) => el.id === id)[0];
+  const marchArrear = marchSalary?.arrear;
   const marchBasic = marchSalary?.basic;
   const marchAddl = marchSalary?.addl;
   const marchDA = Math.round(marchSalary?.basic * marchSalary?.daPercent);
@@ -43,6 +44,7 @@ export default function IncomeTaxSection() {
   const bonus = marchSalary?.bonus;
   const marchPTax = disability === "YES" ? 0 : ptaxCalc(marchGross);
   const aprilSalary = april.filter((el) => el.id === id)[0];
+  const aprilArrear = aprilSalary?.arrear;
   const aprilBasic = aprilSalary?.basic;
   const aprilAddl = aprilSalary?.addl;
   const aprilDA = Math.round(aprilSalary?.basic * aprilSalary?.daPercent);
@@ -53,6 +55,7 @@ export default function IncomeTaxSection() {
   const aprilGSLI = aprilSalary?.gsli;
   const aprilPTax = disability === "YES" ? 0 : ptaxCalc(aprilGross);
   const maySalary = may.filter((el) => el.id === id)[0];
+  const mayArrear = maySalary?.arrear;
   const mayBasic = maySalary?.basic;
   const mayAddl = maySalary?.addl;
   const mayDA = Math.round(maySalary?.basic * maySalary?.daPercent);
@@ -63,6 +66,7 @@ export default function IncomeTaxSection() {
   const mayGSLI = maySalary?.gsli;
   const mayPTax = disability === "YES" ? 0 : ptaxCalc(mayGross);
   const juneSalary = june.filter((el) => el.id === id)[0];
+  const juneArrear = juneSalary?.arrear;
   const juneBasic = juneSalary?.basic;
   const juneAddl = juneSalary?.addl;
   const juneDA = Math.round(juneSalary?.basic * juneSalary?.daPercent);
@@ -73,17 +77,19 @@ export default function IncomeTaxSection() {
   const juneGSLI = juneSalary?.gsli;
   const junePTax = disability === "YES" ? 0 : ptaxCalc(juneGross);
   const julySalary = july.filter((el) => el.id === id)[0];
+  const julyArrear = julySalary?.arrear;
   const julyBasic = julySalary?.basic;
   const julyAddl = julySalary?.addl;
   const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
   const aprilIR = Math.round(aprilSalary?.basic * 0.04);
   const julyHRA = Math.round(julySalary?.basic * julySalary?.hraPercent);
   const julyMA = julySalary?.ma;
-  const julyGross = julyBasic + julyDA + julyHRA + julyAddl + julyMA;
+  const julyGross = julyBasic + julyDA + julyHRA + julyAddl + julyMA + aprilIR;
   const julyGPF = julySalary?.gpf;
   const julyGSLI = julySalary?.gsli;
   const julyPTax = disability === "YES" ? 0 : ptaxCalc(julyGross);
   const augustSalary = august.filter((el) => el.id === id)[0];
+  const augustArrear = augustSalary?.arrear;
   const augustBasic = augustSalary?.basic;
   const augustAddl = augustSalary?.addl;
   const augustDA = Math.round(augustSalary?.basic * augustSalary?.daPercent);
@@ -95,6 +101,7 @@ export default function IncomeTaxSection() {
   const augustGSLI = augustSalary?.gsli;
   const augustPTax = disability === "YES" ? 0 : ptaxCalc(augustGross);
   const septemberSalary = september.filter((el) => el.id === id)[0];
+  const septemberArrear = septemberSalary?.arrear;
   const septemberBasic = septemberSalary?.basic;
   const septemberAddl = septemberSalary?.addl;
   const septemberDA = Math.round(
@@ -110,6 +117,7 @@ export default function IncomeTaxSection() {
   const septemberGSLI = septemberSalary?.gsli;
   const septemberPTax = disability === "YES" ? 0 : ptaxCalc(septemberGross);
   const octoberSalary = october.filter((el) => el.id === id)[0];
+  const octoberArrear = octoberSalary?.arrear;
   const octoberBasic = octoberSalary?.basic;
   const octoberAddl = octoberSalary?.addl;
   const octoberDA = Math.round(octoberSalary?.basic * octoberSalary?.daPercent);
@@ -123,6 +131,8 @@ export default function IncomeTaxSection() {
   const octoberGSLI = octoberSalary?.gsli;
   const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
   const novemberSalary = november.filter((el) => el.id === id)[0];
+  const novemberArrear = novemberSalary?.arrear;
+  november;
   const novemberBasic = novemberSalary?.basic;
   const novemberAddl = novemberSalary?.addl;
   const novemberDA = Math.round(
@@ -138,6 +148,8 @@ export default function IncomeTaxSection() {
   const novemberGSLI = novemberSalary?.gsli;
   const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
   const decemberSalary = december.filter((el) => el.id === id)[0];
+  const decemberArrear = decemberSalary?.arrear;
+  december;
   const decemberBasic = decemberSalary?.basic;
   const decemberAddl = decemberSalary?.addl;
   const decemberDA = Math.round(
@@ -153,6 +165,7 @@ export default function IncomeTaxSection() {
   const decemberGSLI = decemberSalary?.gsli;
   const decemberPTax = disability === "YES" ? 0 : ptaxCalc(decemberGross);
   const januarySalary = january.filter((el) => el.id === id)[0];
+  const januaryArrear = januarySalary?.arrear;
   const januaryBasic = januarySalary?.basic;
   const januaryAddl = januarySalary?.addl;
   const januaryDA = Math.round(januarySalary?.basic * januarySalary?.daPercent);
@@ -166,6 +179,7 @@ export default function IncomeTaxSection() {
   const januaryGSLI = januarySalary?.gsli;
   const januaryPTax = disability === "YES" ? 0 : ptaxCalc(januaryGross);
   const februarySalary = february.filter((el) => el.id === id)[0];
+  const februaryArrear = februarySalary?.arrear;
   const februaryBasic = februarySalary?.basic;
   const februaryAddl = februarySalary?.addl;
   const februaryDA = Math.round(
@@ -257,7 +271,8 @@ export default function IncomeTaxSection() {
     novemberGross +
     decemberGross +
     januaryGross +
-    februaryGross;
+    februaryGross +
+    bonus;
   const grossGPF =
     marchGPF +
     aprilGPF +
@@ -319,8 +334,23 @@ export default function IncomeTaxSection() {
   const otherIncome = teacherDeduction?.otherIncome;
   const fd = teacherDeduction?.fd;
   const tds = teacherDeduction?.tds;
+  const AllGross =
+    GrossPAY +
+    marchArrear +
+    aprilArrear +
+    mayArrear +
+    juneArrear +
+    julyArrear +
+    augustArrear +
+    septemberArrear +
+    octoberArrear +
+    novemberArrear +
+    decemberArrear +
+    januaryArrear +
+    februaryArrear +
+    otherIncome;
   const GrossTotalIncome =
-    GrossPAY - grossPTax - 50000 + BankInterest - hbLoanInterest;
+    AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
   const deductionVIA =
     grossGPF +
     sukanya +
@@ -332,7 +362,8 @@ export default function IncomeTaxSection() {
     lic +
     tutionFee +
     fd +
-    grossGSLI;
+    grossGSLI +
+    nscInterest;
   const limitVIA = deductionVIA >= 150000 ? 150000 : deductionVIA;
   const OtherVIA =
     BankInterest +
@@ -340,10 +371,14 @@ export default function IncomeTaxSection() {
     disabilityDeduction +
     terminalDisease +
     educationLoan +
-    charity;
+    charity +
+    handicapTreatment;
   const TotalIncome = GrossTotalIncome - limitVIA - OtherVIA;
   const TotalRoundOffIncome = roundSo(TotalIncome, 10);
   const CalculatedIT = CalculateIncomeTax(TotalRoundOffIncome);
+  const isUnderRebate = CalculatedIT >= 12500 ? false : true;
+  const eduCess = CalculatedIT * 0.04;
+  const AddedEduCess = CalculatedIT + CalculatedIT * 0.04;
   return (
     <div className="container-fluid timesFont">
       <table
@@ -530,7 +565,7 @@ export default function IncomeTaxSection() {
               1. GROSS SLARY INCOME (Salary +Arrear Salary +Bonus)
             </th>
             <th style={{ borderRightWidth: 2 }}>
-              Rs. {IndianFormat(GrossPAY)}
+              Rs. {IndianFormat(AllGross)}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
@@ -558,7 +593,7 @@ export default function IncomeTaxSection() {
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
             <th style={{ borderRightWidth: 2 }}>
-              Rs. {IndianFormat(GrossPAY)}
+              Rs. {IndianFormat(AllGross)}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
@@ -586,7 +621,7 @@ export default function IncomeTaxSection() {
             >
               5. Income chargeable under the head Salaries (1-2-3-4)
             </th>
-            <th>Rs. {IndianFormat(GrossPAY - grossPTax - 50000)}</th>
+            <th>Rs. {IndianFormat(AllGross - grossPTax - 50000)}</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
@@ -676,8 +711,171 @@ export default function IncomeTaxSection() {
             >
               14. Income Tax on Total Income
             </th>
+            <th>Rs. {IndianFormat(CalculatedIT)}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              15. Less: Rebate U/S 87A (Total Taxable Income not exceeding Rs.
+              5,00,000/- shall got a Tax Rebate of Rs. 12,500/
+            </th>
             <th>
-              {CalculatedIT !== 0 ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+              {isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              16. Total Tax Payable (14-15)
+            </th>
+            <th>
+              {!isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              17. Add: Health & Education Cess (4% of 16)
+            </th>
+            <th>{!isUnderRebate ? `Rs. ${IndianFormat(eduCess)}` : "N/A"}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              18. Income Tax Relief U/S 89(When salary, etc. is paid in arrear
+              of advance)
+            </th>
+            <th>{!isUnderRebate ? `NIL` : "N/A"}</th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              19. Net Tax Payable [(16+17)-18]
+            </th>
+            <th>
+              {!isUnderRebate ? `Rs. ${IndianFormat(AddedEduCess)}` : "NIL"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              20. Total amount of Tax Deducted at Source (TDS) upto Jan 2023
+            </th>
+            <th>
+              {!isUnderRebate
+                ? tds !== 0
+                  ? `Rs. ${IndianFormat(tds)}`
+                  : "NIL"
+                : "N/A"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={2}
+              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+            >
+              21. TDS Payable in Feb 2023/ Excess Tax deduction
+            </th>
+            <th>
+              {!isUnderRebate
+                ? `Rs. ${IndianFormat(AddedEduCess - tds)}`
+                : "N/A"}
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={3}
+              style={{
+                padding: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              suppressHydrationWarning
+            >
+              <div
+                style={{
+                  border: "3px solid black",
+                  width: 300,
+                  height: 40,
+                  marginLeft: 50,
+                  marginTop: 60,
+                  marginBottom: 20,
+                }}
+              >
+                <h4>Incumbent’s Signature</h4>
+              </div>
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={3}
+              style={{
+                padding: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              suppressHydrationWarning
+            >
+              <h4>
+                Short Tax deduction from salary will not be allowed as per I.T.
+                Rules 1961
+              </h4>
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={3}
+              style={{
+                padding: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              suppressHydrationWarning
+            >
+              <h4>
+                HRA exemption will not be allowed without proper receipt with
+                PAN of House owner
+              </h4>
+            </th>
+          </tr>
+          <tr style={{ borderBottomWidth: 2 }}>
+            <th
+              colSpan={3}
+              style={{
+                padding: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              suppressHydrationWarning
+            >
+              <h4>
+                Without supporting documents and deduction will be allowed
+              </h4>
+            </th>
+          </tr>
+          <tr>
+            <th
+              colSpan={3}
+              style={{
+                padding: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              suppressHydrationWarning
+            >
+              <h4>Last Date of submission 11/01/{thisYear}</h4>
             </th>
           </tr>
         </thead>
@@ -687,6 +885,684 @@ export default function IncomeTaxSection() {
           </tr>
         </tbody>
       </table>
+      <div className="my-5 nobreak">
+        <div
+          style={{
+            border: "2px solid",
+            width: "100%",
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          <h5 className="fw-bold">DISTRICT PRIMARY SCHOOL COUNCIL, HOWRAH</h5>
+        </div>
+        <table style={{ border: "1px solid", width: "100%", padding: 5 }}>
+          <thead>
+            <tr>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 5, width: "20%" }}
+              >
+                <h5 className="fw-bold">Name of the Teacher</h5>
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 5, width: "50%" }}
+              >
+                <h5 className="fw-bold text-start">{tname}</h5>
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 5, width: "10%" }}
+              >
+                <h5 className="fw-bold">PAN</h5>
+              </th>
+              <th suppressHydrationWarning style={{ padding: 5, width: "20%" }}>
+                <h5 className="fw-bold">{pan}</h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div
+          style={{
+            border: "2px solid",
+            width: "100%",
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          <h5 className="fw-bold">Schedule - OS (Income from Other Sources)</h5>
+        </div>
+        <table style={{ border: "1px solid", width: "100%", padding: 5 }}>
+          <thead>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                a)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Interest from Bank (SB)
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                Rs. {IndianFormat(BankInterest)}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                b)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Interest from Bank (FD)
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                c)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Interest from NSC
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                d)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Interest from Bond
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                e)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Divident from Share
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                f)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              ></th>
+              <th
+                suppressHydrationWarning
+                style={{ padding: 2, width: "20%" }}
+              ></th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                g)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              ></th>
+              <th
+                suppressHydrationWarning
+                style={{ padding: 2, width: "20%" }}
+              ></th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                h)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{
+                  borderRight: "1px solid",
+                  padding: 2,
+                  textAlign: "left",
+                }}
+              >
+                Family Pension:
+              </th>
+              <th suppressHydrationWarning style={{ width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid" }}
+                colSpan={2}
+              >
+                Income under any head other than the head "Salaries"
+              </th>
+
+              <th suppressHydrationWarning style={{ width: "20%" }}>
+                Rs. {IndianFormat(BankInterest)}
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div
+          style={{
+            border: "2px solid",
+            width: "100%",
+            marginTop: 10,
+          }}
+        >
+          <h5 className="fw-bold">
+            Schedule- VIA : (Deductions under Chapter VIA)
+          </h5>
+        </div>
+        <div
+          style={{
+            border: "2px solid",
+            width: "100%",
+
+            marginBottom: 10,
+          }}
+        >
+          <h5 className="fw-bold">
+            (U/S80C to 80U) Requisite paper, copies of policies, Certificate
+            etc. to be enclose)
+          </h5>
+        </div>
+        <table style={{ border: "1px solid", width: "100%", padding: 5 }}>
+          <thead>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+                colSpan={2}
+              >
+                <h5 className="fw-bold text-start" style={{ paddingLeft: 20 }}>
+                  A) U/S 80 C:
+                </h5>
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                a) Contribution of GPF
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {grossGPF != 0 ? `Rs. ${IndianFormat(grossGPF)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                b) Deposit in Sukanya Samriddhi Account
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {sukanya != 0 ? `Rs. ${IndianFormat(sukanya)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                c) NSC / Others
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {nsc != 0 ? `Rs. ${IndianFormat(nsc)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                d) ULIP /ELSS
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {ulip != 0 ? `Rs. ${IndianFormat(ulip)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                e) Repayment of Housing Loan (Principal)
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {hbLoanPrincipal != 0
+                  ? `Rs. ${IndianFormat(hbLoanPrincipal)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                f) Interest on NSC (upto 5th Year)
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {nscInterest != 0 ? `Rs. ${IndianFormat(nscInterest)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                g)PPF
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {ppf != 0 ? `Rs. ${IndianFormat(ppf)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                h) LIC Premium
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {lic != 0 ? `Rs. ${IndianFormat(lic)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                i) UC Premium
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                j) Tution Fees
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {tutionFee != 0 ? `Rs. ${IndianFormat(tutionFee)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                k) F.D.in Sch. Bank not less than 5 years
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {fd != 0 ? `Rs. ${IndianFormat(fd)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                l) GSLI
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {grossGSLI != 0 ? `Rs. ${IndianFormat(grossGSLI)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                <h5 className="fw-bold">
+                  Total Deduction under A & B above (Limited to Rs. 1,50,000/-)
+                </h5>
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                <h5 className="fw-bold">
+                  {limitVIA != 0 ? `Rs. ${IndianFormat(limitVIA)}` : "NIL"}
+                </h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <table
+          style={{
+            border: "1px solid",
+            width: "100%",
+            padding: 5,
+            marginTop: 10,
+          }}
+        >
+          <thead>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+                colSpan={2}
+              >
+                <h5 className="fw-bold text-start" style={{ paddingLeft: 20 }}>
+                  Schedule - Other VIA
+                </h5>
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                A) U/S 80CCD (18) : New Pension Scheme (Limit upto Rs.50,000/-)
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                B) U/S 80D: Premium on Med. Insurance (Mediclaim) Policy
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {mediclaim != 0 ? `Rs. ${IndianFormat(mediclaim)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                C) U/S 80DD: Maintenance & treatment of a dependent disabled
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {handicapTreatment != 0
+                  ? `Rs. ${IndianFormat(handicapTreatment)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                D) U/S 80DDB : Medical treatment of dependent person with
+                terminal Disease
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {terminalDisease != 0
+                  ? `Rs. ${IndianFormat(terminalDisease)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                E) U/S 80E : Repayment of Interest of paid on Education Loan
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {educationLoan != 0
+                  ? `Rs. ${IndianFormat(educationLoan)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                F) U/S 80U : Tax-payee with disability
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {disabilityDeduction != 0
+                  ? `Rs. ${IndianFormat(disabilityDeduction)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                G) U/S 80TTA: Deduction in respect of interest on Deposits in
+                savings accounts
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {BankInterest != 0
+                  ? `Rs. ${IndianFormat(BankInterest)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                H) U/S 80G : Deduction in respect of Donation to certain fund,
+                Charitable institutions
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {charity != 0 ? `Rs. ${IndianFormat(charity)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-start"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                I)
+              </th>
+              <th
+                suppressHydrationWarning
+                style={{ padding: 2, width: "20%" }}
+              ></th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                <h5 className="fw-bold">
+                  Total Amount deductible under any other provision (s) of
+                  Chapter VI-A
+                </h5>
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                <h5 className="fw-bold">
+                  {OtherVIA != 0 ? `Rs. ${IndianFormat(OtherVIA)}` : "NIL"}
+                </h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <table
+          style={{
+            border: "1px solid",
+            width: "100%",
+            padding: 5,
+            marginTop: 10,
+          }}
+        >
+          <thead>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                colSpan={2}
+                suppressHydrationWarning
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                <h5 className="fw-bold">
+                  Income Tax Structure: F.Y. 2023 - 2024
+                </h5>
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                a) Income upto Rs. 2,50,000/- (Rs. 3,00,000/- for Senior
+                Citizen: @Nil
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                NIL
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                b) Income from Rs.2,50,001/- to Rs.5,00,000/-: @5%
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {TotalRoundOffIncome > 250000 && TotalRoundOffIncome > 500000
+                  ? `Rs. ${IndianFormat(Math.round(12500))}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                c) Income from 5,00,001/- to Rs. 10,00,000/-: @20%
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {TotalRoundOffIncome > 500000 && TotalRoundOffIncome < 1000000
+                  ? `Rs. ${IndianFormat(
+                      Math.round(((TotalRoundOffIncome - 500000) * 20) / 100)
+                    )}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                d) Income exceeding Rs. 10,00,000/-: @30%
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {TotalRoundOffIncome > 1000000
+                  ? `Rs. ${IndianFormat(
+                      Math.round(((TotalRoundOffIncome - 1000000) * 30) / 100)
+                    )}`
+                  : "NIL"}
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
       <div className="my-5">
         <table
           className="nobreak"
@@ -2741,6 +3617,16 @@ export default function IncomeTaxSection() {
             grossGPF,
             grossGSLI,
             grossPTax,
+            AllGross,
+            GrossTotalIncome,
+            deductionVIA,
+            limitVIA,
+            TotalIncome,
+            TotalRoundOffIncome,
+            CalculatedIT,
+            isUnderRebate,
+            eduCess,
+            AddedEduCess,
           }}
         />
       </div> */}

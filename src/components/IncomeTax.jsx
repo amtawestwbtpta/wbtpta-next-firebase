@@ -156,6 +156,16 @@ export default function IncomeTax({ data }) {
     grossGPF,
     grossGSLI,
     grossPTax,
+    AllGross,
+    GrossTotalIncome,
+    deductionVIA,
+    limitVIA,
+    TotalIncome,
+    TotalRoundOffIncome,
+    CalculatedIT,
+    isUnderRebate,
+    eduCess,
+    AddedEduCess,
   } = data;
   return (
     <PDFViewer style={{ height, width }}>
@@ -1380,16 +1390,15 @@ export default function IncomeTax({ data }) {
                 </View>
               </View>
             </View>
-              <View
-                style={{
-                  marginTop: 60,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                  
-                }}
-              >
-                <Text style={styles.text}>SIGNATURE OF THE INCUMBENT</Text>
-              </View>
+            <View
+              style={{
+                marginTop: 60,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <Text style={styles.text}>SIGNATURE OF THE INCUMBENT</Text>
+            </View>
           </View>
         </Page>
       </Document>
@@ -1418,52 +1427,52 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "DejaVu",
+    fontFamily: "TimesBold",
     textAlign: "center",
   },
   title2: {
     fontSize: 10,
     fontWeight: "bold",
-    fontFamily: "DejaVu",
+    fontFamily: "TimesBold",
     textAlign: "center",
   },
   titleMain: {
     fontSize: 20,
     fontWeight: "normal",
-    fontFamily: "DejaVu",
+    fontFamily: "Times",
     textAlign: "center",
   },
   text: {
     fontSize: 11,
-    fontFamily: "DejaVuNormal",
+    fontFamily: "Times",
     textAlign: "center",
   },
   text2: {
     fontSize: 8,
-    fontFamily: "DejaVu",
+    fontFamily: "Times",
     textAlign: "center",
     padding: 2,
   },
   text2i: {
     fontSize: 8,
-    fontFamily: "DejaVuItalic",
+    fontFamily: "Times",
     textAlign: "center",
     padding: 2,
   },
   text3: {
     fontSize: 8,
-    fontFamily: "DejaVuNormal",
+    fontFamily: "Times",
     textAlign: "center",
     transform: "rotate(-60deg)",
   },
   text4: {
     fontSize: 8,
-    fontFamily: "DejaVuNormal",
+    fontFamily: "Times",
     textAlign: "center",
   },
   text5: {
     fontSize: 9,
-    fontFamily: "DejaVuNormal",
+    fontFamily: "Times",
     textAlign: "center",
   },
   headingView: {
@@ -1686,22 +1695,14 @@ const styles = StyleSheet.create({
   },
 });
 Font.register({
-  family: "Kalpurush",
-  src: "https://raw.githubusercontent.com/usprys/usprysdata/main/kalpurush.ttf",
+  family: "Algerian",
+  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/Algerian.ttf",
 });
 Font.register({
   family: "Times",
-  src: "https://raw.githubusercontent.com/usprys/usprysdata/main/times.ttf",
+  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/times.ttf",
 });
 Font.register({
-  family: "DejaVu",
-  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/DejaVuSerif-Bold.ttf",
-});
-Font.register({
-  family: "DejaVuNormal",
-  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/DejaVuSerif.ttf",
-});
-Font.register({
-  family: "DejaVuItalic",
-  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/DejaVuSerif-BoldItalic.ttf",
+  family: "TimesBold",
+  src: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/timesBold.ttf",
 });
