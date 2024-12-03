@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
-import { useRouter } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
 import { DA, HRA } from "../../modules/constants";
 import march from "./march.json";
 import april from "./april.json";
@@ -24,10 +24,21 @@ import {
   CalculateIncomeTax,
 } from "../../modules/calculatefunctions";
 import IncomeTax from "../../components/IncomeTax";
+import dynamic from "next/dynamic";
 export default function IncomeTaxSection() {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const data = JSON.parse(searchParams.get("data"));
   const { state, teachersState, stateObject } = useGlobalContext();
-  const { id, tname, school, pan, phone, disability, desig } = stateObject;
+  const { id, tname, school, pan, phone, disability, desig } = data;
   const thisYear = new Date().getFullYear();
   const nextYear = new Date().getFullYear() + 1;
   const prevYear = new Date().getFullYear() - 1;
@@ -381,7 +392,229 @@ export default function IncomeTaxSection() {
   const eduCess = CalculatedIT * 0.04;
   const AddedEduCess = CalculatedIT + CalculatedIT * 0.04;
   return (
-    <div className="container-fluid timesFont">
+    <div className="container timesFont">
+      <div className="mx-auto my-3 noprint">
+        <button
+          type="button"
+          className="btn btn-primary text-white font-weight-bold p-2 rounded"
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.print();
+            }
+          }}
+        >
+          Print Statement
+        </button>
+      </div>
+
+      <div className="mx-auto noprint mb-5">
+        <button
+          type="button"
+          className="btn btn-info text-white font-weight-bold m-2 p-2 rounded"
+          onClick={() => router.back()}
+        >
+          Go Back
+        </button>
+      </div>
+      <div className="mx-auto noprint mb-5">
+        <PDFDownloadLink
+          document={
+            <IncomeTax
+              data={{
+                id,
+                tname,
+                school,
+                pan,
+                phone,
+                disability,
+                desig,
+                thisYear,
+                nextYear,
+                prevYear,
+                finYear,
+                BankInterest,
+                teacherDeduction,
+                hbLoanPrincipal,
+                hbLoanInterest,
+                lic,
+                ulip,
+                ppf,
+                nsc,
+                nscInterest,
+                tutionFee,
+                sukanya,
+                stampDuty,
+                mediclaim,
+                terminalDisease,
+                handicapTreatment,
+                educationLoan,
+                charity,
+                disabilityDeduction,
+                rgSaving,
+                otherIncome,
+                fd,
+                tds,
+                marchSalary,
+                marchBasic,
+                marchAddl,
+                marchDA,
+                marchHRA,
+                marchMA,
+                marchGross,
+                marchGPF,
+                marchGSLI,
+                bonus,
+                marchPTax,
+                aprilSalary,
+                aprilBasic,
+                aprilAddl,
+                aprilDA,
+                aprilHRA,
+                aprilMA,
+                aprilGross,
+                aprilGPF,
+                aprilGSLI,
+                aprilPTax,
+                maySalary,
+                mayBasic,
+                mayAddl,
+                mayDA,
+                mayHRA,
+                mayMA,
+                mayGross,
+                mayGPF,
+                mayGSLI,
+                mayPTax,
+                juneSalary,
+                juneBasic,
+                juneAddl,
+                juneDA,
+                juneHRA,
+                juneMA,
+                juneGross,
+                juneGPF,
+                juneGSLI,
+                junePTax,
+                julySalary,
+                julyBasic,
+                julyAddl,
+                julyDA,
+                aprilIR,
+                julyHRA,
+                julyMA,
+                julyGross,
+                julyGPF,
+                julyGSLI,
+                julyPTax,
+                augustSalary,
+                augustBasic,
+                augustAddl,
+                augustDA,
+                augustHRA,
+                augustMA,
+                augustGross,
+                augustGPF,
+                augustGSLI,
+                augustPTax,
+                septemberSalary,
+                septemberBasic,
+                septemberAddl,
+                septemberDA,
+                septemberHRA,
+                septemberMA,
+                septemberGross,
+                septemberGPF,
+                septemberGSLI,
+                septemberPTax,
+                octoberSalary,
+                octoberBasic,
+                octoberAddl,
+                octoberDA,
+                octoberHRA,
+                octoberMA,
+                octoberGross,
+                octoberGPF,
+                octoberGSLI,
+                octoberPTax,
+                novemberSalary,
+                novemberBasic,
+                novemberAddl,
+                novemberDA,
+                novemberHRA,
+                novemberMA,
+                novemberGross,
+                novemberGPF,
+                novemberGSLI,
+                novemberPTax,
+                decemberSalary,
+                decemberBasic,
+                decemberAddl,
+                decemberDA,
+                decemberHRA,
+                decemberMA,
+                decemberGross,
+                decemberGPF,
+                decemberGSLI,
+                decemberPTax,
+                januarySalary,
+                januaryBasic,
+                januaryAddl,
+                januaryDA,
+                januaryHRA,
+                januaryMA,
+                januaryGross,
+                januaryGPF,
+                januaryGSLI,
+                januaryPTax,
+                februarySalary,
+                februaryBasic,
+                februaryAddl,
+                februaryDA,
+                februaryHRA,
+                februaryMA,
+                februaryGross,
+                februaryGPF,
+                februaryGSLI,
+                februaryPTax,
+                grossBasic,
+                grossAddl,
+                grossDA,
+                grossHRA,
+                grossMA,
+                GrossPAY,
+                grossGPF,
+                grossGSLI,
+                grossPTax,
+                AllGross,
+                GrossTotalIncome,
+                deductionVIA,
+                limitVIA,
+                OtherVIA,
+                TotalIncome,
+                TotalRoundOffIncome,
+                CalculatedIT,
+                isUnderRebate,
+                eduCess,
+                AddedEduCess,
+              }}
+            />
+          }
+          fileName={`IT Statement of ${tname} of ${school}.pdf`}
+          style={{
+            textDecoration: "none",
+            padding: "10px",
+            color: "#fff",
+            backgroundColor: "navy",
+            border: "1px solid #4a4a4a",
+            width: "40%",
+            borderRadius: 10,
+          }}
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? "Please Wait..." : "Download IT Statement"
+          }
+        </PDFDownloadLink>
+      </div>
       <table
         className="nobreak"
         style={{ border: "2px solid", width: "100%", padding: 5 }}
@@ -604,7 +837,9 @@ export default function IncomeTaxSection() {
             >
               3. Less: P. Tax under section 16(ii/i)
             </th>
-            <th>Rs. {IndianFormat(grossPTax)}</th>
+            <th>
+              {grossPTax !== 0 ? `Rs. ${IndianFormat(grossPTax)}` : "NIL"}
+            </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
@@ -660,9 +895,10 @@ export default function IncomeTaxSection() {
               colSpan={2}
               style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
             >
-              9. Deduction under Chapter VIA (From Schedule-VIA) Aggregate
-              amount of deductions admissible U /S 80C, 80CCC and 80CCD(I)
-              (Limited to Rs.1,50,000/-)
+              9. Deduction under Chapter VIA (From Schedule-VIA)
+              <br />
+              Aggregate amount of deductions admissible U /S 80C, 80CCC and
+              80CCD(I) (Limited to Rs.1,50,000/-)
             </th>
             <th>Rs. {IndianFormat(limitVIA)}</th>
           </tr>
@@ -723,7 +959,7 @@ export default function IncomeTaxSection() {
               5,00,000/- shall got a Tax Rebate of Rs. 12,500/
             </th>
             <th>
-              {isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+              {!isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
@@ -3475,164 +3711,7 @@ export default function IncomeTaxSection() {
           Go Back
         </button>
       </div>
-      <div className="mx-auto noprint mb-5">
-        <IncomeTax
-          data={{
-            id,
-            tname,
-            school,
-            pan,
-            phone,
-            disability,
-            desig,
-            thisYear,
-            nextYear,
-            prevYear,
-            finYear,
-            marchSalary,
-            marchBasic,
-            marchAddl,
-            marchDA,
-            marchHRA,
-            marchMA,
-            marchGross,
-            marchGPF,
-            marchGSLI,
-            bonus,
-            marchPTax,
-            aprilSalary,
-            aprilBasic,
-            aprilAddl,
-            aprilDA,
-            aprilHRA,
-            aprilMA,
-            aprilGross,
-            aprilGPF,
-            aprilGSLI,
-            aprilPTax,
-            maySalary,
-            mayBasic,
-            mayAddl,
-            mayDA,
-            mayHRA,
-            mayMA,
-            mayGross,
-            mayGPF,
-            mayGSLI,
-            mayPTax,
-            juneSalary,
-            juneBasic,
-            juneAddl,
-            juneDA,
-            juneHRA,
-            juneMA,
-            juneGross,
-            juneGPF,
-            juneGSLI,
-            junePTax,
-            julySalary,
-            julyBasic,
-            julyAddl,
-            julyDA,
-            aprilIR,
-            julyHRA,
-            julyMA,
-            julyGross,
-            julyGPF,
-            julyGSLI,
-            julyPTax,
-            augustSalary,
-            augustBasic,
-            augustAddl,
-            augustDA,
-            augustHRA,
-            augustMA,
-            augustGross,
-            augustGPF,
-            augustGSLI,
-            augustPTax,
-            septemberSalary,
-            septemberBasic,
-            septemberAddl,
-            septemberDA,
-            septemberHRA,
-            septemberMA,
-            septemberGross,
-            septemberGPF,
-            septemberGSLI,
-            septemberPTax,
-            octoberSalary,
-            octoberBasic,
-            octoberAddl,
-            octoberDA,
-            octoberHRA,
-            octoberMA,
-            octoberGross,
-            octoberGPF,
-            octoberGSLI,
-            octoberPTax,
-            novemberSalary,
-            novemberBasic,
-            novemberAddl,
-            novemberDA,
-            novemberHRA,
-            novemberMA,
-            novemberGross,
-            novemberGPF,
-            novemberGSLI,
-            novemberPTax,
-            decemberSalary,
-            decemberBasic,
-            decemberAddl,
-            decemberDA,
-            decemberHRA,
-            decemberMA,
-            decemberGross,
-            decemberGPF,
-            decemberGSLI,
-            decemberPTax,
-            januarySalary,
-            januaryBasic,
-            januaryAddl,
-            januaryDA,
-            januaryHRA,
-            januaryMA,
-            januaryGross,
-            januaryGPF,
-            januaryGSLI,
-            januaryPTax,
-            februarySalary,
-            februaryBasic,
-            februaryAddl,
-            februaryDA,
-            februaryHRA,
-            februaryMA,
-            februaryGross,
-            februaryGPF,
-            februaryGSLI,
-            februaryPTax,
-            grossBasic,
-            grossAddl,
-            grossDA,
-            grossHRA,
-            grossMA,
-            GrossPAY,
-            grossGPF,
-            grossGSLI,
-            grossPTax,
-            AllGross,
-            GrossTotalIncome,
-            deductionVIA,
-            limitVIA,
-            TotalIncome,
-            TotalRoundOffIncome,
-            CalculatedIT,
-            isUnderRebate,
-            eduCess,
-            AddedEduCess,
-          }}
-        />
-      </div>
+     
     </div>
   );
 }

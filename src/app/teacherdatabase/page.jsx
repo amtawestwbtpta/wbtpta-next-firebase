@@ -234,8 +234,7 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-success"
-          href={`/incometax`}
-          onClick={() => setStateObject(row)}
+          href={`/incometax?data=${JSON.stringify(row)}`}
         >
           Generate IT Statement
         </Link>
