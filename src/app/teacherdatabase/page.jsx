@@ -40,10 +40,13 @@ const TeacherDatabase = () => {
     setStateObject,
     setTeacherUpdateTime,
     setStateArray,
+    deductionState,
+    setDeductionState,
   } = useGlobalContext();
   const router = useRouter();
   const [showTable, setShowTable] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [showDeductionForm, setShowDeductionForm] = useState(false);
   useEffect(() => {
     if (state !== "admin") {
       localStorage.clear();
@@ -84,7 +87,30 @@ const TeacherDatabase = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [progress, setProgress] = useState(0);
   const [showPercent, setShowPercent] = useState(false);
-
+  const [teacherDeduction, setTeacherDeduction] = useState({
+    id: "",
+    tname: "",
+    hbLoanPrincipal: "",
+    hbLoanInterest: "",
+    lic: "",
+    ulip: "",
+    ppf: "",
+    nsc: "",
+    nscInterest: "",
+    tutionFee: "",
+    sukanya: "",
+    stampDuty: "",
+    mediclaim: "",
+    terminalDisease: "",
+    handicapTreatment: "",
+    educationLoan: "",
+    charity: "",
+    disability: "",
+    rgSaving: "",
+    otherIncome: "",
+    fd: "",
+    tds: "",
+  });
   const userData = async () => {
     setLoader(true);
     let newDatas = teachersState.sort(
@@ -123,6 +149,28 @@ const TeacherDatabase = () => {
     setAllDelTeachers(newDatas);
     setFilteredDelTeachers(newDatas);
     setLoader(false);
+  };
+  const getDeduction = async (id) => {
+    if (deductionState.length === 0) {
+      setLoader(true);
+      const q = query(collection(firestore, "deduction"));
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setDeductionState(data);
+      setLoader(false);
+      setShowDeductionForm(true);
+      const filteredData = data.filter((d) => d.id === id)[0];
+      setTeacherDeduction(filteredData);
+    } else {
+      const filteredData = deductionState.filter((d) => d.id === id)[0];
+      setTeacherDeduction(filteredData);
+      setShowDeductionForm(true);
+      setLoader(false);
+    }
   };
 
   const columns = [
@@ -230,15 +278,30 @@ const TeacherDatabase = () => {
       ),
     },
     {
-      name: "Generate Form 16",
+      name: "Update Deduction",
+      cell: (row) => (
+        <button
+          type="button"
+          className="btn btn-sm btn-warning"
+          onClick={() => {
+            getDeduction(row?.id);
+          }}
+        >
+          Update Deduction
+        </button>
+      ),
+    },
+    {
+      name: "IT Statement",
       cell: (row) => (
         <Link
           className="btn btn-sm btn-success"
           href={`/incometax?data=${JSON.stringify(row)}`}
         >
-          Generate IT Statement
+          IT Statement
         </Link>
       ),
+      omit: deductionState.length === 0,
     },
     {
       name: "Delete Teacher",
@@ -650,8 +713,34 @@ const TeacherDatabase = () => {
       }
     );
   };
-
-  useEffect(() => {}, [
+  const updateTeacherDeduction = async () => {
+    const docRef = doc(firestore, "deduction", teacherDeduction.id);
+    setLoader(true);
+    await updateDoc(docRef, teacherDeduction)
+      .then(() => {
+        setLoader(false);
+        let y = deductionState.filter((el) => el.id !== teacherDeduction.id);
+        y = [...y, teacherDeduction];
+        const newData = y.sort((a, b) => {
+          if (a.tname < b.tname) {
+            return -1;
+          }
+          if (a.tname > b.tname) {
+            return 1;
+          }
+        });
+        setDeductionState(newData);
+        toast.success("Deduction Updated Successfully!");
+      })
+      .catch((e) => {
+        setLoader(false);
+        toast.error("Error Updating Deduction!");
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    //eslint-disable-next-line
+  }, [
     user,
     teachersState,
     filteredData,
@@ -661,7 +750,7 @@ const TeacherDatabase = () => {
   ]);
 
   return (
-    <div className="container text-center my-3">
+    <div className="container-fluid text-center my-3">
       <ToastContainer
         position="top-right"
         autoClose={1500}
@@ -895,6 +984,441 @@ const TeacherDatabase = () => {
           }
           subHeaderAlign="right"
         />
+      )}
+      {showDeductionForm && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Set Deduction Data of {teacherDeduction.tname}
+                </h1>
+              </div>
+              <div className="modal-body">
+                <div className="col-md-6 row mx-auto justify-content-center align-items-baseline">
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      LIC
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control col-md-4"
+                      placeholder="LIC"
+                      value={teacherDeduction.lic}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            lic: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            lic: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      PPF
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="PPF"
+                      value={teacherDeduction.ppf}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            ppf: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            ppf: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Homeloan Principal
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Homeloan Principal"
+                      value={teacherDeduction.hbLoanPrincipal}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            hbLoanPrincipal: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            hbLoanPrincipal: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Homeloan Interest
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Homeloan Interest"
+                      value={teacherDeduction.hbLoanInterest}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            hbLoanInterest: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            hbLoanInterest: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Mediclaim
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Mediclaim"
+                      value={teacherDeduction.mediclaim}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            mediclaim: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            mediclaim: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Sukanya
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Sukanya"
+                      value={teacherDeduction.sukanya}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            sukanya: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            sukanya: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      NSC
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="NSC"
+                      value={teacherDeduction.nsc}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            nsc: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            nsc: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Interest on NSC
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Interest on NSC"
+                      value={teacherDeduction.nscInterest}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            nscInterest: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            nscInterest: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Tution Fees
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Tution Fees"
+                      value={teacherDeduction.tutionFee}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            tutionFee: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            tutionFee: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      F.D. (5 Year)
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Tution Fees"
+                      value={teacherDeduction.fd}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            fd: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            fd: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Disabled dependent Treatment
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Disabled dependent Treatment"
+                      value={teacherDeduction.handicapTreatment}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            handicapTreatment: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            handicapTreatment: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Terminal Disease
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="terminal Disease"
+                      value={teacherDeduction.terminalDisease}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            terminalDisease: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            terminalDisease: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Education Loan Interest
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Education Loan Interest"
+                      value={teacherDeduction.educationLoan}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            educationLoan: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            educationLoan: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Disabled Teacher
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Disabled Teacher"
+                      value={teacherDeduction.disability}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            disability: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            disability: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      Charity
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="Charity"
+                      value={teacherDeduction.charity}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            charity: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            charity: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      ULIP /ELSS
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="ULIP /ELSS"
+                      value={teacherDeduction.ulip}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            ulip: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            ulip: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-4">
+                    <label htmlFor="date" className="form-label">
+                      TDS Submitted
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control "
+                      placeholder="TDS Submitted"
+                      value={teacherDeduction.tds}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setTeacherDeduction({
+                            ...teacherDeduction,
+                            tds: parseInt(e.target.value),
+                          });
+                        } else {
+                          setTeacherDeduction({
+                            tds: "",
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => {
+                    setShowDeductionForm(false);
+                    updateTeacherDeduction();
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => {
+                    setShowDeductionForm(false);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

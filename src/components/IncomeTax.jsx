@@ -7,6 +7,7 @@ import {
   Document,
   StyleSheet,
   Font,
+  PDFViewer,
 } from "@react-pdf/renderer";
 import { IndianFormat } from "../modules/calculatefunctions";
 const width = 2480;
@@ -1903,7 +1904,7 @@ export default function IncomeTax({ data }) {
           >
             <View
               style={{
-                borderRightWidth: 1,
+                //  borderRightWidth: 1,
                 width: "80%",
                 padding: 1,
               }}
@@ -1915,9 +1916,9 @@ export default function IncomeTax({ data }) {
               </Text>
             </View>
 
-            <View style={{ width: "20%", padding: 1 }}>
-              <Text style={[styles.textBold, { textAlign: "center" }]}></Text>
-            </View>
+            {/* <View style={{ width: "20%", padding: 1 }}>
+           <Text style={[styles.textBold, { textAlign: "center" }]}></Text>
+         </View> */}
           </View>
           <View
             style={{
@@ -1943,6 +1944,33 @@ export default function IncomeTax({ data }) {
             <View style={{ width: "20%", padding: 1 }}>
               <Text style={[styles.textBold, { textAlign: "center" }]}>
                 NIL
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              padding: 1,
+              borderWidth: 1,
+              borderTopWidth: 0,
+            }}
+          >
+            <View
+              style={{
+                borderRightWidth: 1,
+                width: "80%",
+                padding: 1,
+              }}
+            >
+              <Text style={[styles.textBold, { textAlign: "center" }]}>
+                Total Deduction under A & B above (Limited to Rs. 1,50,000/-)
+              </Text>
+            </View>
+
+            <View style={{ width: "20%", padding: 1 }}>
+              <Text style={[styles.textBold, { textAlign: "center" }]}>
+                {limitVIA != 0 ? `Rs. ${IndianFormat(limitVIA)}` : "NIL"}
               </Text>
             </View>
           </View>
@@ -2382,7 +2410,7 @@ export default function IncomeTax({ data }) {
               padding: 20,
               width: 200,
               height: 65,
-              marginLeft: 200,
+              marginLeft: 270,
               marginTop: 35,
               marginBottom: 20,
               borderWidth: 2,
@@ -2471,7 +2499,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>MAR</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2558,7 +2586,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>APR</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2645,7 +2673,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>MAY</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2716,7 +2744,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>JUN</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2789,7 +2817,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>JUL</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2864,7 +2892,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>AUG</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -2957,7 +2985,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>SEP</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -3054,7 +3082,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>OCT</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -3151,7 +3179,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>NOV</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -3248,7 +3276,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>DEC</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{thisYear}</Text>
+                  <Text style={styles.textBold}>{prevYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -3345,7 +3373,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>JAN</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{nextYear}</Text>
+                  <Text style={styles.textBold}>{thisYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>
@@ -3442,7 +3470,7 @@ export default function IncomeTax({ data }) {
                   <Text style={styles.textBold}>FEB</Text>
                 </View>
                 <View style={styles.view50Center}>
-                  <Text style={styles.textBold}>{nextYear}</Text>
+                  <Text style={styles.textBold}>{thisYear}</Text>
                 </View>
               </View>
               <View style={styles.view10H0}>

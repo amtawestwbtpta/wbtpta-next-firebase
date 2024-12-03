@@ -347,19 +347,6 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/incometax"
-              onClick={() => {
-                handleNavCollapse();
-                setStateObject(teacherdetails);
-              }}
-            >
-              Income Tax Section
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className="nav-link"
               href="/teacherAddress"
               onClick={handleNavCollapse}
             >

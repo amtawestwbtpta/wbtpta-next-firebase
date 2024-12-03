@@ -89,6 +89,8 @@ const GlobalContext = createContext({
   setfloodReliefState: () => [],
   floodReliefUpdateTime: "",
   setfloodReliefUpdateTime: () => "",
+  deductionState: [],
+  setDeductionState: () => [],
 });
 
 export const GlobalContextProvider = ({ children }) => {
@@ -158,6 +160,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [floodReliefUpdateTime, setfloodReliefUpdateTime] = useState(
     Date.now() - 1000
   );
+  const [deductionState, setDeductionState] = useState([]);
   return (
     <GlobalContext.Provider
       value={{
@@ -205,6 +208,8 @@ export const GlobalContextProvider = ({ children }) => {
         setfloodReliefState,
         floodReliefUpdateTime,
         setfloodReliefUpdateTime,
+        deductionState,
+        setDeductionState,
       }}
     >
       <FirebaseProvider>{children}</FirebaseProvider>
