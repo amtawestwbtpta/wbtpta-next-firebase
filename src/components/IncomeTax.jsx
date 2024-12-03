@@ -10,7 +10,7 @@ import {
   Font,
   PDFViewer,
 } from "@react-pdf/renderer";
-import { INR, printDate } from "../modules/calculatefunctions";
+import { IndianFormat, INR, printDate } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
 
@@ -22,8 +22,10 @@ export default function IncomeTax({ data }) {
     pan,
     phone,
     disability,
+    desig,
     thisYear,
     nextYear,
+    prevYear,
     finYear,
     marchSalary,
     marchBasic,
@@ -170,7 +172,441 @@ export default function IncomeTax({ data }) {
   return (
     <PDFViewer style={{ height, width }}>
       <Document style={{ margin: 5, padding: 5 }} title={`IT Statement`}>
-        <Page size="A4" orientation="landscape" style={styles.page}>
+        <Page size="A4" orientation="portrait" style={styles.page}>
+          <View style={styles.pageMainView}>
+            <View style={styles.mainBorderView}>
+              <View
+                style={[
+                  styles.tableStartBorderView,
+                  { flexDirection: "column" },
+                ]}
+              >
+                <Text style={styles.titleMain}>
+                  HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
+                </Text>
+                <Text style={styles.text2}>DECLARATION OF INCOME TAX</Text>
+                <Text style={styles.text3}>
+                  FOR THE FINANCIAL YEAR {`${prevYear} - ${thisYear}`} RELATION
+                  TO ASSESMENT YEAR {finYear}
+                </Text>
+              </View>
+              <View style={[styles.tableStartBorderView, { height: 5 }]}></View>
+              <View
+                style={[
+                  styles.tableStartBorderView,
+                  { flexDirection: "column" },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.rowStartBorderView,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 0,
+                    },
+                  ]}
+                >
+                  <Text style={styles.text}>Name of the Teacher: </Text>
+                  <Text style={[styles.textBold, { marginLeft: 5 }]}>
+                    {tname}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.rowStartBorderView,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      borderBottomWidth: 0,
+                      width: "100%",
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 0,
+                      width: "20%",
+                    }}
+                  >
+                    <Text style={styles.text}>Designation: </Text>
+                    <Text style={[styles.textBold, { marginLeft: 5 }]}>
+                      {desig}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 0,
+                      width: "30%",
+                    }}
+                  >
+                    <Text style={styles.text}>Circle: </Text>
+                    <Text style={[styles.textBold, { marginLeft: 5 }]}>
+                      AMTA WEST CIRCLE
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={[
+                    styles.rowStartBorderView,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      borderBottomWidth: 0,
+                      width: "100%",
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 0,
+                      width: "60%",
+                    }}
+                  >
+                    <Text style={styles.text}>School: </Text>
+                    <Text style={[styles.textBold, { marginLeft: 5 }]}>
+                      {school}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 0,
+                      width: "30%",
+                    }}
+                  >
+                    <Text style={styles.text}>Mobile No: </Text>
+                    <Text style={[styles.textBold, { marginLeft: 5 }]}>
+                      {phone}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  borderBottomWidth: 0,
+                }}
+              >
+                <View
+                  style={[
+                    styles.rowStartBorderView,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      borderBottomWidth: 1,
+                      borderRightWidth: 1,
+                      width: "60%",
+                    },
+                  ]}
+                >
+                  <View style={{ borderRightWidth: 1 }}>
+                    <Text
+                      style={[styles.text, { padding: 2, paddingRight: 30 }]}
+                    >
+                      PAN:{" "}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(0, 1)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(1, 2)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(2, 3)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(3, 4)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(4, 5)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(5, 6)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(6, 7)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(7, 8)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(8, 9)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderRightWidth: 1,
+                      borderTopWidth: 1,
+                      borderBottomWidth: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.textBold,
+                        { marginHorizontal: 5, padding: 2 },
+                      ]}
+                    >
+                      {pan?.slice(9, 10)}
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}></View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  borderBottomWidth: 0,padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                    1. GROSS SLARY INCOME (Salary +Arrear Salary +Bonus)
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}>Rs. {IndianFormat(AllGross)}</Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                  2. Less: Exemption of HRA under Sec 10(13A) the least of the
+                  following
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}></Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                  a) Actual HRA Received
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}></Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                  b) Rent Paid in excess of 10% of Salary (Basic + DA)
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}></Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                  c) 40% of Salary (Basic + DA)
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1,borderBottomWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}></Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  borderBottomWidth: 1,padding:1,
+                }}
+              >
+                <View style={{ borderRightWidth: 1, width: "60%" }}>
+                  <Text style={[styles.text,{textAlign:"left"}]}>
+                  
+                  </Text>
+                </View>
+                <View style={{ borderRightWidth: 1, width: "20%" }}>
+                  <Text style={styles.textBold}>Rs. {IndianFormat(AllGross)}</Text>
+                </View>
+                <View style={{ width: "20%" }}></View>
+              </View>
+            </View>
+          </View>
+        </Page>
+        {/* <Page size="A4" orientation="landscape" style={styles.page}>
           <View style={styles.pageMainView}>
             <View style={styles.mainBorderView}>
               <View style={styles.tableStartBorderView}>
@@ -1400,7 +1836,7 @@ export default function IncomeTax({ data }) {
               <Text style={styles.text}>SIGNATURE OF THE INCUMBENT</Text>
             </View>
           </View>
-        </Page>
+        </Page> */}
       </Document>
     </PDFViewer>
   );
@@ -1430,16 +1866,16 @@ const styles = StyleSheet.create({
     fontFamily: "TimesBold",
     textAlign: "center",
   },
-  title2: {
-    fontSize: 10,
+  textBold: {
+    fontSize: 11,
     fontWeight: "bold",
     fontFamily: "TimesBold",
     textAlign: "center",
   },
   titleMain: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "normal",
-    fontFamily: "Times",
+    fontFamily: "Algerian",
     textAlign: "center",
   },
   text: {
@@ -1448,8 +1884,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text2: {
-    fontSize: 8,
-    fontFamily: "Times",
+    fontSize: 14,
+    fontFamily: "Algerian",
+    textAlign: "center",
+    padding: 2,
+  },
+  text3: {
+    fontSize: 12,
+    fontFamily: "Algerian",
     textAlign: "center",
     padding: 2,
   },
@@ -1459,12 +1901,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 2,
   },
-  text3: {
-    fontSize: 8,
-    fontFamily: "Times",
-    textAlign: "center",
-    transform: "rotate(-60deg)",
-  },
+
   text4: {
     fontSize: 8,
     fontFamily: "Times",

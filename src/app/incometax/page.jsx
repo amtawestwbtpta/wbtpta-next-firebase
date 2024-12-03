@@ -30,6 +30,7 @@ export default function IncomeTaxSection() {
   const { id, tname, school, pan, phone, disability, desig } = stateObject;
   const thisYear = new Date().getFullYear();
   const nextYear = new Date().getFullYear() + 1;
+  const prevYear = new Date().getFullYear() - 1;
   const finYear = `${thisYear}-${nextYear}`;
   const marchSalary = march.filter((el) => el.id === id)[0];
   const marchArrear = marchSalary?.arrear;
@@ -413,8 +414,8 @@ export default function IncomeTaxSection() {
               style={{ width: "100%", padding: 2 }}
             >
               <h5 className="algerian">
-                FOR THE FINANCIAL YEAR 2023 - 2024 RELATION TO ASSESMENT YEAR{" "}
-                {finYear}
+                FOR THE FINANCIAL YEAR {`${prevYear} - ${thisYear}`} RELATION TO
+                ASSESMENT YEAR {finYear}
               </h5>
             </th>
           </tr>
@@ -3474,7 +3475,7 @@ export default function IncomeTaxSection() {
           Go Back
         </button>
       </div>
-      {/* <div className="mx-auto noprint mb-5">
+      <div className="mx-auto noprint mb-5">
         <IncomeTax
           data={{
             id,
@@ -3483,8 +3484,10 @@ export default function IncomeTaxSection() {
             pan,
             phone,
             disability,
+            desig,
             thisYear,
             nextYear,
+            prevYear,
             finYear,
             marchSalary,
             marchBasic,
@@ -3629,7 +3632,7 @@ export default function IncomeTaxSection() {
             AddedEduCess,
           }}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
