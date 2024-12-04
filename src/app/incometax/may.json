@@ -1,4457 +1,4455 @@
-[
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8bf"
-    },
-    "id": "teachers101",
-    "tname": "SOHINI PAUL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c0"
-    },
-    "id": "teachers102",
-    "tname": "MOUMITA MAJI",
-    "basic": 29800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c1"
-    },
-    "id": "teachers103",
-    "tname": "RAGHABENDRA KOLEY",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c2"
-    },
-    "id": "teachers104",
-    "tname": "AVISHEK CHOWDHURY",
-    "basic": 24700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c3"
-    },
-    "id": "teachers105",
-    "tname": "AMIT RIT",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c4"
-    },
-    "id": "teachers106",
-    "tname": "TAPAS KARMAKAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c5"
-    },
-    "id": "teachers107",
-    "tname": "BIKASH CHANDRA DALUI",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c6"
-    },
-    "id": "teachers108",
-    "tname": "SUPARNA GHOSH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c7"
-    },
-    "id": "teachers109",
-    "tname": "SOHEL REJA",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c8"
-    },
-    "id": "teachers110",
-    "tname": "TARUN GHARA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8c9"
-    },
-    "id": "teachers111",
-    "tname": "SWAPAN DAS",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ca"
-    },
-    "id": "teachers112",
-    "tname": "RAJU KOLEY",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8cb"
-    },
-    "id": "teachers388-61383f93",
-    "tname": "RAHUL BISWAS",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8cc"
-    },
-    "id": "teachers113",
-    "tname": "BAPAN SASMAL",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8cd"
-    },
-    "id": "teachers114",
-    "tname": "NILADRI DHALI",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ce"
-    },
-    "id": "teachers115",
-    "tname": "PRIYANKA RAKSHIT",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8cf"
-    },
-    "id": "teachers116",
-    "tname": "SIPRA MAJUMDER",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d0"
-    },
-    "id": "teachers117",
-    "tname": "PARTHA NANDI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d1"
-    },
-    "id": "teachers118",
-    "tname": "SWAGATA CHAKRABORTY",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d2"
-    },
-    "id": "teachers119",
-    "tname": "PRABIR KUMAR CHAKRABORTY",
-    "basic": 55400,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d3"
-    },
-    "id": "teachers120",
-    "tname": "JAYANTI MAJUMDER",
-    "basic": 48700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d4"
-    },
-    "id": "teachers121",
-    "tname": "MANAS CHAKRABORTY",
-    "basic": 47400,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d5"
-    },
-    "id": "teachers122",
-    "tname": "SOUMENDU PRAMANIK",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d6"
-    },
-    "id": "teachers123",
-    "tname": "AMIT POREY",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d7"
-    },
-    "id": "teachers124",
-    "tname": "ASHIS KUMAR PARUI",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d8"
-    },
-    "id": "teachers125",
-    "tname": "SONALI ADHIKARY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8d9"
-    },
-    "id": "teachers126",
-    "tname": "KAUSHIK DAS",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8da"
-    },
-    "id": "teachers127",
-    "tname": "SHYAMAL HAIT",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8db"
-    },
-    "id": "teachers128",
-    "tname": "NETAI DAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8dc"
-    },
-    "id": "teachers129",
-    "tname": "AMIT BARAN DIRGHANGI",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8dd"
-    },
-    "id": "teachers130",
-    "tname": "PRASANTA PAL",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8de"
-    },
-    "id": "teachers131",
-    "tname": "DIPANKAR PATRA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8df"
-    },
-    "id": "teachers132",
-    "tname": "PREMNATH KAR",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e0"
-    },
-    "id": "teachers133",
-    "tname": "SUBRATA BISWAS ",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e1"
-    },
-    "id": "teachers134",
-    "tname": "ARUP SAMANTA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e2"
-    },
-    "id": "teachers135",
-    "tname": "BHAGYADHAR KARAR",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e3"
-    },
-    "id": "teachers136",
-    "tname": "NILANJANA DEYASHI PAL",
-    "basic": 24700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e4"
-    },
-    "id": "teachers389-da7ce61c",
-    "tname": "MD HUMAYAN KABIR",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e5"
-    },
-    "id": "teachers137",
-    "tname": "MRITYUNJAY ASH",
-    "basic": 53800,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e6"
-    },
-    "id": "teachers138",
-    "tname": "DEBKUMAR MUDLI",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e7"
-    },
-    "id": "teachers395-e9d452d8",
-    "tname": "PIYALI BERA",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e8"
-    },
-    "id": "teachers139",
-    "tname": "ASTAPADA DAS",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8e9"
-    },
-    "id": "teachers140",
-    "tname": "ANIRBAN PANDIT",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ea"
-    },
-    "id": "teachers141",
-    "tname": "ADAITYA BAR",
-    "basic": 29800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8eb"
-    },
-    "id": "teachers142",
-    "tname": "CHANDANA CHAKRABORTI",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ec"
-    },
-    "id": "teachers143",
-    "tname": "SUDIP CHAKRABORTY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ed"
-    },
-    "id": "teachers144",
-    "tname": "BIBEKASISH HAJRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 8000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ee"
-    },
-    "id": "teachers145",
-    "tname": "SHYAMAL MAITY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ef"
-    },
-    "id": "teachers146",
-    "tname": "MANOJ KHOTEL",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f0"
-    },
-    "id": "teachers147",
-    "tname": "PRADIP SADHUKHAN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f1"
-    },
-    "id": "teachers148",
-    "tname": "TRIDIB SINGH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f2"
-    },
-    "id": "teachers149",
-    "tname": "PRANAB GAYEN",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f3"
-    },
-    "id": "teachers150",
-    "tname": "DEBASISH MAZUMDER",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f4"
-    },
-    "id": "teachers151",
-    "tname": "SAYAN DAS",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f5"
-    },
-    "id": "teachers152",
-    "tname": "KARTICK GHOSH",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f6"
-    },
-    "id": "teachers153",
-    "tname": "SUMAN SAMANTA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f7"
-    },
-    "id": "teachers154",
-    "tname": "SURAJIT KOLEY",
-    "basic": 36600,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f8"
-    },
-    "id": "teachers155",
-    "tname": "RAMESH DALUI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8f9"
-    },
-    "id": "teachers156",
-    "tname": "LIPI GHOSH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8fa"
-    },
-    "id": "teachers157",
-    "tname": "PULAK MITRA",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8fb"
-    },
-    "id": "teachers158",
-    "tname": "SAYAN DE",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8fc"
-    },
-    "id": "teachers159",
-    "tname": "SHUVENDU MANNA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8fd"
-    },
-    "id": "teachers160",
-    "tname": "PARTHA SARATHI CHANDRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8fe"
-    },
-    "id": "teachers161",
-    "tname": "SAUMEN MANDAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f8ff"
-    },
-    "id": "teachers162",
-    "tname": "HEMA HALDER",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f900"
-    },
-    "id": "teachers163",
-    "tname": "JAKIA SULTANA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f901"
-    },
-    "id": "teachers164",
-    "tname": "APURBA PRODHAN",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f902"
-    },
-    "id": "teachers165",
-    "tname": "DALI KHAN",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f903"
-    },
-    "id": "teachers166",
-    "tname": "BIKASH CHANDRA JANA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f904"
-    },
-    "id": "teachers167",
-    "tname": "SUKANTA GUCHAIT",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f905"
-    },
-    "id": "teachers168",
-    "tname": "MOLLA MD MAHASIN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f906"
-    },
-    "id": "teachers169",
-    "tname": "UTPAL KUMAR SHEE",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f907"
-    },
-    "id": "teachers170",
-    "tname": "SWAPAN PATRA",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f908"
-    },
-    "id": "teachers390-79bf2ea7",
-    "tname": "SHAIKH MAHAMMAD ALI",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f909"
-    },
-    "id": "teachers171",
-    "tname": "PALASH KUMAR MONDAL",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90a"
-    },
-    "id": "teachers172",
-    "tname": "LABANYA MONDAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90b"
-    },
-    "id": "teachers173",
-    "tname": "SUSHANTA BACHAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90c"
-    },
-    "id": "teachers174",
-    "tname": "MALAYASISH BACHHAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90d"
-    },
-    "id": "teachers175",
-    "tname": "SARMISTHA BAG",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90e"
-    },
-    "id": "teachers176",
-    "tname": "SUBHANKAR GHOSH",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f90f"
-    },
-    "id": "teachers177",
-    "tname": "SUMON GOLUI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f910"
-    },
-    "id": "teachers178",
-    "tname": "NITYANANDA GOLUI",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f911"
-    },
-    "id": "teachers179",
-    "tname": "ARINDAM MANDAL",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f912"
-    },
-    "id": "teachers180",
-    "tname": "PRABHANJAN DAS",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f913"
-    },
-    "id": "teachers181",
-    "tname": "SUVRA KANTI SARKAR",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f914"
-    },
-    "id": "teachers182",
-    "tname": "SIDDHARTHA BISWAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f915"
-    },
-    "id": "teachers183",
-    "tname": "SISIR KUMAR PRAMANICK",
-    "basic": 53800,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f916"
-    },
-    "id": "teachers184",
-    "tname": "SRIBAS HAZRA",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f917"
-    },
-    "id": "teachers185",
-    "tname": "DEBASIS MALIK",
-    "basic": 33500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f918"
-    },
-    "id": "teachers186",
-    "tname": "ASISH CHANDRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f919"
-    },
-    "id": "teachers187",
-    "tname": "MD JAHIDUR RAHAMAN",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91a"
-    },
-    "id": "teachers188",
-    "tname": "GOURANGA BODHAK",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91b"
-    },
-    "id": "teachers189",
-    "tname": "SOUMOJIT SAHA",
-    "basic": 24700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91c"
-    },
-    "id": "teachers385-d26e20d3",
-    "tname": "ALAKA HANSDA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91d"
-    },
-    "id": "teachers190",
-    "tname": "PROSENJIT GHOSH",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91e"
-    },
-    "id": "teachers191",
-    "tname": "RANJAN ROUTH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f91f"
-    },
-    "id": "teachers192",
-    "tname": "ASHIS KOLEY",
-    "basic": 27800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f920"
-    },
-    "id": "teachers193",
-    "tname": "MONI SANKAR BERA",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f921"
-    },
-    "id": "teachers194",
-    "tname": "SEKHAR PALMAL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f922"
-    },
-    "id": "teachers195",
-    "tname": "SUSIL KUMAR SAMANTA",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f923"
-    },
-    "id": "teachers196",
-    "tname": "SUVANKAR PAUL",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f924"
-    },
-    "id": "teachers197",
-    "tname": "BAPI SAMANTA",
-    "basic": 24700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f925"
-    },
-    "id": "teachers198",
-    "tname": "PINTU SAU",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f926"
-    },
-    "id": "teachers199",
-    "tname": "AMIT MAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f927"
-    },
-    "id": "teachers200",
-    "tname": "SUKANTA HAZRA",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f928"
-    },
-    "id": "teachers201",
-    "tname": "NAZEMUL MALLICK",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f929"
-    },
-    "id": "teachers202",
-    "tname": "DEBASISH SAMANTA",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92a"
-    },
-    "id": "teachers203",
-    "tname": "ARGHA MAITY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92b"
-    },
-    "id": "teachers204",
-    "tname": "SWARAJ PANDIT",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92c"
-    },
-    "id": "teachers205",
-    "tname": "NILIMA CHANDA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92d"
-    },
-    "id": "teachers206",
-    "tname": "SUKANTA DHARA",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92e"
-    },
-    "id": "teachers207",
-    "tname": "SK KUTUBUDDIN",
-    "basic": 29500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f92f"
-    },
-    "id": "teachers208",
-    "tname": "TAPASI ACHARYYA",
-    "basic": 51800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f930"
-    },
-    "id": "teachers209",
-    "tname": "ROJINA KHATUN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f931"
-    },
-    "id": "teachers210",
-    "tname": "NILADRY SEKHAR KHAN",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f932"
-    },
-    "id": "teachers211",
-    "tname": "SUJIT BHATTACHARYAY",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f933"
-    },
-    "id": "teachers212",
-    "tname": "SRABANI JATI",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f934"
-    },
-    "id": "teachers213",
-    "tname": "PRASUN MUKHOPADHYAY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f935"
-    },
-    "id": "teachers214",
-    "tname": "DEBASRI KOLEY JATI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f936"
-    },
-    "id": "teachers215",
-    "tname": "MOUSUMI BISWAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f937"
-    },
-    "id": "teachers216",
-    "tname": "MERAJUDDIN SARKAR",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f938"
-    },
-    "id": "teachers217",
-    "tname": "FARID MONDAL",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f939"
-    },
-    "id": "teachers218",
-    "tname": "UJJWAL ADHIKARY",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93a"
-    },
-    "id": "teachers219",
-    "tname": "SUDIPTA BHANDARI",
-    "basic": 29800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93b"
-    },
-    "id": "teachers220",
-    "tname": "SK RAJIBUL HAQUE",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93c"
-    },
-    "id": "teachers221",
-    "tname": "SUBHRADIP POREL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93d"
-    },
-    "id": "teachers222",
-    "tname": "PRIYABRATA BANDYOPADHYAY",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93e"
-    },
-    "id": "teachers223",
-    "tname": "SUJIT GUCHHAIT",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f93f"
-    },
-    "id": "teachers224",
-    "tname": "RAJASI SAMANTA",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f940"
-    },
-    "id": "teachers225",
-    "tname": "MRIDULA CHAKRABARTI",
-    "basic": 62400,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 15000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f941"
-    },
-    "id": "teachers226",
-    "tname": "SK ASIF MURSHED",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f942"
-    },
-    "id": "teachers227",
-    "tname": "TANDRA DALUI",
-    "basic": 33500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f943"
-    },
-    "id": "teachers228",
-    "tname": "NETAI CHAND MAL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f944"
-    },
-    "id": "teachers229",
-    "tname": "RAJESH MAITY",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f945"
-    },
-    "id": "teachers230",
-    "tname": "MRITUNJOY MANNA",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f946"
-    },
-    "id": "teachers231",
-    "tname": "JULFIKAR ALI SHAH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f947"
-    },
-    "id": "teachers232",
-    "tname": "ATANU MAJI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f948"
-    },
-    "id": "teachers233",
-    "tname": "RUPALI DAS",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f949"
-    },
-    "id": "teachers391-12274feb",
-    "tname": "MOONMOON SARKAR",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94a"
-    },
-    "id": "teachers234",
-    "tname": "SUSMITA DHAWA",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94b"
-    },
-    "id": "teachers235",
-    "tname": "BABITA DOLUI",
-    "basic": 29800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94c"
-    },
-    "id": "teachers236",
-    "tname": "TANUSHREE PANDIT",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94d"
-    },
-    "id": "teachers237",
-    "tname": "TAPAN KUMAR KOLEY",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94e"
-    },
-    "id": "teachers238",
-    "tname": "BABULAL DHARA",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f94f"
-    },
-    "id": "teachers239",
-    "tname": "PRALHAD CHAKRABORTY",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f950"
-    },
-    "id": "teachers240",
-    "tname": "SAMIR BAG",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f951"
-    },
-    "id": "teachers241",
-    "tname": "KUMARESH SARKAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f952"
-    },
-    "id": "teachers242",
-    "tname": "MILAN BISWAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f953"
-    },
-    "id": "teachers392-5190daaf",
-    "tname": "MINHAJUDDIN SHIRAJ",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f954"
-    },
-    "id": "teachers243",
-    "tname": "TAPAS KUMAR GHOSH",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f955"
-    },
-    "id": "teachers244",
-    "tname": "MURARIMOHAN MANNA",
-    "basic": 44600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 8000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f956"
-    },
-    "id": "teachers245",
-    "tname": "AVIJIT ROY",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f957"
-    },
-    "id": "teachers246",
-    "tname": "CHINMOY KHAN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f958"
-    },
-    "id": "teachers247",
-    "tname": "PANKAJ KUMAR MONDAL",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 8000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f959"
-    },
-    "id": "teachers248",
-    "tname": "TAPASI RAY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95a"
-    },
-    "id": "teachers249",
-    "tname": "PRASENJIT CHANDRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95b"
-    },
-    "id": "teachers250",
-    "tname": "PRADIP KAMILYA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95c"
-    },
-    "id": "teachers393-b8f65964",
-    "tname": "RAJKUMAR SARKAR",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95d"
-    },
-    "id": "teachers251",
-    "tname": "SUDIPTA DAS",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 6000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95e"
-    },
-    "id": "teachers254",
-    "tname": "SUMANTA PATRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f95f"
-    },
-    "id": "teachers253",
-    "tname": "SUBRATA BISWAS",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f960"
-    },
-    "id": "teachers252",
-    "tname": "ANKITA KOLEY DAS",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f961"
-    },
-    "id": "teachers256",
-    "tname": "ULLASH JANA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f962"
-    },
-    "id": "teachers255",
-    "tname": "RAJESH GOLUI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f963"
-    },
-    "id": "teachers257",
-    "tname": "SUJATA MANNA",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f964"
-    },
-    "id": "teachers258",
-    "tname": "UDAY BHUINYA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f965"
-    },
-    "id": "teachers259",
-    "tname": "SK SAHABUDDIN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f966"
-    },
-    "id": "teachers260",
-    "tname": "NIZAM UDDIN SARDAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f967"
-    },
-    "id": "teachers261",
-    "tname": "KHEYALI MALAKAR",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f968"
-    },
-    "id": "teachers262",
-    "tname": "MUKUL HAZRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f969"
-    },
-    "id": "teachers263",
-    "tname": "SNEHASHIS JANA",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96a"
-    },
-    "id": "teachers264",
-    "tname": "SUMA SAMANTA",
-    "basic": 48700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 15000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96b"
-    },
-    "id": "teachers265",
-    "tname": "BILAS DANDA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96c"
-    },
-    "id": "teachers266",
-    "tname": "USUB ALI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96d"
-    },
-    "id": "teachers267",
-    "tname": "NIRMALYA DAS",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96e"
-    },
-    "id": "teachers268",
-    "tname": "TANUJ RONG",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f96f"
-    },
-    "id": "teachers269",
-    "tname": "SUSANTA PAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f970"
-    },
-    "id": "teachers270",
-    "tname": "MOUSUMI ADHIKARY",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f971"
-    },
-    "id": "teachers271",
-    "tname": "SOUMEN MAITY",
-    "basic": 24700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f972"
-    },
-    "id": "teachers272",
-    "tname": "ARKA CHANDRA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f973"
-    },
-    "id": "teachers273",
-    "tname": "NIRMAL DAS",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f974"
-    },
-    "id": "teachers274",
-    "tname": "TAPAS POLLEY",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f975"
-    },
-    "id": "teachers275",
-    "tname": "SANJOY KUMAR BAG",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f976"
-    },
-    "id": "teachers276",
-    "tname": "PRIYANKA DEY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f977"
-    },
-    "id": "teachers277",
-    "tname": "SHAMPA SAU BODHAK",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f978"
-    },
-    "id": "teachers278",
-    "tname": "SUMANA PRAMANIK",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f979"
-    },
-    "id": "teachers396-680da03e",
-    "tname": "SHEULI PRODHAN",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97a"
-    },
-    "id": "teachers279",
-    "tname": "HEMANTA KUMAR SADHUKHAN",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97b"
-    },
-    "id": "teachers280",
-    "tname": "SOUVIK SAMANTA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97c"
-    },
-    "id": "teachers281",
-    "tname": "HEMANTA MAITY",
-    "basic": 27800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97d"
-    },
-    "id": "teachers282",
-    "tname": "SK GOLAM EAJDANI",
-    "basic": 57100,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97e"
-    },
-    "id": "teachers283",
-    "tname": "SUDIP KUMAR KARAR",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f97f"
-    },
-    "id": "teachers284",
-    "tname": "SONALI PAUL",
-    "basic": 48700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f980"
-    },
-    "id": "teachers285",
-    "tname": "SUSMITA MANDAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f981"
-    },
-    "id": "teachers286",
-    "tname": "ABHIJIT MAITY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f982"
-    },
-    "id": "teachers287",
-    "tname": "SOUVIK CHAUDHURI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f983"
-    },
-    "id": "teachers288",
-    "tname": "ACHINTYA SAMANTA",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f984"
-    },
-    "id": "teachers289",
-    "tname": "SOMENDRA NATH DAS",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f985"
-    },
-    "id": "teachers290",
-    "tname": "DEBABRATA DAS",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f986"
-    },
-    "id": "teachers291",
-    "tname": "KAMALA KANTA RAUL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f987"
-    },
-    "id": "teachers292",
-    "tname": "KARTICK CHANDRA MAITI",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 7000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f988"
-    },
-    "id": "teachers293",
-    "tname": "DILIP KUMAR DAS",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f989"
-    },
-    "id": "teachers294",
-    "tname": "MAUMITA CHAKRABORTY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98a"
-    },
-    "id": "teachers295",
-    "tname": "KAJARI BISWAS",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98b"
-    },
-    "id": "teachers296",
-    "tname": "PALASH KUMAR DALUI",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98c"
-    },
-    "id": "teachers297",
-    "tname": "DILIP DALUI",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98d"
-    },
-    "id": "teachers298",
-    "tname": "SANTI SARKAR",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98e"
-    },
-    "id": "teachers299",
-    "tname": "SUBIR MANNA",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f98f"
-    },
-    "id": "teachers300",
-    "tname": "PROSENJIT PARAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f990"
-    },
-    "id": "teachers301",
-    "tname": "BIPLAB GHOSH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f991"
-    },
-    "id": "teachers302",
-    "tname": "SURAJIT DOLUI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f992"
-    },
-    "id": "teachers303",
-    "tname": "SIDDHARTHA MONDAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f993"
-    },
-    "id": "teachers387-8a82d5ab",
-    "tname": "TARUN KUMAR BARUI",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f994"
-    },
-    "id": "teachers304",
-    "tname": "SISIRKANA BERA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f995"
-    },
-    "id": "teachers305",
-    "tname": "ANUP DAS",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f996"
-    },
-    "id": "teachers306",
-    "tname": "KALYANI HAZRA BOR",
-    "basic": 48700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f997"
-    },
-    "id": "teachers307",
-    "tname": "JHANTU MALLICK",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f998"
-    },
-    "id": "teachers308",
-    "tname": "GADADHAR BAR",
-    "basic": 47800,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f999"
-    },
-    "id": "teachers309",
-    "tname": "SAIKAT MONDAL",
-    "basic": 48700,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99a"
-    },
-    "id": "teachers310",
-    "tname": "PALASH BEJ",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99b"
-    },
-    "id": "teachers311",
-    "tname": "PALLAB MONDAL",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99c"
-    },
-    "id": "teachers312",
-    "tname": "AMIYA KUMAR RIT",
-    "basic": 33500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99d"
-    },
-    "id": "teachers313",
-    "tname": "SUBHANKAR MAITY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99e"
-    },
-    "id": "teachers314",
-    "tname": "PALLABI PURKAIT",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f99f"
-    },
-    "id": "teachers315",
-    "tname": "MANTU MALICK",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a0"
-    },
-    "id": "teachers316",
-    "tname": "GITA ADHIKARY",
-    "basic": 33500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a1"
-    },
-    "id": "teachers317",
-    "tname": "ABHISHEK CHATTERJEE",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a2"
-    },
-    "id": "teachers318",
-    "tname": "SURAJIT MAJUMDER",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a3"
-    },
-    "id": "teachers386-dbc88f20",
-    "tname": "GOPINATH MANNA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a4"
-    },
-    "id": "teachers319",
-    "tname": "BHOLANATH DALUI",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 8000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a5"
-    },
-    "id": "teachers320",
-    "tname": "KUNTAL PACHAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a6"
-    },
-    "id": "teachers321",
-    "tname": "MD RAFIQUL ALAM",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a7"
-    },
-    "id": "teachers322",
-    "tname": "ARATI PATRA",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a8"
-    },
-    "id": "teachers323",
-    "tname": "BALARAM PAL",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 6000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9a9"
-    },
-    "id": "teachers324",
-    "tname": "DEBASHIS MAJI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9aa"
-    },
-    "id": "teachers325",
-    "tname": "NUR HOSSAIN MALLICK",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ab"
-    },
-    "id": "teachers326",
-    "tname": "SATINDRA NATH BERA",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ac"
-    },
-    "id": "teachers327",
-    "tname": "PRANAB KUMAR POREY",
-    "basic": 53800,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ad"
-    },
-    "id": "teachers328",
-    "tname": "SUMANA BHANDARI",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ae"
-    },
-    "id": "teachers329",
-    "tname": "MANASI SHOW",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9af"
-    },
-    "id": "teachers330",
-    "tname": "NARAYAN CHANDRA MANNA",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b0"
-    },
-    "id": "teachers331",
-    "tname": "MITHUN CHAKRABORTY",
-    "basic": 36600,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b1"
-    },
-    "id": "teachers332",
-    "tname": "ARUN KUMAR PAL",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b2"
-    },
-    "id": "teachers333",
-    "tname": "SK SARAFUDDEN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b3"
-    },
-    "id": "teachers334",
-    "tname": "DEBDAS MANNA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b4"
-    },
-    "id": "teachers335",
-    "tname": "SUSANTA CHATTERJEE",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b5"
-    },
-    "id": "teachers388-9d83883f",
-    "tname": "AVIJIT KARAR",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b6"
-    },
-    "id": "teachers336",
-    "tname": "SANDIP KARAR",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b7"
-    },
-    "id": "teachers337",
-    "tname": "KUNAL PACHAL",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b8"
-    },
-    "id": "teachers338",
-    "tname": "ABDUL KARIM",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9b9"
-    },
-    "id": "teachers339",
-    "tname": "TAPAS PATRA",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ba"
-    },
-    "id": "teachers340",
-    "tname": "TINA GAYEN DOLUI",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9bb"
-    },
-    "id": "teachers341",
-    "tname": "GAUTAM CHAKRABORTTY",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9bc"
-    },
-    "id": "teachers342",
-    "tname": "SOURAV SHAW",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9bd"
-    },
-    "id": "teachers343",
-    "tname": "PAPIYA SAHU",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9be"
-    },
-    "id": "teachers344",
-    "tname": "DEBOSREE MAITY",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9bf"
-    },
-    "id": "teachers345",
-    "tname": "SANGHAMITRA MAITY",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c0"
-    },
-    "id": "teachers346",
-    "tname": "LIPIKA MONDAL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c1"
-    },
-    "id": "teachers347",
-    "tname": "MINTU MALIK",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c2"
-    },
-    "id": "teachers348",
-    "tname": "PAROMITA ROY",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c3"
-    },
-    "id": "teachers349",
-    "tname": "ALAKANANDA PAUL",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c4"
-    },
-    "id": "teachers350",
-    "tname": "PARTHO SARATHI HAZRA",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c5"
-    },
-    "id": "teachers351",
-    "tname": "SUBRATA DAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c6"
-    },
-    "id": "teachers352",
-    "tname": "KAJI SAMIM AKTAR",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c7"
-    },
-    "id": "teachers353",
-    "tname": "SALIL KUMAR CHAKRABORTTY",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c8"
-    },
-    "id": "teachers354",
-    "tname": "SANTI KUMAR KARAK",
-    "basic": 45900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 12000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9c9"
-    },
-    "id": "teachers355",
-    "tname": "PRASUN HAZRA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ca"
-    },
-    "id": "teachers356",
-    "tname": "SK SABIR HOSSAIN",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9cb"
-    },
-    "id": "teachers357",
-    "tname": "KANIKA PANJA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9cc"
-    },
-    "id": "teachers358",
-    "tname": "DEBASHIS MANDAL",
-    "basic": 28900,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9cd"
-    },
-    "id": "teachers359",
-    "tname": "AMIYA KUMAR KOLEY",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 7000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9ce"
-    },
-    "id": "teachers360",
-    "tname": "BARNA DATTA",
-    "basic": 48700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9cf"
-    },
-    "id": "teachers361",
-    "tname": "ROSHNIARA MONDAL SK",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d0"
-    },
-    "id": "teachers362",
-    "tname": "PROBHAT RANJAN KOLEY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2500,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d1"
-    },
-    "id": "teachers363",
-    "tname": "PRIYANKA ROY",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d2"
-    },
-    "id": "teachers364",
-    "tname": "RUPA HALDER",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d3"
-    },
-    "id": "teachers365",
-    "tname": "HEMANTA KUMAR MISRA",
-    "basic": 45900,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d4"
-    },
-    "id": "teachers366",
-    "tname": "DIBYENDU KOLEY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d5"
-    },
-    "id": "teachers367",
-    "tname": "SARIFUL MOLLAH",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d6"
-    },
-    "id": "teachers394-a4f17403",
-    "tname": "JNANSANKAR SINGHA MAHAPATRA",
-    "basic": 0,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 0,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d7"
-    },
-    "id": "teachers368",
-    "tname": "MUNMUN CHANDRA",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 4000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d8"
-    },
-    "id": "teachers369",
-    "tname": "SUPARNA GAYEN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9d9"
-    },
-    "id": "teachers370",
-    "tname": "TANMOY SAHA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9da"
-    },
-    "id": "teachers371",
-    "tname": "SARAJIT BISWAS",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9db"
-    },
-    "id": "teachers372",
-    "tname": "LAL CHAND SK",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9dc"
-    },
-    "id": "teachers373",
-    "tname": "RINA ADAK",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9dd"
-    },
-    "id": "teachers374",
-    "tname": "MRINMAY ADHIKARY",
-    "basic": 36600,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9de"
-    },
-    "id": "teachers375",
-    "tname": "MADHUMITA DHAL",
-    "basic": 26200,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9df"
-    },
-    "id": "teachers376",
-    "tname": "SAILEN NEBU",
-    "basic": 50200,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 7000,
-    "gsli": 60
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e0"
-    },
-    "id": "teachers377",
-    "tname": "BISWAJIT SAU",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e1"
-    },
-    "id": "teachers378",
-    "tname": "KAMAL KUMAR DHARA",
-    "basic": 47300,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 10000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e2"
-    },
-    "id": "teachers379",
-    "tname": "DIBYENDU KUMAR ADHIKARY",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 3000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e3"
-    },
-    "id": "teachers380",
-    "tname": "SANJUKTA HAJRA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 5000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e4"
-    },
-    "id": "teachers381",
-    "tname": "SK MAIDUL ISLAM",
-    "basic": 32500,
-    "addl": 400,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e5"
-    },
-    "id": "teachers382",
-    "tname": "MALLIKA GAYEN",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e6"
-    },
-    "id": "teachers383",
-    "tname": "SURASHREE SADHUKHAN SAHA",
-    "basic": 32500,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 500,
-    "gpf": 2000,
-    "gsli": 0
-  },
-  {
-    "_id": {
-      "$oid": "674b266743b19ccbabb5f9e7"
-    },
-    "id": "teachers384",
-    "tname": "ABDUS SALAM MOLLICK",
-    "basic": 30700,
-    "addl": 0,
-    "daPercent": 0.14,
-    "hraPercent": 0.12,
-    "arrear": 0,
-    "ma": 0,
-    "gpf": 2000,
-    "gsli": 0
-  }
-]
+[{
+  "_id": {
+    "$oid": "67506689902714a702d8a8c7"
+  },
+  "id": "teachers101",
+  "tname": "SOHINI PAUL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8c8"
+  },
+  "id": "teachers102",
+  "tname": "MOUMITA MAJI",
+  "basic": 29800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8c9"
+  },
+  "id": "teachers103",
+  "tname": "RAGHABENDRA KOLEY",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ca"
+  },
+  "id": "teachers104",
+  "tname": "AVISHEK CHOWDHURY",
+  "basic": 24700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8cb"
+  },
+  "id": "teachers105",
+  "tname": "AMIT RIT",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8cc"
+  },
+  "id": "teachers106",
+  "tname": "TAPAS KARMAKAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8cd"
+  },
+  "id": "teachers107",
+  "tname": "BIKASH CHANDRA DALUI",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ce"
+  },
+  "id": "teachers108",
+  "tname": "SUPARNA GHOSH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8cf"
+  },
+  "id": "teachers109",
+  "tname": "SOHEL REJA",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d0"
+  },
+  "id": "teachers110",
+  "tname": "TARUN GHARA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d1"
+  },
+  "id": "teachers111",
+  "tname": "SWAPAN DAS",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d2"
+  },
+  "id": "teachers112",
+  "tname": "RAJU KOLEY",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d3"
+  },
+  "id": "teachers388-61383f93",
+  "tname": "RAHUL BISWAS",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d4"
+  },
+  "id": "teachers113",
+  "tname": "BAPAN SASMAL",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d5"
+  },
+  "id": "teachers114",
+  "tname": "NILADRI DHALI",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d6"
+  },
+  "id": "teachers115",
+  "tname": "PRIYANKA RAKSHIT",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d7"
+  },
+  "id": "teachers116",
+  "tname": "SIPRA MAJUMDER",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d8"
+  },
+  "id": "teachers117",
+  "tname": "PARTHA NANDI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8d9"
+  },
+  "id": "teachers118",
+  "tname": "SWAGATA CHAKRABORTY",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8da"
+  },
+  "id": "teachers119",
+  "tname": "PRABIR KUMAR CHAKRABORTY",
+  "basic": 55400,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8db"
+  },
+  "id": "teachers120",
+  "tname": "JAYANTI MAJUMDER",
+  "basic": 48700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8dc"
+  },
+  "id": "teachers121",
+  "tname": "MANAS CHAKRABORTY",
+  "basic": 47400,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8dd"
+  },
+  "id": "teachers122",
+  "tname": "SOUMENDU PRAMANIK",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8de"
+  },
+  "id": "teachers123",
+  "tname": "AMIT POREY",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8df"
+  },
+  "id": "teachers124",
+  "tname": "ASHIS KUMAR PARUI",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e0"
+  },
+  "id": "teachers125",
+  "tname": "SONALI ADHIKARY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e1"
+  },
+  "id": "teachers126",
+  "tname": "KAUSHIK DAS",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e2"
+  },
+  "id": "teachers127",
+  "tname": "SHYAMAL HAIT",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e3"
+  },
+  "id": "teachers128",
+  "tname": "NETAI DAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e4"
+  },
+  "id": "teachers129",
+  "tname": "AMIT BARAN DIRGHANGI",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e5"
+  },
+  "id": "teachers130",
+  "tname": "PRASANTA PAL",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e6"
+  },
+  "id": "teachers131",
+  "tname": "DIPANKAR PATRA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e7"
+  },
+  "id": "teachers132",
+  "tname": "PREMNATH KAR",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e8"
+  },
+  "id": "teachers133",
+  "tname": "SUBRATA BISWAS ",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8e9"
+  },
+  "id": "teachers134",
+  "tname": "ARUP SAMANTA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ea"
+  },
+  "id": "teachers135",
+  "tname": "BHAGYADHAR KARAR",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8eb"
+  },
+  "id": "teachers136",
+  "tname": "NILANJANA DEYASHI PAL",
+  "basic": 24700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ec"
+  },
+  "id": "teachers389-da7ce61c",
+  "tname": "MD HUMAYAN KABIR",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ed"
+  },
+  "id": "teachers137",
+  "tname": "MRITYUNJAY ASH",
+  "basic": 53800,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ee"
+  },
+  "id": "teachers138",
+  "tname": "DEBKUMAR MUDLI",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ef"
+  },
+  "id": "teachers395-e9d452d8",
+  "tname": "PIYALI BERA",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f0"
+  },
+  "id": "teachers139",
+  "tname": "ASTAPADA DAS",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f1"
+  },
+  "id": "teachers140",
+  "tname": "ANIRBAN PANDIT",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f2"
+  },
+  "id": "teachers141",
+  "tname": "ADAITYA BAR",
+  "basic": 29800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f3"
+  },
+  "id": "teachers142",
+  "tname": "CHANDANA CHAKRABORTI",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f4"
+  },
+  "id": "teachers143",
+  "tname": "SUDIP CHAKRABORTY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f5"
+  },
+  "id": "teachers144",
+  "tname": "BIBEKASISH HAJRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 8000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f6"
+  },
+  "id": "teachers145",
+  "tname": "SHYAMAL MAITY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f7"
+  },
+  "id": "teachers146",
+  "tname": "MANOJ KHOTEL",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f8"
+  },
+  "id": "teachers147",
+  "tname": "PRADIP SADHUKHAN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8f9"
+  },
+  "id": "teachers148",
+  "tname": "TRIDIB SINGH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8fa"
+  },
+  "id": "teachers149",
+  "tname": "PRANAB GAYEN",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8fb"
+  },
+  "id": "teachers150",
+  "tname": "DEBASISH MAZUMDER",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8fc"
+  },
+  "id": "teachers151",
+  "tname": "SAYAN DAS",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8fd"
+  },
+  "id": "teachers152",
+  "tname": "KARTICK GHOSH",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8fe"
+  },
+  "id": "teachers153",
+  "tname": "SUMAN SAMANTA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a8ff"
+  },
+  "id": "teachers154",
+  "tname": "SURAJIT KOLEY",
+  "basic": 36600,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a900"
+  },
+  "id": "teachers155",
+  "tname": "RAMESH DALUI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a901"
+  },
+  "id": "teachers156",
+  "tname": "LIPI GHOSH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a902"
+  },
+  "id": "teachers157",
+  "tname": "PULAK MITRA",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a903"
+  },
+  "id": "teachers158",
+  "tname": "SAYAN DE",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a904"
+  },
+  "id": "teachers159",
+  "tname": "SHUVENDU MANNA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a905"
+  },
+  "id": "teachers160",
+  "tname": "PARTHA SARATHI CHANDRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a906"
+  },
+  "id": "teachers161",
+  "tname": "SAUMEN MANDAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a907"
+  },
+  "id": "teachers162",
+  "tname": "HEMA HALDER",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a908"
+  },
+  "id": "teachers163",
+  "tname": "JAKIA SULTANA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a909"
+  },
+  "id": "teachers164",
+  "tname": "APURBA PRODHAN",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90a"
+  },
+  "id": "teachers165",
+  "tname": "DALI KHAN",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90b"
+  },
+  "id": "teachers166",
+  "tname": "BIKASH CHANDRA JANA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90c"
+  },
+  "id": "teachers167",
+  "tname": "SUKANTA GUCHAIT",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90d"
+  },
+  "id": "teachers168",
+  "tname": "MOLLA MD MAHASIN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90e"
+  },
+  "id": "teachers169",
+  "tname": "UTPAL KUMAR SHEE",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a90f"
+  },
+  "id": "teachers170",
+  "tname": "SWAPAN PATRA",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a910"
+  },
+  "id": "teachers390-79bf2ea7",
+  "tname": "SHAIKH MAHAMMAD ALI",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a911"
+  },
+  "id": "teachers171",
+  "tname": "PALASH KUMAR MONDAL",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a912"
+  },
+  "id": "teachers172",
+  "tname": "LABANYA MONDAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a913"
+  },
+  "id": "teachers173",
+  "tname": "SUSHANTA BACHAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a914"
+  },
+  "id": "teachers174",
+  "tname": "MALAYASISH BACHHAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a915"
+  },
+  "id": "teachers175",
+  "tname": "SARMISTHA BAG",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a916"
+  },
+  "id": "teachers176",
+  "tname": "SUBHANKAR GHOSH",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a917"
+  },
+  "id": "teachers177",
+  "tname": "SUMON GOLUI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a918"
+  },
+  "id": "teachers178",
+  "tname": "NITYANANDA GOLUI",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a919"
+  },
+  "id": "teachers179",
+  "tname": "ARINDAM MANDAL",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91a"
+  },
+  "id": "teachers180",
+  "tname": "PRABHANJAN DAS",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91b"
+  },
+  "id": "teachers181",
+  "tname": "SUVRA KANTI SARKAR",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91c"
+  },
+  "id": "teachers182",
+  "tname": "SIDDHARTHA BISWAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91d"
+  },
+  "id": "teachers183",
+  "tname": "SISIR KUMAR PRAMANICK",
+  "basic": 53800,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91e"
+  },
+  "id": "teachers184",
+  "tname": "SRIBAS HAZRA",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a91f"
+  },
+  "id": "teachers185",
+  "tname": "DEBASIS MALIK",
+  "basic": 33500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a920"
+  },
+  "id": "teachers186",
+  "tname": "ASISH CHANDRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a921"
+  },
+  "id": "teachers187",
+  "tname": "MD JAHIDUR RAHAMAN",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a922"
+  },
+  "id": "teachers188",
+  "tname": "GOURANGA BODHAK",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a923"
+  },
+  "id": "teachers189",
+  "tname": "SOUMOJIT SAHA",
+  "basic": 24700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a924"
+  },
+  "id": "teachers385-d26e20d3",
+  "tname": "ALAKA HANSDA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a925"
+  },
+  "id": "teachers190",
+  "tname": "PROSENJIT GHOSH",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a926"
+  },
+  "id": "teachers191",
+  "tname": "RANJAN ROUTH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a927"
+  },
+  "id": "teachers192",
+  "tname": "ASHIS KOLEY",
+  "basic": 27800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a928"
+  },
+  "id": "teachers193",
+  "tname": "MONI SANKAR BERA",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a929"
+  },
+  "id": "teachers194",
+  "tname": "SEKHAR PALMAL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92a"
+  },
+  "id": "teachers195",
+  "tname": "SUSIL KUMAR SAMANTA",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92b"
+  },
+  "id": "teachers196",
+  "tname": "SUVANKAR PAUL",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92c"
+  },
+  "id": "teachers197",
+  "tname": "BAPI SAMANTA",
+  "basic": 24700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92d"
+  },
+  "id": "teachers198",
+  "tname": "PINTU SAU",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92e"
+  },
+  "id": "teachers199",
+  "tname": "AMIT MAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a92f"
+  },
+  "id": "teachers200",
+  "tname": "SUKANTA HAZRA",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a930"
+  },
+  "id": "teachers201",
+  "tname": "NAZEMUL MALLICK",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a931"
+  },
+  "id": "teachers202",
+  "tname": "DEBASISH SAMANTA",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a932"
+  },
+  "id": "teachers203",
+  "tname": "ARGHA MAITY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a933"
+  },
+  "id": "teachers204",
+  "tname": "SWARAJ PANDIT",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a934"
+  },
+  "id": "teachers205",
+  "tname": "NILIMA CHANDA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a935"
+  },
+  "id": "teachers206",
+  "tname": "SUKANTA DHARA",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a936"
+  },
+  "id": "teachers207",
+  "tname": "SK KUTUBUDDIN",
+  "basic": 29500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a937"
+  },
+  "id": "teachers208",
+  "tname": "TAPASI ACHARYYA",
+  "basic": 51800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a938"
+  },
+  "id": "teachers209",
+  "tname": "ROJINA KHATUN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a939"
+  },
+  "id": "teachers210",
+  "tname": "NILADRY SEKHAR KHAN",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93a"
+  },
+  "id": "teachers211",
+  "tname": "SUJIT BHATTACHARYAY",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93b"
+  },
+  "id": "teachers212",
+  "tname": "SRABANI JATI",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93c"
+  },
+  "id": "teachers213",
+  "tname": "PRASUN MUKHOPADHYAY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93d"
+  },
+  "id": "teachers214",
+  "tname": "DEBASRI KOLEY JATI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93e"
+  },
+  "id": "teachers215",
+  "tname": "MOUSUMI BISWAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a93f"
+  },
+  "id": "teachers216",
+  "tname": "MERAJUDDIN SARKAR",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a940"
+  },
+  "id": "teachers217",
+  "tname": "FARID MONDAL",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a941"
+  },
+  "id": "teachers218",
+  "tname": "UJJWAL ADHIKARY",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a942"
+  },
+  "id": "teachers219",
+  "tname": "SUDIPTA BHANDARI",
+  "basic": 29800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a943"
+  },
+  "id": "teachers220",
+  "tname": "SK RAJIBUL HAQUE",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a944"
+  },
+  "id": "teachers221",
+  "tname": "SUBHRADIP POREL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a945"
+  },
+  "id": "teachers222",
+  "tname": "PRIYABRATA BANDYOPADHYAY",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a946"
+  },
+  "id": "teachers223",
+  "tname": "SUJIT GUCHHAIT",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a947"
+  },
+  "id": "teachers224",
+  "tname": "RAJASI SAMANTA",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a948"
+  },
+  "id": "teachers225",
+  "tname": "MRIDULA CHAKRABARTI",
+  "basic": 62400,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 15000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a949"
+  },
+  "id": "teachers226",
+  "tname": "SK ASIF MURSHED",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94a"
+  },
+  "id": "teachers227",
+  "tname": "TANDRA DALUI",
+  "basic": 33500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94b"
+  },
+  "id": "teachers228",
+  "tname": "NETAI CHAND MAL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94c"
+  },
+  "id": "teachers229",
+  "tname": "RAJESH MAITY",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94d"
+  },
+  "id": "teachers230",
+  "tname": "MRITUNJOY MANNA",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94e"
+  },
+  "id": "teachers231",
+  "tname": "JULFIKAR ALI SHAH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a94f"
+  },
+  "id": "teachers232",
+  "tname": "ATANU MAJI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a950"
+  },
+  "id": "teachers233",
+  "tname": "RUPALI DAS",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a951"
+  },
+  "id": "teachers391-12274feb",
+  "tname": "MOONMOON SARKAR",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a952"
+  },
+  "id": "teachers234",
+  "tname": "SUSMITA DHAWA",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a953"
+  },
+  "id": "teachers235",
+  "tname": "BABITA DOLUI",
+  "basic": 29800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a954"
+  },
+  "id": "teachers236",
+  "tname": "TANUSHREE PANDIT",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a955"
+  },
+  "id": "teachers237",
+  "tname": "TAPAN KUMAR KOLEY",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a956"
+  },
+  "id": "teachers238",
+  "tname": "BABULAL DHARA",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a957"
+  },
+  "id": "teachers239",
+  "tname": "PRALHAD CHAKRABORTY",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a958"
+  },
+  "id": "teachers240",
+  "tname": "SAMIR BAG",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a959"
+  },
+  "id": "teachers241",
+  "tname": "KUMARESH SARKAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95a"
+  },
+  "id": "teachers242",
+  "tname": "MILAN BISWAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95b"
+  },
+  "id": "teachers392-5190daaf",
+  "tname": "MINHAJUDDIN SHIRAJ",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95c"
+  },
+  "id": "teachers243",
+  "tname": "TAPAS KUMAR GHOSH",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95d"
+  },
+  "id": "teachers244",
+  "tname": "MURARIMOHAN MANNA",
+  "basic": 44600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 8000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95e"
+  },
+  "id": "teachers245",
+  "tname": "AVIJIT ROY",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a95f"
+  },
+  "id": "teachers246",
+  "tname": "CHINMOY KHAN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a960"
+  },
+  "id": "teachers247",
+  "tname": "PANKAJ KUMAR MONDAL",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 8000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a961"
+  },
+  "id": "teachers248",
+  "tname": "TAPASI RAY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a962"
+  },
+  "id": "teachers249",
+  "tname": "PRASENJIT CHANDRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a963"
+  },
+  "id": "teachers250",
+  "tname": "PRADIP KAMILYA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a964"
+  },
+  "id": "teachers393-b8f65964",
+  "tname": "RAJKUMAR SARKAR",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a965"
+  },
+  "id": "teachers251",
+  "tname": "SUDIPTA DAS",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 6000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a966"
+  },
+  "id": "teachers254",
+  "tname": "SUMANTA PATRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a967"
+  },
+  "id": "teachers253",
+  "tname": "SUBRATA BISWAS",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a968"
+  },
+  "id": "teachers252",
+  "tname": "ANKITA KOLEY DAS",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a969"
+  },
+  "id": "teachers256",
+  "tname": "ULLASH JANA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96a"
+  },
+  "id": "teachers255",
+  "tname": "RAJESH GOLUI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96b"
+  },
+  "id": "teachers257",
+  "tname": "SUJATA MANNA",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96c"
+  },
+  "id": "teachers258",
+  "tname": "UDAY BHUINYA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96d"
+  },
+  "id": "teachers259",
+  "tname": "SK SAHABUDDIN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96e"
+  },
+  "id": "teachers260",
+  "tname": "NIZAM UDDIN SARDAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a96f"
+  },
+  "id": "teachers261",
+  "tname": "KHEYALI MALAKAR",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a970"
+  },
+  "id": "teachers262",
+  "tname": "MUKUL HAZRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a971"
+  },
+  "id": "teachers263",
+  "tname": "SNEHASHIS JANA",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a972"
+  },
+  "id": "teachers264",
+  "tname": "SUMA SAMANTA",
+  "basic": 48700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 15000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a973"
+  },
+  "id": "teachers265",
+  "tname": "BILAS DANDA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a974"
+  },
+  "id": "teachers266",
+  "tname": "USUB ALI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a975"
+  },
+  "id": "teachers267",
+  "tname": "NIRMALYA DAS",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a976"
+  },
+  "id": "teachers268",
+  "tname": "TANUJ RONG",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a977"
+  },
+  "id": "teachers269",
+  "tname": "SUSANTA PAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a978"
+  },
+  "id": "teachers270",
+  "tname": "MOUSUMI ADHIKARY",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a979"
+  },
+  "id": "teachers271",
+  "tname": "SOUMEN MAITY",
+  "basic": 24700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97a"
+  },
+  "id": "teachers272",
+  "tname": "ARKA CHANDRA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97b"
+  },
+  "id": "teachers273",
+  "tname": "NIRMAL DAS",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97c"
+  },
+  "id": "teachers274",
+  "tname": "TAPAS POLLEY",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97d"
+  },
+  "id": "teachers275",
+  "tname": "SANJOY KUMAR BAG",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97e"
+  },
+  "id": "teachers276",
+  "tname": "PRIYANKA DEY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a97f"
+  },
+  "id": "teachers277",
+  "tname": "SHAMPA SAU BODHAK",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a980"
+  },
+  "id": "teachers278",
+  "tname": "SUMANA PRAMANIK",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a981"
+  },
+  "id": "teachers396-680da03e",
+  "tname": "SHEULI PRODHAN",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a982"
+  },
+  "id": "teachers279",
+  "tname": "HEMANTA KUMAR SADHUKHAN",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a983"
+  },
+  "id": "teachers280",
+  "tname": "SOUVIK SAMANTA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a984"
+  },
+  "id": "teachers281",
+  "tname": "HEMANTA MAITY",
+  "basic": 27800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a985"
+  },
+  "id": "teachers282",
+  "tname": "SK GOLAM EAJDANI",
+  "basic": 57100,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a986"
+  },
+  "id": "teachers283",
+  "tname": "SUDIP KUMAR KARAR",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a987"
+  },
+  "id": "teachers284",
+  "tname": "SONALI PAUL",
+  "basic": 48700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a988"
+  },
+  "id": "teachers285",
+  "tname": "SUSMITA MANDAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a989"
+  },
+  "id": "teachers286",
+  "tname": "ABHIJIT MAITY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98a"
+  },
+  "id": "teachers287",
+  "tname": "SOUVIK CHAUDHURI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98b"
+  },
+  "id": "teachers288",
+  "tname": "ACHINTYA SAMANTA",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98c"
+  },
+  "id": "teachers289",
+  "tname": "SOMENDRA NATH DAS",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98d"
+  },
+  "id": "teachers290",
+  "tname": "DEBABRATA DAS",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98e"
+  },
+  "id": "teachers291",
+  "tname": "KAMALA KANTA RAUL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a98f"
+  },
+  "id": "teachers292",
+  "tname": "KARTICK CHANDRA MAITI",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 7000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a990"
+  },
+  "id": "teachers293",
+  "tname": "DILIP KUMAR DAS",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a991"
+  },
+  "id": "teachers294",
+  "tname": "MAUMITA CHAKRABORTY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a992"
+  },
+  "id": "teachers295",
+  "tname": "KAJARI BISWAS",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a993"
+  },
+  "id": "teachers296",
+  "tname": "PALASH KUMAR DALUI",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a994"
+  },
+  "id": "teachers297",
+  "tname": "DILIP DALUI",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a995"
+  },
+  "id": "teachers298",
+  "tname": "SANTI SARKAR",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a996"
+  },
+  "id": "teachers299",
+  "tname": "SUBIR MANNA",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a997"
+  },
+  "id": "teachers300",
+  "tname": "PROSENJIT PARAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a998"
+  },
+  "id": "teachers301",
+  "tname": "BIPLAB GHOSH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a999"
+  },
+  "id": "teachers302",
+  "tname": "SURAJIT DOLUI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99a"
+  },
+  "id": "teachers303",
+  "tname": "SIDDHARTHA MONDAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99b"
+  },
+  "id": "teachers387-8a82d5ab",
+  "tname": "TARUN KUMAR BARUI",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99c"
+  },
+  "id": "teachers304",
+  "tname": "SISIRKANA BERA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99d"
+  },
+  "id": "teachers305",
+  "tname": "ANUP DAS",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99e"
+  },
+  "id": "teachers306",
+  "tname": "KALYANI HAZRA BOR",
+  "basic": 48700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a99f"
+  },
+  "id": "teachers307",
+  "tname": "JHANTU MALLICK",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a0"
+  },
+  "id": "teachers308",
+  "tname": "GADADHAR BAR",
+  "basic": 47800,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a1"
+  },
+  "id": "teachers309",
+  "tname": "SAIKAT MONDAL",
+  "basic": 48700,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a2"
+  },
+  "id": "teachers310",
+  "tname": "PALASH BEJ",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a3"
+  },
+  "id": "teachers311",
+  "tname": "PALLAB MONDAL",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a4"
+  },
+  "id": "teachers312",
+  "tname": "AMIYA KUMAR RIT",
+  "basic": 33500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a5"
+  },
+  "id": "teachers313",
+  "tname": "SUBHANKAR MAITY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a6"
+  },
+  "id": "teachers314",
+  "tname": "PALLABI PURKAIT",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a7"
+  },
+  "id": "teachers315",
+  "tname": "MANTU MALICK",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a8"
+  },
+  "id": "teachers316",
+  "tname": "GITA ADHIKARY",
+  "basic": 33500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9a9"
+  },
+  "id": "teachers317",
+  "tname": "ABHISHEK CHATTERJEE",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9aa"
+  },
+  "id": "teachers318",
+  "tname": "SURAJIT MAJUMDER",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ab"
+  },
+  "id": "teachers386-dbc88f20",
+  "tname": "GOPINATH MANNA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ac"
+  },
+  "id": "teachers319",
+  "tname": "BHOLANATH DALUI",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 8000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ad"
+  },
+  "id": "teachers320",
+  "tname": "KUNTAL PACHAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ae"
+  },
+  "id": "teachers321",
+  "tname": "MD RAFIQUL ALAM",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9af"
+  },
+  "id": "teachers322",
+  "tname": "ARATI PATRA",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b0"
+  },
+  "id": "teachers323",
+  "tname": "BALARAM PAL",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 6000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b1"
+  },
+  "id": "teachers324",
+  "tname": "DEBASHIS MAJI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b2"
+  },
+  "id": "teachers325",
+  "tname": "NUR HOSSAIN MALLICK",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b3"
+  },
+  "id": "teachers326",
+  "tname": "SATINDRA NATH BERA",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b4"
+  },
+  "id": "teachers327",
+  "tname": "PRANAB KUMAR POREY",
+  "basic": 53800,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b5"
+  },
+  "id": "teachers328",
+  "tname": "SUMANA BHANDARI",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b6"
+  },
+  "id": "teachers329",
+  "tname": "MANASI SHOW",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b7"
+  },
+  "id": "teachers330",
+  "tname": "NARAYAN CHANDRA MANNA",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b8"
+  },
+  "id": "teachers331",
+  "tname": "MITHUN CHAKRABORTY",
+  "basic": 36600,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9b9"
+  },
+  "id": "teachers332",
+  "tname": "ARUN KUMAR PAL",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ba"
+  },
+  "id": "teachers333",
+  "tname": "SK SARAFUDDEN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9bb"
+  },
+  "id": "teachers334",
+  "tname": "DEBDAS MANNA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9bc"
+  },
+  "id": "teachers335",
+  "tname": "SUSANTA CHATTERJEE",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9bd"
+  },
+  "id": "teachers388-9d83883f",
+  "tname": "AVIJIT KARAR",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9be"
+  },
+  "id": "teachers336",
+  "tname": "SANDIP KARAR",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9bf"
+  },
+  "id": "teachers337",
+  "tname": "KUNAL PACHAL",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c0"
+  },
+  "id": "teachers338",
+  "tname": "ABDUL KARIM",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c1"
+  },
+  "id": "teachers339",
+  "tname": "TAPAS PATRA",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c2"
+  },
+  "id": "teachers340",
+  "tname": "TINA GAYEN DOLUI",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c3"
+  },
+  "id": "teachers341",
+  "tname": "GAUTAM CHAKRABORTTY",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c4"
+  },
+  "id": "teachers342",
+  "tname": "SOURAV SHAW",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c5"
+  },
+  "id": "teachers343",
+  "tname": "PAPIYA SAHU",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c6"
+  },
+  "id": "teachers344",
+  "tname": "DEBOSREE MAITY",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c7"
+  },
+  "id": "teachers345",
+  "tname": "SANGHAMITRA MAITY",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c8"
+  },
+  "id": "teachers346",
+  "tname": "LIPIKA MONDAL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9c9"
+  },
+  "id": "teachers347",
+  "tname": "MINTU MALIK",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ca"
+  },
+  "id": "teachers348",
+  "tname": "PAROMITA ROY",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9cb"
+  },
+  "id": "teachers349",
+  "tname": "ALAKANANDA PAUL",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9cc"
+  },
+  "id": "teachers350",
+  "tname": "PARTHO SARATHI HAZRA",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9cd"
+  },
+  "id": "teachers351",
+  "tname": "SUBRATA DAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ce"
+  },
+  "id": "teachers352",
+  "tname": "KAJI SAMIM AKTAR",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9cf"
+  },
+  "id": "teachers353",
+  "tname": "SALIL KUMAR CHAKRABORTTY",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d0"
+  },
+  "id": "teachers354",
+  "tname": "SANTI KUMAR KARAK",
+  "basic": 45900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 12000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d1"
+  },
+  "id": "teachers355",
+  "tname": "PRASUN HAZRA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d2"
+  },
+  "id": "teachers356",
+  "tname": "SK SABIR HOSSAIN",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d3"
+  },
+  "id": "teachers357",
+  "tname": "KANIKA PANJA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d4"
+  },
+  "id": "teachers358",
+  "tname": "DEBASHIS MANDAL",
+  "basic": 28900,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d5"
+  },
+  "id": "teachers359",
+  "tname": "AMIYA KUMAR KOLEY",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 7000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d6"
+  },
+  "id": "teachers360",
+  "tname": "BARNA DATTA",
+  "basic": 48700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d7"
+  },
+  "id": "teachers361",
+  "tname": "ROSHNIARA MONDAL SK",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d8"
+  },
+  "id": "teachers362",
+  "tname": "PROBHAT RANJAN KOLEY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2500,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9d9"
+  },
+  "id": "teachers363",
+  "tname": "PRIYANKA ROY",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9da"
+  },
+  "id": "teachers364",
+  "tname": "RUPA HALDER",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9db"
+  },
+  "id": "teachers365",
+  "tname": "HEMANTA KUMAR MISRA",
+  "basic": 45900,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9dc"
+  },
+  "id": "teachers366",
+  "tname": "DIBYENDU KOLEY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9dd"
+  },
+  "id": "teachers367",
+  "tname": "SARIFUL MOLLAH",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9de"
+  },
+  "id": "teachers394-a4f17403",
+  "tname": "JNANSANKAR SINGHA MAHAPATRA",
+  "basic": 0,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 0,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9df"
+  },
+  "id": "teachers368",
+  "tname": "MUNMUN CHANDRA",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 4000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e0"
+  },
+  "id": "teachers369",
+  "tname": "SUPARNA GAYEN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e1"
+  },
+  "id": "teachers370",
+  "tname": "TANMOY SAHA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e2"
+  },
+  "id": "teachers371",
+  "tname": "SARAJIT BISWAS",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e3"
+  },
+  "id": "teachers372",
+  "tname": "LAL CHAND SK",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e4"
+  },
+  "id": "teachers373",
+  "tname": "RINA ADAK",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e5"
+  },
+  "id": "teachers374",
+  "tname": "MRINMAY ADHIKARY",
+  "basic": 36600,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e6"
+  },
+  "id": "teachers375",
+  "tname": "MADHUMITA DHAL",
+  "basic": 26200,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e7"
+  },
+  "id": "teachers376",
+  "tname": "SAILEN NEBU",
+  "basic": 50200,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 7000,
+  "gsli": 60,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e8"
+  },
+  "id": "teachers377",
+  "tname": "BISWAJIT SAU",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9e9"
+  },
+  "id": "teachers378",
+  "tname": "KAMAL KUMAR DHARA",
+  "basic": 47300,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 10000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ea"
+  },
+  "id": "teachers379",
+  "tname": "DIBYENDU KUMAR ADHIKARY",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 3000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9eb"
+  },
+  "id": "teachers380",
+  "tname": "SANJUKTA HAJRA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 5000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ec"
+  },
+  "id": "teachers381",
+  "tname": "SK MAIDUL ISLAM",
+  "basic": 32500,
+  "addl": 400,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ed"
+  },
+  "id": "teachers382",
+  "tname": "MALLIKA GAYEN",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ee"
+  },
+  "id": "teachers383",
+  "tname": "SURASHREE SADHUKHAN SAHA",
+  "basic": 32500,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 500,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+},
+{
+  "_id": {
+    "$oid": "67506689902714a702d8a9ef"
+  },
+  "id": "teachers384",
+  "tname": "ABDUS SALAM MOLLICK",
+  "basic": 30700,
+  "addl": 0,
+  "daPercent": 0.14,
+  "hraPercent": 0.12,
+  "ma": 0,
+  "gpf": 2000,
+  "gsli": 0,
+  "arrear": 0
+}]
