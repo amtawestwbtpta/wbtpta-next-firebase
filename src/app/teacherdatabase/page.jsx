@@ -293,14 +293,26 @@ const TeacherDatabase = () => {
     },
     {
       name: "IT Statement",
-      cell: (row) => (
-        <Link
-          className="btn btn-sm btn-success"
-          href={`/incometax?data=${JSON.stringify(row)}`}
-        >
-          IT Statement
-        </Link>
-      ),
+      cell: (row) => {
+        const { id, tname, school, pan, phone, disability, desig } = row;
+        const data = {
+          id,
+          tname,
+          school,
+          pan,
+          phone,
+          disability,
+          desig,
+        };
+        return (
+          <Link
+            className="btn btn-sm btn-success"
+            href={`/IncomeTax?data=${JSON.stringify(data)}`}
+          >
+            IT Statement
+          </Link>
+        );
+      },
       omit: deductionState.length === 0,
     },
     {
