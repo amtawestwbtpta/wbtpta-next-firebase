@@ -273,7 +273,7 @@ const TeacherDatabase = () => {
           href={`/techpaysliposmsNew`}
           onClick={() => setStateObject(row)}
         >
-          Payslip OSMS New
+          OSMS Payslip
         </Link>
       ),
     },

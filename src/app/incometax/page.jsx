@@ -154,7 +154,6 @@ export default function IncomeTaxSection() {
   const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
   const novemberSalary = november.filter((el) => el.id === id)[0];
   const novemberArrear = novemberSalary?.arrear;
-  november;
   const novemberBasic = novemberSalary?.basic;
   const novemberAddl = novemberSalary?.addl;
   const novemberDA = Math.round(
@@ -171,7 +170,6 @@ export default function IncomeTaxSection() {
   const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
   const decemberSalary = december.filter((el) => el.id === id)[0];
   const decemberArrear = decemberSalary?.arrear;
-  december;
   const decemberBasic = decemberSalary?.basic;
   const decemberAddl = decemberSalary?.addl;
   const decemberDA = Math.round(
