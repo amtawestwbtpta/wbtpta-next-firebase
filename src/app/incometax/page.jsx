@@ -1906,7 +1906,7 @@ export default function IncomeTaxSection() {
                 >
                   {TotalRoundOffIncome > 250000 && TotalRoundOffIncome > 500000
                     ? `Rs. ${IndianFormat(Math.round(12500))}`
-                    : "NIL"}
+                    : `Rs. ${IndianFormat(CalculatedIT)}`}
                 </th>
               </tr>
               <tr style={{ border: "2px solid" }}>

@@ -2337,7 +2337,7 @@ export default function IncomeTax({ data }) {
               <Text style={[styles.textBold, { textAlign: "center" }]}>
                 {TotalRoundOffIncome > 250000 && TotalRoundOffIncome > 500000
                   ? `Rs. ${IndianFormat(Math.round(12500))}`
-                  : "NIL"}
+                  : `Rs. ${IndianFormat(CalculatedIT)}`}
               </Text>
             </View>
           </View>
