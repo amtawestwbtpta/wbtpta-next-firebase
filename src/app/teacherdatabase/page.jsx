@@ -307,7 +307,7 @@ const TeacherDatabase = () => {
         return (
           <Link
             className="btn btn-sm btn-success"
-            href={`/IncomeTax?data=${JSON.stringify(data)}`}
+            href={`/incometax?data=${JSON.stringify(data)}`}
           >
             IT Statement
           </Link>
