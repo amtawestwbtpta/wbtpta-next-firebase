@@ -510,6 +510,7 @@ export const finMonths = [
   "March",
 ];
 export const getMonthDays = [31, 30, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 export const generateID = () => {
   const capitalAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbers = "0123456789";

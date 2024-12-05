@@ -9,7 +9,9 @@ import {
   RoundTo,
   months,
 } from "../../modules/calculatefunctions";
-import { Loader } from "rsuite";
+
+import axios from "axios";
+import Loader from "../../components/Loader";
 const TechSalary = () => {
   const { state, stateArray, setStateObject } = useGlobalContext();
   const router = useRouter();
@@ -21,11 +23,87 @@ const TechSalary = () => {
   const [index, setIndex] = useState(today.getMonth() + 1);
   const [month, setMonth] = useState(GetMonthName(today.getMonth()));
   const thisMonth = GetMonthName(today.getMonth());
+const [loader, setLoader] = useState(false);
+  const [prevJanuary, setPrevJanuary] = useState([]);
+  const [prevFebruary, setPrevFebruary] = useState([]);
+  const [march, setMarch] = useState([]);
+  const [april, setApril] = useState([]);
+  const [may, setMay] = useState([]);
+  const [june, setJune] = useState([]);
+  const [july, setJuly] = useState([]);
+  const [august, setAugust] = useState([]);
+  const [september, setSeptember] = useState([]);
+  const [october, setOctober] = useState([]);
+  const [november, setNovember] = useState([]);
+  const [december, setDecember] = useState([]);
+  const [january, setJanuary] = useState([]);
+  const [february, setFebruary] = useState([]);
+  const getSalary = async () => {
+setLoader(true)
+    const qA = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
+    );
+    const qB = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
+    );
+    const q1 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+    );
+    const q2 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+    );
+    const q3 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
+    );
+    const q4 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
+    );
+    const q5 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+    );
+    const q6 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
+    );
+    const q7 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
+    );
+    const q8 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
+    );
+    const q9 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
+    );
+    const q10 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
+    );
+    const q11 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
+    );
+    const q12 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
+    );
+    setPrevJanuary(qA.data);
+    setPrevFebruary(qB.data);
+    setMarch(q1.data);
+    setApril(q2.data);
+    setMay(q3.data);
+    setJune(q4.data);
+    setJuly(q5.data);
+    setAugust(q6.data);
+    setSeptember(q7.data);
+    setOctober(q8.data);
+    setNovember(q9.data);
+    setDecember(q10.data);
+    setJanuary(q11.data);
+    setFebruary(q12.data);
+    setLoader(false);
+  };
+
   useEffect(() => {
     if (!state) {
       router.push("/login");
     }
-
+    getSalary();
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
@@ -38,7 +116,7 @@ const TechSalary = () => {
 
   return (
     <div className="container-fluid my-5">
-      <>
+      {loader? <Loader/>:<>
         <div className="table-resposive text-center my-2">
           <div className="mx-auto my-3 col-md-2 noprint">
             <h6 className="text-primary">Select Salary Month:</h6>
@@ -127,6 +205,7 @@ const TechSalary = () => {
               </thead>
               <tbody id="tbody">
                 {filteredData.map((el, ind) => {
+                  const id = el?.id;
                   let basic = el.basic;
                   let mbasic = el.mbasic;
                   let ir = Math.round(mbasic * 0.04);
@@ -145,19 +224,98 @@ const TechSalary = () => {
                   let basicpay;
                   let ptax;
                   let pfund;
+                  let gross;
+                  const prevJanuarySalary = prevJanuary.filter(
+                    (e) => e.id === id
+                  )[0];
+                  const prevFebruarySalary = prevFebruary.filter(
+                    (e) => e.id === id
+                  )[0];
+                  const marchSalary = march.filter((e) => e.id === id)[0];
+                  const aprilSalary = april.filter((e) => e.id === id)[0];
+                  const maySalary = may.filter((e) => e.id === id)[0];
+                  const juneSalary = june.filter((e) => e.id === id)[0];
+                  const julySalary = july.filter((e) => e.id === id)[0];
+                  const augustSalary = august.filter((e) => e.id === id)[0];
+                  const septemberSalary = september.filter(
+                    (e) => e.id === id
+                  )[0];
+                  const octoberSalary = october.filter((e) => e.id === id)[0];
+                  const novemberSalary = november.filter((e) => e.id === id)[0];
+                  const decemberSalary = december.filter((e) => e.id === id)[0];
+                  const januarySalary = january.filter((e) => e.id === id)[0];
+                  const februarySalary = february.filter((e) => e.id === id)[0];
                   if (dataYear === date.getFullYear()) {
-                    if (index > 6) {
-                      basicpay = basic;
-                      da = Math.round(basicpay * DA);
-                      pfund = julyGpf;
-                    } else if (index < 7 || index > 3) {
-                      basicpay = mbasic;
-                      da = Math.round(basicpay * DA);
-                      pfund = gpf;
-                    } else {
-                      basicpay = mbasic;
-                      pfund = gpfprev;
-                      da = Math.round(basicpay * PREVDA);
+                    if (index === 1) {
+                      basicpay = prevJanuarySalary?.basic;
+                      da = Math.round(basicpay * prevJanuarySalary?.daPercent);
+                      pfund = prevJanuarySalary?.gpf;
+                      ma = prevJanuarySalary?.ma;
+                    } else if (index === 2) {
+                      basicpay = prevFebruarySalary?.basic;
+                      da = Math.round(basicpay * prevFebruarySalary?.daPercent);
+                      pfund = prevFebruarySalary?.gpf;
+                      ma = prevFebruarySalary?.ma;
+                    } else if (index === 3) {
+                      basicpay = marchSalary?.basic;
+                      da = Math.round(basicpay * marchSalary?.daPercent);
+                      pfund = marchSalary?.gpf;
+                      ma = marchSalary?.ma;
+                    } else if (index === 4) {
+                      basicpay = aprilSalary?.basic;
+                      da = Math.round(basicpay * aprilSalary?.daPercent);
+                      pfund = aprilSalary?.gpf;
+                      ma = aprilSalary?.ma;
+                    } else if (index === 5) {
+                      basicpay = maySalary?.basic;
+                      da = Math.round(basicpay * maySalary?.daPercent);
+                      pfund = maySalary?.gpf;
+                      ma = maySalary?.ma;
+                    } else if (index === 6) {
+                      basicpay = juneSalary?.basic;
+                      da = Math.round(basicpay * juneSalary?.daPercent);
+                      pfund = juneSalary?.gpf;
+                      ma = juneSalary?.ma;
+                    } else if (index === 7) {
+                      basicpay = julySalary?.basic;
+                      da = Math.round(basicpay * julySalary?.daPercent);
+                      pfund = julySalary?.gpf;
+                      ma = julySalary?.ma;
+                    } else if (index === 8) {
+                      basicpay = augustSalary?.basic;
+                      da = Math.round(basicpay * augustSalary?.daPercent);
+                      pfund = augustSalary?.gpf;
+                      ma = augustSalary?.ma;
+                    } else if (index === 9) {
+                      basicpay = septemberSalary?.basic;
+                      da = Math.round(basicpay * septemberSalary?.daPercent);
+                      pfund = septemberSalary?.gpf;
+                      ma = septemberSalary?.ma;
+                    } else if (index === 10) {
+                      basicpay = octoberSalary?.basic;
+                      da = Math.round(basicpay * octoberSalary?.daPercent);
+                      pfund = octoberSalary?.gpf;
+                      ma = octoberSalary?.ma;
+                    } else if (index === 11) {
+                      basicpay = novemberSalary?.basic;
+                      da = Math.round(basicpay * novemberSalary?.daPercent);
+                      pfund = novemberSalary?.gpf;
+                      ma = novemberSalary?.ma;
+                    } else if (index === 12) {
+                      basicpay = decemberSalary?.basic;
+                      da = Math.round(basicpay * decemberSalary?.daPercent);
+                      pfund = decemberSalary?.gpf;
+                      ma = decemberSalary?.ma;
+                    } else if (index === 13) {
+                      basicpay = januarySalary?.basic;
+                      da = Math.round(basicpay * januarySalary?.daPercent);
+                      pfund = januarySalary?.gpf;
+                      ma = januarySalary?.ma;
+                    } else if (index === 14) {
+                      basicpay = februarySalary?.basic;
+                      da = Math.round(basicpay * februarySalary?.daPercent);
+                      pfund = februarySalary?.gpf;
+                      ma = februarySalary?.ma;
                     }
                   } else if (dataYear === date.getFullYear() - 1) {
                     basicpay = prevmbasic;
@@ -177,7 +335,6 @@ const TechSalary = () => {
                   // let da = Math.round(basicpay * DA);
                   let hra = Math.round(basicpay * HRA);
 
-                  let gross;
                   if (year === 2024 && index === 7) {
                     gross = basic + da + ir + hra + addl + ma;
                   } else {
@@ -357,7 +514,8 @@ const TechSalary = () => {
             Teacher's Accuitance
           </button>
         </div>
-      </>
+      </>}
+      
     </div>
   );
 };

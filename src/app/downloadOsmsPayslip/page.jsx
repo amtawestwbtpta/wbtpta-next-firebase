@@ -11,6 +11,7 @@ import {
 import { DA, HRA, NEXTDA } from "../../modules/constants";
 import OSMSPaySLip from "../../components/OSMSPaySLip";
 import dynamic from "next/dynamic";
+import axios from "axios";
 
 export default function Page() {
   const PDFDownloadLink = dynamic(
@@ -21,6 +22,32 @@ export default function Page() {
       loading: () => <p>Please Wait...</p>,
     }
   );
+  const thisYear = new Date().getFullYear();
+  const nextYear = thisYear + 1;
+  const prevYear = thisYear - 1;
+  const dataExist = true;
+  let PAYSLIPMONTHS;
+  if (dataExist) {
+    PAYSLIPMONTHS = [
+      `January-${thisYear}`,
+      `February-${thisYear}`,
+      `March-${thisYear}`,
+      `April-${thisYear}`,
+      `May-${thisYear}`,
+      `June-${thisYear}`,
+      `July-${thisYear}`,
+      `August-${thisYear}`,
+      `September-${thisYear}`,
+      `October-${thisYear}`,
+      `November-${thisYear}`,
+      `December-${thisYear}`,
+      `January-${nextYear}`,
+      `February-${nextYear}`,
+      `March-${nextYear}`,
+    ];
+  } else {
+    [`January-${prevYear}`, `February-${prevYear}`];
+  }
   const searchParams = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
   const key = searchParams.get("key");
@@ -82,36 +109,160 @@ export default function Page() {
   let date = new Date();
   let today = new Date();
   // let date = new Date();
-  const [index, setIndex] = useState(today.getMonth());
+  const [loader, setLoader] = useState(false);
+  const [index, setIndex] = useState(today.getMonth() - 1);
   const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
-  // let junelast = new Date(`${date.getFullYear()}-07-31`);
-  if (dataYear === date.getFullYear()) {
-    if (index > 6) {
-      basicpay = basic;
-      da = Math.round(basicpay * DA);
-      pfund = julyGpf;
-    } else if (index < 7 || index > 3) {
-      basicpay = mbasic;
-      da = Math.round(basicpay * DA);
-      pfund = gpf;
-    } else {
-      basicpay = mbasic;
-      pfund = gpfprev;
-      da = Math.round(basicpay * PREVDA);
-    }
-  } else if (dataYear === date.getFullYear() - 1) {
-    basicpay = prevmbasic;
-    da = Math.round(basicpay * PREV6DA);
-    pfund = gpfprev;
-  } else {
-    pfund = gpfprev;
-    if (index > 6) {
-      basicpay = RoundTo(basic + basic * 0.03, 100);
-      da = Math.round(basicpay * NEXTDA);
-    } else {
-      basicpay = basic;
-      da = Math.round(basicpay * DA);
-    }
+  const [year, setYear] = useState(today.getFullYear());
+  const [prevJanuary, setPrevJanuary] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [prevFebruary, setPrevFebruary] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [march, setMarch] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [april, setApril] = useState([]);
+  const [may, setMay] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [june, setJune] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [july, setJuly] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [august, setAugust] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [september, setSeptember] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [october, setOctober] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [november, setNovember] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [december, setDecember] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [january, setJanuary] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+  const [february, setFebruary] = useState({
+    basic: 29800,
+    daPercent: 0.14,
+    gpf: 2000,
+    ma: 500,
+  });
+
+  if (index === 0) {
+    basicpay = prevJanuary?.basic;
+    da = Math.round(basicpay * prevJanuary?.daPercent);
+    pfund = prevJanuary?.gpf;
+    ma = prevJanuary?.ma;
+  } else if (index === 1) {
+    basicpay = prevFebruary?.basic;
+    da = Math.round(basicpay * prevFebruary?.daPercent);
+    pfund = prevFebruary?.gpf;
+    ma = prevFebruary?.ma;
+  } else if (index === 2) {
+    basicpay = march?.basic;
+    da = Math.round(basicpay * march?.daPercent);
+    pfund = march?.gpf;
+    ma = march?.ma;
+  } else if (index === 3) {
+    basicpay = april?.basic;
+    da = Math.round(basicpay * april?.daPercent);
+    pfund = april?.gpf;
+    ma = april?.ma;
+  } else if (index === 4) {
+    basicpay = may?.basic;
+    da = Math.round(basicpay * may?.daPercent);
+    pfund = may?.gpf;
+    ma = may?.ma;
+  } else if (index === 5) {
+    basicpay = june?.basic;
+    da = Math.round(basicpay * june?.daPercent);
+    pfund = june?.gpf;
+    ma = june?.ma;
+  } else if (index === 6) {
+    basicpay = july?.basic;
+    da = Math.round(basicpay * july?.daPercent);
+    pfund = july?.gpf;
+    ma = july?.ma;
+  } else if (index === 7) {
+    basicpay = august?.basic;
+    da = Math.round(basicpay * august?.daPercent);
+    pfund = august?.gpf;
+    ma = august?.ma;
+  } else if (index === 8) {
+    basicpay = september?.basic;
+    da = Math.round(basicpay * september?.daPercent);
+    pfund = september?.gpf;
+    ma = september?.ma;
+  } else if (index === 9) {
+    basicpay = october?.basic;
+    da = Math.round(basicpay * october?.daPercent);
+    pfund = october?.gpf;
+    ma = october?.ma;
+  } else if (index === 10) {
+    basicpay = november?.basic;
+    da = Math.round(basicpay * november?.daPercent);
+    pfund = november?.gpf;
+    ma = november?.ma;
+  } else if (index === 11) {
+    basicpay = december?.basic;
+    da = Math.round(basicpay * december?.daPercent);
+    pfund = december?.gpf;
+    ma = december?.ma;
+  } else if (index === 12) {
+    basicpay = january?.basic;
+    da = Math.round(basicpay * january?.daPercent);
+    pfund = january?.gpf;
+    ma = january?.ma;
+  } else if (index === 13) {
+    basicpay = february?.basic;
+    da = Math.round(basicpay * february?.daPercent);
+    pfund = february?.gpf;
+    ma = february?.ma;
   }
   let level = ropa(basicpay).lv;
   let cell = ropa(basicpay).ce;
@@ -145,11 +296,91 @@ export default function Page() {
   netpay = gross - deduction;
 
   let lastmonth = GetMonthName(today.getMonth() - 1);
+  const getSalary = async () => {
+    setLoader(true);
+    const qA = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
+    );
+    const qB = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
+    );
+    const q1 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+    );
+    const q2 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+    );
+    const q3 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
+    );
+    const q4 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
+    );
+    const q5 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+    );
+    const q6 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
+    );
+    const q7 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
+    );
+    const q8 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
+    );
+    const q9 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
+    );
+    const q10 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
+    );
+    const q11 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
+    );
+    const q12 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
+    );
+    setPrevJanuary(qA.data?.filter((el) => el.id === data?.id)[0]);
+    setPrevFebruary(qB.data?.filter((el) => el.id === data?.id)[0]);
+    setMarch(q1.data?.filter((el) => el.id === data?.id)[0]);
+    setApril(q2.data?.filter((el) => el.id === data?.id)[0]);
+    setMay(q3.data?.filter((el) => el.id === data?.id)[0]);
+    setJune(q4.data?.filter((el) => el.id === data?.id)[0]);
+    setJuly(q5.data?.filter((el) => el.id === data?.id)[0]);
+    setAugust(q6.data?.filter((el) => el.id === data?.id)[0]);
+    setSeptember(q7.data?.filter((el) => el.id === data?.id)[0]);
+    setOctober(q8.data?.filter((el) => el.id === data?.id)[0]);
+    setNovember(q9.data?.filter((el) => el.id === data?.id)[0]);
+    setDecember(q10.data?.filter((el) => el.id === data?.id)[0]);
+    setJanuary(q11.data?.filter((el) => el.id === data?.id)[0]);
+    setFebruary(q12.data?.filter((el) => el.id === data?.id)[0]);
+    setLoader(false);
+  };
+
+  useEffect(() => {}, [
+    month,
+    index,
+    prevJanuary,
+    prevFebruary,
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    september,
+    october,
+    november,
+    december,
+    january,
+    february,
+  ]);
   useEffect(() => {
     document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
     if (state !== "admin" || key !== serverKey) {
       router.push("/login");
     }
+    getSalary();
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
@@ -175,16 +406,21 @@ export default function Page() {
             aria-label=".form-select-sm example"
             name="Month"
             required
-            defaultValue={month + "-" + (index + 1)}
+            defaultValue={month + "-" + year + "-" + index}
             onChange={(e) => {
-              setMonth(e.target.value.split("-")[0]);
-              setIndex(parseInt(e.target.value.split("-")[1]));
+              if (e.target.value !== "") {
+                setMonth(e.target.value.split("-")[0]);
+                setYear(e.target.value.split("-")[1]);
+                setIndex(parseInt(e.target.value.split("-")[2]));
+              } else {
+                toast.error("Please select a valid month");
+              }
             }}
           >
             <option value="">Select Month </option>
-            {months.map((el, ind) => {
+            {PAYSLIPMONTHS.map((el, ind) => {
               return (
-                <option value={el + "-" + (ind + 1)} key={ind}>
+                <option value={el + "-" + ind} key={ind}>
                   {el}
                 </option>
               );
@@ -222,7 +458,7 @@ export default function Page() {
                 deduction,
                 dataYear,
                 index,
-                ir
+                ir,
               }}
             />
           }

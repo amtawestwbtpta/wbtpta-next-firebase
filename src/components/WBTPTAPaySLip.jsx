@@ -163,7 +163,7 @@ export default function WBTPTAPaySLip({ data }) {
                     <Text style={styles.text2}>MA</Text>
                     <Text style={styles.text}>{ma}</Text>
                   </View>
-                  {dataYear === 2024 && index === 7 && (
+                  {dataYear === 2024 && index === 6 && (
                     <View style={styles.salaryView}>
                       <Text style={styles.text2}>IR</Text>
                       <Text style={styles.text}>{ir}</Text>

@@ -181,7 +181,7 @@ export default function OSMSPaySLip({ data }) {
                   <View style={styles.salaryView}>
                     <Text style={styles.text2}>IR</Text>
                     <Text style={styles.text}>
-                      {dataYear === 2024 && index === 7 ? ir : 0}
+                      {dataYear === 2024 && index === 6 ? ir : 0}
                     </Text>
                   </View>
                 </View>
