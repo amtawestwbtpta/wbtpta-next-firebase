@@ -49,7 +49,7 @@ const PaySlipOsmsNew = () => {
       `March-${nextYear}`,
     ];
   } else {
-    [`January-${prevYear}`, `February-${prevYear}`];
+    PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
   }
 
   const { state, stateObject } = useGlobalContext();
@@ -109,87 +109,87 @@ const PaySlipOsmsNew = () => {
   let today = new Date();
   // let date = new Date();
   const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(today.getMonth()-1);
+  const [index, setIndex] = useState(today.getMonth() - 1);
   const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
   const [year, setYear] = useState(today.getFullYear());
   const [prevJanuary, setPrevJanuary] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [prevFebruary, setPrevFebruary] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [march, setMarch] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [april, setApril] = useState([]);
   const [may, setMay] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [june, setJune] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [july, setJuly] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [august, setAugust] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [september, setSeptember] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [october, setOctober] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [november, setNovember] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [december, setDecember] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [january, setJanuary] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
   const [february, setFebruary] = useState({
     basic: 29800,
     daPercent: 0.14,
     gpf: 2000,
-    ma:500
+    ma: 500,
   });
 
   if (index === 0) {
@@ -357,8 +357,7 @@ const PaySlipOsmsNew = () => {
     setLoader(false);
   };
 
-  useEffect(() => {
-  }, [
+  useEffect(() => {}, [
     month,
     index,
     prevJanuary,

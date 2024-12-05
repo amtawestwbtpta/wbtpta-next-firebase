@@ -46,7 +46,7 @@ export default function Page() {
       `March-${nextYear}`,
     ];
   } else {
-    [`January-${prevYear}`, `February-${prevYear}`];
+    PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
   }
   const searchParams = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
@@ -383,9 +383,7 @@ export default function Page() {
     getSalary();
     // eslint-disable-next-line
   }, []);
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [month, index]);
+
 
   return (
     <Suspense>

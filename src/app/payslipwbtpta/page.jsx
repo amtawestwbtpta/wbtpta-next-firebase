@@ -51,7 +51,7 @@ const PayslipWbtpta = () => {
       `March-${nextYear}`,
     ];
   } else {
-    [`January-${prevYear}`, `February-${prevYear}`];
+    PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
   }
 
   const { state, stateObject } = useGlobalContext();
