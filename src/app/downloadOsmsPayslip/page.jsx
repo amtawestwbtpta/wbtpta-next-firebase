@@ -377,13 +377,12 @@ export default function Page() {
   ]);
   useEffect(() => {
     document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    if (state !== "admin" || key !== serverKey) {
+    if (key !== serverKey) {
       router.push("/login");
     }
     getSalary();
     // eslint-disable-next-line
   }, []);
-
 
   return (
     <Suspense>
