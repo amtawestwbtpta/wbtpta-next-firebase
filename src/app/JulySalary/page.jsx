@@ -3,23 +3,39 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { DA, HRA } from "../../modules/constants";
+import axios from "axios";
 
 const JulySalary = () => {
   const router = useRouter();
   const { state, teachersState } = useGlobalContext();
   const [data, setData] = useState(teachersState);
   const [isclicked, setIsclicked] = useState(false);
+  const [july, setJuly] = useState([]);
+  const [march, setMarch] = useState([]);
+  const getSalary = async () => {
+    const q1 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+    );
+    const q5 = await axios.get(
+      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+    );
+    setMarch(q1);
+    setJuly(q5);
+  };
   useEffect(() => {
-    if (state !== "admin") {
-      router.push("/logout");
-    }
-
     !isclicked
       ? (document.title = "WBTPTA AMTA WEST:All Teacher's July Salary Data")
       : (document.title =
           "WBTPTA AMTA WEST:All WBTPTA Teacher's July Salary Data");
     //eslint-disable-next-line
   }, [isclicked]);
+  useEffect(() => {
+    if (state !== "admin") {
+      router.push("/logout");
+    }
+    getSalary();
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <div>
@@ -93,14 +109,23 @@ const JulySalary = () => {
           </thead>
           <tbody>
             {data.map((el, ind) => {
-              let basic = el.basic;
-              let da = Math.round(basic * DA);
+              let id = el?.id;
+              const marchData = march.filter((item) => item.id === id)[0];
+              const filteredData = july.filter((item) => item.id === id)[0];
+              let basic = filteredData.basic;
+              let da = Math.round(basic * filteredData?.daPercent);
               let hra = Math.round(basic * HRA);
-              let addl = el.addl;
-              let ma = el.ma;
-              let gross = basic + da + hra + addl + ma;
-              let gpf = el.julyGpf;
-              let gsli = el.gsli;
+              let addl = filteredData.addl;
+              let ma = filteredData.ma;
+              let gross =
+                basic +
+                da +
+                hra +
+                addl +
+                ma +
+                marchData.basic * marchData.daPercent;
+              let gpf = filteredData?.gpf;
+              let gsli = filteredData?.gsli;
               let disability = el.disability;
               let ptax;
               if (gross > 40000) {

@@ -264,9 +264,9 @@ export default function Page() {
   hra = Math.round(basicpay * HRA);
 
   if (dataYear === 2024 && index === 7) {
-    gross = basic + da + ir + hra + addl + ma;
+    gross = basicpay + da + ir + hra + addl + ma;
   } else {
-    gross = basic + da + hra + addl + ma;
+    gross = basicpay + da + hra + addl + ma;
   }
 
   if (gross > 40000) {
