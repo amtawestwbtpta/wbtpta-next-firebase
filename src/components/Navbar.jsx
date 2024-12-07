@@ -383,6 +383,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/ITSection"
+              onClick={handleNavCollapse}
+            >
+              IT Section
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/TeacherServiceLife"
               onClick={handleNavCollapse}
             >
