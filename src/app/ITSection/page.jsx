@@ -75,7 +75,51 @@ export default function Page() {
       wrap: true,
       center: +true,
     },
-
+    {
+      name: "Gross Salary",
+      selector: (row) => `₹ ${IndianFormat(row?.AllGross)}`,
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
+      name: "Gross 80C",
+      selector: (teacher) =>
+        teacher?.limit80C !== 0
+          ? `₹ ${IndianFormat(teacher?.limit80C)}`
+          : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
+      name: "Gross 80D",
+      selector: (teacher) =>
+        teacher?.Gross80D !== 0
+          ? `₹ ${IndianFormat(teacher?.Gross80D)}`
+          : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
+      name: "Taxable Income",
+      selector: (teacher) =>
+        teacher?.TaxableIncome !== 0
+          ? `₹ ${IndianFormat(teacher?.TaxableIncome)}`
+          : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
+      name: "Net Tax",
+      selector: (teacher) =>
+        teacher?.NetTax !== 0 ? `₹ ${IndianFormat(teacher?.NetTax)}` : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
     {
       name: "Update Deduction",
       cell: (row) => (
@@ -119,13 +163,6 @@ export default function Page() {
         );
       },
       omit: deductionState.length === 0,
-    },
-    {
-      name: "Gross Salary",
-      selector: (row) => `₹ ${IndianFormat(row?.AllGross)}`,
-      sortable: true,
-      wrap: true,
-      center: +true,
     },
   ];
 
@@ -195,7 +232,7 @@ export default function Page() {
                   type="button"
                   className="btn btn-primary m-2"
                   onClick={() => {
-                    const fData = salary.filter(
+                    const fData = filteredData.filter(
                       (salary) => salary?.AllGross >= 500000
                     );
                     setFilteredData(fData);
@@ -208,7 +245,7 @@ export default function Page() {
                   type="button"
                   className="btn btn-success m-2"
                   onClick={() => {
-                    const fData = salary.filter(
+                    const fData = filteredData.filter(
                       (salary) => salary?.AllGross <= 500000
                     );
                     setFilteredData(fData);
@@ -219,9 +256,22 @@ export default function Page() {
                 </button>
                 <button
                   type="button"
+                  className="btn btn-info m-2"
+                  onClick={() => {
+                    const fData = filteredData.filter(
+                      (salary) => salary?.NetTax !== 0
+                    );
+                    setFilteredData(fData);
+                    setFilterClicked(true);
+                  }}
+                >
+                  Taxable Teachers
+                </button>
+                <button
+                  type="button"
                   className="btn btn-warning m-2"
                   onClick={() => {
-                    const fData = salary.filter(
+                    const fData = filteredData.filter(
                       (salary) => salary?.association === "WBTPTA"
                     );
                     setFilteredData(fData);
@@ -353,7 +403,7 @@ export default function Page() {
                           border: "1px solid",
                         }}
                       >
-                        SN
+                        SL
                       </th>
                       <th
                         style={{
@@ -375,6 +425,34 @@ export default function Page() {
                         }}
                       >
                         Gross Salary
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Gross 80C
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Gross 80D
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Taxable Income
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Net Tax
                       </th>
                       <th
                         className="noprint"
@@ -412,6 +490,7 @@ export default function Page() {
                               style={{
                                 border: "1px solid",
                               }}
+                              className="p-2"
                             >
                               {filterClicked
                                 ? index + 1
@@ -439,6 +518,42 @@ export default function Page() {
                               }}
                             >
                               ₹ {IndianFormat(teacher?.AllGross)}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.limit80C !== 0
+                                ? `₹ ${IndianFormat(teacher?.limit80C)}`
+                                : "NIL"}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.Gross80D !== 0
+                                ? `₹ ${IndianFormat(teacher?.Gross80D)}`
+                                : "NIL"}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.TaxableIncome !== 0
+                                ? `₹ ${IndianFormat(teacher?.TaxableIncome)}`
+                                : "NIL"}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.NetTax !== 0
+                                ? `₹ ${IndianFormat(teacher?.NetTax)}`
+                                : "NIL"}
                             </td>
                             <td
                               className="noprint"
