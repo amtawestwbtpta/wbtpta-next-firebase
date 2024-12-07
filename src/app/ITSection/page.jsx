@@ -589,7 +589,7 @@ export default function Page() {
                                 className="btn btn-sm btn-success p-2 m-2"
                                 onClick={() => {
                                   const fData = teachersState.filter(
-                                    (teacher) => teacher?.id === teacher?.id
+                                    (item) => item?.id === teacher?.id
                                   )[0];
                                   const {
                                     id,
