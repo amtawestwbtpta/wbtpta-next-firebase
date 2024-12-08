@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
+import { collection, getDocs, query } from "firebase/firestore";
 export default function IncomeTaxSection() {
   const PDFDownloadLink = dynamic(
     async () =>
