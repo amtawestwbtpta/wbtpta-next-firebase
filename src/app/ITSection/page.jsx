@@ -235,7 +235,13 @@ export default function Page() {
                     const fData = filteredData.filter(
                       (salary) => salary?.AllGross >= 500000
                     );
-                    setFilteredData(fData);
+                    if (fData.length !== 0) {
+                      setFilteredData(fData);
+                    } else {
+                      setFilteredData(
+                        salary.filter((salary) => salary?.AllGross >= 500000)
+                      );
+                    }
                     setFilterClicked(true);
                   }}
                 >
@@ -248,7 +254,13 @@ export default function Page() {
                     const fData = filteredData.filter(
                       (salary) => salary?.AllGross <= 500000
                     );
-                    setFilteredData(fData);
+                    if (fData.length !== 0) {
+                      setFilteredData(fData);
+                    } else {
+                      setFilteredData(
+                        salary.filter((salary) => salary?.AllGross <= 500000)
+                      );
+                    }
                     setFilterClicked(true);
                   }}
                 >
@@ -261,7 +273,13 @@ export default function Page() {
                     const fData = filteredData.filter(
                       (salary) => salary?.NetTax !== 0
                     );
-                    setFilteredData(fData);
+                    if (fData.length !== 0) {
+                      setFilteredData(fData);
+                    } else {
+                      setFilteredData(
+                        salary.filter((salary) => salary?.NetTax !== 0)
+                      );
+                    }
                     setFilterClicked(true);
                   }}
                 >
@@ -274,7 +292,15 @@ export default function Page() {
                     const fData = filteredData.filter(
                       (salary) => salary?.association === "WBTPTA"
                     );
-                    setFilteredData(fData);
+                    if (fData.length !== 0) {
+                      setFilteredData(fData);
+                    } else {
+                      setFilteredData(
+                        salary.filter(
+                          (salary) => salary?.association === "WBTPTA"
+                        )
+                      );
+                    }
                     setFilterClicked(true);
                   }}
                 >
