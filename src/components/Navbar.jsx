@@ -11,7 +11,7 @@ import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
-import { Loader } from "rsuite";
+import Loader from "./Loader";
 import Image from "next/image";
 import axios from "axios";
 
@@ -124,10 +124,18 @@ const Navbar = () => {
     setSchoolUpdateTime(Date.now());
     setShowLoader(false);
   };
+  let id, tname, school, pan, disability, desig, fname;
 
   if (details) {
     userdetails = decryptObjData("uid");
     teacherdetails = decryptObjData("tid");
+    id = teacherdetails?.id;
+    tname = teacherdetails?.tname;
+    school = teacherdetails?.school;
+    pan = teacherdetails?.pan;
+    disability = teacherdetails?.disability;
+    desig = teacherdetails?.desig;
+    fname = teacherdetails?.fname;
   }
 
   const checkLogin = async () => {
@@ -335,11 +343,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/Form16Prev"
-              onClick={() => {
-                handleNavCollapse();
-                setStateObject(teacherdetails);
-              }}
+              href={`/Form16New?data=${JSON.stringify({
+                id,
+                tname,
+                school,
+                pan,
+                disability,
+                desig,
+                fname,
+              })}`}
             >
               Generate Own Form 16
             </Link>

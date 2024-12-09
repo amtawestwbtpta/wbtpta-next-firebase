@@ -5,7 +5,7 @@ import { useGlobalContext } from "../../context/Store";
 import { months, titleCase } from "../../modules/calculatefunctions";
 import { DA, HRA, PREV6DA, PREVDA } from "../../modules/constants";
 import axios from "axios";
-import { Loader } from "rsuite";
+import Loader from "../../components/Loader";
 const TechAccuitance = () => {
   const { state, stateArray } = useGlobalContext();
   const router = useRouter();
