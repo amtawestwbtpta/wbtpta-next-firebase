@@ -901,7 +901,9 @@ export default function IncomeTaxNew({ data }) {
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
-                    <Text style={styles.textBold}>NOT APPLICABLE</Text>
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(BankInterest)}
+                    </Text>
                   </View>
                 </View>
                 <View
@@ -919,7 +921,7 @@ export default function IncomeTaxNew({ data }) {
                   </View>
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(GrossTotalIncome)}
+                      Rs. {IndianFormat(TotalIncome)}
                     </Text>
                   </View>
                 </View>
@@ -974,9 +976,7 @@ export default function IncomeTaxNew({ data }) {
                 >
                   <View style={{ borderRightWidth: 1, width: "80%" }}>
                     <Text style={[styles.text, { textAlign: "left" }]}>
-                      15. Less: Rebate U/S 87A (Total Taxable Income not
-                      exceeding Rs. 5,00,000/- shall got a Tax Rebate of Rs.
-                      12,500/
+                      15. Less: Rebate U/S 87A
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
@@ -2080,17 +2080,6 @@ export default function IncomeTaxNew({ data }) {
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
                   Schedule - Other VIA
                 </Text>
-                <Image
-                  source={{ uri: NAIMAGEURL }}
-                  style={{
-                    height: 175,
-                    width: 175,
-                    marginBottom: 0,
-                    marginLeft: 340,
-
-                    position: "absolute",
-                  }}
-                />
               </View>
               <View
                 style={{

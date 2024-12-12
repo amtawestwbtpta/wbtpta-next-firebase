@@ -400,14 +400,37 @@ export default function IncomeTaxNewSection() {
     educationLoan +
     charity +
     handicapTreatment;
-  const TotalIncome = GrossTotalIncome - limitVIA - OtherVIA;
-  const TotalRoundOffIncome = roundSo(GrossTotalIncome, 10);
-  const CalculatedIT = CalculateNewIncomeTax(GrossTotalIncome);
+  const TotalIncome = AllGross - 75000
+  const TotalRoundOffIncome = roundSo(TotalIncome, 10);
+  const ThirtyIT = TotalIncome > 1500000 ? TotalIncome - 1500000 : 0;
+  const ThirtyITTax = ThirtyIT * 0.3;
+  const TwentyIT =
+    TotalIncome > 1200000 ? TotalIncome - 1200000 - ThirtyIT : 0;
+  const TwentyITTax = TwentyIT * 0.2;
+  const FifteenIT =
+    TotalIncome > 1000000
+      ? TotalIncome - 1000000 - ThirtyIT - TwentyIT
+      : 0;
+  const FifteenITTax = FifteenIT * 0.15;
+  const TenIT =
+    TotalIncome > 700000
+      ? TotalIncome - 700000 - ThirtyIT - TwentyIT - FifteenIT
+      : 0;
+  const TenITTax = TenIT * 0.1;
+  const FiveIT =
+    TotalIncome > 300000
+      ? TotalIncome - 300000 - ThirtyIT - TwentyIT - FifteenIT - TenIT
+      : 0;
+  const FiveITTax = FiveIT * 0.05;
+  const ZeroIT = Math.min(TotalIncome, 300000);
+  const CalculatedIT =
+    ThirtyITTax + TwentyITTax + FifteenITTax + TenITTax + FiveITTax;
+  // const CalculatedIT = CalculateNewIncomeTax(GrossTotalIncome);
   const MarginalReliefA = Math.floor(
-    GrossTotalIncome > 700000 ? GrossTotalIncome - 700000 : 0
+    TotalIncome > 700000 ? TotalIncome - 700000 : 0
   );
   const MarginalReliefB = Math.floor(
-    GrossTotalIncome > 700000 ? CalculatedIT - MarginalReliefA : 0
+    TotalIncome > 700000 ? CalculatedIT - MarginalReliefA : 0
   );
   const IncomeTaxAfterRelief = Math.floor(CalculatedIT - MarginalReliefB);
   const isUnderRebate = MarginalReliefA > 0 ? false : true;
@@ -1312,7 +1335,7 @@ export default function IncomeTaxNewSection() {
                     11. Amount deduction under any other provision(s) Chapter
                     VI-A (From Schedule- Other VIA)
                   </th>
-                  <th>NOT APPLICABLE</th>
+                  <th>Rs. {IndianFormat(BankInterest)}</th>
                 </tr>
                 <tr style={{ borderBottomWidth: 2 }}>
                   <th
@@ -1325,7 +1348,7 @@ export default function IncomeTaxNewSection() {
                   >
                     12. Total Income (8-9-10-11)
                   </th>
-                  <th>Rs. {IndianFormat(GrossTotalIncome)}</th>
+                  <th>Rs. {IndianFormat(TotalIncome)}</th>
                 </tr>
                 <tr style={{ borderBottomWidth: 2 }}>
                   <th
@@ -2116,17 +2139,6 @@ export default function IncomeTaxNewSection() {
                       >
                         Schedule - Other VIA
                       </h5>
-                      <Image
-                        src={NAIMAGEURL}
-                        width={280}
-                        height={280}
-                        style={{
-                          marginTop: -10,
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                          position: "absolute",
-                        }}
-                      />
                     </th>
                   </tr>
                   <tr style={{ border: "2px solid" }}>
