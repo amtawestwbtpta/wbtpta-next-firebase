@@ -138,7 +138,7 @@ export default function Page() {
       ),
     },
     {
-      name: "IT Statement",
+      name: "IT Statement OLD",
       cell: (row) => {
         const fData = teachersState.filter(
           (teacher) => teacher?.id === row.id
@@ -156,9 +156,36 @@ export default function Page() {
         return (
           <Link
             className="btn btn-sm btn-success"
-            href={`/incometax?data=${JSON.stringify(data)}`}
+            href={`/incometaxOld?data=${JSON.stringify(data)}`}
           >
-            IT Statement
+            IT Statement OLD
+          </Link>
+        );
+      },
+      omit: deductionState.length === 0,
+    },
+    {
+      name: "IT Statement NEW",
+      cell: (row) => {
+        const fData = teachersState.filter(
+          (teacher) => teacher?.id === row.id
+        )[0];
+        const { id, tname, school, pan, phone, disability, desig } = fData;
+        const data = {
+          id,
+          tname,
+          school,
+          pan,
+          phone,
+          disability,
+          desig,
+        };
+        return (
+          <Link
+            className="btn btn-sm btn-primary"
+            href={`/incometaxNew?data=${JSON.stringify(data)}`}
+          >
+            IT Statement NEW
           </Link>
         );
       },
@@ -494,7 +521,15 @@ export default function Page() {
                           border: "1px solid",
                         }}
                       >
-                        IT Statement
+                        IT Statement OLD
+                      </th>
+                      <th
+                        className="noprint"
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        IT Statement NEW
                       </th>
                     </tr>
                   </thead>
@@ -636,11 +671,51 @@ export default function Page() {
                                     desig,
                                   };
                                   router.push(
-                                    `/incometax?data=${JSON.stringify(data)}`
+                                    `/incometaxOld?data=${JSON.stringify(data)}`
                                   );
                                 }}
                               >
-                                IT Statement
+                                IT Statement OLD
+                              </button>
+                            </td>
+                            <td
+                              className="noprint"
+                              style={{
+                                border: "1px solid",
+                              }}
+                              suppressHydrationWarning
+                            >
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-primary p-2 m-2"
+                                onClick={() => {
+                                  const fData = teachersState.filter(
+                                    (item) => item?.id === teacher?.id
+                                  )[0];
+                                  const {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    phone,
+                                    disability,
+                                    desig,
+                                  } = fData;
+                                  const data = {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    phone,
+                                    disability,
+                                    desig,
+                                  };
+                                  router.push(
+                                    `/incometaxNew?data=${JSON.stringify(data)}`
+                                  );
+                                }}
+                              >
+                                IT Statement NEW
                               </button>
                             </td>
                           </tr>

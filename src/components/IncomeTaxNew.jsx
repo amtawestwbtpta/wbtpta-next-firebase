@@ -7,13 +7,25 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
+  // PDFViewer,
+  Image,
 } from "@react-pdf/renderer";
 import { IndianFormat } from "../modules/calculatefunctions";
+import dynamic from "next/dynamic";
 const width = 2480;
 const height = 3508;
 
-export default function IncomeTax({ data }) {
+export default function IncomeTaxNew({ data }) {
+  const PDFViewer = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
+  const NAIMAGEURL =
+    "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/NEW%20TAX%20NA.png";
   const {
     id,
     tname,
@@ -190,8 +202,12 @@ export default function IncomeTax({ data }) {
     otherIncome,
     fd,
     tds,
+    MarginalReliefA,
+    MarginalReliefB,
+    IncomeTaxAfterRelief,
   } = data;
   return (
+    <PDFViewer style={{ height, width }}>
       <Document
         style={{ margin: 5, padding: 5 }}
         title={`IT Statement of ${tname} of ${school}`}
@@ -728,7 +744,7 @@ export default function IncomeTax({ data }) {
                 >
                   <View style={{ borderRightWidth: 1, width: "80%" }}>
                     <Text style={[styles.text, { textAlign: "left" }]}>
-                      3. Less: P. Tax under section 16(ii/i)
+                      3. Less: P. Tax under section 16(iii)
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
@@ -750,12 +766,12 @@ export default function IncomeTax({ data }) {
                   <View style={{ borderRightWidth: 1, width: "80%" }}>
                     <Text style={[styles.text, { textAlign: "left" }]}>
                       4. Less: Standard Deduction for Salaried & Pensioner
-                      (Rs.50,000)
+                      (Rs.75,000)
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(50000)}
+                      Rs. {IndianFormat(75000)}
                     </Text>
                   </View>
                 </View>
@@ -774,7 +790,7 @@ export default function IncomeTax({ data }) {
                   </View>
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(AllGross - grossPTax - 50000)}
+                      Rs. {IndianFormat(AllGross - 75000)}
                     </Text>
                   </View>
                 </View>
@@ -812,11 +828,7 @@ export default function IncomeTax({ data }) {
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
-                    <Text style={styles.textBold}>
-                      {hbLoanInterest !== 0
-                        ? `Rs. ${IndianFormat(hbLoanInterest)}`
-                        : "NIL"}
-                    </Text>
+                    <Text style={styles.textBold}>NOT APPLICABLE</Text>
                   </View>
                 </View>
                 <View
@@ -854,9 +866,7 @@ export default function IncomeTax({ data }) {
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
-                    <Text style={styles.textBold}>
-                      Rs. {IndianFormat(limitVIA)}
-                    </Text>
+                    <Text style={styles.textBold}>NOT APPLICABLE</Text>
                   </View>
                 </View>
                 <View
@@ -873,7 +883,7 @@ export default function IncomeTax({ data }) {
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
-                    <Text style={styles.textBold}>NIL</Text>
+                    <Text style={styles.textBold}>NOT APPLICABLE</Text>
                   </View>
                 </View>
                 <View
@@ -891,9 +901,7 @@ export default function IncomeTax({ data }) {
                     </Text>
                   </View>
                   <View style={{ width: "20%" }}>
-                    <Text style={styles.textBold}>
-                      Rs. {IndianFormat(OtherVIA)}
-                    </Text>
+                    <Text style={styles.textBold}>NOT APPLICABLE</Text>
                   </View>
                 </View>
                 <View
@@ -911,7 +919,7 @@ export default function IncomeTax({ data }) {
                   </View>
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(TotalIncome)}
+                      Rs. {IndianFormat(GrossTotalIncome)}
                     </Text>
                   </View>
                 </View>
@@ -974,7 +982,7 @@ export default function IncomeTax({ data }) {
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
                       {!isUnderRebate
-                        ? `Rs. ${IndianFormat(CalculatedIT)}`
+                        ? `Rs. ${IndianFormat(MarginalReliefB)}`
                         : "NIL"}
                     </Text>
                   </View>
@@ -995,7 +1003,7 @@ export default function IncomeTax({ data }) {
                   <View style={{ width: "20%" }}>
                     <Text style={styles.textBold}>
                       {!isUnderRebate
-                        ? `Rs. ${IndianFormat(CalculatedIT)}`
+                        ? `Rs. ${IndianFormat(IncomeTaxAfterRelief)}`
                         : "NIL"}
                     </Text>
                   </View>
@@ -1656,6 +1664,17 @@ export default function IncomeTax({ data }) {
                 >
                   A) U/S 80 C:
                 </Text>
+                <Image
+                  source={{ uri: NAIMAGEURL }}
+                  style={{
+                    height: 240,
+                    width: 240,
+                    marginBottom: 0,
+                    marginLeft: 300,
+
+                    position: "absolute",
+                  }}
+                />
               </View>
               <View
                 style={{
@@ -2061,6 +2080,17 @@ export default function IncomeTax({ data }) {
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
                   Schedule - Other VIA
                 </Text>
+                <Image
+                  source={{ uri: NAIMAGEURL }}
+                  style={{
+                    height: 175,
+                    width: 175,
+                    marginBottom: 0,
+                    marginLeft: 340,
+
+                    position: "absolute",
+                  }}
+                />
               </View>
               <View
                 style={{
@@ -2353,7 +2383,7 @@ export default function IncomeTax({ data }) {
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
-                  Income Tax Structure: F.Y. {`${prevYear} - ${thisYear}`}
+                  Income Tax Structure: F.Y. {finYear}
                 </Text>
               </View>
               <View
@@ -2373,8 +2403,7 @@ export default function IncomeTax({ data }) {
                   }}
                 >
                   <Text style={[styles.textBold, { textAlign: "center" }]}>
-                    a) Income upto Rs. 2,50,000/- (Rs. 3,00,000/- for Senior
-                    Citizen: @Nil
+                    a) Income upto Rs. 3,00,000/-
                   </Text>
                 </View>
 
@@ -2401,7 +2430,7 @@ export default function IncomeTax({ data }) {
                   }}
                 >
                   <Text style={[styles.textBold, { textAlign: "center" }]}>
-                    b) Income from Rs.2,50,001/- to Rs.5,00,000/-: @5%
+                    b) Income from Rs.3,00,001/- to Rs.7,00,000/-: @5%
                   </Text>
                 </View>
 
@@ -2431,7 +2460,7 @@ export default function IncomeTax({ data }) {
                   }}
                 >
                   <Text style={[styles.textBold, { textAlign: "center" }]}>
-                    c) Income from 5,00,001/- to Rs. 10,00,000/-: @20%
+                    c) Income from 7,00,001/- to Rs. 10,00,000/-: @10%
                   </Text>
                 </View>
 
@@ -2465,7 +2494,73 @@ export default function IncomeTax({ data }) {
                   }}
                 >
                   <Text style={[styles.textBold, { textAlign: "center" }]}>
-                    d) Income exceeding Rs. 10,00,000/-: @30%
+                    d) Income from 10,00,001/- to Rs. 12,00,000/-: @15%
+                  </Text>
+                </View>
+
+                <View style={{ width: "20%", padding: 1 }}>
+                  <Text style={[styles.textBold, { textAlign: "center" }]}>
+                    {TotalRoundOffIncome > 1000000
+                      ? `Rs. ${IndianFormat(
+                          Math.round(
+                            ((TotalRoundOffIncome - 1000000) * 30) / 100
+                          )
+                        )}`
+                      : "NIL"}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding: 1,
+                  borderWidth: 1,
+                  borderTopWidth: 0,
+                }}
+              >
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "80%",
+                    padding: 1,
+                  }}
+                >
+                  <Text style={[styles.textBold, { textAlign: "center" }]}>
+                    e) Income from 12,00,001/- to Rs. 15,00,000/-: @20%
+                  </Text>
+                </View>
+
+                <View style={{ width: "20%", padding: 1 }}>
+                  <Text style={[styles.textBold, { textAlign: "center" }]}>
+                    {TotalRoundOffIncome > 1000000
+                      ? `Rs. ${IndianFormat(
+                          Math.round(
+                            ((TotalRoundOffIncome - 1000000) * 30) / 100
+                          )
+                        )}`
+                      : "NIL"}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  padding: 1,
+                  borderWidth: 1,
+                  borderTopWidth: 0,
+                }}
+              >
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "80%",
+                    padding: 1,
+                  }}
+                >
+                  <Text style={[styles.textBold, { textAlign: "center" }]}>
+                    f) Income exceeding Rs. 15,00,000/-: @30%
                   </Text>
                 </View>
 
@@ -2485,10 +2580,10 @@ export default function IncomeTax({ data }) {
                 style={{
                   padding: 20,
                   width: 200,
-                  height: 65,
+                  height: 40,
                   marginLeft: 270,
-                  marginTop: 10,
-                  marginBottom: 10,
+                  marginTop: 5,
+                  marginBottom: 0,
                   borderWidth: 2,
                   justifyContent: "flex-start",
                   alignItems: "center",
@@ -2496,7 +2591,7 @@ export default function IncomeTax({ data }) {
                   alignContent: "center",
                 }}
               >
-                <Text style={[styles.textBold, { margin: 20 }]}>
+                <Text style={[styles.textBold, { margin: 2 }]}>
                   Incumbent’s Signature
                 </Text>
               </View>
@@ -3784,6 +3879,7 @@ export default function IncomeTax({ data }) {
           </View>
         </Page>
       </Document>
+    </PDFViewer>
   );
 }
 const styles = StyleSheet.create({

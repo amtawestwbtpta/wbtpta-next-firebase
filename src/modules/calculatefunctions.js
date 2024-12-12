@@ -249,6 +249,37 @@ export const CalculateIncomeTax = (totalTaxableIncome) => {
     ? 0
     : 0;
 };
+export function CalculateNewIncomeTax(taxableIncome) {
+  // Tax slabs for the new tax regime in India (FY 2023-24)
+  const taxSlabs = [
+    { slab: 300000, rate: 0 },
+    { slab: 700000, rate: 0.05 },
+    { slab: 1000000, rate: 0.1 },
+    { slab: 1200000, rate: 0.15 },
+    { slab: 1500000, rate: 0.2 },
+    { slab: Infinity, rate: 0.3 }, // Infinity for any income above 15 lakhs
+  ];
+
+  let incomeTax = 0;
+  let remainingIncome = taxableIncome;
+
+  // Iterate through the tax slabs
+  for (let i = 0; i < taxSlabs.length; i++) {
+    const slab = taxSlabs[i];
+    const taxableAmount = Math.min(
+      remainingIncome,
+      slab.slab - (i > 0 ? taxSlabs[i - 1].slab : 0)
+    );
+    incomeTax += taxableAmount * slab.rate;
+    remainingIncome -= taxableAmount;
+
+    if (remainingIncome <= 0) {
+      break; // No more income to tax
+    }
+  }
+
+  return incomeTax;
+}
 export function GetMonthName(monthNumber) {
   monthNumber = monthNumber < 0 ? 11 : monthNumber;
   var months = [
