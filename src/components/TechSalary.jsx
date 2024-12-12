@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
-import { Loader } from "rsuite";
+import Loader from "./Loader";
 import Link from "next/link";
 import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";

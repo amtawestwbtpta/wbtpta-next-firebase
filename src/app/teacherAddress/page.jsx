@@ -4,7 +4,7 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
 import DataTable from "react-data-table-component";
-import { Loader } from "rsuite";
+import Loader from "../../components/Loader";
 const TeacherAddress = () => {
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();

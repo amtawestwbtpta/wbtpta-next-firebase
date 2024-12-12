@@ -191,6 +191,33 @@ export default function Page() {
       },
       omit: deductionState.length === 0,
     },
+    {
+      name: "Form 16",
+      cell: (row) => {
+        const fData = teachersState.filter(
+          (teacher) => teacher?.id === row.id
+        )[0];
+        const { id, tname, school, pan, disability, desig, fname } = fData;
+        const data = {
+          id,
+          tname,
+          school,
+          pan,
+          disability,
+          desig,
+          fname,
+        };
+        return (
+          <Link
+            className="btn btn-sm btn-info"
+            href={`/Form16New?data=${JSON.stringify(data)}`}
+          >
+            Form 16
+          </Link>
+        );
+      },
+      omit: deductionState.length === 0,
+    },
   ];
 
   const getDeduction = async () => {
@@ -531,6 +558,14 @@ export default function Page() {
                       >
                         IT Statement NEW
                       </th>
+                      <th
+                        className="noprint"
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Form 16
+                      </th>
                     </tr>
                   </thead>
                   <tbody
@@ -716,6 +751,46 @@ export default function Page() {
                                 }}
                               >
                                 IT Statement NEW
+                              </button>
+                            </td>
+                            <td
+                              className="noprint"
+                              style={{
+                                border: "1px solid",
+                              }}
+                              suppressHydrationWarning
+                            >
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-info p-2 m-2"
+                                onClick={() => {
+                                  const fData = teachersState.filter(
+                                    (item) => item?.id === teacher?.id
+                                  )[0];
+                                  const {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    disability,
+                                    desig,
+                                    fname,
+                                  } = fData;
+                                  const data = {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    disability,
+                                    desig,
+                                    fname,
+                                  };
+                                  router.push(
+                                    `/Form16New?data=${JSON.stringify(data)}`
+                                  );
+                                }}
+                              >
+                                Form 16
                               </button>
                             </td>
                           </tr>

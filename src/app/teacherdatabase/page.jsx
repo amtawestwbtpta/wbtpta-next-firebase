@@ -240,16 +240,27 @@ const TeacherDatabase = () => {
     },
 
     {
-      name: "Generate Form 16",
-      cell: (row) => (
-        <Link
-          className="btn btn-sm btn-success"
-          href={`/Form16`}
-          onClick={() => setStateObject(row)}
-        >
-          Generate Form 16
-        </Link>
-      ),
+      name: "Download Form 16",
+      cell: (row) => {
+        const { id, tname, school, pan, disability, desig, fname } = row;
+        const data = {
+          id,
+          tname,
+          school,
+          pan,
+          disability,
+          desig,
+          fname,
+        };
+        return (
+          <Link
+            className="btn btn-sm btn-success"
+            href={`/Form16New?data=${JSON.stringify(data)}`}
+          >
+            Download Form 16
+          </Link>
+        );
+      },
     },
     {
       name: "Generate Form 16 Previous Year",
