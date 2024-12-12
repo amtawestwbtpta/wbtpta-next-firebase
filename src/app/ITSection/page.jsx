@@ -113,7 +113,7 @@ export default function Page() {
       center: +true,
     },
     {
-      name: "Net Tax",
+      name: "Net Tax OLD",
       selector: (teacher) =>
         teacher?.NetTax !== 0 ? `₹ ${IndianFormat(teacher?.NetTax)}` : "NIL",
       sortable: true,
@@ -532,7 +532,7 @@ export default function Page() {
                           border: "1px solid",
                         }}
                       >
-                        Net Tax
+                        Net Tax OLD
                       </th>
                       <th
                         className="noprint"

@@ -34,13 +34,13 @@ export default function IncomeTaxOldSection() {
   const month = date.getMonth() + 1;
   let thisYear, nextYear, prevYear;
   if (month < 4) {
-    thisYear = date.getFullYear()-1;
-    nextYear = date.getFullYear() ;
+    thisYear = date.getFullYear() - 1;
+    nextYear = date.getFullYear();
     prevYear = date.getFullYear() - 2;
   } else {
-    thisYear = date.getFullYear() ;
+    thisYear = date.getFullYear();
     nextYear = date.getFullYear() + 1;
-    prevYear = date.getFullYear()-1;
+    prevYear = date.getFullYear() - 1;
   }
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
@@ -511,6 +511,15 @@ export default function IncomeTaxOldSection() {
                 }}
               >
                 Print Statement
+              </button>
+              <button
+                type="button"
+                className="btn btn-success text-white font-weight-bold m-2 p-2 rounded"
+                onClick={() => {
+                  router.push(`/incometaxNew?data=${JSON.stringify(data)}`);
+                }}
+              >
+                Go To New Regime
               </button>
             </div>
 
