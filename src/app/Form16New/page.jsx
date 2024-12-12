@@ -9,7 +9,6 @@ import {
   roundSo,
   CalculateIncomeTax,
 } from "../../modules/calculatefunctions";
-import IncomeTax from "../../components/IncomeTax";
 import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
