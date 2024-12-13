@@ -9,9 +9,11 @@ import {
   getSubmitDateInput,
   todayInString,
 } from "../../modules/calculatefunctions";
+import LeaveProposal from "../../components/LeaveProposal";
 export default function Page() {
   const router = useRouter();
   const { state, stateObject } = useGlobalContext();
+  const { tname, desig, school, doj, phone } = stateObject;
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [leaveReason, setLeaveReason] = useState("");
@@ -133,11 +135,17 @@ export default function Page() {
                       Total Leave Days
                     </label>
                     <input
-                      type="text"
-                      readOnly
+                      type="number"
                       className="form-control"
                       id="date"
                       value={leaveDays}
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setLeaveDays(parseInt(e.target.value));
+                        } else {
+                          setLeaveDays("");
+                        }
+                      }}
                     />
                   </div>
                   {leaveNature === "MATERNITY" && (
@@ -182,6 +190,24 @@ export default function Page() {
           </div>
         </div>
       )}
+
+      <div className="my-3">
+        <LeaveProposal
+          data={{
+            tname,
+            school,
+            desig,
+            doj,
+            leaveReason,
+            leaveNature,
+            leaveDays,
+            startingDate,
+            endingDate,
+            childBirthDate,
+            phone,
+          }}
+        />
+      </div>
     </div>
   );
 }
