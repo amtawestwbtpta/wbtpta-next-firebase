@@ -318,7 +318,7 @@ const TeacherDatabase = () => {
         return (
           <Link
             className="btn btn-sm btn-success"
-            href={`/incometax?data=${JSON.stringify(data)}`}
+            href={`/incometaxOld?data=${JSON.stringify(data)}`}
           >
             IT Statement
           </Link>
@@ -364,6 +364,21 @@ const TeacherDatabase = () => {
         ) : (
           <h6 className="text-success">Teacher Registered</h6>
         ),
+    },
+    {
+      name: "Leave Proposal",
+      cell: (row) => (
+        <button
+        type="button"
+          className="btn btn-sm btn-success"
+          onClick={() => {
+            setStateObject(row)
+            router.push("/LeaveProposal");
+          }}
+        >
+          Leave Proposal
+        </button>
+      ),
     },
   ];
   const delColumns = [
