@@ -7,9 +7,7 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
 } from "@react-pdf/renderer";
-import { IndianFormat, INR, titleCase } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
 
@@ -26,97 +24,1932 @@ export default function LeaveProposal({ data }) {
     startingDate,
     endingDate,
     childBirthDate,
+    village,
+    po,
+    hoi,
   } = data;
   useEffect(() => {
     // console.log(data);
     //eslint-disable-next-line
   }, []);
   return (
-    <PDFViewer style={{ width, height }}>
-      <Document
-        style={{ margin: 5, padding: 5 }}
-        title={`Leave Proposal Form of ${tname} of ${school}`}
-      >
-        <Page size="A4" orientation="portrait" style={styles.page}>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              width: "98%",
-            }}
-          >
-            <View style={styles.pageMainView}>
-              <Text style={styles.title}>OFFICE OF THE</Text>
-              <View
-                style={{
-                  width: 200,
-                  height: 30,
-                  backgroundColor: "black",
-                  position: "absolute",
-                  borderRadius: 5,
-                  right: 4,
-                  marginTop: 3,
-                  top: -5,
-                }}
-              ></View>
-              <View
-                style={{
-                  width: 200,
-                  height: 30,
-                  borderWidth: 2,
-                  borderBottomWidth: 0,
-                  backgroundColor: "white",
-                  position: "absolute",
-                  borderRadius: 5,
-                  right: 6,
-                  top: -5,
-                }}
-              >
-                <Text style={[styles.textBold, { marginTop: 5 }]}>
-                  To be submitted in triplicate
-                </Text>
-              </View>
-
-              <Text style={[styles.title, { marginTop: 10 }]}>
-                HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
+    <Document
+      style={{ margin: 5, padding: 5 }}
+      title={`Leave Proposal Form of ${tname} of ${school}`}
+    >
+      <Page size="A4" orientation="portrait" style={styles.page}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            width: "98%",
+          }}
+        >
+          <View style={styles.pageMainView}>
+            <Text style={styles.title}>OFFICE OF THE</Text>
+            <View
+              style={{
+                width: 200,
+                height: 30,
+                backgroundColor: "black",
+                position: "absolute",
+                borderRadius: 5,
+                right: 4,
+                marginTop: 3,
+                top: -5,
+              }}
+            ></View>
+            <View
+              style={{
+                width: 200,
+                height: 30,
+                borderWidth: 2,
+                borderBottomWidth: 0,
+                backgroundColor: "white",
+                position: "absolute",
+                borderRadius: 5,
+                right: 6,
+                top: -5,
+              }}
+            >
+              <Text style={[styles.textBold, { marginTop: 5 }]}>
+                To be submitted in triplicate
               </Text>
-              <View
-                style={{ height: 2, backgroundColor: "black", width: "100%" }}
-              ></View>
+            </View>
+
+            <Text style={[styles.title, { marginTop: 10 }]}>
+              HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
+            </Text>
+            <View
+              style={{ height: 2, backgroundColor: "black", width: "100%" }}
+            ></View>
+            <View
+              style={{
+                width: 200,
+                height: 30,
+                borderWidth: 2,
+                backgroundColor: "white",
+                borderRadius: 5,
+                marginTop: 5,
+                alignSelf: "center",
+              }}
+            >
+              <Text
+                style={[
+                  styles.titleMain,
+                  { marginTop: 5, textDecoration: "underline" },
+                ]}
+              >
+                LEAVE PROPOSAL
+              </Text>
+            </View>
+
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <Text style={styles.text}></Text>
+
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>1. NAME OF THE TEACHER: </Text>
+              </View>
               <View
                 style={{
-                  width: 200,
-                  height: 30,
-                  borderWidth: 2,
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                  marginTop: 5,
-                  alignSelf: "center",
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "70%",
                 }}
               >
-                <Text
-                  style={[
-                    styles.titleMain,
-                    { marginTop: 5, textDecoration: "underline" },
-                  ]}
-                >
-                  LEAVE PROPOSAL
+                <Text style={styles.text}>{tname}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 2,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <Text style={styles.text}></Text>
+
+              <View style={{ width: "20%" }}>
+                <Text style={styles.text}>2. DESIGNATION </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "25%",
+                }}
+              >
+                <Text style={styles.text}>
+                  {desig === "AT" ? "ASSISTANT TEACHER" : "HEAD TEACHER"}
                 </Text>
               </View>
-
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>DATE OF APPOINTMENT </Text>
+              </View>
               <View
                 style={{
-                  marginTop: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "25%",
                 }}
               >
-                <Text style={styles.text}></Text>
+                <Text style={styles.text}>{doj}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>3. NAME OF THE SCHOOL: </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "60%",
+                }}
+              >
+                <Text style={styles.text}>{school}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "15%" }}>
+                <Text style={styles.text}>4. CIRCLE </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "30%",
+                }}
+              >
+                <Text style={styles.text}>AMTA WEST</Text>
+              </View>
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>CONTACT NO </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "30%",
+                }}
+              >
+                <Text style={styles.text}>{phone}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>5. REASON OF LEAVE: </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "60%",
+                }}
+              >
+                <Text style={styles.text}>{leaveReason}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "100%" }}>
+                <Text style={styles.text}>
+                  6(a). NATURE OF LEAVE PRAYED FOR: HPL/ COMMUTED/ MATERNITY/
+                  MEDICAL/ LWP/ CCL/{" "}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>PATERNITY ETC</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "60%",
+                }}
+              >
+                <Text style={styles.text}>{leaveNature}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "50%" }}>
+                <Text style={styles.text}>
+                  (b). PERIOD OF LEAVE PRAYED FOR FROM
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "10%",
+                }}
+              >
+                <Text style={styles.text}>{startingDate}</Text>
+              </View>
+              <View
+                style={{
+                  width: "5%",
+                }}
+              >
+                <Text style={styles.text}>To</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "10%",
+                }}
+              >
+                <Text style={styles.text}>{endingDate}</Text>
+              </View>
+              <View
+                style={{
+                  width: "5%",
+                }}
+              >
+                <Text style={styles.text}>=</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "10%",
+                }}
+              >
+                <Text style={styles.text}>{leaveDays}</Text>
+              </View>
+              <View
+                style={{
+                  width: "10%",
+                }}
+              >
+                <Text style={styles.text}>Days</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "80%" }}>
+                <Text style={[styles.text, { fontSize: 12 }]}>
+                  7. DATE OF CHILD’S BIRTH AS PER M.C. (IN CASE OF MATERNITY
+                  LEAVE ONLY)
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
+                }}
+              >
+                <Text style={[styles.text, { fontSize: 12 }]}>
+                  {leaveNature === "MATERNITY"
+                    ? childBirthDate
+                    : "NOT APPLICABLE"}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "100%" }}>
+                <Text style={styles.text}>
+                  8. ENCLOSURES: TREATMENT CERTIFICATE/ MEDICAL CERTIFICATE OF
+                  FITNESS/ JOINING REPORT
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "60%" }}>
+                <Text style={styles.text}>
+                  DUELY CERTIFIED BY THE HEAD TEACHER & S.I.S. OF
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
+                }}
+              >
+                <Text style={styles.text}>AMTA WEST</Text>
+              </View>
+              <View
+                style={{
+                  width: "20%",
+                }}
+              >
+                <Text style={styles.text}>CIRCLE, HOWRAH</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 40,
+                marginBottom: 10,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+              }}
+            >
+              <View style={{ width: "60%" }}>
+                <Text style={styles.textBold}>
+                  RECOMMENDATION AND SIGNATURE OF THE H.T/ T.I.C
+                </Text>
+              </View>
+              <View style={{ width: "40%" }}>
+                <Text style={styles.textBold}>SIGNATURE OF TEACHER</Text>
+              </View>
+            </View>
+            <View
+              style={{ height: 2, backgroundColor: "black", width: "100%" }}
+            ></View>
+            <View
+              style={{
+                width: 220,
+                height: 25,
+                borderWidth: 2,
+                backgroundColor: "white",
+                borderRadius: 5,
+                marginTop: 3,
+                marginBottom: 3,
+                alignSelf: "center",
+              }}
+            >
+              <Text style={[styles.titleMain, { textDecoration: "underline" }]}>
+                TO BE FILLED BY THE S.I/S
+              </Text>
+            </View>
+            <View style={styles.tableStartBorderView}>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <Text style={styles.text}>
+                  Leave Account to be furnished by the S.I./S
+                </Text>
+              </View>
+              <View style={styles.rowStartView}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 100,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={styles.text}>Year</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 100,
+                  }}
+                >
+                  <Text style={styles.text}>
+                    Leave{"\n"}earned &{"\n"}nature of{"\n"}Leave
+                  </Text>
+                  <Text style={styles.text}>_______</Text>
+                  <Text style={styles.text}>_______</Text>
+                </View>
 
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>1. NAME OF THE TEACHER: </Text>
+                <View
+                  style={{
+                    width: "30%",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    borderRightWidth: 1,
+                  }}
+                >
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderBottomWidth: 1,
+                      height: 20,
+                    }}
+                  >
+                    <Text style={styles.text}>Leave Enjoyed</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      height: 80,
+                    }}
+                  >
+                    <View
+                      style={{
+                        borderRightWidth: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: 80,
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "center", marginRight: 5 },
+                        ]}
+                      >
+                        Leave{"\n"}from
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        borderRightWidth: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: 80,
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "center", marginRight: 5 },
+                        ]}
+                      >
+                        Leave{"\n"}To
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: 80,
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "center", marginRight: 5 },
+                        ]}
+                      >
+                        No. of{"\n"}
+                        Days
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "20%",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    borderRightWidth: 1,
+                  }}
+                >
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderBottomWidth: 1,
+                      height: 20,
+                    }}
+                  >
+                    <Text style={styles.text}>Nature of Leave</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      height: 80,
+                    }}
+                  >
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: 80,
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "center", marginRight: 5 },
+                        ]}
+                      >
+                        HPL
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: 80,
+                        borderLeftWidth: 1,
+                      }}
+                    >
+                      <Text style={styles.text}>
+                        Commuted/{"\n"}
+                        Maternity/{"\n"}
+                        Medical/{"\n"}
+                        LWP/ CCL/{"\n"}
+                        Paternity etc.
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 100,
+                  }}
+                >
+                  <Text style={styles.text}>
+                    Balance{"\n"}
+                    of Leave
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 100,
+                  }}
+                >
+                  <Text style={styles.text}>
+                    Previous{"\n"}Leave{"\n"}sanctioned by{"\n"}D.P.S.C with
+                    {"\n"}Memo No. &{"\n"}Date
+                  </Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>1</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>2</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>3</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>4</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>5</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>6</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>7</Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>(2-5)=8</Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}>9</Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "8%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "12%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "7%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "13%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 20,
+                  }}
+                >
+                  <Text style={styles.text}></Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{ width: "40%", alignSelf: "flex-end", marginTop: 20 }}
+            >
+              <Text style={styles.textBold}>
+                Signature of the S.I./S with seal
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Page>
+      <Page size="A4" orientation="portrait" style={styles.page}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            width: "98%",
+          }}
+        >
+          <View style={styles.pageMainView}>
+            <View
+              style={{
+                width: 400,
+                height: 25,
+                backgroundColor: "black",
+                position: "absolute",
+                borderRadius: 5,
+                marginTop: 3,
+                top: -5,
+                alignSelf: "center",
+              }}
+            ></View>
+            <View
+              style={{
+                width: 400,
+                height: 25,
+                borderWidth: 2,
+                borderBottomWidth: 0,
+                backgroundColor: "white",
+                position: "absolute",
+                borderRadius: 5,
+                top: -5,
+                alignSelf: "center",
+              }}
+            >
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    textDecoration: "underline",
+                    textDecorationStyle: "double",
+                  },
+                ]}
+              >
+                R E C O M E N D A T I O N
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 30,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Memo No. </Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "50%",
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "50%",
+                  marginLeft: 30,
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Date </Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "50%",
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "70%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Sri/ Smt </Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "80%",
+                  }}
+                >
+                  <Text style={styles.text}>{tname}</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "30%",
+                  marginLeft: 5,
+                }}
+              >
+                <View style={{ width: "35%" }}>
+                  <Text style={styles.text}>Teacher of</Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "65%",
+                  }}
+                >
+                  <Text style={styles.text}>{school?.split(" ")[0]}</Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "90%",
+                  }}
+                >
+                  <Text
+                    style={[styles.text, { textAlign: "left", marginLeft: 10 }]}
+                  >
+                    {school
+                      ?.split(" ")
+                      ?.slice(1, school?.split(" ").length)
+                      .join(" ")}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "40%",
+                  marginLeft: 5,
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Vill.</Text>
                 </View>
                 <View
                   style={{
@@ -125,509 +1958,888 @@ export default function LeaveProposal({ data }) {
                     width: "70%",
                   }}
                 >
-                  <Text style={styles.text}>{tname}</Text>
+                  <Text style={styles.text}>{village}</Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>P.O.</Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "80%",
+                  }}
+                >
+                  <Text
+                    style={[styles.text, { textAlign: "left", marginLeft: 10 }]}
+                  >
+                    {po}
+                  </Text>
                 </View>
               </View>
               <View
                 style={{
-                  marginTop: 2,
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   alignItems: "baseline",
+                  width: "40%",
+                  marginLeft: 5,
                 }}
               >
-                <Text style={styles.text}></Text>
-
-                <View style={{ width: "20%" }}>
-                  <Text style={styles.text}>2. DESIGNATION </Text>
+                <View style={{ width: "70%" }}>
+                  <Text style={styles.text}>Whose date of appointment is</Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "25%",
-                  }}
-                >
-                  <Text style={styles.text}>
-                    {desig === "AT" ? "ASSISTANT TEACHER" : "HEAD TEACHER"}
-                  </Text>
-                </View>
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>DATE OF APPOINTMENT </Text>
-                </View>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomStyle: "dotted",
-                    width: "25%",
+                    width: "30%",
                   }}
                 >
                   <Text style={styles.text}>{doj}</Text>
                 </View>
               </View>
+            </View>
+            <Text style={[styles.text, { marginTop: 5, textAlign: "left" }]}>
+              has been provisionally granted leave as follows subject to the
+              approval of the Council.
+            </Text>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "80%",
+                marginLeft: -35,
+              }}
+            >
+              <View style={{ width: "80%" }}>
+                <Text style={styles.text}>
+                  Commuted/ Maternity/ Medical/ LWP/ CCL/ Paternity etc.
+                </Text>
+              </View>
               <View
                 style={{
-                  marginTop: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
                 }}
               >
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>3. NAME OF THE SCHOOL: </Text>
+                <Text
+                  style={[styles.text, { textAlign: "left", marginLeft: 10 }]}
+                >
+                  {leaveNature}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -8,
+              }}
+            >
+              <View style={{ width: "10%" }}>
+                <Text style={styles.text}>from</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
+                }}
+              >
+                <Text style={[styles.text]}>{startingDate}</Text>
+              </View>
+              <View style={{ width: "10%" }}>
+                <Text style={styles.text}>to</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
+                }}
+              >
+                <Text style={[styles.text]}>{endingDate}</Text>
+              </View>
+              <View style={{ width: "10%" }}>
+                <Text style={styles.text}>for</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "30%",
+                }}
+              >
+                <Text style={[styles.text]}>{leaveDays}</Text>
+              </View>
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}> days in lieu</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "30%",
+                }}
+              >
+                <Text style={[styles.text]}></Text>
+              </View>
+              <View style={{ width: "10%" }}>
+                <Text style={styles.text}>of</Text>
+              </View>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "30%",
+                }}
+              >
+                <Text style={[styles.text]}></Text>
+              </View>
+              <View style={{ width: "30%" }}>
+                <Text style={styles.text}>days HPL from his/ her credit.</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: "40%",
+                alignSelf: "flex-end",
+                marginTop: 30,
+                marginBottom: 10,
+              }}
+            >
+              <Text style={styles.textBold}>
+                Signature of the S.I./S with seal
+              </Text>
+            </View>
+            <View
+              style={{ height: 2, backgroundColor: "black", width: "100%" }}
+            ></View>
+            <View
+              style={{
+                width: 400,
+                height: 25,
+                backgroundColor: "black",
+                position: "absolute",
+                borderRadius: 5,
+                marginTop: 3,
+                left: 91,
+                top: 265,
+                alignSelf: "center",
+              }}
+            ></View>
+            <View
+              style={{
+                width: 400,
+                height: 25,
+                borderWidth: 2,
+                borderBottomWidth: 0,
+                backgroundColor: "white",
+                position: "absolute",
+                borderRadius: 5,
+                top: 265,
+                alignSelf: "center",
+              }}
+            >
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    textDecoration: "underline",
+                    textDecorationStyle: "double",
+                  },
+                ]}
+              >
+                L E A V E{"    "}S A N C T I O N I N G{"    "}O R D E R
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 40,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Memo No. </Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "60%",
+                    width: "50%",
                   }}
                 >
-                  <Text style={styles.text}>{school}</Text>
+                  <Text style={styles.text}> </Text>
                 </View>
               </View>
               <View
                 style={{
-                  marginTop: 5,
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   alignItems: "baseline",
+                  width: "50%",
+                  marginLeft: 30,
                 }}
               >
-                <View style={{ width: "15%" }}>
-                  <Text style={styles.text}>4. CIRCLE </Text>
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Date </Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "30%",
+                    width: "50%",
                   }}
                 >
-                  <Text style={styles.text}>AMTA WEST</Text>
-                </View>
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>CONTACT NO </Text>
-                </View>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomStyle: "dotted",
-                    width: "30%",
-                  }}
-                >
-                  <Text style={styles.text}>{phone}</Text>
+                  <Text style={styles.text}> </Text>
                 </View>
               </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -100,
+              }}
+            >
               <View
                 style={{
-                  marginTop: 5,
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   alignItems: "baseline",
+                  width: "80%",
                 }}
               >
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>5. REASON OF LEAVE: </Text>
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>To : </Text>
+                </View>
+                <View
+                  style={{
+                    width: "40%",
+                  }}
+                >
+                  <Text style={styles.text}>The Sub Inspector of Schools,</Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -35,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "80%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}></Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "60%",
+                    width: "40%",
                   }}
                 >
-                  <Text style={styles.text}>{leaveReason}</Text>
+                  <Text style={styles.text}>Amta West</Text>
+                </View>
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}> Circle, Howrah</Text>
                 </View>
               </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
               <View
                 style={{
-                  marginTop: 5,
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   alignItems: "baseline",
+                  width: "80%",
+                  marginLeft: 50,
                 }}
               >
-                <View style={{ width: "100%" }}>
+                <View style={{ width: "60%" }}>
                   <Text style={styles.text}>
-                    6(a). NATURE OF LEAVE PRAYED FOR: HPL/ COMMUTED/ MATERNITY/
-                    MEDICAL/ LWP/ CCL/{" "}
+                    The undersigned has to inform him/ her that
                   </Text>
                 </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
-                }}
-              >
-                <View style={{ width: "30%" }}>
-                  <Text style={styles.text}>PATERNITY ETC</Text>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "20%",
+                  }}
+                >
+                  <Text style={styles.text}>{leaveDays}</Text>
+                </View>
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}> days of</Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "60%",
+                    width: "20%",
                   }}
                 >
                   <Text style={styles.text}>{leaveNature}</Text>
                 </View>
               </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
               <View
                 style={{
-                  marginTop: 5,
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "center",
                   alignItems: "baseline",
+                  width: "80%",
+                  marginLeft: 10,
                 }}
               >
-                <View style={{ width: "50%" }}>
-                  <Text style={styles.text}>
-                    (b). PERIOD OF LEAVE PRAYED FOR FROM
-                  </Text>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "30%",
+                  }}
+                >
+                  <Text style={styles.text}>{leaveNature}</Text>
+                </View>
+                <View style={{ width: "40%" }}>
+                  <Text style={styles.text}> leave for the period from </Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "10%",
+                    width: "20%",
                   }}
                 >
                   <Text style={styles.text}>{startingDate}</Text>
                 </View>
-                <View
-                  style={{
-                    width: "5%",
-                  }}
-                >
-                  <Text style={styles.text}>To</Text>
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}> to </Text>
                 </View>
                 <View
                   style={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dotted",
-                    width: "10%",
+                    width: "20%",
                   }}
                 >
                   <Text style={styles.text}>{endingDate}</Text>
                 </View>
-                <View
-                  style={{
-                    width: "5%",
-                  }}
-                >
-                  <Text style={styles.text}>=</Text>
-                </View>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomStyle: "dotted",
-                    width: "10%",
-                  }}
-                >
-                  <Text style={styles.text}>{leaveDays}</Text>
-                </View>
-                <View
-                  style={{
-                    width: "10%",
-                  }}
-                >
-                  <Text style={styles.text}>Days</Text>
-                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <View
+                style={{
+                  width: "50%",
+                }}
+              >
+                <Text style={styles.text}>
+                  {" "}
+                  is hereby sectioned in favour of Sri./ Smt.{" "}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "50%",
+                }}
+              >
+                <Text style={styles.text}>{tname}</Text>
               </View>
               <View
                 style={{
-                  marginTop: 5,
                   flexDirection: "row",
                   justifyContent: "flex-start",
                   alignItems: "baseline",
-                }}
-              >
-                <View style={{ width: "80%" }}>
-                  <Text style={[styles.text, { fontSize: 12 }]}>
-                    7. DATE OF CHILD’S BIRTH AS PER B.C. (IN CASE OF MATERNITY
-                    LEAVE ONLY)
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomStyle: "dotted",
-                    width: "20%",
-                  }}
-                >
-                  <Text style={[styles.text, { fontSize: 12 }]}>
-                    {leaveNature === "MATERNITY"
-                      ? childBirthDate
-                      : "NOT APPLICABLE"}
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
-                }}
-              >
-                <View style={{ width: "100%" }}>
-                  <Text style={styles.text}>
-                    8. ENCLOSURES: TREATMENT CERTIFICATE/ MEDICAL CERTIFICATE OF
-                    FITNESS/ JOINING REPORT
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
-                }}
-              >
-                <View style={{ width: "60%" }}>
-                  <Text style={styles.text}>
-                    DUELY CERTIFIED BY THE HEAD TEACHER & S.I.S. OF
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomStyle: "dotted",
-                    width: "20%",
-                  }}
-                >
-                  <Text style={styles.text}>AMTA WEST</Text>
-                </View>
-                <View
-                  style={{
-                    width: "20%",
-                  }}
-                >
-                  <Text style={styles.text}>CIRCLE, HOWRAH</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 40,
-                  marginBottom: 10,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "baseline",
-                }}
-              >
-                <View style={{ width: "60%" }}>
-                  <Text style={styles.textBold}>
-                    RECOMMENDATION AND SIGNATURE OF THE H.T/ T.I.C
-                  </Text>
-                </View>
-                <View style={{ width: "40%" }}>
-                  <Text style={styles.textBold}>SIGNATURE OF TEACHER</Text>
-                </View>
-              </View>
-              <View
-                style={{ height: 2, backgroundColor: "black", width: "100%" }}
-              ></View>
-              <View
-                style={{
-                  width: 220,
-                  height: 25,
-                  borderWidth: 2,
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                  marginTop: 3,
-                  alignSelf: "center",
+                  width: "30%",
                 }}
               >
                 <Text
-                  style={[styles.titleMain, { textDecoration: "underline" }]}
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration: desig === "AT" ? "none" : "line-through",
+                    },
+                  ]}
                 >
-                  TO BE FILLED BY THE S.I/S
+                  {" "}
+                  A.T/{" "}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration: desig === "HT" ? "none" : "line-through",
+                    },
+                  ]}
+                >
+                  {" "}
+                  H.T/{" "}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration:
+                        desig !== "HT" && hoi === "Yes"
+                          ? "none"
+                          : "line-through",
+                    },
+                  ]}
+                >
+                  {" "}
+                  T.I.C{" "}
                 </Text>
               </View>
-              <View style={styles.tableStartBorderView}>
-                <View style={styles.rowStartView}>
-                  <Text style={styles.text}>
-                    Leave Account to be furnished by the S.I./S
-                  </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -48,
+              }}
+            >
+              <View
+                style={{
+                  width: "20%",
+                }}
+              >
+                <Text style={styles.text}> of </Text>
+              </View>
+
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "70%",
+                }}
+              >
+                <Text style={styles.text}>{school}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  width: "40%",
+                }}
+              >
+                <Text style={styles.text}>
+                  {" "}
+                  with full pay/ without pay in lieu of{" "}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "dotted",
+                  width: "20%",
+                }}
+              >
+                <Text style={styles.text}>{leaveDays}</Text>
+              </View>
+              <View
+                style={{
+                  width: "40%",
+                }}
+              >
+                <Text style={styles.text}>
+                  {" "}
+                  days half pay leave on Medical ground/
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <Text style={styles.text}> private affairs. </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: 50,
+              }}
+            >
+              <Text style={styles.text}>
+                {" "}
+                The order should be recorded in the Service Book of the
+                concerned teacher.{" "}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "40%",
+                alignSelf: "flex-end",
+                marginTop: 30,
+                marginBottom: 10,
+              }}
+            >
+              <Text style={styles.text}>Chairman,</Text>
+              <Text style={styles.text}>
+                District Primary School Council, Howrah
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Memo No. </Text>
                 </View>
-                <View style={styles.rowStartView}>
-                  <View
-                    style={{
-                      borderRightWidth: 1,
-                      width: "10%",
-                      height: 100,
-                    }}
-                  >
-                    <Text style={styles.text}>Year</Text>
-                  </View>
-                  <View
-                    style={{
-                      borderRightWidth: 1,
-                      width: "10%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={styles.text}>
-                      Leave{"\n"}earned &{"\n"}nature of{"\n"}Leave
-                    </Text>
-                    <Text style={styles.text}>_______</Text>
-                    <Text style={styles.text}>_______</Text>
-                  </View>
-
-                  <View
-                    style={{
-                      width: "30%",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      borderRightWidth: 1,
-                    }}
-                  >
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderBottomWidth: 1,
-                        height: 20,
-                      }}
-                    >
-                      <Text style={styles.text}>Leave Enjoyed</Text>
-                    </View>
-                    <View
-                      style={{
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        flexDirection: "row",
-                        height: 80,
-                      }}
-                    >
-                      <View
-                        style={{
-                          borderRightWidth: 1,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 80,
-                        }}
-                      >
-                        <Text style={styles.text}>Leave{"\n"}from</Text>
-                      </View>
-                      <View
-                        style={{
-                          borderRightWidth: 1,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 80,
-                        }}
-                      >
-                        <Text style={styles.text}>Leave{"\n"}To</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 80,
-                        }}
-                      >
-                        <Text style={styles.text}>
-                          No. of{"\n"}
-                          Days
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "20%",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      borderRightWidth: 1,
-                    }}
-                  >
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderBottomWidth: 1,
-                        height: 20,
-                      }}
-                    >
-                      <Text style={styles.text}>Nature of Leave</Text>
-                    </View>
-
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "baseline",
-                        flexDirection: "row",
-                        height: 80,
-                      }}
-                    >
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 80,
-                        }}
-                      >
-                        <Text style={styles.text}>HPL</Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 80,
-                          borderLeftWidth: 1,
-                        }}
-                      >
-                        <Text style={styles.text}>
-                          Commuted/{"\n"}
-                          Maternity/{"\n"}
-                          Medical/{"\n"}
-                          LWP/ CCL/{"\n"}
-                          Paternity etc.
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      borderRightWidth: 1,
-                      width: "10%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: 100,
-                    }}
-                  >
-                    <Text style={styles.text}>
-                      Balance{"\n"}
-                      of Leave
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "20%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: 100,
-                    }}
-                  >
-                    <Text style={styles.text}>
-                      Previous{"\n"}Leave{"\n"}sanctioned by{"\n"}D.P.S.C with
-                      {"\n"}Memo No. &{"\n"}Date
-                    </Text>
-                  </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "50%",
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "50%",
+                  marginLeft: 30,
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>Date </Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "50%",
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
                 </View>
               </View>
             </View>
+            <View
+              style={{
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <Text style={styles.text}>
+                Copy forwarded for information to:
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>1. The D.A </Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "80%",
+                  }}
+                >
+                  <Text style={styles.text}> AMTA WEST </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "30%",
+                  marginLeft: 30,
+                }}
+              >
+                <Text style={styles.text}> Circle, D.P.S.C., Howrah</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View style={{ width: "20%" }}>
+                  <Text style={styles.text}>2. Sri/ Smt</Text>
+                </View>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "80%",
+                  }}
+                >
+                  <Text style={styles.text}> {tname} </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "baseline",
+                  width: "30%",
+                }}
+              >
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration: desig === "AT" ? "none" : "line-through",
+                    },
+                  ]}
+                >
+                  {" "}
+                  A.T/{" "}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration: desig === "HT" ? "none" : "line-through",
+                    },
+                  ]}
+                >
+                  {" "}
+                  H.T/{" "}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textDecoration:
+                        desig !== "HT" && hoi === "Yes"
+                          ? "none"
+                          : "line-through",
+                    },
+                  ]}
+                >
+                  {" "}
+                  T.I.C{" "}
+                </Text>
+                <Text style={styles.text}> of </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "baseline",
+                width: "100%",
+                marginLeft: -10,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "60%",
+                }}
+              >
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "dotted",
+                    width: "90%",
+                  }}
+                >
+                  <Text style={styles.text}> {school} </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                  width: "30%",
+                  marginLeft: -30,
+                }}
+              >
+                <Text style={styles.text}>Amta West Circle, Howrah.</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: "40%",
+                alignSelf: "flex-end",
+                marginTop: 30,
+                marginBottom: 10,
+              }}
+            >
+              <Text style={styles.text}>Secretary,</Text>
+              <Text style={styles.text}>
+                District Primary School Council, Howrah
+              </Text>
+            </View>
           </View>
-        </Page>
-      </Document>
-    </PDFViewer>
+        </View>
+      </Page>
+    </Document>
   );
 }
 const styles = StyleSheet.create({

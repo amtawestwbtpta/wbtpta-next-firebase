@@ -10,18 +10,30 @@ import {
   todayInString,
 } from "../../modules/calculatefunctions";
 import LeaveProposal from "../../components/LeaveProposal";
+import dynamic from "next/dynamic";
 export default function Page() {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
   const router = useRouter();
   const { state, stateObject } = useGlobalContext();
-  const { tname, desig, school, doj, phone } = stateObject;
+  const { tname, desig, school, doj, phone, hoi } = stateObject;
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [leaveReason, setLeaveReason] = useState("");
   const [leaveNature, setLeaveNature] = useState("");
   const [startingDate, setStartingDate] = useState(todayInString());
   const [endingDate, setEndingDate] = useState(todayInString());
   const [leaveDays, setLeaveDays] = useState(0);
   const [childBirthDate, setChildBirthDate] = useState(todayInString());
+  const [village, setVillage] = useState("");
+  const [po, setPo] = useState("");
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
@@ -41,8 +53,18 @@ export default function Page() {
       {loader && <Loader />}
       <button
         type="button"
-        className="btn btn-primary"
-        onClick={() => setShowModal(true)}
+        className="btn btn-dark m-2"
+        onClick={() => router.push("/teacherdatabase")}
+      >
+        Go Back
+      </button>
+      <button
+        type="button"
+        className="btn btn-primary m-2"
+        onClick={() => {
+          setShowModal(true);
+          setShowDownloadBtn(false)
+        }}
       >
         Enter Details
       </button>
@@ -138,6 +160,7 @@ export default function Page() {
                       type="number"
                       className="form-control"
                       id="date"
+                      placeholder="Total Leave Days"
                       value={leaveDays}
                       onChange={(e) => {
                         if (e.target.value !== "") {
@@ -164,6 +187,32 @@ export default function Page() {
                       />
                     </div>
                   )}
+                  <div className="mb-3">
+                    <label className="form-label">School Village</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="School Village"
+                      id="date"
+                      value={village}
+                      onChange={(e) => {
+                        setVillage(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">School Post Office</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="School Post Office"
+                      id="date"
+                      value={po}
+                      onChange={(e) => {
+                        setPo(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="modal-footer">
@@ -172,6 +221,7 @@ export default function Page() {
                   type="button"
                   onClick={() => {
                     setShowModal(false);
+                    setShowDownloadBtn(true);
                   }}
                 >
                   Save
@@ -191,23 +241,46 @@ export default function Page() {
         </div>
       )}
 
-      <div className="my-3">
-        <LeaveProposal
-          data={{
-            tname,
-            school,
-            desig,
-            doj,
-            leaveReason,
-            leaveNature,
-            leaveDays,
-            startingDate,
-            endingDate,
-            childBirthDate,
-            phone,
-          }}
-        />
-      </div>
+      {showDownloadBtn && (
+        <div className="my-3">
+          <PDFDownloadLink
+            document={
+              <LeaveProposal
+                data={{
+                  tname,
+                  school,
+                  desig,
+                  doj,
+                  leaveReason,
+                  leaveNature,
+                  leaveDays,
+                  startingDate,
+                  endingDate,
+                  childBirthDate,
+                  phone,
+                  village,
+                  po,
+                  hoi,
+                }}
+              />
+            }
+            fileName={`Leave Proposal Format of ${tname} of ${school}.pdf`}
+            style={{
+              textDecoration: "none",
+              padding: "10px",
+              color: "#fff",
+              backgroundColor: "navy",
+              border: "1px solid #4a4a4a",
+              width: "40%",
+              borderRadius: 10,
+            }}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Please Wait..." : "Download Leave Proposal Format"
+            }
+          </PDFDownloadLink>
+        </div>
+      )}
     </div>
   );
 }
