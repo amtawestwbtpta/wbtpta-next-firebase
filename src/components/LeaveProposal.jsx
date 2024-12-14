@@ -7,6 +7,8 @@ import {
   Document,
   StyleSheet,
   Font,
+  PDFViewer,
+  Image,
 } from "@react-pdf/renderer";
 const width = 2480;
 const height = 3508;
@@ -18,7 +20,6 @@ export default function LeaveProposal({ data }) {
     desig,
     doj,
     phone,
-    leaveReason,
     leaveNature,
     leaveDays,
     startingDate,
@@ -27,6 +28,7 @@ export default function LeaveProposal({ data }) {
     village,
     po,
     hoi,
+    gender,
   } = data;
   useEffect(() => {
     // console.log(data);
@@ -237,12 +239,12 @@ export default function LeaveProposal({ data }) {
                   width: "60%",
                 }}
               >
-                <Text style={styles.text}>{leaveReason}</Text>
+                <Text style={styles.text}>{leaveNature}</Text>
               </View>
             </View>
             <View
               style={{
-                marginTop: 5,
+                marginTop: 7,
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
@@ -253,6 +255,34 @@ export default function LeaveProposal({ data }) {
                   6(a). NATURE OF LEAVE PRAYED FOR: HPL/ COMMUTED/ MATERNITY/
                   MEDICAL/ LWP/ CCL/{" "}
                 </Text>
+
+                <Image
+                  source={{
+                    uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                  }}
+                  style={{
+                    height: 10,
+                    width: 10,
+                    position: "absolute",
+                    marginTop: leaveNature === "PATERNITY" ? 15 : -5,
+                    marginLeft:
+                      leaveNature === "HPL"
+                        ? 250
+                        : leaveNature === "COMMUTED"
+                        ? 300
+                        : leaveNature === "MATERNITY"
+                        ? 390
+                        : leaveNature === "MEDICAL"
+                        ? 450
+                        : leaveNature === "LWP"
+                        ? 500
+                        : leaveNature === "CCL"
+                        ? 535
+                        : leaveNature === "PATERNITY"
+                        ? 60
+                        : 250,
+                  }}
+                />
               </View>
             </View>
             <View
@@ -263,8 +293,11 @@ export default function LeaveProposal({ data }) {
                 alignItems: "baseline",
               }}
             >
-              <View style={{ width: "30%" }}>
-                <Text style={styles.text}>PATERNITY ETC</Text>
+              <View style={{ width: "15%" }}>
+                <Text style={styles.text}>PATERNITY </Text>
+              </View>
+              <View style={{ width: "10%", marginLeft: -20 }}>
+                <Text style={styles.text}>ETC</Text>
               </View>
               <View
                 style={{
@@ -273,7 +306,7 @@ export default function LeaveProposal({ data }) {
                   width: "60%",
                 }}
               >
-                <Text style={styles.text}>{leaveNature}</Text>
+                <Text style={styles.text}>{leaveNature} LEAVE</Text>
               </View>
             </View>
             <View
@@ -360,9 +393,7 @@ export default function LeaveProposal({ data }) {
                 }}
               >
                 <Text style={[styles.text, { fontSize: 12 }]}>
-                  {leaveNature === "MATERNITY"
-                    ? childBirthDate
-                    : "NOT APPLICABLE"}
+                  {leaveNature === "MATERNITY" ? childBirthDate : "-"}
                 </Text>
               </View>
             </View>
@@ -379,6 +410,63 @@ export default function LeaveProposal({ data }) {
                   8. ENCLOSURES: TREATMENT CERTIFICATE/ MEDICAL CERTIFICATE OF
                   FITNESS/ JOINING REPORT
                 </Text>
+                {leaveNature === "MATERNITY" ||
+                leaveNature === "MEDICAL" ||
+                leaveNature === "PATERNITY" ? (
+                  <View>
+                    <Image
+                      source={{
+                        uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                      }}
+                      style={{
+                        height: 10,
+                        width: 10,
+                        position: "absolute",
+                        marginTop: -25,
+                        marginLeft: 200,
+                      }}
+                    />
+                    <Image
+                      source={{
+                        uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                      }}
+                      style={{
+                        height: 10,
+                        width: 10,
+                        position: "absolute",
+                        marginTop: -25,
+                        marginLeft: 350,
+                      }}
+                    />
+                    <Image
+                      source={{
+                        uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                      }}
+                      style={{
+                        height: 10,
+                        width: 10,
+                        position: "absolute",
+                        marginTop: -22,
+                        marginLeft: 500,
+                      }}
+                    />
+                  </View>
+                ) : (
+                  <View>
+                    <Image
+                      source={{
+                        uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                      }}
+                      style={{
+                        height: 10,
+                        width: 10,
+                        position: "absolute",
+                        marginTop: -22,
+                        marginLeft: 500,
+                      }}
+                    />
+                  </View>
+                )}
               </View>
             </View>
             <View
@@ -951,10 +1039,12 @@ export default function LeaveProposal({ data }) {
                   style={{
                     borderRightWidth: 1,
                     width: "10%",
+                    justifyContent: "center",
+                    alignItems: "center",
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}> </Text>
+                  <Text style={styles.text2}>{endingDate?.split("-")[2]}</Text>
                 </View>
                 <View
                   style={{
@@ -965,7 +1055,7 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>{leaveNature}</Text>
                 </View>
                 <View
                   style={{
@@ -976,7 +1066,7 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>{startingDate}</Text>
                 </View>
                 <View
                   style={{
@@ -987,7 +1077,7 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>{endingDate}</Text>
                 </View>
                 <View
                   style={{
@@ -998,7 +1088,7 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>{leaveDays}</Text>
                 </View>
                 <View
                   style={{
@@ -1009,7 +1099,9 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>
+                    {leaveNature === "HPL" ? leaveDays : "N/A"}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1020,7 +1112,7 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>{leaveDays}</Text>
                 </View>
                 <View
                   style={{
@@ -1031,7 +1123,9 @@ export default function LeaveProposal({ data }) {
                     height: 20,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text2}>
+                    {leaveNature === "MATERNITY" ? "NIL" : ""}
+                  </Text>
                 </View>
 
                 <View
@@ -1869,7 +1963,37 @@ export default function LeaveProposal({ data }) {
                 }}
               >
                 <View style={{ width: "20%" }}>
-                  <Text style={styles.text}>Sri/ Smt </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "male" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      Sri/{" "}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "female" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      {" "}
+                      Smt{" "}
+                    </Text>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -1958,7 +2082,11 @@ export default function LeaveProposal({ data }) {
                     width: "70%",
                   }}
                 >
-                  <Text style={styles.text}>{village}</Text>
+                  <Text
+                    style={village.length > 20 ? styles.text2 : styles.text}
+                  >
+                    {village?.toUpperCase()}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -1993,7 +2121,7 @@ export default function LeaveProposal({ data }) {
                   <Text
                     style={[styles.text, { textAlign: "left", marginLeft: 10 }]}
                   >
-                    {po}
+                    {po?.toUpperCase()}
                   </Text>
                 </View>
               </View>
@@ -2034,6 +2162,33 @@ export default function LeaveProposal({ data }) {
                 marginLeft: -35,
               }}
             >
+              {leaveNature !== "HPL" && (
+                <Image
+                  source={{
+                    uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                  }}
+                  style={{
+                    height: 10,
+                    width: 10,
+                    position: "absolute",
+                    marginTop: -5,
+                    marginLeft:
+                      leaveNature === "COMMUTED"
+                        ? 60
+                        : leaveNature === "MATERNITY"
+                        ? 120
+                        : leaveNature === "MEDICAL"
+                        ? 170
+                        : leaveNature === "LWP"
+                        ? 210
+                        : leaveNature === "CCL"
+                        ? 245
+                        : leaveNature === "PATERNITY"
+                        ? 285
+                        : 300,
+                  }}
+                />
+              )}
               <View style={{ width: "80%" }}>
                 <Text style={styles.text}>
                   Commuted/ Maternity/ Medical/ LWP/ CCL/ Paternity etc.
@@ -2073,7 +2228,7 @@ export default function LeaveProposal({ data }) {
                   width: "20%",
                 }}
               >
-                <Text style={[styles.text]}>{startingDate}</Text>
+                <Text style={styles.text}>{startingDate}</Text>
               </View>
               <View style={{ width: "10%" }}>
                 <Text style={styles.text}>to</Text>
@@ -2085,7 +2240,7 @@ export default function LeaveProposal({ data }) {
                   width: "20%",
                 }}
               >
-                <Text style={[styles.text]}>{endingDate}</Text>
+                <Text style={styles.text}>{endingDate}</Text>
               </View>
               <View style={{ width: "10%" }}>
                 <Text style={styles.text}>for</Text>
@@ -2097,7 +2252,7 @@ export default function LeaveProposal({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={[styles.text]}>{leaveDays}</Text>
+                <Text style={styles.text}>{leaveDays}</Text>
               </View>
               <View style={{ width: "30%" }}>
                 <Text style={styles.text}> days in lieu</Text>
@@ -2108,7 +2263,7 @@ export default function LeaveProposal({ data }) {
                 marginTop: 5,
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                alignItems: "baseline",
+                alignItems: "center",
                 width: "100%",
               }}
             >
@@ -2119,7 +2274,7 @@ export default function LeaveProposal({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={[styles.text]}></Text>
+                <Text style={styles.text}>-</Text>
               </View>
               <View style={{ width: "10%" }}>
                 <Text style={styles.text}>of</Text>
@@ -2131,7 +2286,7 @@ export default function LeaveProposal({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={[styles.text]}></Text>
+                <Text style={styles.text}>-</Text>
               </View>
               <View style={{ width: "30%" }}>
                 <Text style={styles.text}>days HPL from his/ her credit.</Text>
@@ -2422,10 +2577,41 @@ export default function LeaveProposal({ data }) {
                   width: "50%",
                 }}
               >
-                <Text style={styles.text}>
-                  {" "}
-                  is hereby sectioned in favour of Sri./ Smt.{" "}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "baseline",
+                  }}
+                >
+                  <Text style={styles.text}>
+                    {" "}
+                    is hereby sectioned in favour of{" "}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.text,
+                      {
+                        textDecoration:
+                          gender === "male" ? "none" : "line-through",
+                      },
+                    ]}
+                  >
+                    Sri/{" "}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.text,
+                      {
+                        textDecoration:
+                          gender === "female" ? "none" : "line-through",
+                      },
+                    ]}
+                  >
+                    {" "}
+                    Smt{" "}
+                  </Text>
+                </View>
               </View>
 
               <View
@@ -2721,7 +2907,38 @@ export default function LeaveProposal({ data }) {
                 }}
               >
                 <View style={{ width: "20%" }}>
-                  <Text style={styles.text}>2. Sri/ Smt</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <Text style={[styles.text]}>2.</Text>
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "male" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      Sri/{" "}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "female" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      {" "}
+                      Smt{" "}
+                    </Text>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -2887,10 +3104,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text2: {
-    fontSize: 14,
-    fontFamily: "Algerian",
+    fontSize: 9,
+    padding: 1,
+    fontFamily: "Times",
     textAlign: "center",
-    padding: 2,
   },
   text3: {
     fontSize: 12,

@@ -22,11 +22,10 @@ export default function Page() {
   );
   const router = useRouter();
   const { state, stateObject } = useGlobalContext();
-  const { tname, desig, school, doj, phone, hoi } = stateObject;
+  const { tname, desig, school, doj, phone, hoi, gender } = stateObject;
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
-  const [leaveReason, setLeaveReason] = useState("");
   const [leaveNature, setLeaveNature] = useState("");
   const [startingDate, setStartingDate] = useState(todayInString());
   const [endingDate, setEndingDate] = useState(todayInString());
@@ -48,6 +47,9 @@ export default function Page() {
     }
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [startingDate, endingDate, leaveDays]);
   return (
     <div className="container">
       {loader && <Loader />}
@@ -63,7 +65,7 @@ export default function Page() {
         className="btn btn-primary m-2"
         onClick={() => {
           setShowModal(true);
-          setShowDownloadBtn(false)
+          setShowDownloadBtn(false);
         }}
       >
         Enter Details
@@ -85,16 +87,6 @@ export default function Page() {
               </div>
               <div className="modal-body">
                 <div className="mx-auto col-md-6">
-                  <div className="mb-3">
-                    <label className="m-2">Reason of Leave</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={leaveReason}
-                      onChange={(e) => setLeaveReason(e.target.value)}
-                      placeholder="ENTER Reason of Leave"
-                    />
-                  </div>
                   <div className="mb-3">
                     <label htmlFor="purpose_type" className="form-label">
                       Nature of Leave
@@ -220,8 +212,12 @@ export default function Page() {
                   className="btn btn-success m-2"
                   type="button"
                   onClick={() => {
-                    setShowModal(false);
-                    setShowDownloadBtn(true);
+                    if (leaveNature !== "") {
+                      setShowModal(false);
+                      setShowDownloadBtn(true);
+                    } else {
+                      toast.error("Select Nature of Leave");
+                    }
                   }}
                 >
                   Save
@@ -251,7 +247,6 @@ export default function Page() {
                   school,
                   desig,
                   doj,
-                  leaveReason,
                   leaveNature,
                   leaveDays,
                   startingDate,
@@ -261,6 +256,7 @@ export default function Page() {
                   village,
                   po,
                   hoi,
+                  gender,
                 }}
               />
             }
@@ -281,6 +277,29 @@ export default function Page() {
           </PDFDownloadLink>
         </div>
       )}
+
+      {/* {showDownloadBtn && (
+        <div className="mt-3">
+          <LeaveProposal
+            data={{
+              tname,
+              school,
+              desig,
+              doj,
+              leaveNature,
+              leaveDays,
+              startingDate,
+              endingDate,
+              childBirthDate,
+              phone,
+              village,
+              po,
+              hoi,
+              gender,
+            }}
+          />
+        </div>
+      )} */}
     </div>
   );
 }
