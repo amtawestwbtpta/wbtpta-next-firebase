@@ -125,7 +125,7 @@ export default function Page() {
                       defaultValue={getCurrentDateInput(startingDate)}
                       onChange={(e) => {
                         setStartingDate(getSubmitDateInput(e.target.value));
-                        calculateDays();
+                        // calculateDays();
                       }}
                     />
                   </div>

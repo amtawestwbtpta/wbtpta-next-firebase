@@ -2669,6 +2669,32 @@ export default function LeaveProposal({ data }) {
                   {" "}
                   T.I.C{" "}
                 </Text>
+                <Image
+                  source={{
+                    uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                  }}
+                  style={{
+                    height: 10,
+                    width: 10,
+                    position: "absolute",
+                    marginTop: -6,
+                    marginLeft: desig === "AT" ? 10 : 43,
+                  }}
+                />
+                {desig !== "HT" && hoi === "Yes" && (
+                  <Image
+                    source={{
+                      uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                    }}
+                    style={{
+                      height: 10,
+                      width: 10,
+                      position: "absolute",
+                      marginTop: -6,
+                      marginLeft: 78,
+                    }}
+                  />
+                )}
               </View>
             </View>
             <View
@@ -2998,6 +3024,32 @@ export default function LeaveProposal({ data }) {
                   T.I.C{" "}
                 </Text>
                 <Text style={styles.text}> of </Text>
+                <Image
+                  source={{
+                    uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                  }}
+                  style={{
+                    height: 10,
+                    width: 10,
+                    position: "absolute",
+                    marginTop: -6,
+                    marginLeft: desig === "AT" ? 10 : 43,
+                  }}
+                />
+                {desig !== "HT" && hoi === "Yes" && (
+                  <Image
+                    source={{
+                      uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                    }}
+                    style={{
+                      height: 10,
+                      width: 10,
+                      position: "absolute",
+                      marginTop: -6,
+                      marginLeft: 78,
+                    }}
+                  />
+                )}
               </View>
             </View>
             <View
