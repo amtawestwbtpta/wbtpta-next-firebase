@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Page,
   Text,
@@ -7,7 +7,6 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
   Image,
 } from "@react-pdf/renderer";
 const width = 2480;
@@ -30,10 +29,6 @@ export default function LeaveProposal({ data }) {
     hoi,
     gender,
   } = data;
-  useEffect(() => {
-    // console.log(data);
-    //eslint-disable-next-line
-  }, []);
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
@@ -542,7 +537,7 @@ export default function LeaveProposal({ data }) {
                   Leave Account to be furnished by the S.I./S
                 </Text>
               </View>
-              <View style={styles.rowStartView}>
+              <View style={[styles.rowStartView, { padding: 0 }]}>
                 <View
                   style={{
                     borderRightWidth: 1,
@@ -583,6 +578,7 @@ export default function LeaveProposal({ data }) {
                       alignItems: "center",
                       borderBottomWidth: 1,
                       height: 20,
+                      width: "100%",
                     }}
                   >
                     <Text style={styles.text}>Leave Enjoyed</Text>
@@ -601,6 +597,7 @@ export default function LeaveProposal({ data }) {
                         justifyContent: "center",
                         alignItems: "center",
                         height: 80,
+                        width: "22%",
                       }}
                     >
                       <Text
@@ -618,6 +615,7 @@ export default function LeaveProposal({ data }) {
                         justifyContent: "center",
                         alignItems: "center",
                         height: 80,
+                        width: "23%",
                       }}
                     >
                       <Text
@@ -634,6 +632,7 @@ export default function LeaveProposal({ data }) {
                         justifyContent: "center",
                         alignItems: "center",
                         height: 80,
+                        width: "24%",
                       }}
                     >
                       <Text
@@ -680,6 +679,7 @@ export default function LeaveProposal({ data }) {
                         justifyContent: "center",
                         alignItems: "center",
                         height: 80,
+                        width: "30%",
                       }}
                     >
                       <Text

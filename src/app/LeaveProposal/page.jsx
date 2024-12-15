@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import {
   getCurrentDateInput,
@@ -23,7 +22,6 @@ export default function Page() {
   const router = useRouter();
   const { state, stateObject } = useGlobalContext();
   const { tname, desig, school, doj, phone, hoi, gender } = stateObject;
-  const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [leaveNature, setLeaveNature] = useState("");
@@ -52,7 +50,6 @@ export default function Page() {
   }, [startingDate, endingDate, leaveDays]);
   return (
     <div className="container">
-      {loader && <Loader />}
       <button
         type="button"
         className="btn btn-dark m-2"
