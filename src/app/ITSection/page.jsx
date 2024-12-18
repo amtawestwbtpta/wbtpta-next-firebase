@@ -138,7 +138,7 @@ export default function Page() {
       ),
     },
     {
-      name: "IT Statement OLD",
+      name: "IT Statement OLD Regime",
       cell: (row) => {
         const fData = teachersState.filter(
           (teacher) => teacher?.id === row.id
@@ -158,14 +158,14 @@ export default function Page() {
             className="btn btn-sm btn-success"
             href={`/incometaxOld?data=${JSON.stringify(data)}`}
           >
-            IT Statement OLD
+            IT Statement OLD Regime
           </Link>
         );
       },
       omit: deductionState.length === 0,
     },
     {
-      name: "IT Statement NEW",
+      name: "IT Statement NEW Regime",
       cell: (row) => {
         const fData = teachersState.filter(
           (teacher) => teacher?.id === row.id
@@ -185,7 +185,7 @@ export default function Page() {
             className="btn btn-sm btn-primary"
             href={`/incometaxNew?data=${JSON.stringify(data)}`}
           >
-            IT Statement NEW
+            IT Statement NEW Regime
           </Link>
         );
       },
@@ -548,7 +548,7 @@ export default function Page() {
                           border: "1px solid",
                         }}
                       >
-                        IT Statement OLD
+                        IT Statement OLD Regime
                       </th>
                       <th
                         className="noprint"
@@ -556,7 +556,7 @@ export default function Page() {
                           border: "1px solid",
                         }}
                       >
-                        IT Statement NEW
+                        IT Statement NEW Regime
                       </th>
                       <th
                         className="noprint"
@@ -710,7 +710,7 @@ export default function Page() {
                                   );
                                 }}
                               >
-                                IT Statement OLD
+                                IT Statement OLD Regime
                               </button>
                             </td>
                             <td
@@ -750,7 +750,7 @@ export default function Page() {
                                   );
                                 }}
                               >
-                                IT Statement NEW
+                                IT Statement NEW Regime
                               </button>
                             </td>
                             <td
