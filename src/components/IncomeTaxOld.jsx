@@ -13,7 +13,7 @@ import { IndianFormat } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
 
-export default function IncomeTaxOld({ data }) {
+export default function IncomeTaxDownload({ data }) {
   const {
     id,
     tname,
@@ -338,21 +338,20 @@ export default function IncomeTaxOld({ data }) {
                       borderBottomWidth: 1,
                       borderRightWidth: 1,
                       width: "60%",
+                      padding: 2,
                     },
                   ]}
                 >
-                  <View style={{ borderRightWidth: 1 }}>
-                    <Text
-                      style={[styles.text, { padding: 2, paddingRight: 30 }]}
-                    >
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text style={[styles.text, { paddingRight: 30 }]}>
                       PAN:{" "}
                     </Text>
                   </View>
                   <View
                     style={{
-                      borderRightWidth: 1,
-                      borderTopWidth: 1,
-                      borderBottomWidth: 1,
+                      borderWidth: 1,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
@@ -360,7 +359,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(0, 1)}
@@ -378,7 +377,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(1, 2)}
@@ -396,7 +395,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(2, 3)}
@@ -414,7 +413,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(3, 4)}
@@ -432,7 +431,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(4, 5)}
@@ -450,7 +449,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(5, 6)}
@@ -468,7 +467,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(6, 7)}
@@ -486,7 +485,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(7, 8)}
@@ -504,7 +503,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(8, 9)}
@@ -522,7 +521,7 @@ export default function IncomeTaxOld({ data }) {
                     <Text
                       style={[
                         styles.textBold,
-                        { marginHorizontal: 5, padding: 2 },
+                        { marginHorizontal: 5, padding: 1 },
                       ]}
                     >
                       {pan?.slice(9, 10)}
@@ -631,9 +630,9 @@ export default function IncomeTaxOld({ data }) {
                   width: 110,
                   height: 2,
                   backgroundColor: "black",
-                  transform: "rotate(-28deg)",
+                  transform: "rotate(-24deg)",
                   left: 330,
-                  top: 180,
+                  top: 160,
                   position: "absolute",
                 }}
               ></View>
@@ -945,7 +944,13 @@ export default function IncomeTaxOld({ data }) {
                     Rs. 5,00,000/- shall got a Tax Rebate of Rs. 12,500/
                   </Text>
                 </View>
-                <View style={{ width: "20%" }}>
+                <View
+                  style={{
+                    width: "20%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Text style={styles.textBold}>
                     {!isUnderRebate
                       ? `Rs. ${IndianFormat(CalculatedIT)}`
@@ -1098,6 +1103,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   width: "100%",
 
+                  padding: 1,
                   borderTopWidth: 1,
                   borderBottomWidth: 1,
                 }}
@@ -1113,6 +1119,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   width: "100%",
 
+                  padding: 1,
                   borderBottomWidth: 1,
                 }}
               >
@@ -1127,6 +1134,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   width: "100%",
 
+                  padding: 1,
                   borderBottomWidth: 1,
                 }}
               >
@@ -1139,6 +1147,8 @@ export default function IncomeTaxOld({ data }) {
               <View
                 style={{
                   width: "100%",
+
+                  padding: 1,
                 }}
               >
                 <Text
@@ -1157,6 +1167,7 @@ export default function IncomeTaxOld({ data }) {
             <View
               style={{
                 width: "100%",
+                padding: 1,
                 borderWidth: 1,
               }}
             >
@@ -1519,6 +1530,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -1543,6 +1555,7 @@ export default function IncomeTaxOld({ data }) {
             <View
               style={{
                 width: "100%",
+                padding: 1,
                 borderWidth: 1,
               }}
             >
@@ -1561,6 +1574,7 @@ export default function IncomeTaxOld({ data }) {
             <View
               style={{
                 width: "100%",
+                padding: 1,
                 borderWidth: 1,
               }}
             >
@@ -1582,6 +1596,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1607,6 +1622,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1632,6 +1648,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1657,6 +1674,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1682,6 +1700,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1709,6 +1728,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1736,6 +1756,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>g)PPF</Text>
@@ -1759,6 +1780,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1784,6 +1806,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1809,6 +1832,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1834,6 +1858,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1859,6 +1884,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   //  borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text
@@ -1887,6 +1913,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1912,6 +1939,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -1936,6 +1964,7 @@ export default function IncomeTaxOld({ data }) {
             <View
               style={{
                 width: "100%",
+                padding: 1,
                 borderWidth: 1,
               }}
             >
@@ -1955,6 +1984,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -1981,6 +2011,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2006,6 +2037,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2033,6 +2065,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2061,6 +2094,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2088,6 +2122,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2115,6 +2150,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2143,6 +2179,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>
@@ -2169,6 +2206,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.text, { textAlign: "left" }]}>I)</Text>
@@ -2190,6 +2228,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -2207,6 +2246,7 @@ export default function IncomeTaxOld({ data }) {
             <View
               style={{
                 width: "100%",
+                padding: 1,
                 borderWidth: 1,
               }}
             >
@@ -2226,6 +2266,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -2252,6 +2293,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -2279,6 +2321,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -2308,6 +2351,7 @@ export default function IncomeTaxOld({ data }) {
                 style={{
                   borderRightWidth: 1,
                   width: "80%",
+                  padding: 1,
                 }}
               >
                 <Text style={[styles.textBold, { textAlign: "center" }]}>
@@ -2331,7 +2375,7 @@ export default function IncomeTaxOld({ data }) {
                 width: 200,
                 height: 65,
                 marginLeft: 270,
-                marginTop: 10,
+                marginTop: 30,
                 marginBottom: 10,
                 borderWidth: 2,
                 justifyContent: "flex-start",
@@ -2424,7 +2468,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>MAR</Text>
                   </View>
@@ -2517,7 +2561,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>APR</Text>
                   </View>
@@ -2610,7 +2654,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>MAY</Text>
                   </View>
@@ -2683,7 +2727,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>JUN</Text>
                   </View>
@@ -2760,7 +2804,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>JUL</Text>
                   </View>
@@ -2839,7 +2883,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>AUG</Text>
                   </View>
@@ -2936,7 +2980,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>SEP</Text>
                   </View>
@@ -3033,7 +3077,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>OCT</Text>
                   </View>
@@ -3130,7 +3174,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>NOV</Text>
                   </View>
@@ -3227,7 +3271,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>DEC</Text>
                   </View>
@@ -3324,7 +3368,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>JAN</Text>
                   </View>
@@ -3421,7 +3465,7 @@ export default function IncomeTaxOld({ data }) {
                 </View>
               </View>
               <View style={styles.rowStartBorderView}>
-                <View style={[styles.rowFlexView, { width: "16%" }]}>
+                <View style={[styles.rowFlexView, { width: "16.2%" }]}>
                   <View style={styles.view50Center}>
                     <Text style={styles.textBold}>FEB</Text>
                   </View>
@@ -3616,6 +3660,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "TimesBold",
     textAlign: "center",
+    padding: 2,
   },
   textBold: {
     fontSize: 10,
@@ -3692,7 +3737,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -3735,7 +3780,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderRightWidth: 1,
     borderBottomWidth: 0,
-    paddingRight: 1,
     width: "16%",
     height: 14,
     flexDirection: "row",
