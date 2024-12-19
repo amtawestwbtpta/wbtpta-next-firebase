@@ -2091,7 +2091,7 @@ export default function IncomeTaxNewSection() {
                       style={{ padding: 2, width: "20%" }}
                     >
                       {FiveITTax > 0
-                        ? `Rs. ${IndianFormat(FiveIT * 0.05)}`
+                        ? `Rs. ${IndianFormat(Math.floor(FiveIT * 0.05))}`
                         : "NIL"}
                     </th>
                   </tr>
@@ -2108,7 +2108,7 @@ export default function IncomeTaxNewSection() {
                       style={{ padding: 2, width: "20%" }}
                     >
                       {TenITTax > 0
-                        ? `Rs. ${IndianFormat(TenIT * 0.1)}`
+                        ? `Rs. ${IndianFormat(Math.floor(TenIT * 0.1))}`
                         : "NIL"}
                     </th>
                   </tr>
@@ -2125,7 +2125,7 @@ export default function IncomeTaxNewSection() {
                       style={{ padding: 2, width: "20%" }}
                     >
                       {FifteenITTax > 0
-                        ? `Rs. ${IndianFormat(FifteenIT * 0.15)}`
+                        ? `Rs. ${IndianFormat(Math.floor(FifteenIT * 0.15))}`
                         : "NIL"}
                     </th>
                   </tr>
@@ -2142,7 +2142,7 @@ export default function IncomeTaxNewSection() {
                       style={{ padding: 2, width: "20%" }}
                     >
                       {TwentyITTax > 0
-                        ? `Rs. ${IndianFormat(TwentyIT * 0.2)}`
+                        ? `Rs. ${IndianFormat(Math.floor(TwentyIT * 0.2))}`
                         : "NIL"}
                     </th>
                   </tr>
@@ -2159,7 +2159,7 @@ export default function IncomeTaxNewSection() {
                       style={{ padding: 2, width: "20%" }}
                     >
                       {ThirtyITTax > 0
-                        ? `Rs. ${IndianFormat(ThirtyIT * 0.3)}`
+                        ? `Rs. ${IndianFormat(Math.floor(ThirtyIT * 0.3))}`
                         : "NIL"}
                     </th>
                   </tr>
