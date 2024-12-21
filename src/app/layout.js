@@ -38,7 +38,7 @@ const timesNewRoman = localFont({
 const kalpurush = localFont({
   src: [
     {
-      path: "../../public/assets/fonts/times.ttf",
+      path: "../../public/assets/fonts/kalpurush.ttf",
     },
   ],
   variable: "--font-kalpurush",
