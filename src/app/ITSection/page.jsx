@@ -121,6 +121,14 @@ export default function Page() {
       center: +true,
     },
     {
+      name: "Net Tax NEW",
+      selector: (teacher) =>
+        teacher?.AddedEduCess !== 0 ? `₹ ${IndianFormat(teacher?.AddedEduCess)}` : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
       name: "Update Deduction",
       cell: (row) => (
         <button
@@ -535,6 +543,13 @@ export default function Page() {
                         Net Tax OLD
                       </th>
                       <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Net Tax NEW
+                      </th>
+                      <th
                         className="noprint"
                         style={{
                           border: "1px solid",
@@ -649,6 +664,15 @@ export default function Page() {
                             >
                               {teacher?.NetTax !== 0
                                 ? `₹ ${IndianFormat(teacher?.NetTax)}`
+                                : "NIL"}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.AddedEduCess !== 0
+                                ? `₹ ${IndianFormat(teacher?.AddedEduCess)}`
                                 : "NIL"}
                             </td>
                             <td
