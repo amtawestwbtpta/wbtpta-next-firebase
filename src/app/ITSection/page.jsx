@@ -478,7 +478,7 @@ export default function Page() {
                     border: "1px solid",
                     width: "100%",
                   }}
-                  className="container"
+                  className="container-fluid"
                 >
                   <thead
                     style={{
