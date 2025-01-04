@@ -15,6 +15,7 @@ import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, getDocs, query } from "firebase/firestore";
+import IncomeTaxOld2025 from "../../components/IncomeTaxOld2025";
 export default function IncomeTaxOldSection() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -67,6 +68,7 @@ export default function IncomeTaxOldSection() {
   const marchGSLI = marchSalary?.gsli;
   const bonus = marchSalary?.bonus;
   const marchPTax = disability === "YES" ? 0 : ptaxCalc(marchGross);
+  const marchNetpay = marchGross - marchGPF - marchGSLI - marchPTax;
   const aprilSalary = april.filter((el) => el.id === id)[0];
   const aprilArrear = aprilSalary?.arrear;
   const aprilBasic = aprilSalary?.basic;
@@ -78,6 +80,7 @@ export default function IncomeTaxOldSection() {
   const aprilGPF = aprilSalary?.gpf;
   const aprilGSLI = aprilSalary?.gsli;
   const aprilPTax = disability === "YES" ? 0 : ptaxCalc(aprilGross);
+  const aprilNetpay = aprilGross - aprilGPF - aprilGSLI - aprilPTax;
   const maySalary = may.filter((el) => el.id === id)[0];
   const mayArrear = maySalary?.arrear;
   const mayBasic = maySalary?.basic;
@@ -89,6 +92,7 @@ export default function IncomeTaxOldSection() {
   const mayGPF = maySalary?.gpf;
   const mayGSLI = maySalary?.gsli;
   const mayPTax = disability === "YES" ? 0 : ptaxCalc(mayGross);
+  const mayNetpay = mayGross - mayGPF - mayGSLI - mayPTax;
   const juneSalary = june.filter((el) => el.id === id)[0];
   const juneArrear = juneSalary?.arrear;
   const juneBasic = juneSalary?.basic;
@@ -100,6 +104,7 @@ export default function IncomeTaxOldSection() {
   const juneGPF = juneSalary?.gpf;
   const juneGSLI = juneSalary?.gsli;
   const junePTax = disability === "YES" ? 0 : ptaxCalc(juneGross);
+  const juneNetpay = juneGross - juneGPF - juneGSLI - junePTax;
   const julySalary = july.filter((el) => el.id === id)[0];
   const julyArrear = julySalary?.arrear;
   const julyBasic = julySalary?.basic;
@@ -112,6 +117,7 @@ export default function IncomeTaxOldSection() {
   const julyGPF = julySalary?.gpf;
   const julyGSLI = julySalary?.gsli;
   const julyPTax = disability === "YES" ? 0 : ptaxCalc(julyGross);
+  const julyNetpay = julyGross - julyGPF - julyGSLI - julyPTax;
   const augustSalary = august.filter((el) => el.id === id)[0];
   const augustArrear = augustSalary?.arrear;
   const augustBasic = augustSalary?.basic;
@@ -124,6 +130,7 @@ export default function IncomeTaxOldSection() {
   const augustGPF = augustSalary?.gpf;
   const augustGSLI = augustSalary?.gsli;
   const augustPTax = disability === "YES" ? 0 : ptaxCalc(augustGross);
+  const augustNetpay = augustGross - augustGPF - augustGSLI - augustPTax;
   const septemberSalary = september.filter((el) => el.id === id)[0];
   const septemberArrear = septemberSalary?.arrear;
   const septemberBasic = septemberSalary?.basic;
@@ -140,6 +147,8 @@ export default function IncomeTaxOldSection() {
   const septemberGPF = septemberSalary?.gpf;
   const septemberGSLI = septemberSalary?.gsli;
   const septemberPTax = disability === "YES" ? 0 : ptaxCalc(septemberGross);
+  const septemberNetpay =
+    septemberGross - septemberGPF - septemberGSLI - septemberPTax;
   const octoberSalary = october.filter((el) => el.id === id)[0];
   const octoberArrear = octoberSalary?.arrear;
   const octoberBasic = octoberSalary?.basic;
@@ -154,6 +163,7 @@ export default function IncomeTaxOldSection() {
   const octoberGPF = octoberSalary?.gpf;
   const octoberGSLI = octoberSalary?.gsli;
   const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
+  const octoberNetpay = octoberGross - octoberGPF - octoberGSLI - octoberPTax;
   const novemberSalary = november.filter((el) => el.id === id)[0];
   const novemberArrear = novemberSalary?.arrear;
   const novemberBasic = novemberSalary?.basic;
@@ -170,6 +180,8 @@ export default function IncomeTaxOldSection() {
   const novemberGPF = novemberSalary?.gpf;
   const novemberGSLI = novemberSalary?.gsli;
   const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
+  const novemberNetpay =
+    novemberGross - novemberGPF - novemberGSLI - novemberPTax;
   const decemberSalary = december.filter((el) => el.id === id)[0];
   const decemberArrear = decemberSalary?.arrear;
   const decemberBasic = decemberSalary?.basic;
@@ -186,6 +198,8 @@ export default function IncomeTaxOldSection() {
   const decemberGPF = decemberSalary?.gpf;
   const decemberGSLI = decemberSalary?.gsli;
   const decemberPTax = disability === "YES" ? 0 : ptaxCalc(decemberGross);
+  const decemberNetpay =
+    decemberGross - decemberGPF - decemberGSLI - decemberPTax;
   const januarySalary = january.filter((el) => el.id === id)[0];
   const januaryArrear = januarySalary?.arrear;
   const januaryBasic = januarySalary?.basic;
@@ -200,6 +214,7 @@ export default function IncomeTaxOldSection() {
   const januaryGPF = januarySalary?.gpf;
   const januaryGSLI = januarySalary?.gsli;
   const januaryPTax = disability === "YES" ? 0 : ptaxCalc(januaryGross);
+  const januaryNetpay = januaryGross - januaryGPF - januaryGSLI - januaryPTax;
   const februarySalary = february.filter((el) => el.id === id)[0];
   const februaryArrear = februarySalary?.arrear;
   const februaryBasic = februarySalary?.basic;
@@ -216,6 +231,8 @@ export default function IncomeTaxOldSection() {
   const februaryGPF = februarySalary?.gpf;
   const februaryGSLI = februarySalary?.gsli;
   const februaryPTax = disability === "YES" ? 0 : ptaxCalc(februaryGross);
+  const februaryNetpay =
+    februaryGross - februaryGPF - februaryGSLI - februaryPTax;
   const grossBasic =
     marchBasic +
     aprilBasic +
@@ -281,6 +298,19 @@ export default function IncomeTaxOldSection() {
     decemberMA +
     januaryMA +
     februaryMA;
+  const TotalGross =
+    marchGross +
+    aprilGross +
+    mayGross +
+    juneGross +
+    julyGross +
+    augustGross +
+    septemberGross +
+    octoberGross +
+    novemberGross +
+    decemberGross +
+    januaryGross +
+    februaryGross;
   const GrossPAY =
     marchGross +
     aprilGross +
@@ -334,6 +364,19 @@ export default function IncomeTaxOldSection() {
     decemberPTax +
     januaryPTax +
     februaryPTax;
+  const grossNetpay =
+    marchNetpay +
+    aprilNetpay +
+    mayNetpay +
+    juneNetpay +
+    julyNetpay +
+    augustNetpay +
+    septemberNetpay +
+    octoberNetpay +
+    novemberNetpay +
+    decemberNetpay +
+    januaryNetpay +
+    februaryNetpay;
   const BankInterest = randBetween(500, 2000);
   const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
   const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
@@ -371,6 +414,19 @@ export default function IncomeTaxOldSection() {
     januaryArrear +
     februaryArrear +
     otherIncome;
+  const GrossArrear =
+    marchArrear +
+    aprilArrear +
+    mayArrear +
+    juneArrear +
+    julyArrear +
+    augustArrear +
+    septemberArrear +
+    octoberArrear +
+    novemberArrear +
+    decemberArrear +
+    januaryArrear +
+    februaryArrear;
   const GrossTotalIncome =
     AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
   const deductionVIA =
@@ -715,7 +771,7 @@ export default function IncomeTaxOldSection() {
                     }}
                   />
                 }
-                fileName={`IT Statement of ${tname} of ${school}.pdf`}
+                fileName={`IT Statement of ${tname} OLD TAX REGIME.pdf`}
                 style={{
                   textDecoration: "none",
                   padding: "10px",
@@ -728,6 +784,220 @@ export default function IncomeTaxOldSection() {
               >
                 {({ blob, url, loading, error }) =>
                   loading ? "Please Wait..." : "Download IT Statement"
+                }
+              </PDFDownloadLink>
+            </div>
+            <div className="mx-auto noprint mb-5">
+              <PDFDownloadLink
+                document={
+                  <IncomeTaxOld2025
+                    data={{
+                      id,
+                      tname,
+                      school,
+                      pan,
+                      phone,
+                      disability,
+                      desig,
+                      thisYear,
+                      nextYear,
+                      prevYear,
+                      finYear,
+                      BankInterest,
+                      teacherDeduction,
+                      hbLoanPrincipal,
+                      hbLoanInterest,
+                      lic,
+                      ulip,
+                      ppf,
+                      nsc,
+                      nscInterest,
+                      tutionFee,
+                      sukanya,
+                      stampDuty,
+                      mediclaim,
+                      terminalDisease,
+                      handicapTreatment,
+                      educationLoan,
+                      charity,
+                      disabilityDeduction,
+                      rgSaving,
+                      otherIncome,
+                      fd,
+                      tds,
+                      marchSalary,
+                      marchBasic,
+                      marchAddl,
+                      marchDA,
+                      marchHRA,
+                      marchMA,
+                      marchGross,
+                      marchGPF,
+                      marchGSLI,
+                      bonus,
+                      marchPTax,
+                      aprilSalary,
+                      aprilBasic,
+                      aprilAddl,
+                      aprilDA,
+                      aprilHRA,
+                      aprilMA,
+                      aprilGross,
+                      aprilGPF,
+                      aprilGSLI,
+                      aprilPTax,
+                      maySalary,
+                      mayBasic,
+                      mayAddl,
+                      mayDA,
+                      mayHRA,
+                      mayMA,
+                      mayGross,
+                      mayGPF,
+                      mayGSLI,
+                      mayPTax,
+                      juneSalary,
+                      juneBasic,
+                      juneAddl,
+                      juneDA,
+                      juneHRA,
+                      juneMA,
+                      juneGross,
+                      juneGPF,
+                      juneGSLI,
+                      junePTax,
+                      julySalary,
+                      julyBasic,
+                      julyAddl,
+                      julyDA,
+                      aprilIR,
+                      julyHRA,
+                      julyMA,
+                      julyGross,
+                      julyGPF,
+                      julyGSLI,
+                      julyPTax,
+                      augustSalary,
+                      augustBasic,
+                      augustAddl,
+                      augustDA,
+                      augustHRA,
+                      augustMA,
+                      augustGross,
+                      augustGPF,
+                      augustGSLI,
+                      augustPTax,
+                      septemberSalary,
+                      septemberBasic,
+                      septemberAddl,
+                      septemberDA,
+                      septemberHRA,
+                      septemberMA,
+                      septemberGross,
+                      septemberGPF,
+                      septemberGSLI,
+                      septemberPTax,
+                      octoberSalary,
+                      octoberBasic,
+                      octoberAddl,
+                      octoberDA,
+                      octoberHRA,
+                      octoberMA,
+                      octoberGross,
+                      octoberGPF,
+                      octoberGSLI,
+                      octoberPTax,
+                      novemberSalary,
+                      novemberBasic,
+                      novemberAddl,
+                      novemberDA,
+                      novemberHRA,
+                      novemberMA,
+                      novemberGross,
+                      novemberGPF,
+                      novemberGSLI,
+                      novemberPTax,
+                      decemberSalary,
+                      decemberBasic,
+                      decemberAddl,
+                      decemberDA,
+                      decemberHRA,
+                      decemberMA,
+                      decemberGross,
+                      decemberGPF,
+                      decemberGSLI,
+                      decemberPTax,
+                      januarySalary,
+                      januaryBasic,
+                      januaryAddl,
+                      januaryDA,
+                      januaryHRA,
+                      januaryMA,
+                      januaryGross,
+                      januaryGPF,
+                      januaryGSLI,
+                      januaryPTax,
+                      februarySalary,
+                      februaryBasic,
+                      februaryAddl,
+                      februaryDA,
+                      februaryHRA,
+                      februaryMA,
+                      februaryGross,
+                      februaryGPF,
+                      februaryGSLI,
+                      februaryPTax,
+                      grossBasic,
+                      grossAddl,
+                      grossDA,
+                      grossHRA,
+                      grossMA,
+                      GrossPAY,
+                      grossGPF,
+                      grossGSLI,
+                      grossPTax,
+                      AllGross,
+                      GrossTotalIncome,
+                      deductionVIA,
+                      limitVIA,
+                      OtherVIA,
+                      TotalIncome,
+                      TotalRoundOffIncome,
+                      CalculatedIT,
+                      isUnderRebate,
+                      eduCess,
+                      AddedEduCess,
+                      TotalGross,
+                      GrossArrear,
+                      marchNetpay,
+                      aprilNetpay,
+                      mayNetpay,
+                      juneNetpay,
+                      julyNetpay,
+                      augustNetpay,
+                      septemberNetpay,
+                      octoberNetpay,
+                      novemberNetpay,
+                      decemberNetpay,
+                      januaryNetpay,
+                      februaryNetpay,
+                      grossNetpay,
+                    }}
+                  />
+                }
+                fileName={`IT Statement of ${tname} OLD TAX REGIME 2025.pdf`}
+                style={{
+                  textDecoration: "none",
+                  padding: "10px",
+                  color: "#fff",
+                  backgroundColor: "purple",
+                  border: "1px solid #4a4a4a",
+                  width: "40%",
+                  borderRadius: 10,
+                }}
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Please Wait..." : "Download 2025 IT Statement"
                 }
               </PDFDownloadLink>
             </div>
