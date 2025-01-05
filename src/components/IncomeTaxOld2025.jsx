@@ -5901,7 +5901,8 @@ export default function IncomeTaxOld2025({ data }) {
                 <View
                   style={{
                     width: "10%",
-                    justifyContent: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
                     alignItems: "center",
                     borderRightWidth: 1,
                   }}
@@ -5909,7 +5910,7 @@ export default function IncomeTaxOld2025({ data }) {
                   <Text style={styles.text}>
                     {julyBasic !== 0 ? julyGross : ""}
                   </Text>
-                  <Text style={[styles.text, { fontSize: 7 }]}>
+                  <Text style={styles.text}>
                     {aprilIR !== 0 ? `(IR- ${aprilIR})` : ""}
                   </Text>
                 </View>
