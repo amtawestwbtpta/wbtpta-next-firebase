@@ -190,8 +190,7 @@ export default function IncomeTaxNew2025({ data }) {
     GrossArrear,
   } = data;
   return (
-   <PDFViewer style={{width,height}}>
-     <Document
+    <Document
       style={{ margin: 5, padding: 5 }}
       title={`IT Statement of ${tname} of ${school} NEW 2025`}
     >
@@ -4449,7 +4448,7 @@ export default function IncomeTaxNew2025({ data }) {
                 <View
                   style={{
                     width: "10%",
-                    flexDirection:"row",
+                    flexDirection: "row",
                     justifyContent: "space-evenly",
                     alignItems: "center",
                     borderRightWidth: 1,
@@ -6596,7 +6595,6 @@ export default function IncomeTaxNew2025({ data }) {
         </View>
       </Page>
     </Document>
-   </PDFViewer>
   );
 }
 const styles = StyleSheet.create({
