@@ -91,6 +91,23 @@ const GlobalContext = createContext({
   setfloodReliefUpdateTime: () => "",
   deductionState: [],
   setDeductionState: () => [],
+  salaryState: [],
+  setSalaryState: () => [],
+  indSalaryState: {
+    march: [],
+    april: [],
+    may: [],
+    june: [],
+    july: [],
+    august: [],
+    september: [],
+    october: [],
+    november: [],
+    december: [],
+    january: [],
+    february: [],
+  },
+  setIndSalaryState: () => {},
 });
 
 export const GlobalContextProvider = ({ children }) => {
@@ -161,6 +178,21 @@ export const GlobalContextProvider = ({ children }) => {
     Date.now() - 1000
   );
   const [deductionState, setDeductionState] = useState([]);
+  const [salaryState, setSalaryState] = useState([]);
+  const [indSalaryState, setIndSalaryState] = useState({
+    march: [],
+    april: [],
+    may: [],
+    june: [],
+    july: [],
+    august: [],
+    september: [],
+    october: [],
+    november: [],
+    december: [],
+    january: [],
+    february: [],
+  });
   return (
     <GlobalContext.Provider
       value={{
@@ -210,6 +242,10 @@ export const GlobalContextProvider = ({ children }) => {
         setfloodReliefUpdateTime,
         deductionState,
         setDeductionState,
+        salaryState,
+        setSalaryState,
+        indSalaryState,
+        setIndSalaryState,
       }}
     >
       <FirebaseProvider>{children}</FirebaseProvider>

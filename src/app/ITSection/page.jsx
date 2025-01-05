@@ -19,8 +19,13 @@ import Link from "next/link";
 
 export default function Page() {
   const router = useRouter();
-  const { deductionState, setDeductionState, teachersState } =
-    useGlobalContext();
+  const {
+    deductionState,
+    setDeductionState,
+    teachersState,
+    salaryState,
+    setSalaryState,
+  } = useGlobalContext();
   const [salary, setSalary] = useState([]);
   const [loader, setLoader] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -123,7 +128,9 @@ export default function Page() {
     {
       name: "Net Tax NEW",
       selector: (teacher) =>
-        teacher?.AddedEduCess !== 0 ? `₹ ${IndianFormat(teacher?.AddedEduCess)}` : "NIL",
+        teacher?.AddedEduCess !== 0
+          ? `₹ ${IndianFormat(teacher?.AddedEduCess)}`
+          : "NIL",
       sortable: true,
       wrap: true,
       center: +true,
@@ -274,11 +281,17 @@ export default function Page() {
     );
     setSalary(q1.data);
     setFilteredData(q1.data);
+    setSalaryState(q1.data);
     setLoader(false);
   };
   useEffect(() => {
     getDeduction();
-    getSalary();
+    if (salaryState.length === 0) {
+      getSalary();
+    } else {
+      setSalary(salaryState);
+      setFilteredData(salaryState);
+    }
     // eslint-disable-next-line
   }, []);
   return (
