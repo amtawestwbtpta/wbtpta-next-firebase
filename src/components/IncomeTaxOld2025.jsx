@@ -5909,6 +5909,9 @@ export default function IncomeTaxOld2025({ data }) {
                   <Text style={styles.text}>
                     {julyBasic !== 0 ? julyGross : ""}
                   </Text>
+                  <Text style={[styles.text, { fontSize: 7 }]}>
+                    {aprilIR !== 0 ? `(IR- ${aprilIR})` : ""}
+                  </Text>
                 </View>
                 <View
                   style={{

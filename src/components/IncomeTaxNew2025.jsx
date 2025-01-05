@@ -2669,7 +2669,9 @@ export default function IncomeTaxNew2025({ data }) {
                       <Text style={styles.text}>Rs.</Text>
                     </View>
                     <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>{IncomeTaxAfterRelief > 0 ? " " : "NIL"}</Text>
+                      <Text style={styles.text}>
+                        {IncomeTaxAfterRelief > 0 ? " " : "NIL"}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -4453,6 +4455,9 @@ export default function IncomeTaxNew2025({ data }) {
                 >
                   <Text style={styles.text}>
                     {julyBasic !== 0 ? julyGross : ""}
+                  </Text>
+                  <Text style={[styles.text, { fontSize: 7 }]}>
+                    {aprilIR !== 0 ? `(IR- ${aprilIR})` : ""}
                   </Text>
                 </View>
                 <View
