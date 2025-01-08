@@ -259,7 +259,7 @@ const TechSalary = () => {
                     const februarySalary = february.filter(
                       (e) => e.id === id
                     )[0];
-                    if (dataYear === date.getFullYear()) {
+                    // if (dataYear === date.getFullYear()) {
                       if (index === 1) {
                         basicpay = januarySalary?.basic;
                         da = Math.round(basicpay * januarySalary?.daPercent);
@@ -331,20 +331,21 @@ const TechSalary = () => {
                         pfund = februarySalary?.gpf;
                         ma = februarySalary?.ma;
                       }
-                    } else if (dataYear === date.getFullYear() - 1) {
-                      basicpay = prevmbasic;
-                      da = Math.round(basicpay * PREV6DA);
-                      pfund = gpfprev;
-                    } else {
-                      pfund = gpfprev;
-                      if (index > 6) {
-                        basicpay = RoundTo(basic + basic * 0.03, 100);
-                        da = Math.round(basicpay * NEXTDA);
-                      } else {
-                        basicpay = basic;
-                        da = Math.round(basicpay * DA);
-                      }
-                    }
+                    // } else if (dataYear === date.getFullYear() - 1) {
+                    //   basicpay = prevmbasic;
+                    //   da = Math.round(basicpay * PREV6DA);
+                    //   pfund = gpfprev;
+                    // }
+                    //  else {
+                    //   pfund = gpfprev;
+                    //   if (index > 6) {
+                    //     basicpay = RoundTo(basic + basic * 0.03, 100);
+                    //     da = Math.round(basicpay * NEXTDA);
+                    //   } else {
+                    //     basicpay = basic;
+                    //     da = Math.round(basicpay * DA);
+                    //   }
+                    // }
 
                     // let da = Math.round(basicpay * DA);
                     let hra = Math.round(basicpay * HRA);
