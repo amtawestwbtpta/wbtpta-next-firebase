@@ -259,7 +259,7 @@ const TechSalary = () => {
                     const februarySalary = february.filter(
                       (e) => e.id === id
                     )[0];
-                    if (dataYear === date.getFullYear()) {
+                    if (dataYear === date.getFullYear()-1) {
                       if (index === 1) {
                         basicpay = prevJanuarySalary?.basic;
                         da = Math.round(
@@ -335,7 +335,7 @@ const TechSalary = () => {
                         pfund = februarySalary?.gpf;
                         ma = februarySalary?.ma;
                       }
-                    } else if (dataYear === date.getFullYear() - 1) {
+                    } else if (dataYear === date.getFullYear() - 2) {
                       basicpay = prevmbasic;
                       da = Math.round(basicpay * PREV6DA);
                       pfund = gpfprev;
