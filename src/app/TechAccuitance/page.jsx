@@ -693,15 +693,15 @@ const TechAccuitance = () => {
                           }
                         } else {
                           if (index === 0) {
-                            basicpay = prevJanuarySalary?.basic;
-                            da = Math.round(basicpay * prevJanuarySalary?.daPercent);
-                            pfund = prevJanuarySalary?.gpf;
-                            ma = prevJanuarySalary?.ma;
+                            basicpay = januarySalary?.basic;
+                            da = Math.round(basicpay * januarySalary?.daPercent);
+                            pfund = januarySalary?.gpf;
+                            ma = januarySalary?.ma;
                           } else if (index === 1) {
-                            basicpay = prevFebruarySalary?.basic;
-                            da = Math.round(basicpay * prevFebruarySalary?.daPercent);
-                            pfund = prevFebruarySalary?.gpf;
-                            ma = prevFebruarySalary?.ma;
+                            basicpay = januarySalary?.basic;
+                            da = Math.round(basicpay * januarySalary?.daPercent);
+                            pfund = januarySalary?.gpf;
+                            ma = januarySalary?.ma;
                           } else if (index === 2) {
                             basicpay = marchSalary?.basic;
                             da = Math.round(basicpay * marchSalary?.daPercent);
