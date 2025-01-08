@@ -259,21 +259,17 @@ const TechSalary = () => {
                     const februarySalary = february.filter(
                       (e) => e.id === id
                     )[0];
-                    if (dataYear === date.getFullYear()-1) {
+                    if (dataYear === date.getFullYear()) {
                       if (index === 1) {
-                        basicpay = prevJanuarySalary?.basic;
-                        da = Math.round(
-                          basicpay * prevJanuarySalary?.daPercent
-                        );
-                        pfund = prevJanuarySalary?.gpf;
-                        ma = prevJanuarySalary?.ma;
+                        basicpay = januarySalary?.basic;
+                        da = Math.round(basicpay * januarySalary?.daPercent);
+                        pfund = januarySalary?.gpf;
+                        ma = januarySalary?.ma;
                       } else if (index === 2) {
-                        basicpay = prevFebruarySalary?.basic;
-                        da = Math.round(
-                          basicpay * prevFebruarySalary?.daPercent
-                        );
-                        pfund = prevFebruarySalary?.gpf;
-                        ma = prevFebruarySalary?.ma;
+                        basicpay = februarySalary?.basic;
+                        da = Math.round(basicpay * februarySalary?.daPercent);
+                        pfund = februarySalary?.gpf;
+                        ma = februarySalary?.ma;
                       } else if (index === 3) {
                         basicpay = marchSalary?.basic;
                         da = Math.round(basicpay * marchSalary?.daPercent);
@@ -335,7 +331,7 @@ const TechSalary = () => {
                         pfund = februarySalary?.gpf;
                         ma = februarySalary?.ma;
                       }
-                    } else if (dataYear === date.getFullYear() - 2) {
+                    } else if (dataYear === date.getFullYear() - 1) {
                       basicpay = prevmbasic;
                       da = Math.round(basicpay * PREV6DA);
                       pfund = gpfprev;
