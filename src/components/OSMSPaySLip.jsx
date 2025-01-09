@@ -66,7 +66,7 @@ export default function OSMSPaySLip({ data }) {
               </Text>
               <Text style={[styles.title2, { marginTop: 10 }]}>
                 PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
-                {today.getFullYear()}
+                {today.getFullYear()-1}
               </Text>
             </View>
             <View></View>
