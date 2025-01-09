@@ -36,19 +36,19 @@ const PayslipWbtpta = () => {
     PAYSLIPMONTHS = [
       `January-${thisYear}`,
       `February-${thisYear}`,
+      `March-${prevYear}`,
+      `April-${prevYear}`,
+      `May-${prevYear}`,
+      `June-${prevYear}`,
+      `July-${prevYear}`,
+      `August-${prevYear}`,
+      `September-${prevYear}`,
+      `October-${prevYear}`,
+      `November-${prevYear}`,
+      `December-${prevYear}`,
+      `January-${prevYear}`,
+      `February-${thisYear}`,
       `March-${thisYear}`,
-      `April-${thisYear}`,
-      `May-${thisYear}`,
-      `June-${thisYear}`,
-      `July-${thisYear}`,
-      `August-${thisYear}`,
-      `September-${thisYear}`,
-      `October-${thisYear}`,
-      `November-${thisYear}`,
-      `December-${thisYear}`,
-      `January-${nextYear}`,
-      `February-${nextYear}`,
-      `March-${nextYear}`,
     ];
   } else {
     PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
@@ -111,7 +111,9 @@ const PayslipWbtpta = () => {
   let today = new Date();
   // let date = new Date();
   const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(today.getMonth() - 1);
+  const [index, setIndex] = useState(
+    today.getMonth() === 0 ? 11 : today.getMonth() - 1
+  );
   const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
   const [year, setYear] = useState(today.getFullYear());
   const [prevJanuary, setPrevJanuary] = useState({
