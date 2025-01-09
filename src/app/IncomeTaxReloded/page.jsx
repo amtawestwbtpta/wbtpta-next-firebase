@@ -46,7 +46,6 @@ export default function IncomeTaxReloded() {
   const [schSearch, setSchSearch] = useState("");
   const [showDeductionForm, setShowDeductionForm] = useState(false);
   const [filterClicked, setFilterClicked] = useState(false);
-  const [showTableFormat, setShowTableFormat] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
     id: "",
     tname: "",
@@ -1657,94 +1656,6 @@ export default function IncomeTaxReloded() {
     });
   };
 
-  const columns = [
-    {
-      name: "IT Data",
-      selector: (row, ind) => (
-        <div className="my-2 mx-auto">
-          <p className="m-0 p-0">
-            SL:{" "}
-            {filterClicked
-              ? ind + 1
-              : salary.findIndex((i) => i.id === row.id) + 1}
-          </p>
-          <p className="m-0 p-0">Teacher Name: {row.tname}</p>
-          <p className="m-0 p-0">School Name: {row.school}</p>
-          <p className="m-0 p-0">
-            Gross Salary: {`₹ ${IndianFormat(row?.AllGross)}`}
-          </p>
-          <p className="m-0 p-0">
-            Gross 80C:{" "}
-            {row?.limit80C !== 0 ? `₹ ${IndianFormat(row?.limit80C)}` : "NIL"}
-          </p>
-          <p className="m-0 p-0">
-            Gross 80D:{" "}
-            {row?.Gross80D !== 0 ? `₹ ${IndianFormat(row?.Gross80D)}` : "NIL"}
-          </p>
-          <p className="m-0 p-0">
-            Taxable Income:{" "}
-            {row?.TaxableIncome !== 0
-              ? `₹ ${IndianFormat(row?.TaxableIncome)}`
-              : "NIL"}
-          </p>
-          <p className="m-0 p-0">
-            Net Tax OLD:{" "}
-            {row?.NetTax !== 0 ? `₹ ${IndianFormat(row?.NetTax)}` : "NIL"}
-          </p>
-          <p className="m-0 p-0">
-            Net Tax NEW:{" "}
-            {row?.AddedEduCess !== 0
-              ? `₹ ${IndianFormat(row?.AddedEduCess)}`
-              : "NIL"}
-          </p>
-          <button
-            type="button"
-            className="btn btn-sm btn-warning m-1"
-            onClick={() => {
-              const fData = deductionState.filter((d) => d.id === row?.id)[0];
-              setTeacherDeduction(fData);
-              setShowDeductionForm(true);
-              setLoader(false);
-            }}
-          >
-            Update Deduction
-          </button>
-          <button
-            type="button"
-            className="btn btn-sm btn-success m-1"
-            onClick={() => {
-              const fData = teachersState.filter(
-                (teacher) => teacher?.id === row.id
-              )[0];
-              calCulateOldIT(fData);
-              setTeacherData(fData);
-              setShowOldModal(true);
-            }}
-          >
-            IT Old Regime
-          </button>
-          <button
-            type="button"
-            className="btn btn-sm btn-primary m-1"
-            onClick={() => {
-              const fData = teachersState.filter(
-                (teacher) => teacher?.id === row.id
-              )[0];
-              calCulateNewIT(fData);
-              setTeacherData(fData);
-              setShowNewModal(true);
-            }}
-          >
-            IT New Regime
-          </button>
-        </div>
-      ),
-      sortable: true,
-      wrap: true,
-      center: +true,
-    },
-  ];
-
   const getDeduction = async () => {
     if (deductionState.length === 0) {
       setLoader(true);
@@ -1987,239 +1898,161 @@ export default function IncomeTaxReloded() {
                 )}
               </div>
               <div>
-                {showTableFormat ? (
-                  <>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-danger m-2"
-                      onClick={() => {
-                        setShowTableFormat(false);
-                      }}
-                    >
-                      Hide Table Format
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-primary text-white font-weight-bold p-2 m-2 noprint rounded"
-                      onClick={() => {
-                        if (typeof window !== "undefined") {
-                          window.print();
-                        }
-                      }}
-                    >
-                      Print
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger m-2"
-                    onClick={() => {
-                      setShowTableFormat(true);
-                    }}
-                  >
-                    Show Table Format
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="btn btn-sm btn-primary text-white font-weight-bold p-2 m-2 noprint rounded"
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.print();
+                    }
+                  }}
+                >
+                  Print
+                </button>
               </div>
             </div>
 
             <h3 className="text-black">All Teacher IT Data</h3>
             <div>
-              {!showTableFormat ? (
-                <div className="container">
-                  <DataTable
-                    columns={columns}
-                    data={filteredData}
-                    pagination
-                    paginationPerPage={30}
-                    highlightOnHover
-                    fixedHeader
-                    subHeader
-                    subHeaderComponent={
-                      <div>
-                        <div className="mb-2">
-                          <input
-                            type="text"
-                            placeholder="Search by Teacher"
-                            className="form-control"
-                            value={search}
-                            onChange={(e) => {
-                              setSearch(e.target.value);
-                              setFilteredData(
-                                salary.filter((el) =>
-                                  el.tname
-                                    .toLowerCase()
-                                    .includes(e.target.value.toLowerCase())
-                                )
-                              );
-                            }}
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <input
-                            type="text"
-                            placeholder="Search by School"
-                            className="form-control"
-                            value={schSearch}
-                            onChange={(e) => {
-                              setSchSearch(e.target.value);
-                              setFilteredData(
-                                salary.filter((el) =>
-                                  el.school
-                                    .toLowerCase()
-                                    .includes(e.target.value.toLowerCase())
-                                )
-                              );
-                            }}
-                          />
-                        </div>
-                      </div>
-                    }
-                    subHeaderAlign="right"
-                  />
-                </div>
-              ) : (
-                <div className="mx-auto">
-                  <div className="col-md-4 mx-auto noprint">
-                    <div className="mb-2">
-                      <input
-                        type="text"
-                        placeholder="Search by Teacher"
-                        className="form-control"
-                        value={search}
-                        onChange={(e) => {
-                          setSearch(e.target.value);
-                          setFilteredData(
-                            salary.filter((el) =>
-                              el.tname
-                                .toLowerCase()
-                                .includes(e.target.value.toLowerCase())
-                            )
-                          );
-                        }}
-                      />
-                    </div>
-                    <div className="mb-2">
-                      <input
-                        type="text"
-                        placeholder="Search by School"
-                        className="form-control"
-                        value={schSearch}
-                        onChange={(e) => {
-                          setSchSearch(e.target.value);
-                          setFilteredData(
-                            salary.filter((el) =>
-                              el.school
-                                .toLowerCase()
-                                .includes(e.target.value.toLowerCase())
-                            )
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="mx-auto  d-flex flex-row justify-content-evenly flex-wrap">
-                    {filteredData.map((row, index) => {
-                      if (row?.AllGross !== 0) {
-                        return (
-                          <div
-                            className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak"
-                            style={{ backgroundColor: "seashell" }}
-                            key={index}
-                          >
-                            <p className="m-0 p-0">
-                              SL:{" "}
-                              {filterClicked
-                                ? index + 1
-                                : salary.findIndex((i) => i.id === row.id) + 1}
-                            </p>
-                            <p className="m-0 p-0">Teacher Name: {row.tname}</p>
-                            <p className="m-0 p-0">School Name: {row.school}</p>
-                            <p className="m-0 p-0">
-                              Gross Salary: {`₹ ${IndianFormat(row?.AllGross)}`}
-                            </p>
-                            <p className="m-0 p-0">
-                              Gross 80C:{" "}
-                              {row?.limit80C !== 0
-                                ? `₹ ${IndianFormat(row?.limit80C)}`
-                                : "NIL"}
-                            </p>
-                            <p className="m-0 p-0">
-                              Gross 80D:{" "}
-                              {row?.Gross80D !== 0
-                                ? `₹ ${IndianFormat(row?.Gross80D)}`
-                                : "NIL"}
-                            </p>
-                            <p className="m-0 p-0">
-                              Taxable Income:{" "}
-                              {row?.TaxableIncome !== 0
-                                ? `₹ ${IndianFormat(row?.TaxableIncome)}`
-                                : "NIL"}
-                            </p>
-                            <p className="m-0 p-0">
-                              Net Tax OLD:{" "}
-                              {row?.NetTax !== 0
-                                ? `₹ ${IndianFormat(row?.NetTax)}`
-                                : "NIL"}
-                            </p>
-                            <p className="m-0 p-0">
-                              Net Tax NEW:{" "}
-                              {row?.AddedEduCess !== 0
-                                ? `₹ ${IndianFormat(row?.AddedEduCess)}`
-                                : "NIL"}
-                            </p>
-                            <div>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-warning m-1 noprint"
-                                onClick={() => {
-                                  const fData = deductionState.filter(
-                                    (d) => d.id === row?.id
-                                  )[0];
-                                  setTeacherDeduction(fData);
-                                  setShowDeductionForm(true);
-                                  setLoader(false);
-                                }}
-                              >
-                                Update Deduction
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-success m-1 noprint"
-                                onClick={() => {
-                                  const fData = teachersState.filter(
-                                    (teacher) => teacher?.id === row.id
-                                  )[0];
-                                  calCulateOldIT(fData);
-                                  setTeacherData(fData);
-                                  setShowOldModal(true);
-                                }}
-                              >
-                                IT Old Regime
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-primary m-1 noprint"
-                                onClick={() => {
-                                  const fData = teachersState.filter(
-                                    (teacher) => teacher?.id === row.id
-                                  )[0];
-                                  calCulateNewIT(fData);
-                                  setTeacherData(fData);
-                                  setShowNewModal(true);
-                                }}
-                              >
-                                IT New Regime
-                              </button>
-                            </div>
-                          </div>
+              <div className="mx-auto">
+                <div className="col-md-4 mx-auto noprint">
+                  <div className="mb-2">
+                    <input
+                      type="text"
+                      placeholder="Search by Teacher"
+                      className="form-control"
+                      value={search}
+                      onChange={(e) => {
+                        setSearch(e.target.value);
+                        setFilteredData(
+                          salary.filter((el) =>
+                            el.tname
+                              .toLowerCase()
+                              .includes(e.target.value.toLowerCase())
+                          )
                         );
-                      }
-                    })}
+                      }}
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <input
+                      type="text"
+                      placeholder="Search by School"
+                      className="form-control"
+                      value={schSearch}
+                      onChange={(e) => {
+                        setSchSearch(e.target.value);
+                        setFilteredData(
+                          salary.filter((el) =>
+                            el.school
+                              .toLowerCase()
+                              .includes(e.target.value.toLowerCase())
+                          )
+                        );
+                      }}
+                    />
                   </div>
                 </div>
-              )}
+                <div className="mx-auto  d-flex flex-row justify-content-evenly flex-wrap">
+                  {filteredData.map((row, index) => {
+                    if (row?.AllGross !== 0) {
+                      return (
+                        <div
+                          className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak"
+                          style={{ backgroundColor: "seashell" }}
+                          key={index}
+                        >
+                          <p className="m-0 p-0">
+                            SL:{" "}
+                            {filterClicked
+                              ? index + 1
+                              : salary.findIndex((i) => i.id === row.id) + 1}
+                          </p>
+                          <p className="m-0 p-0">Teacher Name: {row.tname}</p>
+                          <p className="m-0 p-0">School Name: {row.school}</p>
+                          <p className="m-0 p-0">
+                            Gross Salary: {`₹ ${IndianFormat(row?.AllGross)}`}
+                          </p>
+                          <p className="m-0 p-0">
+                            Gross 80C:{" "}
+                            {row?.limit80C !== 0
+                              ? `₹ ${IndianFormat(row?.limit80C)}`
+                              : "NIL"}
+                          </p>
+                          <p className="m-0 p-0">
+                            Gross 80D:{" "}
+                            {row?.Gross80D !== 0
+                              ? `₹ ${IndianFormat(row?.Gross80D)}`
+                              : "NIL"}
+                          </p>
+                          <p className="m-0 p-0">
+                            Taxable Income:{" "}
+                            {row?.TaxableIncome !== 0
+                              ? `₹ ${IndianFormat(row?.TaxableIncome)}`
+                              : "NIL"}
+                          </p>
+                          <p className="m-0 p-0">
+                            Net Tax OLD:{" "}
+                            {row?.NetTax !== 0
+                              ? `₹ ${IndianFormat(row?.NetTax)}`
+                              : "NIL"}
+                          </p>
+                          <p className="m-0 p-0">
+                            Net Tax NEW:{" "}
+                            {row?.AddedEduCess !== 0
+                              ? `₹ ${IndianFormat(row?.AddedEduCess)}`
+                              : "NIL"}
+                          </p>
+                          <div>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-warning m-1 noprint"
+                              onClick={() => {
+                                const fData = deductionState.filter(
+                                  (d) => d.id === row?.id
+                                )[0];
+                                setTeacherDeduction(fData);
+                                setShowDeductionForm(true);
+                                setLoader(false);
+                              }}
+                            >
+                              Update Deduction
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-success m-1 noprint"
+                              onClick={() => {
+                                const fData = teachersState.filter(
+                                  (teacher) => teacher?.id === row.id
+                                )[0];
+                                calCulateOldIT(fData);
+                                setTeacherData(fData);
+                                setShowOldModal(true);
+                              }}
+                            >
+                              IT Old Regime
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-primary m-1 noprint"
+                              onClick={() => {
+                                const fData = teachersState.filter(
+                                  (teacher) => teacher?.id === row.id
+                                )[0];
+                                calCulateNewIT(fData);
+                                setTeacherData(fData);
+                                setShowNewModal(true);
+                              }}
+                            >
+                              IT New Regime
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              </div>
             </div>
             <div className="my-3">
               {showDeductionForm && (
