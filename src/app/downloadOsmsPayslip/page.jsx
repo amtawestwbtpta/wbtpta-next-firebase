@@ -194,15 +194,15 @@ export default function Page() {
   });
 
   if (index === 0) {
-    basicpay = prevJanuary?.basic;
-    da = Math.round(basicpay * prevJanuary?.daPercent);
-    pfund = prevJanuary?.gpf;
-    ma = prevJanuary?.ma;
+    basicpay = january?.basic;
+    da = Math.round(basicpay * january?.daPercent);
+    pfund = january?.gpf;
+    ma = january?.ma;
   } else if (index === 1) {
-    basicpay = prevFebruary?.basic;
-    da = Math.round(basicpay * prevFebruary?.daPercent);
-    pfund = prevFebruary?.gpf;
-    ma = prevFebruary?.ma;
+    basicpay = february?.basic;
+    da = Math.round(basicpay * february?.daPercent);
+    pfund = february?.gpf;
+    ma = february?.ma;
   } else if (index === 2) {
     basicpay = march?.basic;
     da = Math.round(basicpay * march?.daPercent);
