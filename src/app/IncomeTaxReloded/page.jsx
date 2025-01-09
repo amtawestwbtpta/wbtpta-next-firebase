@@ -1697,12 +1697,6 @@ export default function IncomeTaxReloded() {
               ? `₹ ${IndianFormat(row?.AddedEduCess)}`
               : "NIL"}
           </p>
-          <p className="m-0 p-0">
-            Net Tax NEW:{" "}
-            {row?.AddedEduCess !== 0
-              ? `₹ ${IndianFormat(row?.AddedEduCess)}`
-              : "NIL"}
-          </p>
           <button
             type="button"
             className="btn btn-sm btn-warning m-1"
@@ -2167,12 +2161,6 @@ export default function IncomeTaxReloded() {
                               Net Tax OLD:{" "}
                               {row?.NetTax !== 0
                                 ? `₹ ${IndianFormat(row?.NetTax)}`
-                                : "NIL"}
-                            </p>
-                            <p className="m-0 p-0">
-                              Net Tax NEW:{" "}
-                              {row?.AddedEduCess !== 0
-                                ? `₹ ${IndianFormat(row?.AddedEduCess)}`
                                 : "NIL"}
                             </p>
                             <p className="m-0 p-0">
@@ -2690,7 +2678,7 @@ export default function IncomeTaxReloded() {
                   style={{ display: "block" }}
                   aria-modal="true"
                 >
-                  <div className="modal-dialog">
+                  <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                       <div className="modal-header">
                         <h1
@@ -2775,7 +2763,7 @@ export default function IncomeTaxReloded() {
                   style={{ display: "block" }}
                   aria-modal="true"
                 >
-                  <div className="modal-dialog">
+                  <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                       <div className="modal-header">
                         <h1
