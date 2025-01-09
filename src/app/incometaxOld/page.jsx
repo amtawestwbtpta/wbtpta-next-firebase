@@ -40,13 +40,13 @@ export default function IncomeTaxOldSection() {
   const month = date.getMonth() + 1;
   let thisYear, nextYear, prevYear;
   if (month < 4) {
-    thisYear = date.getFullYear() - 1;
-    nextYear = date.getFullYear();
-    prevYear = date.getFullYear() - 2;
-  } else {
     thisYear = date.getFullYear();
     nextYear = date.getFullYear() + 1;
     prevYear = date.getFullYear() - 1;
+  } else {
+    thisYear = date.getFullYear() - 1;
+    nextYear = date.getFullYear();
+    prevYear = date.getFullYear() - 2;
   }
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);

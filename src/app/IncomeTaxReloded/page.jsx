@@ -78,6 +78,7 @@ export default function IncomeTaxReloded() {
     desig: "",
     thisYear: "",
     prevYear: "",
+    nextYear: "",
     finYear: "",
     marchSalary: "",
     marchBasic: "",
@@ -452,14 +453,15 @@ export default function IncomeTaxReloded() {
   const month = date.getMonth() + 1;
   let thisYear, nextYear, prevYear;
   if (month < 4) {
-    thisYear = date.getFullYear() - 1;
-    nextYear = date.getFullYear();
-    prevYear = date.getFullYear() - 2;
-  } else {
     thisYear = date.getFullYear();
     nextYear = date.getFullYear() + 1;
     prevYear = date.getFullYear() - 1;
+  } else {
+    thisYear = date.getFullYear() - 1;
+    nextYear = date.getFullYear();
+    prevYear = date.getFullYear() - 2;
   }
+  const finYear = `${thisYear}-${nextYear}`;
   const [showNewModal, setShowNewModal] = useState(false);
   const [showOldModal, setShowOldModal] = useState(false);
   const [march, setMarch] = useState([]);
@@ -476,7 +478,6 @@ export default function IncomeTaxReloded() {
   const [february, setFebruary] = useState([]);
   const calCulateOldIT = async (data) => {
     const { id, tname, fname, school, pan, phone, disability, desig } = data;
-    const finYear = `${thisYear}-${nextYear}`;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -1081,7 +1082,6 @@ export default function IncomeTaxReloded() {
   };
   const calCulateNewIT = async (data) => {
     const { id, tname, school, pan, phone, disability, desig } = data;
-    const finYear = `${thisYear}-${nextYear}`;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -1486,6 +1486,7 @@ export default function IncomeTaxReloded() {
       desig,
       thisYear,
       prevYear,
+      nextYear,
       finYear,
       marchSalary,
       marchBasic,
@@ -1797,6 +1798,10 @@ export default function IncomeTaxReloded() {
     }
     // eslint-disable-next-line
   }, []);
+  useEffect(()=>{
+    console.log(month)
+    //eslint-disable-next-line
+  },[])
   return (
     <div className="container-fluid">
       {loader ? (

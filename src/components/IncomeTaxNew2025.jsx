@@ -21,6 +21,7 @@ export default function IncomeTaxNew2025({ data }) {
     desig,
     thisYear,
     prevYear,
+    nextYear,
     finYear,
     marchSalary,
     marchBasic,
