@@ -1677,18 +1677,13 @@ export default function IncomeTaxReloded() {
     await updateDoc(docRef, teacherDeduction)
       .then(() => {
         setLoader(false);
-        let y = deductionState.filter((el) => el.id !== teacherDeduction.id);
-        y = [...y, teacherDeduction];
-        const newData = y.sort((a, b) => {
-          if (a.tname < b.tname) {
-            return -1;
-          }
-          if (a.tname > b.tname) {
-            return 1;
-          }
-        });
+        const newData = deductionState.map((item) =>
+          item.id === teacherDeduction.id ? teacherDeduction : item
+        );
         setDeductionState(newData);
         toast.success("Deduction Updated Successfully!");
+        setShowDeductionForm(false);
+        setLoader(false);
       })
       .catch((e) => {
         setLoader(false);
@@ -1798,10 +1793,9 @@ export default function IncomeTaxReloded() {
     }
     // eslint-disable-next-line
   }, []);
-  useEffect(()=>{
-    console.log(month)
+  useEffect(() => {
     //eslint-disable-next-line
-  },[])
+  }, []);
   return (
     <div className="container-fluid">
       {loader ? (
@@ -1896,6 +1890,8 @@ export default function IncomeTaxReloded() {
                     onClick={() => {
                       setFilteredData(salary);
                       setFilterClicked(false);
+                      setSearch("");
+                      setSchSearch("");
                     }}
                   >
                     Clear Filter
@@ -2486,7 +2482,6 @@ export default function IncomeTaxReloded() {
                           type="button"
                           className="btn btn-sm btn-success"
                           onClick={() => {
-                            setShowDeductionForm(false);
                             updateTeacherDeduction();
                           }}
                         >
