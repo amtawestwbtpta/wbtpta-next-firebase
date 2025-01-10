@@ -1671,7 +1671,8 @@ export default function IncomeTaxReloded() {
       setLoader(false);
     }
   };
-  const updateTeacherDeduction = async () => {
+  const updateTeacherDeduction = async (e) => {
+    e.preventDefault();
     const docRef = doc(firestore, "deduction", teacherDeduction.id);
     setLoader(true);
     await updateDoc(docRef, teacherDeduction)
