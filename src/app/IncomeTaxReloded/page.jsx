@@ -2551,6 +2551,10 @@ export default function IncomeTaxReloded() {
                                 : "Download 2025 IT Statement"
                             }
                           </PDFDownloadLink>
+                          <p className="my-5">
+                            Bank Interest : Rs.{" "}
+                            {IndianFormat(oldITData?.BankInterest)}
+                          </p>
                         </div>
                         <div className="mx-auto noprint my-5">
                           <PDFDownloadLink
