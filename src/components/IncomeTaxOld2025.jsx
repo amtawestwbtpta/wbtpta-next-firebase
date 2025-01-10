@@ -1903,7 +1903,7 @@ export default function IncomeTaxOld2025({ data }) {
                 <View
                   style={{
                     width: "5%",
-                    height: 115,
+                    height: 120,
                     justifyContent: "center",
                     textAlign: "center",
                     alignItems: "center",
@@ -1917,7 +1917,7 @@ export default function IncomeTaxOld2025({ data }) {
                     borderWidth: 1,
                     borderTopWidth: 0,
                     borderBottomWidth: 0,
-                    height: 115,
+                    height: 120,
                   }}
                 >
                   <View
@@ -2240,7 +2240,7 @@ export default function IncomeTaxOld2025({ data }) {
                       )}
                     </View>
                   </View>
-                  {sukanya !== 0 && (
+                  {sukanya > 0 && (
                     <View
                       style={{
                         width: "100%",
@@ -2294,7 +2294,7 @@ export default function IncomeTaxOld2025({ data }) {
                   </View>
                 </View>
 
-                <View style={{ width: "25%", height: 115 }}>
+                <View style={{ width: "25%", height: 120 }}>
                   <View
                     style={{
                       width: "100%",
