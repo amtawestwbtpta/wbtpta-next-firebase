@@ -2265,7 +2265,7 @@ export default function IncomeTaxOld2025({ data }) {
                       </View>
 
                       <View style={{ width: "20%" }}>
-                        {stampDuty !== 0 ? (
+                        {sukanya !== 0 ? (
                           <Text style={styles.text}>
                             Rs. {IndianFormat(sukanya)}
                           </Text>
@@ -2298,7 +2298,7 @@ export default function IncomeTaxOld2025({ data }) {
                   <View
                     style={{
                       width: "100%",
-                      height: 110,
+                      height: 115,
                       borderBottomWidth: 1,
                     }}
                   ></View>
