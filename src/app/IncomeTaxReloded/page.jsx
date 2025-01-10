@@ -461,7 +461,7 @@ export default function IncomeTaxReloded() {
     nextYear = date.getFullYear();
     prevYear = date.getFullYear() - 2;
   }
-  const finYear = `${thisYear}-${nextYear}`;
+  const finYear = `${nextYear}-${nextYear + 1}`;
   const [showNewModal, setShowNewModal] = useState(false);
   const [showOldModal, setShowOldModal] = useState(false);
   const [march, setMarch] = useState([]);
@@ -1798,10 +1798,10 @@ export default function IncomeTaxReloded() {
     }
     // eslint-disable-next-line
   }, []);
-  useEffect(()=>{
-    console.log(month)
+  useEffect(() => {
+    console.log(month);
     //eslint-disable-next-line
-  },[])
+  }, []);
   return (
     <div className="container-fluid">
       {loader ? (
