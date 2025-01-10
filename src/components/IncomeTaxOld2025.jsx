@@ -2243,6 +2243,39 @@ export default function IncomeTaxOld2025({ data }) {
                   <View
                     style={{
                       width: "100%",
+                      borderBottomWidth: 1,
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View style={{ width: "10%", borderRightWidth: 1 }}>
+                      <Text style={styles.text}>i)</Text>
+                    </View>
+                    <View style={{ width: "70%", borderRightWidth: 1 }}>
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "left", paddingLeft: 2 },
+                        ]}
+                      >
+                        Sukanya Samridhdhi Yojona Premium
+                      </Text>
+                    </View>
+
+                    <View style={{ width: "20%" }}>
+                      {stampDuty !== 0 ? (
+                        <Text style={styles.text}>
+                          Rs. {IndianFormat(sukanya)}
+                        </Text>
+                      ) : (
+                        <Text style={styles.text}>NIL</Text>
+                      )}
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "center",
