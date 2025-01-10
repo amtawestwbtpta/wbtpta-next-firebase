@@ -45,6 +45,7 @@ export default function IncomeTaxReloded() {
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
   const [showDeductionForm, setShowDeductionForm] = useState(false);
+  const [showForm16, setShowForm16] = useState(false);
   const [filterClicked, setFilterClicked] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
     id: "",
@@ -2551,30 +2552,45 @@ export default function IncomeTaxReloded() {
                                 : "Download 2025 IT Statement"
                             }
                           </PDFDownloadLink>
-                          <p className="my-5">
-                            Bank Interest : Rs.{" "}
-                            {IndianFormat(oldITData?.BankInterest)}
-                          </p>
+                          <div className="my-5">
+                            <p className="my-1">
+                              Bank Interest : Rs.{" "}
+                              {IndianFormat(oldITData?.BankInterest)}
+                            </p>
+                            <p className="my-1">
+                              Income Tax : Rs.{" "}
+                              {IndianFormat(oldITData?.AddedEduCess)}
+                            </p>
+                          </div>
                         </div>
-                        <div className="mx-auto noprint my-5">
-                          <PDFDownloadLink
-                            document={<Form16New data={oldITData} />}
-                            fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
-                            style={{
-                              textDecoration: "none",
-                              padding: "10px",
-                              color: "#fff",
-                              backgroundColor: "navy",
-                              border: "1px solid #4a4a4a",
-                              width: "40%",
-                              borderRadius: 10,
-                            }}
-                          >
-                            {({ blob, url, loading, error }) =>
-                              loading ? "Please Wait..." : "Download Form 16"
-                            }
-                          </PDFDownloadLink>
-                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-success m-2"
+                          onClick={() => setShowForm16(!showForm16)}
+                        >
+                          {showForm16 ? "Hide Form 16" : "Show Form 16"}
+                        </button>
+                        {showForm16 && (
+                          <div className="mx-auto noprint my-5">
+                            <PDFDownloadLink
+                              document={<Form16New data={oldITData} />}
+                              fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
+                              style={{
+                                textDecoration: "none",
+                                padding: "10px",
+                                color: "#fff",
+                                backgroundColor: "navy",
+                                border: "1px solid #4a4a4a",
+                                width: "40%",
+                                borderRadius: 10,
+                              }}
+                            >
+                              {({ blob, url, loading, error }) =>
+                                loading ? "Please Wait..." : "Download Form 16"
+                              }
+                            </PDFDownloadLink>
+                          </div>
+                        )}
                       </div>
                       <div className="modal-footer">
                         <button
