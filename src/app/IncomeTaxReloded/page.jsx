@@ -2640,10 +2640,16 @@ export default function IncomeTaxReloded() {
                                 : "Download 2025 IT Statement"
                             }
                           </PDFDownloadLink>
-                          <p className="my-5">
-                            Bank Interest : Rs.{" "}
-                            {IndianFormat(newITData?.BankInterest)}
-                          </p>
+                          <div className="my-5">
+                            <p className="my-1">
+                              Bank Interest : Rs.{" "}
+                              {IndianFormat(newITData?.BankInterest)}
+                            </p>
+                            <p className="my-1">
+                              Income Tax : Rs.{" "}
+                              {IndianFormat(newITData?.AddedEduCess)}
+                            </p>
+                          </div>
                         </div>
                       </div>
                       <div className="modal-footer">
