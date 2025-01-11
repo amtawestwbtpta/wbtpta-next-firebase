@@ -96,8 +96,8 @@ export default function GPWiseTeacher() {
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {el.tname},
-                      {el.hoi === "Yes" ? ` (${el.desig}), (HOI),` : ` (AT),`}
-                      {showAssoc && `(${el.association})`}
+                      {el.hoi === "Yes" ? ` (${el.desig}), (HOI)` : ` (AT)`}
+                      {showAssoc && `, (${el.association})`}
                     </th>
                     <th
                       style={{ textAlign: "center", verticalAlign: "middle" }}
