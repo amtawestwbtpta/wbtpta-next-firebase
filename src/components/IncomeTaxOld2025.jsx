@@ -4707,7 +4707,15 @@ export default function IncomeTaxOld2025({ data }) {
                     </View>
                   </View>
                 </View>
-                <View style={{ width: "10%", borderRightWidth: 1, height: 50 }}>
+                <View
+                  style={{
+                    width: "10%",
+                    borderRightWidth: 1,
+                    height: 50,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Text style={styles.text}>GROSS</Text>
                 </View>
                 <View
