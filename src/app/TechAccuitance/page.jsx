@@ -14,7 +14,7 @@ const TechAccuitance = () => {
   const [showTable, setShowTable] = useState(false);
   const [school, setSchool] = useState("");
   const [editTeacher, setEditTeacher] = useState({});
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState(new Date().getFullYear()-1);
   useEffect(() => {
     if (!state) {
       router.push("/logout");
@@ -153,11 +153,11 @@ const TechAccuitance = () => {
                 style={{ backgroundColor: "#a19e9d" }}
               >
                 <h4 className="text-black">Select Year</h4>
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-primary m-2"
                   onClick={() => {
-                    setYear(new Date().getFullYear() - 1);
+                    setYear(new Date().getFullYear() - 2);
                     if (typeof window !== undefined) {
                       let trList = document.querySelectorAll("tr");
                       let divList = document.querySelectorAll("div");
@@ -170,13 +170,13 @@ const TechAccuitance = () => {
                     }
                   }}
                 >
-                  {new Date().getFullYear() - 1}
-                </button>
+                  {new Date().getFullYear() - 2}
+                </button> */}
                 <button
                   type="button"
                   className="btn btn-success m-2"
                   onClick={() => {
-                    setYear(new Date().getFullYear());
+                    setYear(new Date().getFullYear()-1);
                     if (typeof window !== undefined) {
                       let trList = document.querySelectorAll("tr");
                       let divList = document.querySelectorAll("div");
@@ -189,7 +189,7 @@ const TechAccuitance = () => {
                     }
                   }}
                 >
-                  {new Date().getFullYear()}
+                  {new Date().getFullYear()-1}
                 </button>
               </div>
 
@@ -675,7 +675,7 @@ const TechAccuitance = () => {
                         const februarySalary=february.filter(e=>e.id===id)[0]
                         
 
-                        if (year === date.getFullYear() - 1) {
+                        if (year === date.getFullYear() - 2) {
                           if (index <= 5) {
                             basicpay = prevmbasic;
                             pfund = gpfprev;
