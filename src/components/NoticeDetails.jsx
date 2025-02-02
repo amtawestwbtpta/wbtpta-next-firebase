@@ -78,19 +78,24 @@ const NoticeDetails = ({ sata }) => {
   const [isLink, setIsLink] = useState(false);
   const [textArr, setTextArr] = useState([]);
   const getNoticeReplies = async () => {
-    setLoader(true);
-    const q = query(
-      collection(firestore, "noticeReply"),
-      where("noticeId", "==", sata.id)
-    );
-    const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs.map((doc) => ({
-      // doc.data() is never undefined for query doc snapshots
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setNoticeReplies(data);
-    setLoader(false);
+    try {
+      setLoader(true);
+      const q = query(
+        collection(firestore, "noticeReply"),
+        where("noticeId", "==", sata.id)
+      );
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setNoticeReplies(data);
+      setLoader(false);
+    } catch (error) {
+      console.log(error);
+      setLoader(false);
+    }
   };
 
   const addComment = async () => {
