@@ -18,30 +18,17 @@ export default function WBTPTAPaySLip({ data }) {
     tname,
     desig,
     school,
-    disability,
     empid,
     pan,
-    dataYear,
-    index,
     ir,
-    basic,
-    mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
-    prevmbasic,
-    gpf,
-    gpfprev,
-    julyGpf,
     ptax,
     gsli,
     udise,
-    bank,
-    account,
-    ifsc,
-    lastmonth,
     month,
     netpay,
     basicpay,
@@ -50,11 +37,12 @@ export default function WBTPTAPaySLip({ data }) {
     level,
     cell,
     deduction,
+    year,
   } = data;
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
-      title={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`}
+      title={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()}, ${year}`}
     >
       <Page size="A4" orientation="portrait" style={styles.page}>
         <View style={styles.pageMainView}>
@@ -163,7 +151,7 @@ export default function WBTPTAPaySLip({ data }) {
                     <Text style={styles.text2}>MA</Text>
                     <Text style={styles.text}>{ma}</Text>
                   </View>
-                  {dataYear === 2024 && index === 6 && (
+                  {ir > 0 && (
                     <View style={styles.salaryView}>
                       <Text style={styles.text2}>IR</Text>
                       <Text style={styles.text}>{ir}</Text>

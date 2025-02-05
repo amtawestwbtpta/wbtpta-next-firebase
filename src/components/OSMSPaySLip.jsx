@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   Page,
@@ -30,23 +30,20 @@ export default function OSMSPaySLip({ data }) {
     bank,
     account,
     ifsc,
-    lastmonth,
     month,
     netpay,
     basicpay,
     pfund,
-    today,
     level,
     cell,
     deduction,
-    dataYear,
-    index,
+    year,
     ir,
   } = data;
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
-      title={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`}
+      title={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()}, ${year}`}
     >
       <Page size="A4" orientation="portrait" style={styles.page}>
         <View style={styles.pageMainView}>
@@ -65,8 +62,7 @@ export default function OSMSPaySLip({ data }) {
                 AMTA WEST CIRCLE, HAORA
               </Text>
               <Text style={[styles.title2, { marginTop: 10 }]}>
-                PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
-                {today.getFullYear()-1}
+                PAY SLIP FOR THE MONTH OF {month.toUpperCase()},{year}
               </Text>
             </View>
             <View></View>
@@ -180,9 +176,7 @@ export default function OSMSPaySLip({ data }) {
                   </View>
                   <View style={styles.salaryView}>
                     <Text style={styles.text2}>IR</Text>
-                    <Text style={styles.text}>
-                      {dataYear === 2024 && index === 6 ? ir : 0}
-                    </Text>
+                    <Text style={styles.text}>{ir > 0 ? ir : 0}</Text>
                   </View>
                 </View>
               </View>

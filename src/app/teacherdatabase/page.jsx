@@ -231,7 +231,7 @@ const TeacherDatabase = () => {
       cell: (row) => (
         <Link
           className="btn btn-sm btn-info"
-          href={`/payslipwbtpta`}
+          href={`/payslipwbtptaNew`}
           onClick={() => setStateObject(row)}
         >
           Payslip WBTPTA
@@ -281,7 +281,7 @@ const TeacherDatabase = () => {
         <Link
           className="btn btn-sm btn-primary"
           // href={`/techpaysliposmsNew?details=${JSON.stringify(row)}`}
-          href={`/techpaysliposmsNew`}
+          href={`/paysliposmsNew`}
           onClick={() => setStateObject(row)}
         >
           OSMS Payslip

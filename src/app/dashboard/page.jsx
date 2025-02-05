@@ -16,7 +16,7 @@ import {
 import { useGlobalContext } from "../../context/Store";
 import { DA, HRA } from "../../modules/constants";
 const page = () => {
-  const { state, setStateArray, teachersState } = useGlobalContext();
+  const { state} = useGlobalContext();
   const router = useRouter();
   const el = React.useRef(null);
   const [tooltip, setTooltip] = useState(false);
@@ -507,17 +507,6 @@ const page = () => {
         <div>
           <Link className="btn btn-primary m-2 rounded" href="/update_self">
             Update Profile
-          </Link>
-          <Link
-            className="btn btn-success m-2 rounded"
-            href="/TechersAccuitance"
-            onClick={() =>
-              setStateArray(
-                teachersState.filter((el) => el.udise === teacherdetails?.udise)
-              )
-            }
-          >
-            Teachers Acquittance Register
           </Link>
         </div>
       </div>

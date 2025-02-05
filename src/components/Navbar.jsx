@@ -315,7 +315,7 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/TechAccuitance"
+              href="/TechersAccuitance"
               onClick={() => {
                 handleNavCollapse();
                 setStateArray(
@@ -331,7 +331,7 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/payslipwbtpta"
+              href="/payslipwbtptaNew"
               onClick={() => {
                 handleNavCollapse();
                 setStateObject(teacherdetails);
@@ -735,7 +735,7 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/TechAccuitance"
+              href="/TechersAccuitance"
               onClick={() => {
                 handleNavCollapse();
                 setStateArray(
@@ -751,7 +751,7 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              href="/payslipwbtpta"
+              href="/payslipwbtptaNew"
               onClick={() => {
                 handleNavCollapse();
                 setStateObject(teacherdetails);

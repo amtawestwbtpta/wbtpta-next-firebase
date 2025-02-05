@@ -367,7 +367,7 @@ const page = () => {
                       type="button"
                       className="btn btn-info p-2 rounded"
                       onClick={() => {
-                        router.push(`/TechAccuitance`);
+                        router.push(`/TechersAccuitance`);
                         setStateArray(filteredData);
                       }}
                     >
