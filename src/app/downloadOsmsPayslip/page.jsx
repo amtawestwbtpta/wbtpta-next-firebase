@@ -292,7 +292,7 @@ export default function Page() {
           </div>
           <PDFDownloadLink
             document={<OSMSPaySLip data={salary} />}
-            fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
+            fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()}.pdf`}
             style={{
               textDecoration: "none",
               padding: "10px",
