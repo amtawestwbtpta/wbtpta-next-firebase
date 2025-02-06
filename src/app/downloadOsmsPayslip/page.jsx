@@ -68,6 +68,7 @@ export default function Page() {
   const lastMonthIndex = today.getMonth();
   const paySlipArray = thisYearMonths
     .slice(0, lastMonthIndex)
+    .reverse()
     .concat(preYearMonths.reverse());
   const searchParams = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));

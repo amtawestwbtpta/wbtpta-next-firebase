@@ -72,8 +72,11 @@ const PayslipWbtpta = () => {
   );
   const [year, setYear] = useState(today.getFullYear());
   const lastmonth = GetMonthName(today.getMonth() - 1);
-  const lastMonthIndex = today.getMonth() ;
-  const paySlipArray = thisYearMonths.slice(0, lastMonthIndex).concat(preYearMonths.reverse());
+  const lastMonthIndex = today.getMonth();
+  const paySlipArray = thisYearMonths
+    .slice(0, lastMonthIndex)
+    .reverse()
+    .concat(preYearMonths.reverse());
   let details = stateObject;
   let tname,
     id,
