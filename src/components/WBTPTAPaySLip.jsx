@@ -63,8 +63,7 @@ export default function WBTPTAPaySLip({ data }) {
               {`* Sikshak Bhawan, Vill.- Joypur Fakirdas, P.O.- Joypur,\n P.S.- Joypur, District- Howrah, PIN-711401. *`}
             </Text>
             <Text style={[styles.title2, { marginTop: 10 }]}>
-              PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
-              {today.getFullYear()}
+              PAY SLIP FOR THE MONTH OF {month.toUpperCase()},{year}
             </Text>
           </View>
 
