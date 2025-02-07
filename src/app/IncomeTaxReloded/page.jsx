@@ -1703,55 +1703,57 @@ export default function IncomeTaxReloded() {
     setLoader(false);
   };
   const getMonthlySalary = async () => {
-    setLoader(true);
+    setLoader(false);
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/january-${thisYear}.json`
     );
     const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/february-${thisYear}.json`
     );
     const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/march-${prevYear}.json`
     );
     const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-${prevYear}.json`
     );
     const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/may-${prevYear}.json`
     );
     const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/june-${prevYear}.json`
     );
     const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/july-${prevYear}.json`
     );
     const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/august-${prevYear}.json`
     );
     const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/september-${prevYear}.json`
     );
     const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/october-${prevYear}.json`
     );
     const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/november-${prevYear}.json`
     );
     const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/december-${prevYear}.json`
     );
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
+
+    setJanuary(q1.data);
+    setFebruary(q2.data);
+    setMarch(q3.data);
+    setApril(q4.data);
+    setMay(q5.data);
+    setJune(q6.data);
+    setJuly(q7.data);
+    setAugust(q8.data);
+    setSeptember(q9.data);
+    setOctober(q10.data);
+    setNovember(q11.data);
+    setDecember(q12.data);
+    setLoader(true);
     setIndSalaryState({
       march: q1.data,
       april: q2.data,
@@ -1768,6 +1770,7 @@ export default function IncomeTaxReloded() {
     });
     setLoader(false);
   };
+
   useEffect(() => {
     getDeduction();
     if (salaryState.length === 0) {

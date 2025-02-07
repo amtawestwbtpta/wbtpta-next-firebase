@@ -33,7 +33,6 @@ export default function WBTPTAPaySLip({ data }) {
     netpay,
     basicpay,
     pfund,
-    today,
     level,
     cell,
     deduction,

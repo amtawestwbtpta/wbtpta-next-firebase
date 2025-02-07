@@ -9,110 +9,116 @@ import {
   RoundTo,
   months,
 } from "../../modules/calculatefunctions";
-
+import ropa from "../../modules/ropa";
 import axios from "axios";
 import Loader from "../../components/Loader";
+import { toast } from "react-toastify";
 const TechSalary = () => {
   const { state, stateArray, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
   const [school, setSchool] = useState("");
+  const thisYear = new Date().getFullYear();
+  const preYear = thisYear - 1;
+  const pre2ndYear = thisYear - 2;
+  const thisYearMonths = [
+    `January-${thisYear}`,
+    `February-${thisYear}`,
+    `March-${thisYear}`,
+    `April-${thisYear}`,
+    `May-${thisYear}`,
+    `June-${thisYear}`,
+    `July-${thisYear}`,
+    `August-${thisYear}`,
+    `September-${thisYear}`,
+    `October-${thisYear}`,
+    `November-${thisYear}`,
+    `December-${thisYear}`,
+  ];
+  const preYearMonths = [
+    `January-${preYear}`,
+    `February-${preYear}`,
+    `March-${preYear}`,
+    `April-${preYear}`,
+    `May-${preYear}`,
+    `June-${preYear}`,
+    `July-${preYear}`,
+    `August-${preYear}`,
+    `September-${preYear}`,
+    `October-${preYear}`,
+    `November-${preYear}`,
+    `December-${preYear}`,
+  ];
+  const pre2ndYearMonths = [
+    `January-${pre2ndYear}`,
+    `February-${pre2ndYear}`,
+    `March-${pre2ndYear}`,
+    `April-${pre2ndYear}`,
+    `May-${pre2ndYear}`,
+    `June-${pre2ndYear}`,
+    `July-${pre2ndYear}`,
+    `August-${pre2ndYear}`,
+    `September-${pre2ndYear}`,
+    `October-${pre2ndYear}`,
+    `November-${pre2ndYear}`,
+    `December-${pre2ndYear}`,
+  ];
+
   const today = new Date();
-  const date = new Date();
-  const year = today.getFullYear();
-  const [index, setIndex] = useState(today.getMonth() + 1);
-  const [month, setMonth] = useState(GetMonthName(today.getMonth()));
-  const thisMonth = GetMonthName(today.getMonth());
   const [loader, setLoader] = useState(false);
-  const [prevJanuary, setPrevJanuary] = useState([]);
-  const [prevFebruary, setPrevFebruary] = useState([]);
-  const [march, setMarch] = useState([]);
-  const [april, setApril] = useState([]);
-  const [may, setMay] = useState([]);
-  const [june, setJune] = useState([]);
-  const [july, setJuly] = useState([]);
-  const [august, setAugust] = useState([]);
-  const [september, setSeptember] = useState([]);
-  const [october, setOctober] = useState([]);
-  const [november, setNovember] = useState([]);
-  const [december, setDecember] = useState([]);
-  const [january, setJanuary] = useState([]);
-  const [february, setFebruary] = useState([]);
-  const getSalary = async () => {
+  const [month, setMonth] = useState(
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+  );
+  const [year, setYear] = useState(today.getFullYear());
+
+  const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
+  const paySlipArray = thisYearMonths
+    .slice(0, lastMonthIndex)
+    .reverse()
+    .concat(preYearMonths.reverse())
+    .concat(pre2ndYearMonths.reverse());
+
+  const [monthSalary, setMonthSalary] = useState([]);
+  const [aprilSalary, setAprilSalary] = useState([]);
+  const handleChange = async (e) => {
+    if (e.target.value !== "") {
+      const month = e.target.value.split("-")[0];
+      const year = parseInt(e.target.value.split("-")[1]);
+      setMonth(month);
+      setYear(year);
+
+      await getModifiedSalary(month, year);
+    } else {
+      toast.error("Please select a valid month");
+    }
+  };
+
+  const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const qA = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
-    );
-    const qB = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
-    );
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
     );
     const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
     );
-    const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
-    );
-    const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
-    );
-    const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
-    );
-    const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
-    );
-    const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
-    );
-    const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
-    );
-    const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
-    );
-    const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
-    );
-    const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
-    );
-    const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
-    );
-    setPrevJanuary(qA.data);
-    setPrevFebruary(qB.data);
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
     setLoader(false);
+    setMonthSalary(q1.data);
+    setAprilSalary(q2.data);
   };
 
   useEffect(() => {
     if (!state) {
       router.push("/login");
     }
-    getSalary();
+    setFilteredData(stateArray);
+    setSchool(stateArray[0]?.school);
+    getModifiedSalary(month, year);
+    document.title = `All Teacher's Salary Data of ${stateArray[0]?.school}`;
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-    setFilteredData(stateArray);
-    setSchool(stateArray[0]?.school);
-
-    document.title = `All Teacher's Salary Data of ${stateArray[0]?.school}`;
     // eslint-disable-next-line
-  }, [stateArray]);
+  }, [monthSalary, aprilSalary]);
 
   return (
     <div className="container-fluid my-5">
@@ -128,22 +134,17 @@ const TechSalary = () => {
                 aria-label=".form-select-sm example"
                 name="Month"
                 required
-                defaultValue={month + "-" + (index + 1)}
-                onChange={(e) => {
-                  setMonth(e.target.value.split("-")[0]);
-                  setIndex(parseInt(e.target.value.split("-")[1]));
-                }}
+                defaultValue={month + "-" + year}
+                onChange={handleChange}
               >
                 <option value="">Select Month </option>
-                {months
-                  .slice(0, months.indexOf(thisMonth) + 1)
-                  .map((el, ind) => {
-                    return (
-                      <option value={el + "-" + (ind + 1)} key={ind}>
-                        {el}
-                      </option>
-                    );
-                  })}
+                {paySlipArray.map((el, ind) => {
+                  return (
+                    <option value={el} key={ind}>
+                      {el}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <h3 className="text-center text-primary">
@@ -180,7 +181,7 @@ const TechSalary = () => {
                     <th className="text-center" style={{ border: "1px solid" }}>
                       MA
                     </th>
-                    {year === 2024 && index === 7 && (
+                    {month === "July" && year === 2024 && (
                       <th
                         className="text-center"
                         style={{ border: "1px solid" }}
@@ -213,149 +214,86 @@ const TechSalary = () => {
                 </thead>
                 <tbody id="tbody">
                   {filteredData.map((el, ind) => {
-                    const id = el?.id;
-                    let basic = el.basic;
-                    let mbasic = el.mbasic;
-                    let ir = Math.round(mbasic * 0.04);
-                    let addl = el.addl;
-                    let ma = el.ma;
-                    let gpf = el.gpf;
-                    let julyGpf = el.julyGpf;
-                    let gpfprev = el.gpfprev;
-                    let gsli = el.gsli;
-                    let disability = el.disability;
-                    let prevmbasic = el.prevmbasic;
-                    let dataYear = el.dataYear;
-                    let da;
+                    let tname,
+                      id,
+                      desig,
+                      school,
+                      disability,
+                      empid,
+                      pan,
+                      dataYear,
+                      basic,
+                      mbasic,
+                      addl,
+                      da,
+                      hra,
+                      ma,
+                      gross,
+                      prevmbasic,
+                      gpf,
+                      gpfprev,
+                      julyGpf,
+                      pfund,
+                      ptax,
+                      gsli,
+                      udise,
+                      bank,
+                      account,
+                      ifsc,
+                      level,
+                      cell,
+                      ir;
 
-                    // console.log(junelast)
+                    tname = el.tname;
+                    id = el.id;
+                    desig = el.desig;
+                    school = el.school;
+                    disability = el.disability;
+                    empid = el.empid;
+                    pan = el.pan;
+                    basic = parseInt(el.basic);
+                    mbasic = parseInt(el.mbasic);
+                    addl = parseInt(el.addl);
+                    ma = parseInt(el.ma);
+                    gpf = parseInt(el.gpf);
+                    gpfprev = parseInt(el.gpfprev);
+                    julyGpf = parseInt(el.julyGpf);
+                    gsli = parseInt(el.gsli);
+                    udise = el.udise;
+                    bank = el.bank;
+                    account = el.account;
+                    ifsc = el.ifsc;
+                    dataYear = el.dataYear;
+
+                    let netpay;
+
                     let basicpay;
-                    let ptax;
-                    let pfund;
-                    let gross;
-                    const prevJanuarySalary = prevJanuary.filter(
-                      (e) => e.id === id
+
+                    const techersSalary = monthSalary?.filter(
+                      (el) => el.id === id
                     )[0];
-                    const prevFebruarySalary = prevFebruary.filter(
-                      (e) => e.id === id
+                    const teachersAprilSalary = aprilSalary?.filter(
+                      (el) => el.id === id
                     )[0];
-                    const marchSalary = march.filter((e) => e.id === id)[0];
-                    const aprilSalary = april.filter((e) => e.id === id)[0];
-                    const maySalary = may.filter((e) => e.id === id)[0];
-                    const juneSalary = june.filter((e) => e.id === id)[0];
-                    const julySalary = july.filter((e) => e.id === id)[0];
-                    const augustSalary = august.filter((e) => e.id === id)[0];
-                    const septemberSalary = september.filter(
-                      (e) => e.id === id
-                    )[0];
-                    const octoberSalary = october.filter((e) => e.id === id)[0];
-                    const novemberSalary = november.filter(
-                      (e) => e.id === id
-                    )[0];
-                    const decemberSalary = december.filter(
-                      (e) => e.id === id
-                    )[0];
-                    const januarySalary = january.filter((e) => e.id === id)[0];
-                    const februarySalary = february.filter(
-                      (e) => e.id === id
-                    )[0];
-                    if (dataYear === date.getFullYear()) {
-                      if (index === 1) {
-                        basicpay = januarySalary?.basic;
-                        da = Math.round(basicpay * januarySalary?.daPercent);
-                        pfund = januarySalary?.gpf;
-                        ma = januarySalary?.ma;
-                      } else if (index === 2) {
-                        basicpay = februarySalary?.basic;
-                        da = Math.round(basicpay * februarySalary?.daPercent);
-                        pfund = februarySalary?.gpf;
-                        ma = februarySalary?.ma;
-                      } else if (index === 3) {
-                        basicpay = marchSalary?.basic;
-                        da = Math.round(basicpay * marchSalary?.daPercent);
-                        pfund = marchSalary?.gpf;
-                        ma = marchSalary?.ma;
-                      } else if (index === 4) {
-                        basicpay = aprilSalary?.basic;
-                        da = Math.round(basicpay * aprilSalary?.daPercent);
-                        pfund = aprilSalary?.gpf;
-                        ma = aprilSalary?.ma;
-                      } else if (index === 5) {
-                        basicpay = maySalary?.basic;
-                        da = Math.round(basicpay * maySalary?.daPercent);
-                        pfund = maySalary?.gpf;
-                        ma = maySalary?.ma;
-                      } else if (index === 6) {
-                        basicpay = juneSalary?.basic;
-                        da = Math.round(basicpay * juneSalary?.daPercent);
-                        pfund = juneSalary?.gpf;
-                        ma = juneSalary?.ma;
-                      } else if (index === 7) {
-                        basicpay = julySalary?.basic;
-                        da = Math.round(basicpay * julySalary?.daPercent);
-                        pfund = julySalary?.gpf;
-                        ma = julySalary?.ma;
-                      } else if (index === 8) {
-                        basicpay = augustSalary?.basic;
-                        da = Math.round(basicpay * augustSalary?.daPercent);
-                        pfund = augustSalary?.gpf;
-                        ma = augustSalary?.ma;
-                      } else if (index === 9) {
-                        basicpay = septemberSalary?.basic;
-                        da = Math.round(basicpay * septemberSalary?.daPercent);
-                        pfund = septemberSalary?.gpf;
-                        ma = septemberSalary?.ma;
-                      } else if (index === 10) {
-                        basicpay = octoberSalary?.basic;
-                        da = Math.round(basicpay * octoberSalary?.daPercent);
-                        pfund = octoberSalary?.gpf;
-                        ma = octoberSalary?.ma;
-                      } else if (index === 11) {
-                        basicpay = novemberSalary?.basic;
-                        da = Math.round(basicpay * novemberSalary?.daPercent);
-                        pfund = novemberSalary?.gpf;
-                        ma = novemberSalary?.ma;
-                      } else if (index === 12) {
-                        basicpay = decemberSalary?.basic;
-                        da = Math.round(basicpay * decemberSalary?.daPercent);
-                        pfund = decemberSalary?.gpf;
-                        ma = decemberSalary?.ma;
-                      } else if (index === 13) {
-                        basicpay = januarySalary?.basic;
-                        da = Math.round(basicpay * januarySalary?.daPercent);
-                        pfund = januarySalary?.gpf;
-                        ma = januarySalary?.ma;
-                      } else if (index === 14) {
-                        basicpay = februarySalary?.basic;
-                        da = Math.round(basicpay * februarySalary?.daPercent);
-                        pfund = februarySalary?.gpf;
-                        ma = februarySalary?.ma;
-                      }
-                    } else if (dataYear === date.getFullYear() - 1) {
-                      basicpay = prevmbasic;
-                      da = Math.round(basicpay * PREV6DA);
-                      pfund = gpfprev;
+                    if (
+                      month === "July" &&
+                      year === 2024 &&
+                      teachersAprilSalary?.basic > 0
+                    ) {
+                      ir = Math.round(teachersAprilSalary?.basic * 0.04);
                     } else {
-                      pfund = gpfprev;
-                      if (index > 6) {
-                        basicpay = RoundTo(basic + basic * 0.03, 100);
-                        da = Math.round(basicpay * NEXTDA);
-                      } else {
-                        basicpay = basic;
-                        da = Math.round(basicpay * DA);
-                      }
+                      ir = 0;
                     }
-
-                    // let da = Math.round(basicpay * DA);
-                    let hra = Math.round(basicpay * HRA);
-
-                    if (dataYear === 2024 && index === 7) {
-                      gross = basicpay + da + ir + hra + addl + ma;
-                    } else {
-                      gross = basicpay + da + hra + addl + ma;
-                    }
-                    // console.log(gross)
-
+                    basicpay = techersSalary?.basic;
+                    da = Math.round(basicpay * techersSalary?.daPercent);
+                    hra = Math.round(basicpay * techersSalary?.hraPercent);
+                    addl = techersSalary?.addl;
+                    ma = techersSalary?.ma;
+                    pfund = techersSalary?.gpf;
+                    gsli = techersSalary?.gsli;
+                    level = ropa(basicpay).lv;
+                    cell = ropa(basicpay).ce;
+                    gross = basicpay + da + ir + hra + addl + ma;
                     if (gross > 40000) {
                       ptax = 200;
                     } else if (gross > 25000) {
@@ -374,110 +312,122 @@ const TechSalary = () => {
 
                     let deduction = gsli + pfund + ptax;
 
-                    let netpay = gross - deduction;
+                    netpay = gross - deduction;
                     return (
-                      <tr key={el.id}>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {ind + 1}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {el.tname}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {el.desig}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {basicpay}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {addl}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {da}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {hra}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {ma}
-                        </td>
-                        {year === 2024 && index === 7 && (
+                      netpay > 0 && (
+                        <tr key={el.id}>
                           <td
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {ir}
+                            {ind + 1}
                           </td>
-                        )}
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {gross}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {pfund}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {gsli}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {ptax}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {netpay}
-                        </td>
-                        <th
-                          className="noprint text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          {el.association === "WBTPTA" ? (
-                            <Link
-                              className="btn btn-info text-decoration-none"
-                              href={`/payslipwbtpta`}
-                              onClick={() => setStateObject(el)}
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {el.tname}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {el.desig}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {basicpay}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {addl}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {da}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {hra}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {ma}
+                          </td>
+                          {ir > 0 && (
+                            <td
+                              className="text-center"
+                              style={{ border: "1px solid" }}
                             >
-                              PRINT PAYSLIP
-                            </Link>
-                          ) : null}
-                        </th>
-                      </tr>
+                              {ir}
+                            </td>
+                          )}
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {gross}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {pfund}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {gsli}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {ptax}
+                          </td>
+                          <td
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {netpay}
+                          </td>
+                          <th
+                            className="noprint text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            {state === "admin" ||
+                            el.association === "WBTPTA" ? (
+                              <Link
+                                className="btn btn-info m-1 text-decoration-none"
+                                href={`/payslipwbtptaNew`}
+                                onClick={() => setStateObject(el)}
+                              >
+                                PRINT PAYSLIP
+                              </Link>
+                            ) : null}
+                            {state === "admin" ? (
+                              <Link
+                                className="btn btn-success m-1 text-decoration-none"
+                                href={`/paysliposmsNew`}
+                                onClick={() => setStateObject(el)}
+                              >
+                                OSMS PAYSLIP
+                              </Link>
+                            ) : null}
+                          </th>
+                        </tr>
+                      )
                     );
                   })}
                 </tbody>

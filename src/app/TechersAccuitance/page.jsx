@@ -23,8 +23,6 @@ const TechersAccuitance = () => {
     // eslint-disable-next-line
   }, []);
 
-  const [prevJanuary, setPrevJanuary] = useState([]);
-  const [prevFebruary, setPrevFebruary] = useState([]);
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
   const [may, setMay] = useState([]);
@@ -37,66 +35,6 @@ const TechersAccuitance = () => {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
-  const getSalary = async () => {
-    setShowTable(false);
-    const qA = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
-    );
-    const qB = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
-    );
-    const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
-    );
-    const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
-    );
-    const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
-    );
-    const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
-    );
-    const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
-    );
-    const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
-    );
-    const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
-    );
-    const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
-    );
-    const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
-    );
-    const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
-    );
-    const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
-    );
-    const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
-    );
-    setPrevJanuary(qA.data);
-    setPrevFebruary(qB.data);
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
-    setShowTable(true);
-  };
   const getModifiedSalary = async (year) => {
     setShowTable(false);
     const q1 = await axios.get(
