@@ -225,6 +225,12 @@ const page = () => {
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
+                  Total Student {filteredSchool[0].year - 2}:{" "}
+                  {filteredSchool[0].student_prev2}
+                </h6>
+              </div>
+              <div className="col-md-3 m-1">
+                <h6 className="text-primary text center">
                   Total Student {filteredSchool[0].year - 1}:{" "}
                   {filteredSchool[0].student}
                 </h6>
