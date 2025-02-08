@@ -9,13 +9,13 @@ import {
   roundSo,
   CalculateIncomeTax,
 } from "../../modules/calculatefunctions";
-import IncomeTaxOld from "../../components/IncomeTaxOld";
+import IncomeTaxOld from "../../pdfs/IncomeTaxOld";
 import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, getDocs, query } from "firebase/firestore";
-import IncomeTaxOld2025 from "../../components/IncomeTaxOld2025";
+import IncomeTaxOld2025 from "../../pdfs/IncomeTaxOld2025";
 export default function IncomeTaxOldSection() {
   const PDFDownloadLink = dynamic(
     async () =>

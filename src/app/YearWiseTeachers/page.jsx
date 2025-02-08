@@ -8,9 +8,9 @@ import {
   months,
   uniqArray,
 } from "../../modules/calculatefunctions";
-import ServiceConfirmation from "../../components/ServiceConfirmation";
-import BenefitProforma from "../../components/BenefitProforma";
-import BenefitApplication from "../../components/BenefitApplication";
+import ServiceConfirmation from "../../pdfs/ServiceConfirmation";
+import BenefitProforma from "../../pdfs/BenefitProforma";
+import BenefitApplication from "../../pdfs/BenefitApplication";
 import dynamic from "next/dynamic";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(

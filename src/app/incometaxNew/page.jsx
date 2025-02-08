@@ -10,13 +10,13 @@ import {
   CalculateIncomeTax,
   CalculateNewIncomeTax,
 } from "../../modules/calculatefunctions";
-import IncomeTaxNew from "../../components/IncomeTaxNew";
+import IncomeTaxNew from "../../pdfs/IncomeTaxNew";
 import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, getDocs, query } from "firebase/firestore";
-import IncomeTaxNew2025 from "../../components/IncomeTaxNew2025";
+import IncomeTaxNew2025 from "../../pdfs/IncomeTaxNew2025";
 
 export default function IncomeTaxNewSection() {
   const PDFDownloadLink = dynamic(

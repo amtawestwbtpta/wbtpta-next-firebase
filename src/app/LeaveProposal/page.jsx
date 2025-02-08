@@ -8,7 +8,7 @@ import {
   getSubmitDateInput,
   todayInString,
 } from "../../modules/calculatefunctions";
-import LeaveProposal from "../../components/LeaveProposal";
+import LeaveProposal from "../../pdfs/LeaveProposal";
 import dynamic from "next/dynamic";
 export default function Page() {
   const PDFDownloadLink = dynamic(

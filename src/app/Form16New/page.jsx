@@ -14,7 +14,7 @@ import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, getDocs, query } from "firebase/firestore";
-import Form16New from "../../components/Form16New";
+import Form16New from "../../pdfs/Form16New";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>

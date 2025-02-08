@@ -17,9 +17,9 @@ import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import IncomeTaxNew2025 from "../../components/IncomeTaxNew2025";
-import IncomeTaxOld2025 from "../../components/IncomeTaxOld2025";
-import Form16New from "../../components/Form16New";
+import IncomeTaxNew2025 from "../../pdfs/IncomeTaxNew2025";
+import IncomeTaxOld2025 from "../../pdfs/IncomeTaxOld2025";
+import Form16New from "../../pdfs/Form16New";
 export default function IncomeTaxReloded() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -257,6 +257,7 @@ export default function IncomeTaxReloded() {
     phone: "",
     disability: "",
     desig: "",
+    gender: "",
     thisYear: "",
     nextYear: "",
     prevYear: "",
@@ -478,7 +479,8 @@ export default function IncomeTaxReloded() {
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
   const calCulateOldIT = async (data) => {
-    const { id, tname, fname, school, pan, phone, disability, desig } = data;
+    const { id, tname, fname, school, pan, phone, disability, desig, gender } =
+      data;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -896,6 +898,7 @@ export default function IncomeTaxReloded() {
       phone,
       disability,
       desig,
+      gender,
       thisYear,
       nextYear,
       prevYear,

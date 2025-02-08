@@ -11,7 +11,7 @@ import {
   RoundTo,
 } from "../../modules/calculatefunctions";
 import { DA, HRA, NEXTDA } from "../../modules/constants";
-import OSMSPaySLip from "../../components/OSMSPaySLip";
+import OSMSPaySLip from "../../pdfs/OSMSPaySLip";
 import dynamic from "next/dynamic";
 import Loader from "../../components/Loader";
 import axios from "axios";
