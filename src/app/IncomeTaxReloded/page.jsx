@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import IncomeTaxNew2025 from "../../pdfs/IncomeTaxNew2025";
 import IncomeTaxOld2025 from "../../pdfs/IncomeTaxOld2025";
 import Form16New from "../../pdfs/Form16New";
+import Form16NewRegime from "../../pdfs/Form16NewRegime";
 export default function IncomeTaxReloded() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -38,6 +39,7 @@ export default function IncomeTaxReloded() {
     setSalaryState,
     indSalaryState,
     setIndSalaryState,
+    state,
   } = useGlobalContext();
   const [salary, setSalary] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -46,6 +48,7 @@ export default function IncomeTaxReloded() {
   const [schSearch, setSchSearch] = useState("");
   const [showDeductionForm, setShowDeductionForm] = useState(false);
   const [showForm16, setShowForm16] = useState(false);
+  const [showForm16New, setShowForm16New] = useState(false);
   const [filterClicked, setFilterClicked] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
     id: "",
@@ -77,6 +80,7 @@ export default function IncomeTaxReloded() {
     pan: "",
     phone: "",
     desig: "",
+    gender: "",
     thisYear: "",
     prevYear: "",
     nextYear: "",
@@ -1085,7 +1089,7 @@ export default function IncomeTaxReloded() {
     });
   };
   const calCulateNewIT = async (data) => {
-    const { id, tname, school, pan, phone, disability, desig } = data;
+    const { id, tname, school, pan, phone, disability, desig, gender } = data;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -1488,6 +1492,7 @@ export default function IncomeTaxReloded() {
       pan,
       phone,
       desig,
+      gender,
       thisYear,
       prevYear,
       nextYear,
@@ -1700,9 +1705,13 @@ export default function IncomeTaxReloded() {
     const q1 = await axios.get(
       "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/Salary.json"
     );
-    setSalary(q1.data);
-    setFilteredData(q1.data);
-    setSalaryState(q1.data);
+    const data = q1.data;
+    const onlyWbtptaTeachers = data?.filter(
+      (teacher) => teacher?.association === "WBTPTA"
+    );
+    setSalary(state === "admin" ? data : onlyWbtptaTeachers);
+    setFilteredData(state === "admin" ? data : onlyWbtptaTeachers);
+    setSalaryState(data);
     setLoader(false);
   };
   const getMonthlySalary = async () => {
@@ -1779,8 +1788,11 @@ export default function IncomeTaxReloded() {
     if (salaryState.length === 0) {
       getSalary();
     } else {
-      setSalary(salaryState);
-      setFilteredData(salaryState);
+      const onlyWbtptaTeachers = salaryState?.filter(
+        (teacher) => teacher?.association === "WBTPTA"
+      );
+      setSalary(state === "admin" ? salaryState : onlyWbtptaTeachers);
+      setFilteredData(state === "admin" ? salaryState : onlyWbtptaTeachers);
     }
     if (indSalaryState.march.length === 0) {
       getMonthlySalary();
@@ -1869,27 +1881,29 @@ export default function IncomeTaxReloded() {
                 >
                   Taxable Teachers
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-warning m-2"
-                  onClick={() => {
-                    const fData = filteredData.filter(
-                      (salary) => salary?.association === "WBTPTA"
-                    );
-                    if (fData.length !== 0) {
-                      setFilteredData(fData);
-                    } else {
-                      setFilteredData(
-                        salary.filter(
-                          (salary) => salary?.association === "WBTPTA"
-                        )
+                {state === "admin" && (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-warning m-2"
+                    onClick={() => {
+                      const fData = filteredData.filter(
+                        (salary) => salary?.association === "WBTPTA"
                       );
-                    }
-                    setFilterClicked(true);
-                  }}
-                >
-                  Only WBTPTA Teachers
-                </button>
+                      if (fData.length !== 0) {
+                        setFilteredData(fData);
+                      } else {
+                        setFilteredData(
+                          salary.filter(
+                            (salary) => salary?.association === "WBTPTA"
+                          )
+                        );
+                      }
+                      setFilterClicked(true);
+                    }}
+                  >
+                    Only WBTPTA Teachers
+                  </button>
+                )}
                 {salary.length !== filteredData.length && (
                   <button
                     type="button"
@@ -2012,20 +2026,22 @@ export default function IncomeTaxReloded() {
                               : "NIL"}
                           </p>
                           <div>
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-warning m-1 noprint"
-                              onClick={() => {
-                                const fData = deductionState.filter(
-                                  (d) => d.id === row?.id
-                                )[0];
-                                setTeacherDeduction(fData);
-                                setShowDeductionForm(true);
-                                setLoader(false);
-                              }}
-                            >
-                              Update Deduction
-                            </button>
+                            {state === "admin" && (
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-warning m-1 noprint"
+                                onClick={() => {
+                                  const fData = deductionState.filter(
+                                    (d) => d.id === row?.id
+                                  )[0];
+                                  setTeacherDeduction(fData);
+                                  setShowDeductionForm(true);
+                                  setLoader(false);
+                                }}
+                              >
+                                Update Deduction
+                              </button>
+                            )}
                             <button
                               type="button"
                               className="btn btn-sm btn-success m-1 noprint"
@@ -2533,6 +2549,7 @@ export default function IncomeTaxReloded() {
                           aria-label="Close"
                           onClick={() => {
                             setShowOldModal(false);
+                            setShowForm16(false)
                           }}
                         ></button>
                       </div>
@@ -2603,6 +2620,7 @@ export default function IncomeTaxReloded() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowOldModal(false);
+                            setShowForm16(false)
                           }}
                         >
                           Close
@@ -2637,6 +2655,7 @@ export default function IncomeTaxReloded() {
                           aria-label="Close"
                           onClick={() => {
                             setShowNewModal(false);
+                            setShowForm16New(false)
                           }}
                         ></button>
                       </div>
@@ -2672,6 +2691,34 @@ export default function IncomeTaxReloded() {
                             </p>
                           </div>
                         </div>
+                        <button
+                          type="button"
+                          className="btn btn-success m-2"
+                          onClick={() => setShowForm16New(!showForm16New)}
+                        >
+                          {showForm16New ? "Hide Form 16" : "Show Form 16"}
+                        </button>
+                        {showForm16New && (
+                          <div className="mx-auto noprint my-5">
+                            <PDFDownloadLink
+                              document={<Form16NewRegime data={newITData} />}
+                              fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
+                              style={{
+                                textDecoration: "none",
+                                padding: "10px",
+                                color: "#fff",
+                                backgroundColor: "navy",
+                                border: "1px solid #4a4a4a",
+                                width: "40%",
+                                borderRadius: 10,
+                              }}
+                            >
+                              {({ blob, url, loading, error }) =>
+                                loading ? "Please Wait..." : "Download Form 16"
+                              }
+                            </PDFDownloadLink>
+                          </div>
+                        )}
                       </div>
                       <div className="modal-footer">
                         <button
@@ -2679,6 +2726,7 @@ export default function IncomeTaxReloded() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowNewModal(false);
+                            setShowForm16New(false)
                           }}
                         >
                           Close

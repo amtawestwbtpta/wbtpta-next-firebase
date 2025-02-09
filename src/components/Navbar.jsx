@@ -805,7 +805,15 @@ const Navbar = () => {
               </li>
             </>
           ) : null}
-
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/IncomeTaxReloded"
+              onClick={handleNavCollapse}
+            >
+              IT Reloded
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -1021,6 +1029,15 @@ const Navbar = () => {
               onClick={handleNavCollapse}
             >
               Flood Relief
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/IncomeTaxReloded"
+              onClick={handleNavCollapse}
+            >
+              IT Reloded
             </Link>
           </li>
           <li className="nav-item">
