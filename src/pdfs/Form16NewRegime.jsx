@@ -615,49 +615,49 @@ export default function Form16NewRegime({ data }) {
                 </View>
               </View>
               {/* <View
-                  style={[
-                    styles.tableStartBorderView,
-                    { borderBottomWidth: 0 },
-                  ]}
+                style={[
+                  styles.tableStartBorderView,
+                  { borderBottomWidth: 0 },
+                ]}
+              >
+                <View
+                  style={{
+                    width: "40%",
+                    borderRightWidth: 1,
+                    padding: 2,
+                  }}
                 >
-                  <View
-                    style={{
-                      width: "40%",
-                      borderRightWidth: 1,
-                      padding: 2,
-                    }}
-                  >
-                    <Text style={styles.textBold}>b) Tax on Employment</Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "20%",
-                      borderRightWidth: 1,
-                      padding: 2,
-                    }}
-                  >
-                    <Text style={styles.textBold}>
-                      Rs. {IndianFormat(grossPTax)}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "20%",
-                      borderRightWidth: 1,
-                      padding: 2,
-                    }}
-                  >
-                    <Text style={styles.textBold}> </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "20%",
-                      padding: 2,
-                    }}
-                  >
-                    <Text style={styles.textBold}> </Text>
-                  </View>
-                </View> */}
+                  <Text style={styles.textBold}>b) Tax on Employment</Text>
+                </View>
+                <View
+                  style={{
+                    width: "20%",
+                    borderRightWidth: 1,
+                    padding: 2,
+                  }}
+                >
+                  <Text style={styles.textBold}>
+                    Rs. {IndianFormat(grossPTax)}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "20%",
+                    borderRightWidth: 1,
+                    padding: 2,
+                  }}
+                >
+                  <Text style={styles.textBold}> </Text>
+                </View>
+                <View
+                  style={{
+                    width: "20%",
+                    padding: 2,
+                  }}
+                >
+                  <Text style={styles.textBold}> </Text>
+                </View>
+              </View> */}
               <View
                 style={[styles.tableStartBorderView, { borderBottomWidth: 0 }]}
               >
@@ -1028,464 +1028,6 @@ export default function Form16NewRegime({ data }) {
                 ]}
               >
                 {/* <View style={[styles.tableStartBorderView]}>
-                    <View
-                      style={{
-                        width: "40%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        11) DEDUCTION UNDER{"\n"} CHAPTER VI A (80C TO 80U)
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>GROSS{"\n"} AMOUNT</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        QUALIFYING{"\n"} AMOUNT
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        DEDUCTION{"\n"} AMOUNT
-                      </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={[
-                      styles.tableStartBorderView,
-                      { borderBottomWidth: 0 },
-                    ]}
-                  >
-                    <View
-                      style={{
-                        width: "40%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>G.P.F. SUBSCRIPTION</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(grossGPF)}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(grossGPF)}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(grossGPF)}
-                      </Text>
-                    </View>
-                  </View>
-                  {grossGSLI > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          G.S.L.I. Subscription
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(grossGSLI)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(grossGSLI)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(grossGSLI)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  {lic > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          L.I.C. / PLI Premium
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(lic)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(lic)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(lic)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  {nsc > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>NSC / KVP Purchase</Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(nsc)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(nsc)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(nsc)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  {ppf > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>P.P.F.</Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(ppf)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(ppf)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(ppf)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  {mediclaim > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          80 D Medical Insurance Premium
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(mediclaim)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(mediclaim)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(mediclaim)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  {disabilityDeduction > 0 && (
-                    <View
-                      style={[
-                        styles.tableStartBorderView,
-                        { borderBottomWidth: 0 },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          width: "40%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          80U Person with Disability
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(disabilityDeduction)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          borderRightWidth: 1,
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(disabilityDeduction)}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "20%",
-                          padding: 2,
-                        }}
-                      >
-                        <Text style={styles.textBold}>
-                          Rs. {IndianFormat(disabilityDeduction)}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                  <View
-                    style={[
-                      styles.tableStartBorderView,
-                      { borderBottomWidth: 0 },
-                    ]}
-                  >
-                    <View
-                      style={{
-                        width: "40%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        80 TTA Exemption of Savings Bank Interest{"\n"} (
-                        Maximum Rs. 10000/-)
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(BankInterest)}
-                      </Text>
-                      <Text style={styles.textBold}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        borderRightWidth: 1,
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(BankInterest)}
-                      </Text>
-                      <Text style={styles.textBold}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "20%",
-                        padding: 2,
-                      }}
-                    >
-                      <Text style={styles.textBold}>
-                        Rs. {IndianFormat(BankInterest)}
-                      </Text>
-                      <Text style={styles.textBold}> </Text>
-                    </View>
-                  </View> */}
-                <View
-                  style={[
-                    styles.tableStartBorderView,
-                    { borderBottomWidth: 0 },
-                  ]}
-                >
                   <View
                     style={{
                       width: "40%",
@@ -1494,7 +1036,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      11) AGGREATE OF DEDUCTABLE AMOUNT UNDER CHAPTER V1A
+                      11) DEDUCTION UNDER{"\n"} CHAPTER VI A (80C TO 80U)
                     </Text>
                   </View>
                   <View
@@ -1504,8 +1046,7 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
-                    <Text style={styles.textBold}> </Text>
-                    <Text style={styles.textBold}> </Text>
+                    <Text style={styles.textBold}>GROSS{"\n"} AMOUNT</Text>
                   </View>
                   <View
                     style={{
@@ -1514,8 +1055,9 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
-                    <Text style={styles.textBold}> </Text>
-                    <Text style={styles.textBold}> </Text>
+                    <Text style={styles.textBold}>
+                      QUALIFYING{"\n"} AMOUNT
+                    </Text>
                   </View>
                   <View
                     style={{
@@ -1524,9 +1066,8 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
+                      DEDUCTION{"\n"} AMOUNT
                     </Text>
-                    <Text style={styles.textBold}> </Text>
                   </View>
                 </View>
                 <View
@@ -1542,8 +1083,419 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
+                    <Text style={styles.textBold}>G.P.F. SUBSCRIPTION</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
                     <Text style={styles.textBold}>
-                      12) TOTAL OR NET TAXABLE INCOME (10-12)
+                      Rs. {IndianFormat(grossGPF)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(grossGPF)}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(grossGPF)}
+                    </Text>
+                  </View>
+                </View>
+                {grossGSLI > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        G.S.L.I. Subscription
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(grossGSLI)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(grossGSLI)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(grossGSLI)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {lic > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        L.I.C. / PLI Premium
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(lic)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(lic)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(lic)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {nsc > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>NSC / KVP Purchase</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(nsc)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(nsc)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(nsc)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {ppf > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>P.P.F.</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(ppf)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(ppf)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(ppf)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {mediclaim > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        80 D Medical Insurance Premium
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(mediclaim)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(mediclaim)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(mediclaim)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {disabilityDeduction > 0 && (
+                  <View
+                    style={[
+                      styles.tableStartBorderView,
+                      { borderBottomWidth: 0 },
+                    ]}
+                  >
+                    <View
+                      style={{
+                        width: "40%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        80U Person with Disability
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(disabilityDeduction)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        borderRightWidth: 1,
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(disabilityDeduction)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: "20%",
+                        padding: 2,
+                      }}
+                    >
+                      <Text style={styles.textBold}>
+                        Rs. {IndianFormat(disabilityDeduction)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                <View
+                  style={[
+                    styles.tableStartBorderView,
+                    { borderBottomWidth: 0 },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "40%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      80 TTA Exemption of Savings Bank Interest{"\n"} (
+                      Maximum Rs. 10000/-)
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(BankInterest)}
+                    </Text>
+                    <Text style={styles.textBold}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(BankInterest)}
+                    </Text>
+                    <Text style={styles.textBold}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      Rs. {IndianFormat(BankInterest)}
+                    </Text>
+                    <Text style={styles.textBold}> </Text>
+                  </View>
+                </View> */}
+
+                <View
+                  style={[
+                    styles.tableStartBorderView,
+                    { borderBottomWidth: 0 },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "40%",
+                      borderRightWidth: 1,
+                      padding: 2,
+                    }}
+                  >
+                    <Text style={styles.textBold}>
+                      11) TOTAL OR NET TAXABLE INCOME
                     </Text>
                   </View>
                   <View
@@ -1554,7 +1506,6 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}> </Text>
-                    <Text style={styles.textBold}> </Text>
                   </View>
                   <View
                     style={{
@@ -1563,7 +1514,6 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
-                    <Text style={styles.textBold}> </Text>
                     <Text style={styles.textBold}> </Text>
                   </View>
                   <View
@@ -1575,7 +1525,6 @@ export default function Form16NewRegime({ data }) {
                     <Text style={styles.textBold}>
                       Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
                     </Text>
-                    <Text style={styles.textBold}> </Text>
                   </View>
                 </View>
                 <View
@@ -1591,7 +1540,7 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
-                    <Text style={styles.textBold}>13) ROUNDED OFF</Text>
+                    <Text style={styles.textBold}>12) ROUNDED OFF</Text>
                   </View>
                   <View
                     style={{
@@ -1636,7 +1585,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      14) TAX ON TOTAL OR NET INCOME
+                      13) TAX ON TOTAL OR NET INCOME
                     </Text>
                   </View>
                   <View
@@ -1682,7 +1631,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      15) LESS: REBATE U/S. 87A
+                      14) LESS: REBATE U/S. 87A
                     </Text>
                   </View>
                   <View
@@ -1729,7 +1678,7 @@ export default function Form16NewRegime({ data }) {
                       padding: 2,
                     }}
                   >
-                    <Text style={styles.textBold}>16) TAX ON SURCHARGE</Text>
+                    <Text style={styles.textBold}>15) TAX ON SURCHARGE</Text>
                   </View>
                   <View
                     style={{
@@ -1772,7 +1721,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      17) ADD: EDUCATION CESS {"\n"}
+                      16) ADD: EDUCATION CESS {"\n"}
                       (4% OF TAX AND SURCHARGE)
                     </Text>
                   </View>
@@ -1822,7 +1771,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      18) TOTAL TAX PAYABLE (17+18)
+                      17) TOTAL TAX PAYABLE (17+18)
                     </Text>
                   </View>
                   <View
@@ -1870,7 +1819,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      19) LESS: REBATE U/S. 89 {"\n"}
+                      18) LESS: REBATE U/S. 89 {"\n"}
                       (Attach Details)
                     </Text>
                   </View>
@@ -1920,7 +1869,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      20) NET TAX PAYABLE (19-20)
+                      19) NET TAX PAYABLE (19-20)
                     </Text>
                   </View>
                   <View
@@ -1968,7 +1917,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      21) LESS: TAX DEDUCTED AT SOURCE
+                      20) LESS: TAX DEDUCTED AT SOURCE
                     </Text>
                   </View>
                   <View
@@ -2014,7 +1963,7 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      22) TAX PAYABLE / REFUNDABLE (21-22)
+                      21) TAX PAYABLE / REFUNDABLE (21-22)
                     </Text>
                   </View>
                   <View
