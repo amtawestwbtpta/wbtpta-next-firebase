@@ -35,7 +35,7 @@ export default function Page() {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLeaveDays(diffDays);
     return diffDays;
   };
@@ -50,23 +50,25 @@ export default function Page() {
   }, [startingDate, endingDate, leaveDays]);
   return (
     <div className="container">
-      <button
-        type="button"
-        className="btn btn-dark m-2"
-        onClick={() => router.push("/teacherdatabase")}
-      >
-        Go Back
-      </button>
-      <button
-        type="button"
-        className="btn btn-primary m-2"
-        onClick={() => {
-          setShowModal(true);
-          setShowDownloadBtn(false);
-        }}
-      >
-        Enter Details
-      </button>
+      <div className="d-flex flex-column justify-content-center align-items-center mx-auto" style={{width:"50%"}}>
+        <button
+          type="button"
+          className="btn btn-dark m-5"
+          onClick={() => router.push("/teacherdatabase")}
+        >
+          Go Back
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary m-5"
+          onClick={() => {
+            setShowModal(true);
+            setShowDownloadBtn(false);
+          }}
+        >
+          Enter Details
+        </button>
+      </div>
       {showModal && (
         <div
           className="modal fade show"
@@ -137,10 +139,15 @@ export default function Page() {
                       defaultValue={getCurrentDateInput(endingDate)}
                       onChange={(e) => {
                         setEndingDate(getSubmitDateInput(e.target.value));
-                        calculateDays();
                       }}
                     />
                   </div>
+                  <button
+                    className="btn btn-success m-3"
+                    onClick={calculateDays}
+                  >
+                    Calculate Days
+                  </button>
                   <div className="mb-3">
                     <label htmlFor="date" className="form-label">
                       Total Leave Days
