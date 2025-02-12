@@ -1703,7 +1703,7 @@ export default function IncomeTaxReloded() {
   const getSalary = async () => {
     setLoader(true);
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/Salary.json"
+      "https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary.json"
     );
     const data = q1.data;
     const onlyWbtptaTeachers = data?.filter(
