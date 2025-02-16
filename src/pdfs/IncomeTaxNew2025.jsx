@@ -2222,6 +2222,23 @@ export default function IncomeTaxNew2025({ data }) {
                   </View>
                 </View>
               </View>
+              <View
+                style={{
+                  justifyContent: "flex-end",
+                  width: "100%",
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.text,
+                    { textAlign: "right", paddingRight: 20 },
+                  ]}
+                >
+                  Contd...2
+                </Text>
+              </View>
             </View>
           </View>
         </View>
