@@ -1977,7 +1977,11 @@ export default function IncomeTaxReloded() {
                 </div>
                 <div className="mx-auto  d-flex flex-row justify-content-evenly flex-wrap">
                   {filteredData.map((row, index) => {
-                    if (row?.AllGross !== 0) {
+                    if (
+                      row?.AllGross !== 0 &&
+                      teachersState.filter((teacher) => teacher.id === row.id)
+                        .length > 0
+                    ) {
                       return (
                         <div
                           className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak"
@@ -2549,7 +2553,7 @@ export default function IncomeTaxReloded() {
                           aria-label="Close"
                           onClick={() => {
                             setShowOldModal(false);
-                            setShowForm16(false)
+                            setShowForm16(false);
                           }}
                         ></button>
                       </div>
@@ -2620,7 +2624,7 @@ export default function IncomeTaxReloded() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowOldModal(false);
-                            setShowForm16(false)
+                            setShowForm16(false);
                           }}
                         >
                           Close
@@ -2655,7 +2659,7 @@ export default function IncomeTaxReloded() {
                           aria-label="Close"
                           onClick={() => {
                             setShowNewModal(false);
-                            setShowForm16New(false)
+                            setShowForm16New(false);
                           }}
                         ></button>
                       </div>
@@ -2726,7 +2730,7 @@ export default function IncomeTaxReloded() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowNewModal(false);
-                            setShowForm16New(false)
+                            setShowForm16New(false);
                           }}
                         >
                           Close
