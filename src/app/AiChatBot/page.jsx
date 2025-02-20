@@ -2,8 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "./Typewriter.css";
+import { useGlobalContext } from "../../context/Store";
+import { useRouter } from "next/navigation";
 const TypewriterChat = () => {
+  const { state } = useGlobalContext();
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
@@ -65,6 +68,12 @@ const TypewriterChat = () => {
       return () => clearInterval(interval);
     }
   }, [typing]);
+  useEffect(() => {
+    if (!state) {
+      router.push("/login");
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="container mt-5">
       <form action="" method="post" onSubmit={handleSend}>

@@ -3,20 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Typed from "typed.js";
-import {
-  decryptObjData,
-  encryptData,
-  getCookie,
-} from "../../modules/encryption";
-import {
-  NumInWords,
-  IndianFormat,
-  RoundTo,
-} from "../../modules/calculatefunctions";
+import { decryptObjData, getCookie } from "../../modules/encryption";
+import { INR } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { DA, HRA } from "../../modules/constants";
 const page = () => {
-  const { state} = useGlobalContext();
+  const { state } = useGlobalContext();
   const router = useRouter();
   const el = React.useRef(null);
   const [tooltip, setTooltip] = useState(false);
@@ -499,7 +491,7 @@ const page = () => {
                 <label>Netpay in Words: </label>
               </div>
               <div>
-                <p>{NumInWords(setnetpay)}</p>
+                <p>{INR(setnetpay)}</p>
               </div>
             </div>
           </div>
@@ -511,7 +503,6 @@ const page = () => {
           <Link className="btn btn-success m-2 rounded" href="/AiChatBot">
             Chat With AI
           </Link>
-
         </div>
       </div>
     </div>
