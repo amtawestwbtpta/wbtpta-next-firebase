@@ -4,6 +4,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GEMEINI_API_KEY } from "../../modules/constants";
+
+const genAl = new GoogleGenerativeAI(GEMEINI_API_KEY);
 const TypewriterChat = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
@@ -25,19 +29,16 @@ const TypewriterChat = () => {
       // Call Gemini AI chat API (replace with actual API endpoint)
       //   const response = await axios.post('YOUR_Gemini_API_ENDPOINT', { message: input });
       try {
-        const response = await axios.post("/api/deepSeekChat", {
-          prompt: input,
-        });
-        if (response.data.success) {
+        const response = await generateGeminiReply(input);
+        if (response !== "") {
           const aiMessage = {
-            text: response.data.message,
+            text: response,
             sender: "Gemini",
           };
           msg = [...msg, aiMessage];
           setMessages(msg);
         } else {
-          toast.error(response.data.error || response.data.message);
-          console.log(response.data.error || response.data.message);
+          toast.error("Error sending message to Gemini AI. Please try again.");
           setTyping(false);
         }
       } catch (error) {
@@ -51,6 +52,18 @@ const TypewriterChat = () => {
         };
         setMessages([...messages, defaultMessage]);
       }
+    }
+  };
+  const generateGeminiReply = async (prompt) => {
+    try {
+      const model = genAl.getGenerativeModel({ model: "gemini-pro" });
+      const result = await model.generateContent(prompt);
+      const response = result.response.text();
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.error("Error generating text:", error);
+      return "";
     }
   };
   useEffect(() => {
@@ -78,18 +91,18 @@ const TypewriterChat = () => {
     <div className="container mt-5">
       <form action="" method="post" onSubmit={handleSend}>
         <div className="row">
-          <div className="col-md-8 offset-md-2">
+          <div className="col-md-10 mx-auto">
             <div className="card shadow-sm">
               <div className="card-body">
                 <div className="chat-container">
                   {messages.map((msg, index) => (
                     <div
                       key={index}
-                      className={`message mb-3 p-2 rounded ${
-                        msg.sender === "user"
-                          ? "bg-light text-dark"
-                          : "bg-primary text-white"
-                      }`}
+                      className={`message mb-3 p-2 rounded text-black`}
+                      style={{
+                        backgroundColor:
+                          msg.sender === "user" ? "cornsilk" : "honeydew",
+                      }}
                     >
                       {msg.sender === "DeepSeek" && typing ? (
                         <span

@@ -10,3 +10,4 @@ export const INCREAMENT = 0.06;
 export const HRA = 0.12;
 export const BONUS = 5800;
 export const RESEND_API = "re_FEaRtwRb_CxAofyprbLowbWjAKgZN3ug2";
+export const GEMEINI_API_KEY = "AIzaSyCEByvhqTMU2G4R027zODIkKvIkdtJe6Fo";
