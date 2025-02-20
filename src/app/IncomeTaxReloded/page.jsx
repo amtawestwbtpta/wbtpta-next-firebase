@@ -812,7 +812,8 @@ export default function IncomeTaxReloded() {
       novemberNetpay +
       decemberNetpay +
       januaryNetpay +
-      februaryNetpay;
+      februaryNetpay +
+      bonus;
     const BankInterest = randBetween(500, 2000);
     const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
     const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
@@ -1430,7 +1431,8 @@ export default function IncomeTaxReloded() {
       novemberNetpay +
       decemberNetpay +
       januaryNetpay +
-      februaryNetpay;
+      februaryNetpay +
+      bonus;
     const BankInterest = randBetween(500, 2000);
     const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
     const otherIncome = teacherDeduction?.otherIncome;
