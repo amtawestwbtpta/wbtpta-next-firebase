@@ -6,6 +6,7 @@ import {
 import axios from "axios";
 import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
+import { decryptData } from "./encryption";
 
 export const sendNotifications = async (token, title, body) => {
   var data = JSON.stringify({
@@ -20,7 +21,7 @@ export const sendNotifications = async (token, title, body) => {
     method: "post",
     url: "https://fcm.googleapis.com/fcm/send",
     headers: {
-      Authorization: `key=${MESSAGING_KEY}`,
+      Authorization: `key=${decryptData(MESSAGING_KEY)}`,
       "Content-Type": "application/json",
     },
     data: data,

@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GEMEINI_API_KEY } from "../../modules/constants";
+import { decryptData } from "../../modules/encryption";
 
-const genAl = new GoogleGenerativeAI(GEMEINI_API_KEY);
+const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
 const TypewriterChat = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
