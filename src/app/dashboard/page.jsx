@@ -508,6 +508,10 @@ const page = () => {
           <Link className="btn btn-primary m-2 rounded" href="/update_self">
             Update Profile
           </Link>
+          <Link className="btn btn-success m-2 rounded" href="/AiChatBot">
+            Chat With AI
+          </Link>
+
         </div>
       </div>
     </div>
