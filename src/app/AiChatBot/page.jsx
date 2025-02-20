@@ -59,7 +59,6 @@ const TypewriterChat = () => {
       const model = genAl.getGenerativeModel({ model: "gemini-pro" });
       const result = await model.generateContent(prompt);
       const response = result.response.text();
-      console.log(response);
       return response;
     } catch (error) {
       console.error("Error generating text:", error);
