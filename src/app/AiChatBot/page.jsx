@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GEMEINI_API_KEY } from "../../modules/constants";
 import { decryptData } from "../../modules/encryption";
-
+import "./ChatBot.css";
 const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
 const TypewriterChat = () => {
   const { state } = useGlobalContext();
@@ -97,19 +97,16 @@ const TypewriterChat = () => {
                   {messages.map((msg, index) => (
                     <div
                       key={index}
-                      className={`message mb-3 p-2 rounded text-black`}
+                      className={`message mb-3 p-2 rounded text-black ben`}
                       style={{
                         backgroundColor:
                           msg.sender === "user" ? "cornsilk" : "honeydew",
                       }}
                     >
                       {msg.sender === "DeepSeek" && typing ? (
-                        <span
-                          ref={messageRef}
-                          className="typing-indicator"
-                        ></span>
+                        <p ref={messageRef} className="typing-indicator"></p>
                       ) : (
-                        <span>{msg.text}</span>
+                        <p>{msg.text}</p>
                       )}
                     </div>
                   ))}

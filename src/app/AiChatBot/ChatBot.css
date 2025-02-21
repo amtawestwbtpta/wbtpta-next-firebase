@@ -1,0 +1,37 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.user {
+  background-color: #eee;
+  text-align: right;
+}
+
+.aria {
+  background-color: #ccf;
+  text-align: left;
+}
+
+.typing-indicator {
+  animation: typing 1s infinite;
+}
+
+@keyframes typing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

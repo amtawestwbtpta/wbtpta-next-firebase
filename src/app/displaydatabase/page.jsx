@@ -344,19 +344,19 @@ const DisplayDatabase = () => {
   const resetPassword = async (user) => {
     const docRef = doc(firestore, "userteachers", user.id);
     await updateDoc(docRef, {
-      password: bcrypt.hashSync(user.empid.toLowerCase(), 10),
+      password: bcrypt.hashSync(user.pan.toLowerCase(), 10),
     })
       .then(async () => {
         const url = `/api/resetPassword`;
         const response = await axios.post(url, {
           id,
-          password: bcrypt.hashSync(user.empid.toLowerCase(), 10),
+          password: bcrypt.hashSync(user.pan.toLowerCase(), 10),
         });
         const record = response.data;
         if (record.success) {
           let x = userState.filter((el) => el.id === user.id)[0];
           let y = userState.filter((el) => el.id !== user.id);
-          x.password = bcrypt.hashSync(user.empid.toLowerCase(), 10);
+          x.password = bcrypt.hashSync(user.pan.toLowerCase(), 10);
           y = [...y, x];
           let newData = y.sort((a, b) => a.createdAt - b.createdAt);
           setUserState(newData);
