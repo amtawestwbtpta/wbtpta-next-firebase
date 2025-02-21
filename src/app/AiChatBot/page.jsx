@@ -7,6 +7,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GEMEINI_API_KEY } from "../../modules/constants";
 import { decryptData } from "../../modules/encryption";
 import "./ChatBot.css";
+import Image from "next/image";
 const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
 const TypewriterChat = () => {
   const { state } = useGlobalContext();
@@ -104,9 +105,9 @@ const TypewriterChat = () => {
                       }}
                     >
                       {msg.sender === "DeepSeek" && typing ? (
-                        <p ref={messageRef} className="typing-indicator"></p>
+                        <p ref={messageRef} className="typing-indicator fs-6"></p>
                       ) : (
-                        <p>{msg.text}</p>
+                        <p className="fs-6">{msg.text}</p>
                       )}
                     </div>
                   ))}
@@ -126,6 +127,16 @@ const TypewriterChat = () => {
                   >
                     Send
                   </button>
+                </div>
+                <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
+                  <a href="#" className="text-decoration-none m-0 p-0">
+                    <small>Powered by </small>
+                  </a>
+                  <img
+                    src="https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/Gemini.jpg"
+                    alt="LOGO"
+                    width={"50vw"}
+                  />
                 </div>
               </div>
             </div>
