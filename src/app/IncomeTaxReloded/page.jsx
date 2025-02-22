@@ -490,7 +490,10 @@ export default function IncomeTaxReloded() {
     const marchBasic = marchSalary?.basic;
     const marchAddl = marchSalary?.addl;
     const marchDA = Math.round(marchSalary?.basic * marchSalary?.daPercent);
-    const marchHRA = Math.round(marchSalary?.basic * marchSalary?.hraPercent);
+    const marchHRA =
+      marchSalary?.hraPercent > 10
+        ? marchSalary?.hraPercent
+        : Math.round(marchSalary?.basic * marchSalary?.hraPercent);
     const marchMA = marchSalary?.ma;
     const marchGross = marchBasic + marchDA + marchHRA + marchAddl + marchMA;
     const marchGPF = marchSalary?.gpf;
@@ -503,7 +506,10 @@ export default function IncomeTaxReloded() {
     const aprilBasic = aprilSalary?.basic;
     const aprilAddl = aprilSalary?.addl;
     const aprilDA = Math.round(aprilSalary?.basic * aprilSalary?.daPercent);
-    const aprilHRA = Math.round(aprilSalary?.basic * aprilSalary?.hraPercent);
+    const aprilHRA =
+      aprilSalary?.hraPercent > 10
+        ? aprilSalary?.hraPercent
+        : Math.round(aprilSalary?.basic * aprilSalary?.hraPercent);
     const aprilMA = aprilSalary?.ma;
     const aprilGross = aprilBasic + aprilDA + aprilHRA + aprilAddl + aprilMA;
     const aprilGPF = aprilSalary?.gpf;
@@ -515,7 +521,10 @@ export default function IncomeTaxReloded() {
     const mayBasic = maySalary?.basic;
     const mayAddl = maySalary?.addl;
     const mayDA = Math.round(maySalary?.basic * maySalary?.daPercent);
-    const mayHRA = Math.round(maySalary?.basic * maySalary?.hraPercent);
+    const mayHRA =
+      maySalary?.hraPercent > 10
+        ? maySalary?.hraPercent
+        : Math.round(maySalary?.basic * maySalary?.hraPercent);
     const mayMA = maySalary?.ma;
     const mayGross = mayBasic + mayDA + mayHRA + mayAddl + mayMA;
     const mayGPF = maySalary?.gpf;
@@ -527,7 +536,10 @@ export default function IncomeTaxReloded() {
     const juneBasic = juneSalary?.basic;
     const juneAddl = juneSalary?.addl;
     const juneDA = Math.round(juneSalary?.basic * juneSalary?.daPercent);
-    const juneHRA = Math.round(juneSalary?.basic * juneSalary?.hraPercent);
+    const juneHRA =
+      juneSalary?.hraPercent > 10
+        ? juneSalary?.hraPercent
+        : Math.round(juneSalary?.basic * juneSalary?.hraPercent);
     const juneMA = juneSalary?.ma;
     const juneGross = juneBasic + juneDA + juneHRA + juneAddl + juneMA;
     const juneGPF = juneSalary?.gpf;
@@ -540,7 +552,10 @@ export default function IncomeTaxReloded() {
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
     const aprilIR = Math.round(aprilSalary?.basic * 0.04);
-    const julyHRA = Math.round(julySalary?.basic * julySalary?.hraPercent);
+    const julyHRA =
+      julySalary?.hraPercent > 10
+        ? julySalary?.hraPercent
+        : Math.round(julySalary?.basic * julySalary?.hraPercent);
     const julyMA = julySalary?.ma;
     const julyGross =
       julyBasic + julyDA + julyHRA + julyAddl + julyMA + aprilIR;
@@ -553,9 +568,10 @@ export default function IncomeTaxReloded() {
     const augustBasic = augustSalary?.basic;
     const augustAddl = augustSalary?.addl;
     const augustDA = Math.round(augustSalary?.basic * augustSalary?.daPercent);
-    const augustHRA = Math.round(
-      augustSalary?.basic * augustSalary?.hraPercent
-    );
+    const augustHRA =
+      augustSalary?.hraPercent > 10
+        ? augustSalary?.hraPercent
+        : Math.round(augustSalary?.basic * augustSalary?.hraPercent);
     const augustMA = augustSalary?.ma;
     const augustGross =
       augustBasic + augustDA + augustHRA + augustAddl + augustMA;
@@ -570,9 +586,10 @@ export default function IncomeTaxReloded() {
     const septemberDA = Math.round(
       septemberSalary?.basic * septemberSalary?.daPercent
     );
-    const septemberHRA = Math.round(
-      septemberSalary?.basic * septemberSalary?.hraPercent
-    );
+    const septemberHRA =
+      septemberSalary?.hraPercent > 10
+        ? septemberSalary?.hraPercent
+        : Math.round(septemberSalary?.basic * septemberSalary?.hraPercent);
     const septemberMA = septemberSalary?.ma;
     const septemberGross =
       septemberBasic + septemberDA + septemberHRA + septemberAddl + septemberMA;
@@ -588,9 +605,10 @@ export default function IncomeTaxReloded() {
     const octoberDA = Math.round(
       octoberSalary?.basic * octoberSalary?.daPercent
     );
-    const octoberHRA = Math.round(
-      octoberSalary?.basic * octoberSalary?.hraPercent
-    );
+    const octoberHRA =
+      octoberSalary?.hraPercent > 10
+        ? octoberSalary?.hraPercent
+        : Math.round(octoberSalary?.basic * octoberSalary?.hraPercent);
     const octoberMA = octoberSalary?.ma;
     const octoberGross =
       octoberBasic + octoberDA + octoberHRA + octoberAddl + octoberMA;
@@ -605,9 +623,10 @@ export default function IncomeTaxReloded() {
     const novemberDA = Math.round(
       novemberSalary?.basic * novemberSalary?.daPercent
     );
-    const novemberHRA = Math.round(
-      novemberSalary?.basic * novemberSalary?.hraPercent
-    );
+    const novemberHRA =
+      novemberSalary?.hraPercent > 10
+        ? novemberSalary?.hraPercent
+        : Math.round(novemberSalary?.basic * novemberSalary?.hraPercent);
     const novemberMA = novemberSalary?.ma;
     const novemberGross =
       novemberBasic + novemberDA + novemberHRA + novemberAddl + novemberMA;
@@ -623,9 +642,10 @@ export default function IncomeTaxReloded() {
     const decemberDA = Math.round(
       decemberSalary?.basic * decemberSalary?.daPercent
     );
-    const decemberHRA = Math.round(
-      decemberSalary?.basic * decemberSalary?.hraPercent
-    );
+    const decemberHRA =
+      decemberSalary?.hraPercent > 10
+        ? decemberSalary?.hraPercent
+        : Math.round(decemberSalary?.basic * decemberSalary?.hraPercent);
     const decemberMA = decemberSalary?.ma;
     const decemberGross =
       decemberBasic + decemberDA + decemberHRA + decemberAddl + decemberMA;
@@ -641,9 +661,10 @@ export default function IncomeTaxReloded() {
     const januaryDA = Math.round(
       januarySalary?.basic * januarySalary?.daPercent
     );
-    const januaryHRA = Math.round(
-      januarySalary?.basic * januarySalary?.hraPercent
-    );
+    const januaryHRA =
+      januarySalary?.hraPercent > 10
+        ? januarySalary?.hraPercent
+        : Math.round(januarySalary?.basic * januarySalary?.hraPercent);
     const januaryMA = januarySalary?.ma;
     const januaryGross =
       januaryBasic + januaryDA + januaryHRA + januaryAddl + januaryMA;
@@ -658,9 +679,10 @@ export default function IncomeTaxReloded() {
     const februaryDA = Math.round(
       februarySalary?.basic * februarySalary?.daPercent
     );
-    const februaryHRA = Math.round(
-      februarySalary?.basic * februarySalary?.hraPercent
-    );
+    const februaryHRA =
+      februarySalary?.hraPercent > 10
+        ? februarySalary?.hraPercent
+        : Math.round(februarySalary?.basic * februarySalary?.hraPercent);
     const februaryMA = februarySalary?.ma;
     const februaryGross =
       februaryBasic + februaryDA + februaryHRA + februaryAddl + februaryMA;
@@ -1096,7 +1118,10 @@ export default function IncomeTaxReloded() {
     const marchBasic = marchSalary?.basic;
     const marchAddl = marchSalary?.addl;
     const marchDA = Math.round(marchSalary?.basic * marchSalary?.daPercent);
-    const marchHRA = Math.round(marchSalary?.basic * marchSalary?.hraPercent);
+    const marchHRA =
+      marchSalary?.hraPercent > 10
+        ? marchSalary?.hraPercent
+        : Math.round(marchSalary?.basic * marchSalary?.hraPercent);
     const marchMA = marchSalary?.ma;
     const marchGross = marchBasic + marchDA + marchHRA + marchAddl + marchMA;
     const marchGPF = marchSalary?.gpf;
@@ -1109,7 +1134,10 @@ export default function IncomeTaxReloded() {
     const aprilBasic = aprilSalary?.basic;
     const aprilAddl = aprilSalary?.addl;
     const aprilDA = Math.round(aprilSalary?.basic * aprilSalary?.daPercent);
-    const aprilHRA = Math.round(aprilSalary?.basic * aprilSalary?.hraPercent);
+    const aprilHRA =
+      aprilSalary?.hraPercent > 10
+        ? aprilSalary?.hraPercent
+        : Math.round(aprilSalary?.basic * aprilSalary?.hraPercent);
     const aprilMA = aprilSalary?.ma;
     const aprilGross = aprilBasic + aprilDA + aprilHRA + aprilAddl + aprilMA;
     const aprilGPF = aprilSalary?.gpf;
@@ -1121,7 +1149,10 @@ export default function IncomeTaxReloded() {
     const mayBasic = maySalary?.basic;
     const mayAddl = maySalary?.addl;
     const mayDA = Math.round(maySalary?.basic * maySalary?.daPercent);
-    const mayHRA = Math.round(maySalary?.basic * maySalary?.hraPercent);
+    const mayHRA =
+      maySalary?.hraPercent > 10
+        ? maySalary?.hraPercent
+        : Math.round(maySalary?.basic * maySalary?.hraPercent);
     const mayMA = maySalary?.ma;
     const mayGross = mayBasic + mayDA + mayHRA + mayAddl + mayMA;
     const mayGPF = maySalary?.gpf;
@@ -1133,7 +1164,10 @@ export default function IncomeTaxReloded() {
     const juneBasic = juneSalary?.basic;
     const juneAddl = juneSalary?.addl;
     const juneDA = Math.round(juneSalary?.basic * juneSalary?.daPercent);
-    const juneHRA = Math.round(juneSalary?.basic * juneSalary?.hraPercent);
+    const juneHRA =
+      juneSalary?.hraPercent > 10
+        ? juneSalary?.hraPercent
+        : Math.round(juneSalary?.basic * juneSalary?.hraPercent);
     const juneMA = juneSalary?.ma;
     const juneGross = juneBasic + juneDA + juneHRA + juneAddl + juneMA;
     const juneGPF = juneSalary?.gpf;
@@ -1146,7 +1180,10 @@ export default function IncomeTaxReloded() {
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
     const aprilIR = Math.round(aprilSalary?.basic * 0.04);
-    const julyHRA = Math.round(julySalary?.basic * julySalary?.hraPercent);
+    const julyHRA =
+      julySalary?.hraPercent > 10
+        ? julySalary?.hraPercent
+        : Math.round(julySalary?.basic * julySalary?.hraPercent);
     const julyMA = julySalary?.ma;
     const julyGross =
       julyBasic + julyDA + julyHRA + julyAddl + julyMA + aprilIR;
@@ -1159,9 +1196,10 @@ export default function IncomeTaxReloded() {
     const augustBasic = augustSalary?.basic;
     const augustAddl = augustSalary?.addl;
     const augustDA = Math.round(augustSalary?.basic * augustSalary?.daPercent);
-    const augustHRA = Math.round(
-      augustSalary?.basic * augustSalary?.hraPercent
-    );
+    const augustHRA =
+      augustSalary?.hraPercent > 10
+        ? augustSalary?.hraPercent
+        : Math.round(augustSalary?.basic * augustSalary?.hraPercent);
     const augustMA = augustSalary?.ma;
     const augustGross =
       augustBasic + augustDA + augustHRA + augustAddl + augustMA;
@@ -1176,9 +1214,10 @@ export default function IncomeTaxReloded() {
     const septemberDA = Math.round(
       septemberSalary?.basic * septemberSalary?.daPercent
     );
-    const septemberHRA = Math.round(
-      septemberSalary?.basic * septemberSalary?.hraPercent
-    );
+    const septemberHRA =
+      septemberSalary?.hraPercent > 10
+        ? septemberSalary?.hraPercent
+        : Math.round(septemberSalary?.basic * septemberSalary?.hraPercent);
     const septemberMA = septemberSalary?.ma;
     const septemberGross =
       septemberBasic + septemberDA + septemberHRA + septemberAddl + septemberMA;
@@ -1194,9 +1233,10 @@ export default function IncomeTaxReloded() {
     const octoberDA = Math.round(
       octoberSalary?.basic * octoberSalary?.daPercent
     );
-    const octoberHRA = Math.round(
-      octoberSalary?.basic * octoberSalary?.hraPercent
-    );
+    const octoberHRA =
+      octoberSalary?.hraPercent > 10
+        ? octoberSalary?.hraPercent
+        : Math.round(octoberSalary?.basic * octoberSalary?.hraPercent);
     const octoberMA = octoberSalary?.ma;
     const octoberGross =
       octoberBasic + octoberDA + octoberHRA + octoberAddl + octoberMA;
@@ -1211,9 +1251,10 @@ export default function IncomeTaxReloded() {
     const novemberDA = Math.round(
       novemberSalary?.basic * novemberSalary?.daPercent
     );
-    const novemberHRA = Math.round(
-      novemberSalary?.basic * novemberSalary?.hraPercent
-    );
+    const novemberHRA =
+      novemberSalary?.hraPercent > 10
+        ? novemberSalary?.hraPercent
+        : Math.round(novemberSalary?.basic * novemberSalary?.hraPercent);
     const novemberMA = novemberSalary?.ma;
     const novemberGross =
       novemberBasic + novemberDA + novemberHRA + novemberAddl + novemberMA;
@@ -1229,9 +1270,10 @@ export default function IncomeTaxReloded() {
     const decemberDA = Math.round(
       decemberSalary?.basic * decemberSalary?.daPercent
     );
-    const decemberHRA = Math.round(
-      decemberSalary?.basic * decemberSalary?.hraPercent
-    );
+    const decemberHRA =
+      decemberSalary?.hraPercent > 10
+        ? decemberSalary?.hraPercent
+        : Math.round(decemberSalary?.basic * decemberSalary?.hraPercent);
     const decemberMA = decemberSalary?.ma;
     const decemberGross =
       decemberBasic + decemberDA + decemberHRA + decemberAddl + decemberMA;
@@ -1247,9 +1289,10 @@ export default function IncomeTaxReloded() {
     const januaryDA = Math.round(
       januarySalary?.basic * januarySalary?.daPercent
     );
-    const januaryHRA = Math.round(
-      januarySalary?.basic * januarySalary?.hraPercent
-    );
+    const januaryHRA =
+      januarySalary?.hraPercent > 10
+        ? januarySalary?.hraPercent
+        : Math.round(januarySalary?.basic * januarySalary?.hraPercent);
     const januaryMA = januarySalary?.ma;
     const januaryGross =
       januaryBasic + januaryDA + januaryHRA + januaryAddl + januaryMA;
@@ -1264,9 +1307,10 @@ export default function IncomeTaxReloded() {
     const februaryDA = Math.round(
       februarySalary?.basic * februarySalary?.daPercent
     );
-    const februaryHRA = Math.round(
-      februarySalary?.basic * februarySalary?.hraPercent
-    );
+    const februaryHRA =
+      februarySalary?.hraPercent > 10
+        ? februarySalary?.hraPercent
+        : Math.round(februarySalary?.basic * februarySalary?.hraPercent);
     const februaryMA = februarySalary?.ma;
     const februaryGross =
       februaryBasic + februaryDA + februaryHRA + februaryAddl + februaryMA;
