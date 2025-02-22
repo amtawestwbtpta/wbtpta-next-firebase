@@ -193,7 +193,10 @@ const PaySlipOsmsNew = () => {
     }
     basicpay = monthSalary?.basic;
     da = Math.round(basicpay * monthSalary?.daPercent);
-    hra = Math.round(basicpay * monthSalary?.hraPercent);
+    hra =
+      monthSalary?.hraPercent > 10
+        ? monthSalary?.hraPercent
+        : Math.round(basicpay * monthSalary?.hraPercent);
     addl = monthSalary?.addl;
     ma = monthSalary?.ma;
     pfund = monthSalary?.gpf;

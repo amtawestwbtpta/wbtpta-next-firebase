@@ -368,6 +368,26 @@ const EditTeacher = () => {
             <option value="AT">AT</option>
           </select>
         </div>
+        <div className="mb-0 col-md-3">
+          <label className="form-label">Gender</label>
+          <br />
+          <select
+            className="form-select form-select-sm mb-3"
+            aria-label=".form-select-lg example"
+            name="gender"
+            id="gender"
+            value={inputField?.gender}
+            onChange={(e) => {
+              setinputField({
+                ...inputField,
+                gender: e.target.value,
+              });
+            }}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
         <div className="mb-3 col-md-3">
           <label className="form-label">Is HOI?</label>
           <select

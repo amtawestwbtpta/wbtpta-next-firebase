@@ -286,7 +286,11 @@ const TechSalary = () => {
                     }
                     basicpay = techersSalary?.basic;
                     da = Math.round(basicpay * techersSalary?.daPercent);
-                    hra = Math.round(basicpay * techersSalary?.hraPercent);
+                    // hra = Math.round(basicpay * techersSalary?.hraPercent);
+                    hra =
+                      techersSalary?.hraPercent > 10
+                        ? techersSalary?.hraPercent
+                        : Math.round(basicpay * techersSalary?.hraPercent);
                     addl = techersSalary?.addl;
                     ma = techersSalary?.ma;
                     pfund = techersSalary?.gpf;
@@ -314,7 +318,8 @@ const TechSalary = () => {
 
                     netpay = gross - deduction;
                     return (
-                      netpay > 0 && (
+                      basicpay !== 0 &&
+                      basicpay !== undefined && (
                         <tr key={el.id}>
                           <td
                             className="text-center"

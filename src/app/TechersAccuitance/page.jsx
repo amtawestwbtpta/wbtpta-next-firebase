@@ -726,9 +726,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * januarySalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * januarySalary?.hraPercent
-                            );
+                            hra =
+                              januarySalary?.hraPercent > 10
+                                ? januarySalary?.hraPercent
+                                : Math.round(
+                                    basicpay * januarySalary?.hraPercent
+                                  );
                             addl = januarySalary?.addl;
                             pfund = januarySalary?.gpf;
                             gsli = januarySalary?.gsli;
@@ -738,9 +741,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * februarySalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * februarySalary?.hraPercent
-                            );
+                            hra =
+                              februarySalary?.hraPercent > 10
+                                ? februarySalary?.hraPercent
+                                : Math.round(
+                                    basicpay * februarySalary?.hraPercent
+                                  );
                             addl = februarySalary?.addl;
                             pfund = februarySalary?.gpf;
                             gsli = februarySalary?.gsli;
@@ -748,9 +754,12 @@ const TechersAccuitance = () => {
                           } else if (index === 2) {
                             basicpay = marchSalary?.basic;
                             da = Math.round(basicpay * marchSalary?.daPercent);
-                            hra = Math.round(
-                              basicpay * marchSalary?.hraPercent
-                            );
+                            hra =
+                              marchSalary?.hraPercent > 10
+                                ? marchSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * marchSalary?.hraPercent
+                                  );
                             addl = marchSalary?.addl;
                             pfund = marchSalary?.gpf;
                             gsli = marchSalary?.gsli;
@@ -758,9 +767,12 @@ const TechersAccuitance = () => {
                           } else if (index === 3) {
                             basicpay = aprilSalary?.basic;
                             da = Math.round(basicpay * aprilSalary?.daPercent);
-                            hra = Math.round(
-                              basicpay * aprilSalary?.hraPercent
-                            );
+                            hra =
+                              aprilSalary?.hraPercent > 10
+                                ? aprilSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * aprilSalary?.hraPercent
+                                  );
                             addl = aprilSalary?.addl;
                             pfund = aprilSalary?.gpf;
                             gsli = aprilSalary?.gsli;
@@ -768,7 +780,10 @@ const TechersAccuitance = () => {
                           } else if (index === 4) {
                             basicpay = maySalary?.basic;
                             da = Math.round(basicpay * maySalary?.daPercent);
-                            hra = Math.round(basicpay * maySalary?.hraPercent);
+                            hra =
+                              maySalary?.hraPercent > 10
+                                ? maySalary?.hraPercent
+                                : Math.round(basicpay * maySalary?.hraPercent);
                             addl = maySalary?.addl;
                             pfund = maySalary?.gpf;
                             gsli = maySalary?.gsli;
@@ -776,7 +791,10 @@ const TechersAccuitance = () => {
                           } else if (index === 5) {
                             basicpay = juneSalary?.basic;
                             da = Math.round(basicpay * juneSalary?.daPercent);
-                            hra = Math.round(basicpay * juneSalary?.hraPercent);
+                            hra =
+                              juneSalary?.hraPercent > 10
+                                ? juneSalary?.hraPercent
+                                : Math.round(basicpay * juneSalary?.hraPercent);
                             addl = juneSalary?.addl;
                             pfund = juneSalary?.gpf;
                             gsli = juneSalary?.gsli;
@@ -784,7 +802,10 @@ const TechersAccuitance = () => {
                           } else if (index === 6) {
                             basicpay = julySalary?.basic;
                             da = Math.round(basicpay * julySalary?.daPercent);
-                            hra = Math.round(basicpay * julySalary?.hraPercent);
+                            hra =
+                              julySalary?.hraPercent > 10
+                                ? julySalary?.hraPercent
+                                : Math.round(basicpay * julySalary?.hraPercent);
                             addl = julySalary?.addl;
                             pfund = julySalary?.gpf;
                             gsli = julySalary?.gsli;
@@ -792,9 +813,12 @@ const TechersAccuitance = () => {
                           } else if (index === 7) {
                             basicpay = augustSalary?.basic;
                             da = Math.round(basicpay * augustSalary?.daPercent);
-                            hra = Math.round(
-                              basicpay * augustSalary?.hraPercent
-                            );
+                            hra =
+                              augustSalary?.hraPercent > 10
+                                ? augustSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * augustSalary?.hraPercent
+                                  );
                             addl = augustSalary?.addl;
                             pfund = augustSalary?.gpf;
                             gsli = augustSalary?.gsli;
@@ -804,9 +828,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * septemberSalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * septemberSalary?.hraPercent
-                            );
+                            hra =
+                              septemberSalary?.hraPercent > 10
+                                ? septemberSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * septemberSalary?.hraPercent
+                                  );
                             addl = septemberSalary?.addl;
                             pfund = septemberSalary?.gpf;
                             gsli = septemberSalary?.gsli;
@@ -816,9 +843,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * octoberSalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * octoberSalary?.hraPercent
-                            );
+                            hra =
+                              octoberSalary?.hraPercent > 10
+                                ? octoberSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * octoberSalary?.hraPercent
+                                  );
                             addl = octoberSalary?.addl;
                             pfund = octoberSalary?.gpf;
                             gsli = octoberSalary?.gsli;
@@ -828,9 +858,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * novemberSalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * novemberSalary?.hraPercent
-                            );
+                            hra =
+                              novemberSalary?.hraPercent > 10
+                                ? novemberSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * novemberSalary?.hraPercent
+                                  );
                             addl = novemberSalary?.addl;
                             pfund = novemberSalary?.gpf;
                             gsli = novemberSalary?.gsli;
@@ -840,9 +873,12 @@ const TechersAccuitance = () => {
                             da = Math.round(
                               basicpay * decemberSalary?.daPercent
                             );
-                            hra = Math.round(
-                              basicpay * decemberSalary?.hraPercent
-                            );
+                            hra =
+                              decemberSalary?.hraPercent > 10
+                                ? decemberSalary?.hraPercent
+                                : Math.round(
+                                    basicpay * decemberSalary?.hraPercent
+                                  );
                             addl = decemberSalary?.addl;
                             pfund = decemberSalary?.gpf;
                             gsli = decemberSalary?.gsli;
@@ -875,7 +911,11 @@ const TechersAccuitance = () => {
 
                           let netpay = gross - deduction;
 
-                          if (el.monthData[index].value && basicpay !== 0) {
+                          if (
+                            el.monthData[index].value &&
+                            basicpay !== 0 &&
+                            basicpay !== undefined
+                          ) {
                             return (
                               <tr
                                 key={ind}
@@ -892,6 +932,7 @@ const TechersAccuitance = () => {
                                 <td
                                   className="text-center"
                                   style={{ border: "1px solid" }}
+                                  onClick={() => console.log(basicpay)}
                                 >
                                   {el.tname}
                                 </td>
