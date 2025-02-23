@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Font,
   Image,
+  PDFViewer,
 } from "@react-pdf/renderer";
 const width = 2480;
 const height = 3508;
@@ -28,6 +29,7 @@ export default function LeaveProposal({ data }) {
     po,
     hoi,
     gender,
+    serviceAge,
   } = data;
   return (
     <Document
@@ -557,11 +559,17 @@ export default function LeaveProposal({ data }) {
                     height: 100,
                   }}
                 >
-                  <Text style={styles.text}>
+                  <Text style={[styles.text, { padding: 0 }]}>
                     Leave{"\n"}earned &{"\n"}nature of{"\n"}Leave
                   </Text>
-                  <Text style={styles.text}>_______</Text>
-                  <Text style={styles.text}>_______</Text>
+                  <Text style={[styles.text, { padding: 0 }]}>_______</Text>
+                  <Text
+                    style={[
+                      styles.textBold,
+                      { marginTop: 2, fontSize: 8.5, padding: 0 },
+                    ]}
+                  >{`${leaveNature}\nLEAVE`}</Text>
+                  <Text style={[styles.text, { marginTop: -12 }]}>_______</Text>
                 </View>
 
                 <View
@@ -693,8 +701,6 @@ export default function LeaveProposal({ data }) {
                     </View>
                     <View
                       style={{
-                        justifyContent: "center",
-                        alignItems: "center",
                         height: 80,
                         borderLeftWidth: 1,
                       }}
@@ -706,6 +712,38 @@ export default function LeaveProposal({ data }) {
                         LWP/ CCL/{"\n"}
                         Paternity etc.
                       </Text>
+                      {leaveNature !== "HPL" && (
+                        <Image
+                          source={{
+                            uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                          }}
+                          style={{
+                            height: 15,
+                            width: 15,
+                            position: "absolute",
+                            marginLeft:
+                              leaveNature === "LWP"
+                                ? 0
+                                : leaveNature === "PATERNITY"
+                                ? 0
+                                : 58,
+                            marginTop:
+                              leaveNature === "COMMUTED"
+                                ? 0
+                                : leaveNature === "MATERNITY"
+                                ? 15
+                                : leaveNature === "MEDICAL"
+                                ? 28
+                                : leaveNature === "LWP"
+                                ? 45
+                                : leaveNature === "CCL"
+                                ? 42
+                                : leaveNature === "PATERNITY"
+                                ? 60
+                                : 60,
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>
@@ -720,7 +758,12 @@ export default function LeaveProposal({ data }) {
                 >
                   <Text style={styles.text}>
                     Balance{"\n"}
-                    of Leave
+                    of Leave{"\n"}
+                  </Text>
+                  <Text
+                    style={[styles.textBold, { marginTop: 10, fontSize: 8.5 }]}
+                  >
+                    {leaveNature !== "MATERNITY" && `${leaveNature}`}
                   </Text>
                 </View>
                 <View
@@ -1041,10 +1084,12 @@ export default function LeaveProposal({ data }) {
                     width: "10%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>{endingDate?.split("-")[2]}</Text>
+                  <Text style={styles.text2}>
+                    {`${doj}\nTo\n${endingDate}`}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1052,10 +1097,23 @@ export default function LeaveProposal({ data }) {
                     width: "10%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>{leaveNature}</Text>
+                  {leaveNature === "MATERNITY" ? (
+                    <Text style={styles.text}>180</Text>
+                  ) : (
+                    <Text style={styles.text}>
+                      {serviceAge} <Text style={styles.titleMain}>&#215;</Text>{" "}
+                      30
+                      {"\n= "} {serviceAge * 30}
+                    </Text>
+                  )}
+                  {/* <Text style={styles.text}>
+                      {leaveNature === "MATERNITY"
+                        ? 180
+                        : `${serviceAge} X 30\n= ${serviceAge * 30}`}
+                    </Text> */}
                 </View>
                 <View
                   style={{
@@ -1063,7 +1121,7 @@ export default function LeaveProposal({ data }) {
                     width: "8%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text2}>{startingDate}</Text>
@@ -1074,7 +1132,7 @@ export default function LeaveProposal({ data }) {
                     width: "10%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text2}>{endingDate}</Text>
@@ -1085,7 +1143,7 @@ export default function LeaveProposal({ data }) {
                     width: "12%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text2}>{leaveDays}</Text>
@@ -1096,11 +1154,11 @@ export default function LeaveProposal({ data }) {
                     width: "7%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text2}>
-                    {leaveNature === "HPL" ? leaveDays : "N/A"}
+                    {leaveNature === "MATERNITY" ? "N/A" : leaveDays * 2}
                   </Text>
                 </View>
                 <View
@@ -1109,7 +1167,7 @@ export default function LeaveProposal({ data }) {
                     width: "13%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text2}>{leaveDays}</Text>
@@ -1120,11 +1178,15 @@ export default function LeaveProposal({ data }) {
                     width: "10%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>
-                    {leaveNature === "MATERNITY" ? "NIL" : ""}
+                  <Text style={[styles.text, { fontSize: 11 }]}>
+                    {leaveNature === "MATERNITY"
+                      ? "NIL"
+                      : `(${serviceAge * 30} - ${leaveDays})\n= ${
+                          serviceAge * 30 - leaveDays
+                        }`}
                   </Text>
                 </View>
 
@@ -1133,111 +1195,13 @@ export default function LeaveProposal({ data }) {
                     width: "20%",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: 20,
+                    height: 40,
                   }}
                 >
                   <Text style={styles.text}></Text>
                 </View>
               </View>
-              <View style={[styles.rowStartView, { padding: 0 }]}>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "10%",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}> </Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "10%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "8%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "10%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "12%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "7%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "13%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "10%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
 
-                <View
-                  style={{
-                    width: "20%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 20,
-                  }}
-                >
-                  <Text style={styles.text}></Text>
-                </View>
-              </View>
               <View style={[styles.rowStartView, { padding: 0 }]}>
                 <View
                   style={{
@@ -3155,60 +3119,18 @@ const styles = StyleSheet.create({
     fontFamily: "Times",
     textAlign: "center",
   },
+  text3: {
+    fontSize: 12.5,
+    padding: 1,
+    textAlign: "center",
+  },
   text2: {
     fontSize: 9,
     padding: 1,
     fontFamily: "Times",
     textAlign: "center",
   },
-  text3: {
-    fontSize: 12,
-    fontFamily: "Algerian",
-    textAlign: "center",
-    padding: 2,
-  },
-  text2i: {
-    fontSize: 8,
-    fontFamily: "TimesItalic",
-    textAlign: "center",
-    padding: 2,
-  },
 
-  text4: {
-    fontSize: 8,
-    fontFamily: "Times",
-    textAlign: "center",
-  },
-  text5: {
-    fontSize: 9,
-    fontFamily: "Times",
-    textAlign: "center",
-  },
-  headingView: {
-    // border: "1px solid",
-    borderWidth: 1,
-    width: "100%",
-    height: "auto",
-  },
-  salaryView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    alignContent: "center",
-    width: "100%",
-  },
-  tableStartView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
-    width: "100%",
-    height: "auto",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
   tableStartBorderView: {
     borderTopWidth: 1,
     borderLeftWidth: 1,
@@ -3219,116 +3141,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
-  },
-  mainBorderView: {
-    borderWidth: 1,
-    width: "100%",
-    height: "auto",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
-  view88H20: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "8.78%",
-    height: 20,
-  },
-  view16: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "16%",
-    height: 32,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
-  view16H0: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "16%",
-    height: 14,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
-  view10: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "10%",
-    height: 32,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
-  view10H0: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "10%",
-    height: 14,
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
-  SecondView10: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "10%",
-    height: 15,
-  },
-  view5: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderBottomWidth: 0,
-    paddingRight: 1,
-    width: "5%",
-    height: 73,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  view25: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    width: "25%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  view50: {
-    width: "50%",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  view50Center: {
-    width: "50%",
-    height: 14,
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    borderRightWidth: 1,
   },
 
   rowStartView: {
@@ -3344,48 +3156,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
   },
-  rowStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 1,
-    width: "100%",
-    height: "auto",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    alignContent: "center",
-    padding: 2,
-  },
-  rowWrapView: {
-    paddingRight: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-  },
-  rowFlexView: {
-    paddingRight: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center",
-    alignItems: "center",
-  },
-  columnFlexView: {
-    paddingRight: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-  },
-  rowFlexViewEvenly: {
-    paddingRight: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignContent: "center",
-    alignItems: "center",
-  },
+
   break: {
     borderBottomWidth: 1,
     width: "100%",
