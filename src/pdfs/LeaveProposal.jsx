@@ -721,12 +721,7 @@ export default function LeaveProposal({ data }) {
                             height: 15,
                             width: 15,
                             position: "absolute",
-                            marginLeft:
-                              leaveNature === "LWP"
-                                ? 0
-                                : leaveNature === "PATERNITY"
-                                ? 0
-                                : 58,
+                            marginLeft: 0,
                             marginTop:
                               leaveNature === "COMMUTED"
                                 ? 0
