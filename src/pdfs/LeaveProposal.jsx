@@ -1198,7 +1198,7 @@ export default function LeaveProposal({ data }) {
                     height: 40,
                   }}
                 >
-                  <Text style={styles.text}></Text>
+                  <Text style={styles.text}>NIL</Text>
                 </View>
               </View>
 
