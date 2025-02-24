@@ -247,18 +247,6 @@ function FlexibleComp() {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
-                    style={{ height: 50, width: 100 }}
-                    onClick={() => {
-                      setFilteredData(
-                        filteredData.filter((el) => el.association === 'WBTPTA')
-                      );
-                    }}
-                  >
-                    Filter WBTPTA
-                  </button>
-                  <button
-                    type="button"
                     className="btn btn-danger noprint text-white font-weight-bold p-2 m-5 rounded"
                     style={{ height: 50, width: 100 }}
                     onClick={() => {
@@ -273,6 +261,17 @@ function FlexibleComp() {
               )}
             </div>
             <div className="my-2 noprint">
+            <button
+                type="button"
+                className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
+                onClick={() => {
+                  setFilteredData(
+                    fetchedData.filter((el) => el.association === "WBTPTA")
+                  );
+                }}
+              >
+                Filter WBTPTA
+              </button>
               <button
                 type="button"
                 className="btn btn-danger noprint text-white font-weight-bold p-2 m-5 rounded"
@@ -343,6 +342,7 @@ function FlexibleComp() {
               >
                 Close
               </button>
+              
             </div>
             <h3 className="text-center mx-auto">{heading.toUpperCase()}</h3>
             <table className="table table-white table-hover table-striped table-borderd align-middle table-responsive mx-auto text-center">

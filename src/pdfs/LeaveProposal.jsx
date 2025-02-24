@@ -2237,7 +2237,11 @@ export default function LeaveProposal({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={styles.text}>-</Text>
+                <Text style={styles.text}>
+                  {leaveNature === "MATERNITY" || leaveNature === "PATERNITY"
+                    ? "-"
+                    : `${leaveDays * 2} HP`}
+                </Text>
               </View>
               <View style={{ width: "10%" }}>
                 <Text style={styles.text}>of</Text>
@@ -2249,7 +2253,11 @@ export default function LeaveProposal({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={styles.text}>-</Text>
+                <Text style={styles.text}>
+                  {leaveNature === "MATERNITY" || leaveNature === "PATERNITY"
+                    ? "-"
+                    : serviceAge * 30}
+                </Text>
               </View>
               <View style={{ width: "30%" }}>
                 <Text style={styles.text}>days HPL from his/ her credit.</Text>
