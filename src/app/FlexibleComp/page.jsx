@@ -247,10 +247,24 @@ function FlexibleComp() {
                   </button>
                   <button
                     type="button"
+                    className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
+                    style={{ height: 50, width: 100 }}
+                    onClick={() => {
+                      setFilteredData(
+                        filteredData.filter((el) => el.association === 'WBTPTA')
+                      );
+                    }}
+                  >
+                    Filter WBTPTA
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-danger noprint text-white font-weight-bold p-2 m-5 rounded"
                     style={{ height: 50, width: 100 }}
                     onClick={() => {
                       setFilteredData(fetchedData);
+                      setFkey("");
+                      setFvalue("");
                     }}
                   >
                     Clear
