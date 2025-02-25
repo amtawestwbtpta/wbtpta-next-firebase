@@ -631,7 +631,7 @@ export default function Page() {
         </div>
       )}
 
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -653,6 +653,8 @@ export default function Page() {
                   gender,
                   serviceAge,
                   teachersPrevLeaves,
+                  earnedLeave,
+                  balanceLeave,
                 }}
               />
             }
@@ -672,9 +674,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )} */}
+      )}
 
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="mt-3">
           <LeaveProposal
             data={{
@@ -699,7 +701,7 @@ export default function Page() {
             }}
           />
         </div>
-      )}
+      )} */}
 
       {!showDownloadBtn && !showModal && !loader && (
         <div
