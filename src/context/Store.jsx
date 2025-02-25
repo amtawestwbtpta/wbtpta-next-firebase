@@ -108,6 +108,8 @@ const GlobalContext = createContext({
     february: [],
   },
   setIndSalaryState: () => {},
+  leaveState: [],
+  setLeaveState: () => [],
 });
 
 export const GlobalContextProvider = ({ children }) => {
@@ -193,6 +195,7 @@ export const GlobalContextProvider = ({ children }) => {
     january: [],
     february: [],
   });
+  const [leaveState, setLeaveState] = useState([]);
   return (
     <GlobalContext.Provider
       value={{
@@ -246,6 +249,8 @@ export const GlobalContextProvider = ({ children }) => {
         setSalaryState,
         indSalaryState,
         setIndSalaryState,
+        leaveState,
+        setLeaveState,
       }}
     >
       <FirebaseProvider>{children}</FirebaseProvider>

@@ -10,6 +10,11 @@ import {
 } from "../../modules/calculatefunctions";
 import LeaveProposal from "../../pdfs/LeaveProposal";
 import dynamic from "next/dynamic";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { query } from "firebase/database";
+import { firestore } from "../../context/FirbaseContext";
+import Loader from "../../components/Loader";
+import { v4 as uuid } from "uuid";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -20,8 +25,9 @@ export default function Page() {
     }
   );
   const router = useRouter();
-  const { state, stateObject } = useGlobalContext();
-  const { tname, desig, school, doj, phone, hoi, gender } = stateObject;
+  const { state, stateObject, leaveState, setLeaveState } = useGlobalContext();
+  const { tname, desig, school, doj, phone, hoi, gender, id } = stateObject;
+  const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [leaveNature, setLeaveNature] = useState("");
@@ -32,6 +38,33 @@ export default function Page() {
   const [village, setVillage] = useState("");
   const [po, setPo] = useState("");
   const [serviceAge, setServiceAge] = useState("");
+  const [selectedLeaveID, setSelectedLeaveID] = useState("");
+  const [teachersPrevLeaves, setTeachersPrevLeaves] = useState([
+    {
+      id: "",
+      teacherId: "",
+      tname: "",
+      leaveType: "",
+      startDate: "",
+      endDate: "",
+      days: 30,
+      year: 2022,
+      childBirthDate: "",
+    },
+  ]);
+  const [uploadLeave, setUploadLeave] = useState([
+    {
+      id: "",
+      teacherId: "",
+      tname: "",
+      leaveType: "",
+      startDate: "",
+      endDate: "",
+      days: 30,
+      year: 2022,
+      childBirthDate: "",
+    },
+  ]);
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
@@ -47,9 +80,75 @@ export default function Page() {
     const sAge = endingYear - joiningYear;
     setServiceAge(sAge);
   };
+  const getTeachersLeaves = async () => {
+    setLoader(true);
+    const querySnapshot = await getDocs(query(collection(firestore, "leaves")));
+    const data = querySnapshot.docs
+      .map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .sort((a, b) => {
+        if (
+          new Date(getCurrentDateInput(a.endDate)) <
+          new Date(getCurrentDateInput(b.endDate))
+        )
+          return -1;
+        if (
+          new Date(getCurrentDateInput(a.endDate)) >
+          new Date(getCurrentDateInput(b.endDate))
+        )
+          return 1;
+        return 0;
+      });
+    setLeaveState(data);
+    const teachersPrevLeave = data.filter((leave) => leave.teacherId === id);
+    if (teachersPrevLeave.length > 0) {
+      setTeachersPrevLeaves(teachersPrevLeave);
+    }
+    setLoader(false);
+  };
+  const docId = uuid().split("-")[0];
+  const uploadDetails = async () => {
+    setLoader(true);
+    const leaveData = {
+      id: docId,
+      teacherId: id,
+      tname: tname,
+      leaveType: leaveNature,
+      startDate: startingDate,
+      endDate: endingDate,
+      days: leaveDays,
+      year: parseInt(endingDate.split("-")[2]),
+      childBirthDate: leaveNature === "MATERNITY" ? childBirthDate : "",
+    };
+    await setDoc(doc(firestore, "notices", docId), leaveData)
+      .then(() => {
+        toast.success("Leave Application Submitted Successfully");
+        setShowModal(false);
+        setLoader(false);
+        setLeaveState([...leaveState, leaveData]);
+      })
+      .catch((err) => {
+        toast.error("Leave Application Failed");
+        setLoader(false);
+      });
+  };
+
   useEffect(() => {
     if (state !== "admin") {
       router.push("/");
+    }
+    if (leaveState.length === 0) {
+      getTeachersLeaves();
+    } else {
+      const teachersPrevLeave = leaveState.filter(
+        (leave) => leave.teacherId === id
+      );
+      if (teachersPrevLeave.length > 0) {
+        setTeachersPrevLeaves(teachersPrevLeave);
+      }
     }
     // eslint-disable-next-line
   }, []);
@@ -105,171 +204,282 @@ export default function Page() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="mx-auto col-md-6">
-                  <div className="mb-3">
-                    <label htmlFor="purpose_type" className="form-label">
-                      Nature of Leave
-                    </label>
-                    <select
-                      className="form-select"
-                      id="purpose_type"
-                      defaultValue={leaveNature}
-                      onChange={(e) => {
-                        if (e.target.value !== "") {
-                          setLeaveNature(e.target.value);
-                        } else {
-                          setLeaveNature("");
-                          toast.error("Select Nature of Leave");
-                        }
-                      }}
-                    >
-                      <option value="">Select nature of Leave</option>
-                      <option value="HPL">HPL</option>
-                      <option value="COMMUTED">COMMUTED</option>
-                      <option value="MATERNITY">MATERNITY</option>
-                      <option value="MEDICAL">MEDICAL</option>
-                      <option value="LWP">LWP</option>
-                      <option value="CCL">CCL</option>
-                      <option value="PATERNITY">PATERNITY</option>
-                    </select>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="date" className="form-label">
-                      Starting Date
-                    </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="date"
-                      defaultValue={getCurrentDateInput(startingDate)}
-                      onChange={(e) => {
-                        setStartingDate(getSubmitDateInput(e.target.value));
-                        // calculateDays();
-                      }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="date" className="form-label">
-                      Ending Date
-                    </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="date"
-                      defaultValue={getCurrentDateInput(endingDate)}
-                      onChange={(e) => {
-                        setEndingDate(getSubmitDateInput(e.target.value));
-                      }}
-                    />
-                  </div>
-                  <button
-                    className="btn btn-success m-3"
-                    onClick={calculateDays}
-                  >
-                    Calculate Days
-                  </button>
-                  <div className="mb-3">
-                    <label htmlFor="date" className="form-label">
-                      Total Leave Days
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="date"
-                      placeholder="Total Leave Days"
-                      value={leaveDays}
-                      onChange={(e) => {
-                        if (e.target.value !== "") {
-                          setLeaveDays(parseInt(e.target.value));
-                        } else {
-                          setLeaveDays("");
-                        }
-                      }}
-                    />
-                  </div>
-                  {leaveNature === "MATERNITY" && (
+                <div className="prevLeaves">
+                  {teachersPrevLeaves[0].id !== "" ? (
+                    <div>
+                      <h5>Teacher's Previous Leaves</h5>
+                      {teachersPrevLeaves.map((leave, index) => (
+                        <div className="card m-2" key={index}>
+                          <div className="card-body">
+                            <p className="card-text m-0 p-0">Sl: {index + 1}</p>
+                            <h6 className="card-title m-0 p-0">
+                              Leave Type: {leave.leaveType}
+                            </h6>
+                            <p className="card-text m-0 p-0">
+                              Start Date: {leave.startDate} - End Date:{" "}
+                              {leave.endDate}
+                            </p>
+                            <p className="card-text m-0 p-0">
+                              Days: {leave.days}
+                            </p>
+                            {leave.leaveType === "MATERNITY" && (
+                              <p className="card-text m-0 p-0">
+                                Child Birth Date: {leave.childBirthDate}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <h5>Teacher Has No Previous Leaves in Our Records</h5>
+                  )}
+                </div>
+                <hr />
+
+                <div className="currentLeave">
+                  <h5 className="m-0 p-0">Details of Current Leave</h5>
+                  <div className="mx-auto col-md-6 my-2">
+                    <div className="mb-3">
+                      <label htmlFor="purpose_type" className="form-label">
+                        Nature of Leave
+                      </label>
+                      <select
+                        className="form-select"
+                        id="purpose_type"
+                        defaultValue={leaveNature}
+                        onChange={(e) => {
+                          if (e.target.value !== "") {
+                            setLeaveNature(e.target.value);
+                            if (teachersPrevLeaves[0].id !== "") {
+                              const checkLeave = teachersPrevLeaves.filter(
+                                (el) => el.leaveType === e.target.value
+                              );
+                              if (checkLeave.length > 0) {
+                                setSelectedLeaveID(
+                                  checkLeave[checkLeave.length - 1].id
+                                );
+                                toast.success(
+                                  "This leave type already exists in your previous leaves"
+                                );
+                              }
+                            }
+                          } else {
+                            setLeaveNature("");
+                            toast.error("Select Nature of Leave");
+                          }
+                        }}
+                      >
+                        <option value="">Select nature of Leave</option>
+                        <option value="HPL">HPL</option>
+                        <option value="COMMUTED">COMMUTED</option>
+                        <option value="MATERNITY">MATERNITY</option>
+                        <option value="MEDICAL">MEDICAL</option>
+                        <option value="LWP">LWP</option>
+                        <option value="CCL">CCL</option>
+                        <option value="PATERNITY">PATERNITY</option>
+                      </select>
+                    </div>
                     <div className="mb-3">
                       <label htmlFor="date" className="form-label">
-                        Child Birth Date
+                        Starting Date
                       </label>
                       <input
                         type="date"
                         className="form-control"
                         id="date"
-                        defaultValue={getCurrentDateInput(childBirthDate)}
+                        defaultValue={getCurrentDateInput(startingDate)}
                         onChange={(e) => {
-                          setChildBirthDate(getSubmitDateInput(e.target.value));
+                          setStartingDate(getSubmitDateInput(e.target.value));
                         }}
                       />
                     </div>
-                  )}
-                  <div className="mb-3">
-                    <label className="form-label">School Village</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="School Village"
-                      id="date"
-                      value={village}
-                      onChange={(e) => {
-                        setVillage(e.target.value);
+                    <div className="mb-3">
+                      <label htmlFor="date" className="form-label">
+                        Ending Date
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="date"
+                        defaultValue={getCurrentDateInput(endingDate)}
+                        onChange={(e) => {
+                          setEndingDate(getSubmitDateInput(e.target.value));
+                        }}
+                      />
+                    </div>
+                    <button
+                      className="btn btn-success m-3"
+                      onClick={() => {
+                        calculateDays();
+                        // accumulateEvents();
                       }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">School Post Office</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="School Post Office"
-                      id="date"
-                      value={po}
-                      onChange={(e) => {
-                        setPo(e.target.value);
-                      }}
-                    />
+                    >
+                      Calculate Days
+                    </button>
+                    <div className="mb-3">
+                      <label htmlFor="date" className="form-label">
+                        Total Leave Days
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="date"
+                        placeholder="Total Leave Days"
+                        value={leaveDays}
+                        onChange={(e) => {
+                          if (e.target.value !== "") {
+                            setLeaveDays(parseInt(e.target.value));
+                          } else {
+                            setLeaveDays("");
+                          }
+                        }}
+                      />
+                    </div>
+                    {leaveNature === "MATERNITY" && (
+                      <div className="mb-3">
+                        <label htmlFor="date" className="form-label">
+                          Child Birth Date
+                        </label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="date"
+                          defaultValue={getCurrentDateInput(childBirthDate)}
+                          onChange={(e) => {
+                            setChildBirthDate(
+                              getSubmitDateInput(e.target.value)
+                            );
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div className="mb-3">
+                      <label className="form-label">School Village</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="School Village"
+                        id="date"
+                        value={village}
+                        onChange={(e) => {
+                          setVillage(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">School Post Office</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="School Post Office"
+                        id="date"
+                        value={po}
+                        onChange={(e) => {
+                          setPo(e.target.value);
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button
-                  className="btn btn-success m-2"
-                  type="button"
-                  disabled={
-                    leaveNature === "" ||
-                    village === "" ||
-                    po === "" ||
-                    leaveDays === ""
-                  }
-                  onClick={() => {
-                    if (leaveNature !== "") {
-                      setShowModal(false);
-                      setShowDownloadBtn(true);
-                      console.log(leaveNature);
-                    } else {
-                      toast.error("Select Nature of Leave");
+              <div className="modal-footer d-flex flex-column">
+                <div>
+                  <button
+                    className="btn btn-primary m-2"
+                    type="button"
+                    disabled={
+                      leaveNature === "" ||
+                      village === "" ||
+                      po === "" ||
+                      leaveDays === 0
                     }
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  className="btn btn-danger m-2"
-                  type="button"
-                  onClick={() => {
-                    setShowModal(false);
-                    setShowDownloadBtn(false);
-                  }}
-                >
-                  Cancel
-                </button>
+                    onClick={() => {
+                      if (leaveNature !== "") {
+                        setShowModal(false);
+                        setShowDownloadBtn(true);
+                      } else {
+                        toast.error("Select Nature of Leave");
+                      }
+                    }}
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    className="btn btn-danger m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      setShowDownloadBtn(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+
+                {teachersPrevLeaves[0].id !== "" && (
+                  <div>
+                    <p className="text-danger">
+                      *** To Continue with Previous Leaves select Leave Nature,
+                      Enter Village and PO, then click 'Continue'
+                    </p>
+                    <button
+                      className="btn btn-success m-2"
+                      type="button"
+                      disabled={
+                        leaveNature === "" || village === "" || po === ""
+                      }
+                      onClick={() => {
+                        const prevLeave = leaveState.filter(
+                          (leave) => leave.id === selectedLeaveID
+                        )[0];
+                        setStartingDate(prevLeave.startDate);
+                        setEndingDate(prevLeave.endDate);
+                        setLeaveDays(prevLeave.days);
+                        setChildBirthDate(prevLeave?.childBirthDate);
+                        setUploadLeave(prevLeave);
+                        calculateServiceAge();
+                        setShowModal(false);
+                        setShowDownloadBtn(true);
+                      }}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                )}
+
+                <div>
+                  <p className="text-success">
+                    *** To Upload To Database Click Upload Details
+                  </p>
+                  <button
+                    className="btn btn-success m-2"
+                    type="button"
+                    disabled={
+                      leaveNature === "" ||
+                      village === "" ||
+                      po === "" ||
+                      leaveDays === 0
+                    }
+                    onClick={() => {
+                      if (uploadLeave.id !== selectedLeaveID) {
+                        uploadDetails();
+                      } else {
+                        toast.error("Previous Leave Details Already Exists");
+                      }
+                    }}
+                  >
+                    Upload
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -290,6 +500,7 @@ export default function Page() {
                   hoi,
                   gender,
                   serviceAge,
+                  teachersPrevLeaves,
                 }}
               />
             }
@@ -309,9 +520,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )}
+      )} */}
 
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="mt-3">
           <LeaveProposal
             data={{
@@ -330,10 +541,13 @@ export default function Page() {
               hoi,
               gender,
               serviceAge,
+              teachersPrevLeaves,
             }}
           />
         </div>
-      )} */}
+      )}
+
+      {loader && <Loader />}
     </div>
   );
 }
