@@ -47,6 +47,9 @@ export default function Page() {
   const [village, setVillage] = useState("");
   const [po, setPo] = useState("");
   const [serviceAge, setServiceAge] = useState("");
+  const [earnedLeave, setEarnedLeave] = useState("");
+  const [balanceLeave, setBalanceLeave] = useState("");
+  const [showEditLeave, setShowEditLeave] = useState(false);
   const [selectedLeaveID, setSelectedLeaveID] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
   const [teachersPrevLeaves, setTeachersPrevLeaves] = useState([
@@ -60,6 +63,8 @@ export default function Page() {
       days: 30,
       year: 2022,
       childBirthDate: "",
+      memoNumber: "",
+      memoDate: "",
     },
   ]);
   const [uploadLeave, setUploadLeave] = useState([
@@ -73,6 +78,8 @@ export default function Page() {
       days: 30,
       year: 2022,
       childBirthDate: "",
+      memoNumber: "",
+      memoDate: "",
     },
   ]);
   const [editLeave, setEditLeave] = useState({
@@ -85,14 +92,21 @@ export default function Page() {
     days: 30,
     year: 2022,
     childBirthDate: "",
+    memoNumber: "",
+    memoDate: "",
   });
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
+    const endingYear = new Date(getCurrentDateInput(endingDate)).getFullYear();
+    const joiningYear = new Date(getCurrentDateInput(doj)).getFullYear();
+    const sAge = endingYear - joiningYear;
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLeaveDays(diffDays);
-    calculateServiceAge();
+    setServiceAge(sAge);
+    setEarnedLeave(sAge * 30);
+    setBalanceLeave(sAge * 30 - diffDays);
     return diffDays;
   };
   const calculateEditDays = () => {
@@ -103,12 +117,7 @@ export default function Page() {
     setEditLeave({ ...editLeave, days: diffDays });
     return diffDays;
   };
-  const calculateServiceAge = () => {
-    const endingYear = new Date(getCurrentDateInput(endingDate)).getFullYear();
-    const joiningYear = new Date(getCurrentDateInput(doj)).getFullYear();
-    const sAge = endingYear - joiningYear;
-    setServiceAge(sAge);
-  };
+
   const getTeachersLeaves = async () => {
     setLoader(true);
     const querySnapshot = await getDocs(query(collection(firestore, "leaves")));
@@ -271,6 +280,7 @@ export default function Page() {
                   onClick={() => {
                     setShowModal(false);
                     setShowDownloadBtn(false);
+                    setShowEditLeave(false);
                   }}
                 ></button>
               </div>
@@ -287,7 +297,7 @@ export default function Page() {
                               Leave Type: {leave.leaveType}
                             </h6>
                             <p className="card-text m-0 p-0">
-                              Start Date: {leave.startDate} <br/> End Date:{" "}
+                              Start Date: {leave.startDate} <br /> End Date:{" "}
                               {leave.endDate}
                             </p>
                             <p className="card-text m-0 p-0">
@@ -388,25 +398,11 @@ export default function Page() {
                     >
                       Calculate Days
                     </button>
-                    <div className="mb-3">
+                    {leaveDays > 0 && (
                       <label htmlFor="date" className="form-label">
-                        Total Leave Days
+                        Total Leave Days : {leaveDays}
                       </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="date"
-                        placeholder="Total Leave Days"
-                        value={leaveDays}
-                        onChange={(e) => {
-                          if (e.target.value !== "") {
-                            setLeaveDays(parseInt(e.target.value));
-                          } else {
-                            setLeaveDays("");
-                          }
-                        }}
-                      />
-                    </div>
+                    )}
                     {leaveNature === "MATERNITY" && (
                       <div className="mb-3">
                         <label htmlFor="date" className="form-label">
@@ -451,6 +447,67 @@ export default function Page() {
                         }}
                       />
                     </div>
+                    {showEditLeave && (
+                      <div>
+                        <div className="mb-3">
+                          <label htmlFor="date" className="form-label">
+                            Total Leave Days
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="date"
+                            placeholder="Total Leave Days"
+                            value={leaveDays}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setLeaveDays(parseInt(e.target.value));
+                              } else {
+                                setLeaveDays("");
+                              }
+                            }}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="date" className="form-label">
+                            Total Leaves Earned
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="date"
+                            placeholder="Total Leaves Earned"
+                            value={earnedLeave}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setEarnedLeave(parseInt(e.target.value));
+                              } else {
+                                setEarnedLeave("");
+                              }
+                            }}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="date" className="form-label">
+                            Balance of Leave
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="date"
+                            placeholder="Balance of Leave"
+                            value={balanceLeave}
+                            onChange={(e) => {
+                              if (e.target.value !== "") {
+                                setBalanceLeave(parseInt(e.target.value));
+                              } else {
+                                setBalanceLeave("");
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -478,11 +535,27 @@ export default function Page() {
                   </button>
 
                   <button
+                    className="btn btn-warning m-2"
+                    type="button"
+                    disabled={
+                      leaveNature === "" ||
+                      village === "" ||
+                      po === "" ||
+                      leaveDays === 0
+                    }
+                    onClick={() => {
+                      setShowEditLeave(!showEditLeave);
+                    }}
+                  >
+                    {showEditLeave ? "Hide Edit" : "Edit Leave"}
+                  </button>
+                  <button
                     className="btn btn-danger m-2"
                     type="button"
                     onClick={() => {
                       setShowModal(false);
                       setShowDownloadBtn(false);
+                      setShowEditLeave(false);
                     }}
                   >
                     Cancel
@@ -510,7 +583,7 @@ export default function Page() {
                         setLeaveDays(prevLeave.days);
                         setChildBirthDate(prevLeave?.childBirthDate);
                         setUploadLeave(prevLeave);
-                        calculateServiceAge();
+                        calculateDays();
                         setShowModal(false);
                         setShowDownloadBtn(true);
                       }}
@@ -535,7 +608,15 @@ export default function Page() {
                     }
                     onClick={() => {
                       if (uploadLeave.id !== selectedLeaveID) {
-                        uploadDetails();
+                        // eslint-disable-next-line
+                        let conf = confirm(
+                          "Are you sure you want to Upload this Leave?"
+                        );
+                        if (conf) {
+                          uploadDetails();
+                        } else {
+                          toast.success("Leave Not Uploaded!!!");
+                        }
                       } else {
                         toast.error("Previous Leave Details Already Exists");
                       }
@@ -550,7 +631,7 @@ export default function Page() {
         </div>
       )}
 
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -591,9 +672,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )}
+      )} */}
 
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="mt-3">
           <LeaveProposal
             data={{
@@ -613,10 +694,12 @@ export default function Page() {
               gender,
               serviceAge,
               teachersPrevLeaves,
+              earnedLeave,
+              balanceLeave,
             }}
           />
         </div>
-      )} */}
+      )}
 
       {!showDownloadBtn && !showModal && !loader && (
         <div
@@ -845,6 +928,44 @@ export default function Page() {
                       />
                     </div>
                   )}
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      D. P. S. C Memo Number
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="days"
+                      placeholder="D. P. S. C Memo Number"
+                      value={editLeave?.memoNumber}
+                      onChange={(e) => {
+                        setEditLeave({
+                          ...editLeave,
+                          memoNumber: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      D. P. S. C Memo Date
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="memo_date"
+                      defaultValue={
+                        getCurrentDateInput(editLeave?.memoDate) ||
+                        getCurrentDateInput(todayInString())
+                      }
+                      onChange={(e) => {
+                        setEditLeave({
+                          ...editLeave,
+                          memoDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="modal-footer d-flex flex-column">
