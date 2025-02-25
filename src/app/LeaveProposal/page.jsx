@@ -280,14 +280,14 @@ export default function Page() {
                     <div>
                       <h5>Teacher's Previous Leaves</h5>
                       {teachersPrevLeaves.map((leave, index) => (
-                        <div className="card m-2" key={index}>
-                          <div className="card-body">
+                        <div className="card m-2 col-md-3 mx-auto " key={index}>
+                          <div className="card-body p-1">
                             <p className="card-text m-0 p-0">Sl: {index + 1}</p>
                             <h6 className="card-title m-0 p-0">
                               Leave Type: {leave.leaveType}
                             </h6>
                             <p className="card-text m-0 p-0">
-                              Start Date: {leave.startDate} - End Date:{" "}
+                              Start Date: {leave.startDate} <br/> End Date:{" "}
                               {leave.endDate}
                             </p>
                             <p className="card-text m-0 p-0">
