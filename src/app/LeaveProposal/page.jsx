@@ -4,13 +4,22 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {
+  createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
+  titleCase,
   todayInString,
 } from "../../modules/calculatefunctions";
 import LeaveProposal from "../../pdfs/LeaveProposal";
 import dynamic from "next/dynamic";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { query } from "firebase/database";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
@@ -39,6 +48,7 @@ export default function Page() {
   const [po, setPo] = useState("");
   const [serviceAge, setServiceAge] = useState("");
   const [selectedLeaveID, setSelectedLeaveID] = useState("");
+  const [showUpdate, setShowUpdate] = useState(false);
   const [teachersPrevLeaves, setTeachersPrevLeaves] = useState([
     {
       id: "",
@@ -65,6 +75,17 @@ export default function Page() {
       childBirthDate: "",
     },
   ]);
+  const [editLeave, setEditLeave] = useState({
+    id: "",
+    teacherId: "",
+    tname: "",
+    leaveType: "",
+    startDate: "",
+    endDate: "",
+    days: 30,
+    year: 2022,
+    childBirthDate: "",
+  });
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
@@ -72,6 +93,14 @@ export default function Page() {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLeaveDays(diffDays);
     calculateServiceAge();
+    return diffDays;
+  };
+  const calculateEditDays = () => {
+    const start = new Date(getCurrentDateInput(editLeave.startDate));
+    const end = new Date(getCurrentDateInput(editLeave.endDate));
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    setEditLeave({ ...editLeave, days: diffDays });
     return diffDays;
   };
   const calculateServiceAge = () => {
@@ -123,7 +152,7 @@ export default function Page() {
       year: parseInt(endingDate.split("-")[2]),
       childBirthDate: leaveNature === "MATERNITY" ? childBirthDate : "",
     };
-    await setDoc(doc(firestore, "notices", docId), leaveData)
+    await setDoc(doc(firestore, "leaves", docId), leaveData)
       .then(() => {
         toast.success("Leave Application Submitted Successfully");
         setShowModal(false);
@@ -135,7 +164,40 @@ export default function Page() {
         setLoader(false);
       });
   };
-
+  const updateLeave = async () => {
+    setLoader(true);
+    const docRef = doc(firestore, "leaves", editLeave?.id);
+    await updateDoc(docRef, editLeave)
+      .then(() => {
+        toast.success("Leave Updated Successfully");
+        setShowUpdate(false);
+        setLoader(false);
+        const updatedLeaves = leaveState.map((leave) =>
+          leave.id === editLeave?.id ? editLeave : leave
+        );
+        setLeaveState(updatedLeaves);
+      })
+      .catch((err) => {
+        toast.error("Leave Update Failed");
+        setLoader(false);
+      });
+  };
+  const deleteLeave = async (id) => {
+    setLoader(true);
+    const docRef = doc(firestore, "leaves", id);
+    await deleteDoc(docRef)
+      .then(() => {
+        toast.success("Leave Deleted Successfully");
+        setLoader(false);
+        const updatedLeaves = leaveState.filter((leave) => leave.id !== id);
+        setLeaveState(updatedLeaves);
+      })
+      .catch((err) => {
+        toast.error("Leave Delete Failed");
+        setLoader(false);
+        console.log(err);
+      });
+  };
   useEffect(() => {
     if (state !== "admin") {
       router.push("/");
@@ -170,6 +232,15 @@ export default function Page() {
         </button>
         <button
           type="button"
+          className="btn btn-sm m-3 btn-info"
+          onClick={() => {
+            createDownloadLink(leaveState, "leaves");
+          }}
+        >
+          Download Leave Data
+        </button>
+        <button
+          type="button"
           className="btn btn-primary m-5"
           onClick={() => {
             setShowModal(true);
@@ -191,7 +262,7 @@ export default function Page() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Enter Required Details
+                  Enter Leave Details of {titleCase(tname)}
                 </h1>
                 <button
                   type="button"
@@ -479,7 +550,7 @@ export default function Page() {
         </div>
       )}
 
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -520,9 +591,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )} */}
+      )}
 
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="mt-3">
           <LeaveProposal
             data={{
@@ -544,6 +615,263 @@ export default function Page() {
               teachersPrevLeaves,
             }}
           />
+        </div>
+      )} */}
+
+      {!showDownloadBtn && !showModal && !loader && (
+        <div
+          style={{
+            width: "100%",
+            overflowX: "auto",
+          }}
+        >
+          <table
+            className="ttable-striped table-hover text-center"
+            style={{
+              verticalAlign: "middle",
+              width: "100%",
+              overflowX: "auto",
+              border: "1px solid",
+              padding: 2,
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ borderWidth: 1 }}>Sl</th>
+                <th style={{ borderWidth: 1 }}>Name</th>
+                <th style={{ borderWidth: 1 }}>Leave Type</th>
+                <th style={{ borderWidth: 1 }}>Start Date</th>
+                <th style={{ borderWidth: 1 }}>End Date</th>
+                <th style={{ borderWidth: 1 }}>Leave Days</th>
+                <th style={{ borderWidth: 1 }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leaveState.map((leave, index) => (
+                <tr
+                  style={{
+                    backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#ffffff",
+                    border: "1px solid",
+                    padding: 2,
+                    verticalAlign: "middle",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                  key={index}
+                >
+                  <td style={{ borderWidth: 1, padding: 5 }}>{index + 1}</td>
+                  <td style={{ borderWidth: 1, padding: 5 }}>{leave.tname}</td>
+                  <td style={{ borderWidth: 1, padding: 5 }}>
+                    {leave.leaveType}
+                  </td>
+                  <td style={{ borderWidth: 1, padding: 5 }}>
+                    {leave.startDate}
+                  </td>
+                  <td style={{ borderWidth: 1, padding: 5 }}>
+                    {leave.endDate}
+                  </td>
+                  <td style={{ borderWidth: 1, padding: 5 }}>{leave.days}</td>
+                  <td
+                    style={{ borderWidth: 1, padding: 5 }}
+                    suppressHydrationWarning
+                  >
+                    <button
+                      className="btn btn-warning m-1 btn-sm"
+                      onClick={() => {
+                        setEditLeave(leave);
+                        setShowUpdate(true);
+                      }}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn btn-danger m-1 btn-sm"
+                      onClick={() => {
+                        // eslint-disable-next-line
+                        let conf = confirm(
+                          "Are you sure you want to Delete this Leave?"
+                        );
+                        if (conf) {
+                          deleteLeave(leave.id);
+                        } else {
+                          toast.success("Leave Not Deleted!!!");
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {showUpdate && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Update Leave Data of {editLeave.tname}
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setShowUpdate(false);
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <h5 className="m-0 p-0">Details of Current Leave</h5>
+                <div className="mx-auto col-md-6 my-2">
+                  <div className="mb-3">
+                    <label htmlFor="purpose_type" className="form-label">
+                      Nature of Leave
+                    </label>
+                    <select
+                      className="form-select"
+                      id="purpose_type"
+                      defaultValue={editLeave?.leaveType}
+                      onChange={(e) => {
+                        setEditLeave({
+                          ...editLeave,
+                          leaveType: e.target.value,
+                        });
+                      }}
+                    >
+                      <option value="">Select nature of Leave</option>
+                      <option value="HPL">HPL</option>
+                      <option value="COMMUTED">COMMUTED</option>
+                      <option value="MATERNITY">MATERNITY</option>
+                      <option value="MEDICAL">MEDICAL</option>
+                      <option value="LWP">LWP</option>
+                      <option value="CCL">CCL</option>
+                      <option value="PATERNITY">PATERNITY</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      Starting Date
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="date"
+                      defaultValue={getCurrentDateInput(editLeave?.startDate)}
+                      onChange={(e) => {
+                        setEditLeave({
+                          ...editLeave,
+                          startDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      Ending Date
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="date"
+                      defaultValue={getCurrentDateInput(editLeave?.endDate)}
+                      onChange={(e) => {
+                        setEditLeave({
+                          ...editLeave,
+                          endDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <button
+                    className="btn btn-success m-3"
+                    onClick={() => {
+                      calculateEditDays();
+                    }}
+                  >
+                    Calculate Days
+                  </button>
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      Total Leave Days
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="days"
+                      placeholder="Total Leave Days"
+                      value={editLeave?.days}
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setEditLeave({
+                            ...editLeave,
+                            days: parseInt(e.target.value),
+                          });
+                        } else {
+                          setEditLeave({ ...editLeave, days: "" });
+                        }
+                      }}
+                    />
+                  </div>
+                  {editLeave?.leaveType === "MATERNITY" && (
+                    <div className="mb-3">
+                      <label htmlFor="date" className="form-label">
+                        Child Birth Date
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="date"
+                        defaultValue={getCurrentDateInput(
+                          editLeave?.childBirthDate
+                        )}
+                        onChange={(e) => {
+                          setEditLeave({
+                            ...editLeave,
+                            childBirthDate: getSubmitDateInput(e.target.value),
+                          });
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="modal-footer d-flex flex-column">
+                <div>
+                  <button
+                    className="btn btn-primary m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowUpdate(false);
+                      updateLeave();
+                    }}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-danger m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowUpdate(false);
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
