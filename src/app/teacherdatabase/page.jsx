@@ -225,7 +225,21 @@ const TeacherDatabase = () => {
         </button>
       ),
     },
-
+    {
+      name: "Leave Proposal",
+      cell: (row) => (
+        <button
+        type="button"
+          className="btn btn-sm btn-success"
+          onClick={() => {
+            setStateObject(row)
+            router.push("/LeaveProposalNew");
+          }}
+        >
+          Leave Proposal
+        </button>
+      ),
+    },
     {
       name: "Payslip WBTPTA",
       cell: (row) => (
@@ -365,21 +379,7 @@ const TeacherDatabase = () => {
           <h6 className="text-success">Teacher Registered</h6>
         ),
     },
-    {
-      name: "Leave Proposal",
-      cell: (row) => (
-        <button
-        type="button"
-          className="btn btn-sm btn-success"
-          onClick={() => {
-            setStateObject(row)
-            router.push("/LeaveProposal");
-          }}
-        >
-          Leave Proposal
-        </button>
-      ),
-    },
+    
   ];
   const delColumns = [
     {

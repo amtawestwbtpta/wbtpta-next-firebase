@@ -817,3 +817,11 @@ export function formatDateAndTime(timestamp) {
   const ampm = date.getHours() >= 12 ? "PM" : "AM";
   return `${day}-${month}-${year} At ${hours}:${minutes} ${ampm}`;
 }
+
+export const calStrLength = (value) => {
+  if (value) {
+    return value.toString().length;
+  } else {
+    return 0;
+  }
+};
