@@ -1386,7 +1386,7 @@ export default function Page() {
           </div>
         </div>
       )}
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -1434,9 +1434,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )} */}
+      )}
 
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="mt-3 mx-auto">
           <LeaveProposalNew
             data={{
@@ -1466,7 +1466,7 @@ export default function Page() {
             }}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
