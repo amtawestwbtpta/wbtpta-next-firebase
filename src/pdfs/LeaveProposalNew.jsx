@@ -2287,7 +2287,31 @@ export default function LeaveProposalNew({ data }) {
                 </View>
                 <View style={{ width: "30%" }}>
                   <Text style={styles.text}>
-                    days HPL from his/ her credit.
+                    days HPL from{" "}
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "male" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      his/{" "}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          textDecoration:
+                            gender === "female" ? "none" : "line-through",
+                        },
+                      ]}
+                    >
+                      {" "}
+                      her{" "}
+                    </Text>{" "}
+                    credit.
                   </Text>
                 </View>
               </View>
