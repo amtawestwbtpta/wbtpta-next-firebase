@@ -3,12 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GEMEINI_API_KEY } from "../../modules/constants";
-import { decryptData } from "../../modules/encryption";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import { GEMEINI_API_KEY } from "../../modules/constants";
+// import { decryptData } from "../../modules/encryption";
 import "./ChatBot.css";
-import Image from "next/image";
-const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
+// import Image from "next/image";
+// const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
 const TypewriterChat = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
@@ -16,7 +16,7 @@ const TypewriterChat = () => {
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
   const messageRef = useRef(null);
-
+  const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
   const handleSend = async (e) => {
     e.preventDefault();
     if (input.trim() !== "") {
@@ -30,42 +30,71 @@ const TypewriterChat = () => {
       // Call Gemini AI chat API (replace with actual API endpoint)
       //   const response = await axios.post('YOUR_Gemini_API_ENDPOINT', { message: input });
       try {
-        const response = await generateGeminiReply(input);
-        if (response !== "") {
-          const aiMessage = {
-            text: response,
-            sender: "Gemini",
-          };
-          msg = [...msg, aiMessage];
-          setMessages(msg);
-        } else {
-          toast.error("Error sending message to Gemini AI. Please try again.");
-          setTyping(false);
-        }
+        // const response = await generateGeminiReply(input);
+        // if (response !== "") {
+        //   const aiMessage = {
+        //     text: response,
+        //     sender: "Gemini",
+        //   };
+        //   msg = [...msg, aiMessage];
+        //   setMessages(msg);
+        // } else {
+        //   toast.error("Error sending message to Gemini AI. Please try again.");
+        //   setTyping(false);
+        // }
+        const response = await fetch(
+          "https://openrouter.ai/api/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+              "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
+              "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "deepseek/deepseek-r1:free",
+              messages: [
+                {
+                  role: "user",
+                  content: input,
+                },
+              ],
+            }),
+          }
+        );
+        const data = await response.json();
+        const aiMessage = {
+          text: data.choices?.[0]?.message?.content,
+          sender: "DeepSeek",
+        };
+        msg = [...msg, aiMessage];
+        setMessages(msg);
       } catch (error) {
+        toast.error("Error sending message to Gemini AI")
         console.error("Error sending message to Gemini AI: ", error);
         setTyping(true);
 
         // If Gemini AI fails to respond, display a default message
         const defaultMessage = {
           text: "I'm sorry, I couldn't understand that. Please try again.",
-          sender: "Gemini",
+          sender: "DeepSeek",
         };
         setMessages([...messages, defaultMessage]);
       }
     }
   };
-  const generateGeminiReply = async (prompt) => {
-    try {
-      const model = genAl.getGenerativeModel({ model: "gemini-pro" });
-      const result = await model.generateContent(prompt);
-      const response = result.response.text();
-      return response;
-    } catch (error) {
-      console.error("Error generating text:", error);
-      return "";
-    }
-  };
+  // const generateGeminiReply = async (prompt) => {
+  //   try {
+  //     const model = genAl.getGenerativeModel({ model: "gemini-pro" });
+  //     const result = await model.generateContent(prompt);
+  //     const response = result.response.text();
+  //     return response;
+  //   } catch (error) {
+  //     console.error("Error generating text:", error);
+  //     return "";
+  //   }
+  // };
   useEffect(() => {
     if (typing && messageRef.current) {
       const messageText = messageRef.current.textContent;
@@ -105,7 +134,10 @@ const TypewriterChat = () => {
                       }}
                     >
                       {msg.sender === "DeepSeek" && typing ? (
-                        <p ref={messageRef} className="typing-indicator fs-6"></p>
+                        <p
+                          ref={messageRef}
+                          className="typing-indicator fs-6"
+                        ></p>
                       ) : (
                         <p className="fs-6">{msg.text}</p>
                       )}
@@ -133,7 +165,7 @@ const TypewriterChat = () => {
                     <small>Powered by </small>
                   </a>
                   <img
-                    src="https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/Gemini.jpg"
+                    src="https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/deepseek.png"
                     alt="LOGO"
                     width={"50vw"}
                   />
