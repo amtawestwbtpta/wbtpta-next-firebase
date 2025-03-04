@@ -1,37 +1,18 @@
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.message {
+#response {
+  margin-top: 20px;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  min-height: 50px;
 }
-
-.user {
-  background-color: #eee;
-  text-align: right;
+#response h3 {
+  color: #333;
+  font-size: 1.2em;
 }
-
-.aria {
-  background-color: #ccf;
-  text-align: left;
+#response strong {
+  color: #d9534f;
 }
-
-.typing-indicator {
-  animation: typing 1s infinite;
+#response ul {
+  padding-left: 20px;
 }
-
-@keyframes typing {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+#response li {
+  margin-bottom: 5px;
 }
