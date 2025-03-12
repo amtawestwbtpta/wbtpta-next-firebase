@@ -11,7 +11,7 @@ import { DA, HRA, NEXTDA } from "../../modules/constants";
 import dynamic from "next/dynamic";
 import WBTPTAPaySLip from "../../components/WBTPTAPaySLip";
 import axios from "axios";
-import { decryptObjData, getCookie } from "@/modules/encryption";
+import { decryptObjData, getCookie } from "../../modules/encryption";
 import { toast } from "react-toastify";
 export default function Page() {
   const PDFDownloadLink = dynamic(
