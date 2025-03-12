@@ -11,6 +11,8 @@ import { DA, HRA, NEXTDA } from "../../modules/constants";
 import dynamic from "next/dynamic";
 import WBTPTAPaySLip from "../../components/WBTPTAPaySLip";
 import axios from "axios";
+import { decryptObjData, getCookie } from "@/modules/encryption";
+import { toast } from "react-toastify";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -247,7 +249,21 @@ export default function Page() {
     getModifiedSalary(month, year);
     // eslint-disable-next-line
   }, []);
-
+  let mydetails = getCookie("tid");
+  let myData, circle;
+  if (mydetails) {
+    myData = decryptObjData("tid");
+    circle = myData?.circle;
+  }
+  useEffect(() => {
+    if (circle !== "admin") {
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+      return;
+    }
+    //eslint-disable-next-line
+  }, []);
   return (
     <Suspense>
       <div>
@@ -280,7 +296,7 @@ export default function Page() {
             })}
           </select>
         </div>
-        <PDFDownloadLink
+        {/* <PDFDownloadLink
           document={<WBTPTAPaySLip data={salary} />}
           fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()}.pdf`}
           style={{
@@ -296,7 +312,8 @@ export default function Page() {
           {({ blob, url, loading, error }) =>
             loading ? "Please Wait..." : "Download Payslip"
           }
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
+        <h3 className="text-danger">This Service is Temporary Unavailable</h3>
       </div>
     </Suspense>
   );

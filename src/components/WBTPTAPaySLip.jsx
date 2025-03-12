@@ -53,7 +53,7 @@ export default function WBTPTAPaySLip({ data }) {
 
           <View style={styles.columnFlexView}>
             <Text style={styles.title}>
-              WEST BENGAL TRAINAMOOL PRIMARY TEACHERS' ASSOCIATION
+              WEST BENGAL TRINAMOOL PRIMARY TEACHERS' ASSOCIATION
             </Text>
             <Text style={styles.title}>
               * AMTA WEST CIRCLE * HOWRAH GRAMIN DISTRICT *

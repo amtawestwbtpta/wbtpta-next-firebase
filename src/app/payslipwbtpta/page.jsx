@@ -510,7 +510,7 @@ const PayslipWbtpta = () => {
 
         <div>
           <h4 className="mb-2">
-            WEST BENGAL TRAINAMOOL PRIMARY TEACHERS' ASSOCIATION
+            WEST BENGAL TRINAMOOL PRIMARY TEACHERS' ASSOCIATION
           </h4>
           <h5 className="mb-2">
             * AMTA WEST CIRCLE * HOWRAH GRAMIN DISTRICT *

@@ -39,9 +39,11 @@ const TypewriterChat = () => {
         const data = await response.json();
         const markdownText =
           `<h3 className="text-primary">${input}</h3>` +
-            data.choices?.[0]?.message?.reasoning ||
-          "" + data.choices?.[0]?.message?.content ||
-          "No response received.";
+          data.choices?.[0]?.message?.reasoning
+            ? data.choices?.[0]?.message?.reasoning
+            : "" + data.choices?.[0]?.message?.content
+            ? data.choices?.[0]?.message?.content
+            : "No response received.";
         responseDiv.innerHTML = marked.parse(markdownText);
         document.getElementById("userInput").value = "";
       } catch (error) {
