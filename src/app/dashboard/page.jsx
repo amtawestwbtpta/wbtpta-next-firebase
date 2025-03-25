@@ -222,7 +222,7 @@ const page = () => {
       {showLoader ? (
         <Loader />
       ) : (
-        <div>
+        <div suppressHydrationWarning>
           <div
             className="col-md-3 mx-auto "
             onMouseEnter={() => setTooltip(true)}
@@ -233,6 +233,8 @@ const page = () => {
               alt="profile"
               className="profileImage"
               onClick={() => router.push("/ChangePhoto")}
+              suppressContentEditableWarning
+              suppressHydrationWarning
             />
             <div className="mx-auto">
               {tooltip && (
@@ -241,10 +243,14 @@ const page = () => {
             </div>
           </div>
           <div className="mx-auto my-2" style={{ height: "120px" }}>
-            <span
-              className="text-primary text-center fs-3 mb-3 web-message"
-              ref={el}
-            />
+            {tname && (
+              <span
+                className="text-primary text-center fs-3 mb-3 web-message"
+                ref={el}
+              >
+                Welcome {tname},<br /> {desig}, of <br /> {school}
+              </span>
+            )}
           </div>
 
           <button

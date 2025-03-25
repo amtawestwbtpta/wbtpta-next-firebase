@@ -280,7 +280,7 @@ const EditTeacher = () => {
             }}
           />
         </div>
-        <div className="mb-0 col-md-3">
+        {/* <div className="mb-0 col-md-3">
           <label className="form-label">Teacher's Search Name</label>
           <input
             type="text"
@@ -296,7 +296,7 @@ const EditTeacher = () => {
               });
             }}
           />
-        </div>
+        </div> */}
         <div className="mb-3 col-md-3">
           <label className="form-label">Father's Name</label>
           <input
@@ -821,7 +821,7 @@ const EditTeacher = () => {
             }}
           ></textarea>
         </div>
-        <div className="mb-3 col-md-3">
+        {/* <div className="mb-3 col-md-3">
           <label className="form-label">July Basic</label>
           <input
             type="text"
@@ -1278,7 +1278,7 @@ const EditTeacher = () => {
               }
             }}
           />
-        </div>
+        </div> */}
         <div className="mb-3 col-md-3">
           <button
             type="button"

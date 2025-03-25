@@ -53,7 +53,7 @@ const AddTeacher = () => {
     udise: "",
     tname: "",
     gender: "male",
-    ph: 0,
+    // ph: 0,
     disability: "MO",
     desig: "AT",
     fname: "",
@@ -111,8 +111,8 @@ const AddTeacher = () => {
     errudise: "",
     errtname: "",
     errgender: "",
-    errtsname: "",
-    errph: "",
+    // errtsname: "",
+    errDisability: "",
     errdesig: "",
     errfname: "",
     errgp: "",
@@ -130,13 +130,13 @@ const AddTeacher = () => {
     errtraining: "",
     errpan: "",
     erraddress: "",
-    errbasic: "",
-    errmbasic: "",
-    errma: "",
-    errgpf: "",
-    errgsli: "",
-    errarrear: "",
-    errbonus: "",
+    // errbasic: "",
+    // errmbasic: "",
+    // errma: "",
+    // errgpf: "",
+    // errgsli: "",
+    // errarrear: "",
+    // errbonus: "",
     errquestion: "",
     errhoi: "",
     errservice: "",
@@ -192,9 +192,9 @@ const AddTeacher = () => {
       errschool: "",
       errudise: "",
       errtname: "",
-      errtsname: "",
+      // errtsname: "",
       errgender: "",
-      errph: "",
+      errDisability: "",
       errdesig: "",
       errfname: "",
       errgp: "",
@@ -212,13 +212,13 @@ const AddTeacher = () => {
       errtraining: "",
       errpan: "",
       erraddress: "",
-      errbasic: "",
-      errmbasic: "",
-      errma: "",
-      errgpf: "",
-      errgsli: "",
-      errarrear: "",
-      errbonus: "",
+      // errbasic: "",
+      // errmbasic: "",
+      // errma: "",
+      // errgpf: "",
+      // errgsli: "",
+      // errarrear: "",
+      // errbonus: "",
       errquestion: "",
       errhoi: "",
       errservice: "",
@@ -246,11 +246,11 @@ const AddTeacher = () => {
       }));
     }
 
-    if (inputField.ph === "") {
+    if (inputField.disability === "") {
       formIsValid = false;
       setErrField((prevState) => ({
         ...prevState,
-        errph: "Please Enter PH",
+        errDisability: "Please Enter Disability",
       }));
     }
     if (inputField.desig === "") {
@@ -360,56 +360,56 @@ const AddTeacher = () => {
         erraddress: "Please Enter Address",
       }));
     }
-    if (inputField.basic === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errbasic: "Please Enter Basic",
-      }));
-    }
-    if (inputField.mbasic === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errmbasic: "Please Enter March Basic",
-      }));
-    }
-    if (inputField.ma === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errma: "Please Enter MA",
-      }));
-    }
-    if (inputField.gpf === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errgpf: "Please Enter GPF",
-      }));
-    }
+    // if (inputField.basic === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errbasic: "Please Enter Basic",
+    //   }));
+    // }
+    // if (inputField.mbasic === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errmbasic: "Please Enter March Basic",
+    //   }));
+    // }
+    // if (inputField.ma === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errma: "Please Enter MA",
+    //   }));
+    // }
+    // if (inputField.gpf === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errgpf: "Please Enter GPF",
+    //   }));
+    // }
 
-    if (inputField.gsli === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errgsli: "Please Enter GSLI",
-      }));
-    }
-    if (inputField.arrear === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errarrear: "Please Enter Arrear",
-      }));
-    }
-    if (inputField.bonus === "") {
-      formIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        errbonus: "Please Enter bonus",
-      }));
-    }
+    // if (inputField.gsli === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errgsli: "Please Enter GSLI",
+    //   }));
+    // }
+    // if (inputField.arrear === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errarrear: "Please Enter Arrear",
+    //   }));
+    // }
+    // if (inputField.bonus === "") {
+    //   formIsValid = false;
+    //   setErrField((prevState) => ({
+    //     ...prevState,
+    //     errbonus: "Please Enter bonus",
+    //   }));
+    // }
 
     return formIsValid;
   };
@@ -504,8 +504,8 @@ const AddTeacher = () => {
       errudise: "",
       errtname: "",
       errgender: "",
-      errtsname: "",
-      errph: "",
+      // errtsname: "",
+      errDisability: "",
       errdesig: "",
       errfname: "",
       errgp: "",
@@ -523,13 +523,13 @@ const AddTeacher = () => {
       errtraining: "",
       errpan: "",
       erraddress: "",
-      errbasic: "",
-      errmbasic: "",
-      errma: "",
-      errgpf: "",
-      errgsli: "",
-      errarrear: "",
-      errbonus: "",
+      // errbasic: "",
+      // errmbasic: "",
+      // errma: "",
+      // errgpf: "",
+      // errgsli: "",
+      // errarrear: "",
+      // errbonus: "",
       errquestion: "",
       errhoi: "",
       errservice: "",
@@ -539,12 +539,12 @@ const AddTeacher = () => {
       udise: "",
       tname: "",
       gender: "male",
-      ph: 0,
+      // ph: 0,
       disability: "MO",
       desig: "AT",
       fname: "",
       circle: "taw",
-      sis: "AMTA WEST CIRCLE",
+      // sis: "AMTA WEST CIRCLE",
       gp: "",
       association: "WBTPTA",
       phone: "",
@@ -560,28 +560,28 @@ const AddTeacher = () => {
       training: "TRAINED",
       pan: "",
       address: "",
-      basic: 28900,
-      mbasic: 28900,
-      prevmbasic: 28900,
-      addl: 0,
-      da: 0,
-      mda: 0,
-      hra: 0,
-      mhra: 0,
-      ma: 500,
-      gross: 0,
-      mgross: 0,
-      mptax: 0,
-      gpf: 0,
-      gpfprev: 0,
-      julyGpf: 0,
-      ptax: 150,
-      gsli: 0,
-      jptax: 0,
-      netpay: 0,
-      mnetpay: 0,
-      bonus: 0,
-      arrear: 0,
+      // basic: 28900,
+      // mbasic: 28900,
+      // prevmbasic: 28900,
+      // addl: 0,
+      // da: 0,
+      // mda: 0,
+      // hra: 0,
+      // mhra: 0,
+      // ma: 500,
+      // gross: 0,
+      // mgross: 0,
+      // mptax: 0,
+      // gpf: 0,
+      // gpfprev: 0,
+      // julyGpf: 0,
+      // ptax: 150,
+      // gsli: 0,
+      // jptax: 0,
+      // netpay: 0,
+      // mnetpay: 0,
+      // bonus: 0,
+      // arrear: 0,
       question: "taw",
       hoi: "No",
       service: "inservice",
@@ -718,7 +718,7 @@ const AddTeacher = () => {
                       onChange={(e) => {
                         setInputField({
                           ...inputField,
-                          ph: e.target.value,
+                          // ph: e.target.value,
                           disability: e.target.value === 1 ? "YES" : "NO",
                         });
                       }}
@@ -727,8 +727,8 @@ const AddTeacher = () => {
                       <option value={0}>No</option>
                       <option value={1}>Yes</option>
                     </select>
-                    {errField.errph.length > 0 && (
-                      <span className="error">{errField.errph}</span>
+                    {errField.errDisability.length > 0 && (
+                      <span className="error">{errField.errDisability}</span>
                     )}
                   </div>
                   <div className="mb-3 col-md-3">
@@ -1107,7 +1107,7 @@ const AddTeacher = () => {
                     )}
                   </div>
 
-                  <div className="mb-3 col-md-3">
+                  {/* <div className="mb-3 col-md-3">
                     <label className="form-label">March Basic</label>
                     <input
                       type="number"
@@ -1250,7 +1250,7 @@ const AddTeacher = () => {
                     {errField.errbonus.length > 0 && (
                       <span className="error">{errField.errbonus}</span>
                     )}
-                  </div>
+                  </div> */}
                   <div className="mb-0 col-md-3">
                     <label className="form-label">GRAM PANCHAYET</label>
                     <br />
@@ -1261,112 +1261,14 @@ const AddTeacher = () => {
                       id="gp_inp"
                       defaultValue={inputField.gp}
                       onChange={(e) => {
-                        let filteredData = teachersData.filter((el) =>
-                          el.tname
-                            .toUpperCase()
-                            .match(inputField.tname.toUpperCase())
-                        );
                         let totalTeachers = teachersData.filter(
                           (el) => el.udise === inputField.udise
                         ).length;
-
-                        if (filteredData.length > 0) {
-                          setInputField({
-                            ...inputField,
-                            tsname:
-                              inputField.tname +
-                              Math.floor(Math.random() * 10000),
-                            gp: e.target.value,
-                            da: funcda(inputField.mbasic),
-                            mda: funcmda(inputField.mbasic),
-                            hra: funchra(inputField.mbasic),
-                            mhra: funcmhra(inputField.mbasic),
-                            mgross: gross(inputField.mbasic, inputField.addl),
-                            gross: gross(inputField.basic, inputField.addl),
-                            mptax: ptaxCalc(
-                              gross(inputField.mbasic, inputField.addl)
-                            ),
-                            jptax: ptaxCalc(
-                              gross(inputField.basic, inputField.addl)
-                            ),
-                            netpay: netpay(
-                              inputField.basic,
-                              inputField.addl,
-                              inputField.ph,
-                              inputField.gpf,
-                              inputField.gsli
-                            ),
-                            mnetpay: netpay(
-                              inputField.mbasic,
-                              inputField.addl,
-                              inputField.ph,
-                              inputField.gpf,
-                              inputField.gsli
-                            ),
-                            rank: totalTeachers + 1,
-                            netpayword: NumInWords(
-                              inputField.basic +
-                                inputField.addl +
-                                inputField.basic * DA +
-                                inputField.basic * HRA +
-                                inputField.ma -
-                                inputField.gpf -
-                                inputField.gsli -
-                                (inputField.ph === 0
-                                  ? 0
-                                  : ptaxCalc(
-                                      gross(inputField.mbasic, inputField.addl)
-                                    ))
-                            ),
-                          });
-                        } else {
-                          setInputField({
-                            ...inputField,
-                            tsname: inputField.tname,
-                            gp: e.target.value,
-                            da: funcda(inputField.mbasic),
-                            mda: funcmda(inputField.mbasic),
-                            hra: funchra(inputField.mbasic),
-                            mhra: funcmhra(inputField.mbasic),
-                            mgross: gross(inputField.mbasic, inputField.addl),
-                            gross: gross(inputField.basic, inputField.addl),
-                            netpay: netpay(
-                              inputField.basic,
-                              inputField.addl,
-                              inputField.ph,
-                              inputField.gpf,
-                              inputField.gsli
-                            ),
-                            mnetpay: netpay(
-                              inputField.mbasic,
-                              inputField.addl,
-                              inputField.ph,
-                              inputField.gpf,
-                              inputField.gsli
-                            ),
-                            mptax: ptaxCalc(
-                              gross(inputField.mbasic, inputField.addl)
-                            ),
-                            jptax: ptaxCalc(
-                              gross(inputField.basic, inputField.addl)
-                            ),
-                            rank: totalTeachers + 1,
-                            netpayword: NumInWords(
-                              inputField.basic +
-                                inputField.addl +
-                                inputField.basic * DA +
-                                inputField.basic * HRA +
-                                inputField.ma -
-                                inputField.gpf -
-                                inputField.gsli -
-                                (inputField.ph === 0
-                                  ? 0
-                                  : ptaxCalc(
-                                      gross(inputField.mbasic, inputField.addl)
-                                    ))
-                            ),
-                          });
-                        }
+                        setInputField({
+                          ...inputField,
+                          gp: e.target.value,
+                          rank: totalTeachers + 1,
+                        });
                       }}
                     >
                       <option value="">Select GP From Below</option>
