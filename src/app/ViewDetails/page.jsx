@@ -52,42 +52,42 @@ const ViewDetails = () => {
   } = details;
 
   let date = new Date();
-  let basicpay;
-  let ptax;
-  let junelast = new Date(`${date.getFullYear()}-07-31`);
-  if (dataYear === new Date().getFullYear()) {
-    if (date >= junelast) {
-      basicpay = basic;
-    } else {
-      basicpay = mbasic;
-    }
-  } else {
-    basicpay = basic;
-  }
-  let da = Math.round(basicpay * DA);
-  let hra = Math.round(basicpay * HRA);
+  // let basicpay;
+  // let ptax;
+  // let junelast = new Date(`${date.getFullYear()}-07-31`);
+  // if (dataYear === new Date().getFullYear()) {
+  //   if (date >= junelast) {
+  //     basicpay = basic;
+  //   } else {
+  //     basicpay = mbasic;
+  //   }
+  // } else {
+  //   basicpay = basic;
+  // }
+  // let da = Math.round(basicpay * DA);
+  // let hra = Math.round(basicpay * HRA);
 
-  let gross = basicpay + da + hra + addl + ma;
+  // let gross = basicpay + da + hra + addl + ma;
 
-  if (gross > 40000) {
-    ptax = 200;
-  } else if (gross > 25000) {
-    ptax = 150;
-  } else if (gross > 15000) {
-    ptax = 130;
-  } else if (gross > 10000) {
-    ptax = 110;
-  } else {
-    ptax = 0;
-  }
+  // if (gross > 40000) {
+  //   ptax = 200;
+  // } else if (gross > 25000) {
+  //   ptax = 150;
+  // } else if (gross > 15000) {
+  //   ptax = 130;
+  // } else if (gross > 10000) {
+  //   ptax = 110;
+  // } else {
+  //   ptax = 0;
+  // }
 
-  if (disability === "YES") {
-    ptax = 0;
-  }
+  // if (disability === "YES") {
+  //   ptax = 0;
+  // }
 
-  let deduction = gsli + gpf + ptax;
+  // let deduction = gsli + gpf + ptax;
 
-  let netpay = gross - deduction;
+  // let netpay = gross - deduction;
   const ifsc_ser = () => {
     fetch(`https://ifsc.razorpay.com/${ifsc}`)
       .then((res) => res.json())
