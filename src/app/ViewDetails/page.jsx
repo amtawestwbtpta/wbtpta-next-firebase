@@ -37,14 +37,14 @@ const ViewDetails = () => {
     training,
     pan,
     address,
-    basic,
-    mbasic,
-    addl,
-    ma,
-    gpf,
-    gpfprev,
-    julyGpf,
-    gsli,
+    // basic,
+    // mbasic,
+    // addl,
+    // ma,
+    // gpf,
+    // gpfprev,
+    // julyGpf,
+    // gsli,
     fname,
     question,
     hoi,
@@ -311,7 +311,7 @@ const ViewDetails = () => {
           id="ifsc"
         ></div>
 
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+        {/* <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
           <div>
             <label>BASIC: </label>
           </div>
@@ -442,7 +442,7 @@ const ViewDetails = () => {
           <div>
             <p>{NumInWords(netpay)}</p>
           </div>
-        </div>
+        </div> */}
         {question === "admin" ? (
           <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
             <div>
