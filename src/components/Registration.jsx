@@ -44,29 +44,15 @@ const Registration = ({ data, setSignUpTrue }) => {
   const [inputField, setInputField] = useState({
     teachersID: data.id,
     tname: data.tname,
-    tsname: data.tsname,
-    school: data.school,
-    desig: data.desig,
     pan: data.pan,
     udise: data.udise,
-    sis: data.sis,
-    circle: data.circle,
-    empid: data.empid,
     question: data.question,
     email: data.email,
     phone: data.phone,
     id: docId,
-    dpscst: "District Primary School Council, Howrah",
-    dpsc: "Howrah District Primary School Council",
-    dpsc1: "",
-    dpsc2: "CHAIRMAN, DPSC, HOWRAH",
-    dpsc3: "18, N.D. MUKHERJEE ROAD",
-    dpsc4: "HOWRAH- 1",
-    tan: "CALD02032C",
     username: "",
     password: "",
     cpassword: "",
-    createdAt: Date.now(),
   });
   const [errField, setErrField] = useState({
     usernameErr: "",
@@ -90,13 +76,10 @@ const Registration = ({ data, setSignUpTrue }) => {
     // console.log(inputField);
     if (validForm()) {
       try {
-        const username = inputField.username.replace(/\s/g, '').toLowerCase();
+        const username = inputField.username.replace(/\s/g, "").toLowerCase();
         setDisplayLoader(true);
         const collectionRef = collection(firestore, "userteachers");
-        const q = query(
-          collectionRef,
-          where("username", "==", username)
-        );
+        const q = query(collectionRef, where("username", "==", username));
         const querySnapshot = await getDocs(q);
         // console.log(querySnapshot.docs[0].data().pan);
         if (querySnapshot.docs.length > 0) {
@@ -113,28 +96,16 @@ const Registration = ({ data, setSignUpTrue }) => {
             let response = await axios.post(url, {
               teachersID: inputField.teachersID,
               tname: inputField.tname,
-              tsname: inputField.tsname,
-              school: inputField.school,
               desig: inputField.desig,
               pan: inputField.pan,
               udise: inputField.udise,
-              sis: inputField.sis,
-              circle: inputField.circle,
               empid: inputField.empid,
               question: inputField.question,
               email: inputField.email,
               phone: inputField.phone,
               id: docId,
-              dpscst: inputField.dpscst,
-              dpsc: inputField.dpsc,
-              dpsc1: inputField.dpsc1,
-              dpsc2: inputField.dpsc2,
-              dpsc3: inputField.dpsc3,
-              dpsc4: inputField.dpsc4,
-              tan: inputField.tan,
               username: username,
               password: bcrypt.hashSync(inputField.password, 10),
-              createdAt: inputField.createdAt,
             });
             if (response.status === 200) {
               const filestorageRef = ref(
@@ -166,12 +137,10 @@ const Registration = ({ data, setSignUpTrue }) => {
                         await setDoc(doc(firestore, "userteachers", docId), {
                           teachersID: inputField.teachersID,
                           tname: inputField.tname,
-                          tsname: inputField.tsname,
                           school: inputField.school,
                           desig: inputField.desig,
                           pan: inputField.pan,
                           udise: inputField.udise,
-                          sis: inputField.sis,
                           circle: inputField.circle,
                           empid: inputField.empid,
                           question: inputField.question,
@@ -180,16 +149,8 @@ const Registration = ({ data, setSignUpTrue }) => {
                           id: docId,
                           photoName: inputField.teachersID + "-" + file.name,
                           url: photourl,
-                          dpscst: inputField.dpscst,
-                          dpsc: inputField.dpsc,
-                          dpsc1: inputField.dpsc1,
-                          dpsc2: inputField.dpsc2,
-                          dpsc3: inputField.dpsc3,
-                          dpsc4: inputField.dpsc4,
-                          tan: inputField.tan,
                           username: username,
                           password: bcrypt.hashSync(inputField.password, 10),
-                          createdAt: inputField.createdAt,
                           disabled: false,
                         });
                         await setDoc(doc(firestore, "profileImage", docId), {

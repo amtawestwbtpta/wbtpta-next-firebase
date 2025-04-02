@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    // name: String,  //Removed For Firebase
-    //Photo ID and Photo Name Added
     username: {
       type: String,
       unique: true,
@@ -12,33 +10,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    // sl: Number,  //Removed For Firebase
-    teachersID: String, //Added For Firebase
-    id: String, //Added For Firebase
+    teachersID: String, 
+    id: String, 
     tname: String,
-    tsname: String,
     school: String,
-    phone: String,
     udise: Number,
     desig: String,
-    sis: String,
     circle: String,
     empid: String,
     pan: String,
-    teacher: String,
     photoName: String,
     url: String,
-    cloudinaryUrl: String,
-    // aadhaar: Number,  //Removed For Firebase
-    loggedin: String,
-    dpscst: String,
-    dpsc: String,
-    dpsc1: String,
-    dpsc2: String,
-    dpsc3: String,
-    dpsc4: String,
-    tan: String,
     question: String,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     password: {
       type: String,
       select: true,

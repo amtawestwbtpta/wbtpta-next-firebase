@@ -7,65 +7,39 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const {
-      // name,  //Removed For Firebase
-      teachersID, //Added For Firebase
-      id, //Added For Firebase
+      teachersID,
+      id,
       username,
       email,
-      // sl,  //Removed For Firebase
       tname,
-      tsname,
       school,
       udise,
       desig,
-      sis,
       circle,
       empid,
       photoName,
       url,
       pan,
-      teacher,
-      // aadhaar,  //Removed For Firebase
       loggedin,
-      dpscst,
-      dpsc,
-      dpsc1,
-      dpsc2,
-      dpsc3,
-      dpsc4,
-      tan,
       question,
       password,
     }: any = reqBody;
 
     const newUser = new User({
-      // name,  //Removed For Firebase
-      teachersID, //Added For Firebase
-      id, //Added For Firebase
+      teachersID,
+      id,
       username,
       email,
-      // sl,  //Removed For Firebase
       tname,
-      tsname,
       school,
       udise,
       desig,
-      sis,
       circle,
       empid,
       photoName,
       url,
       pan,
-      teacher,
-      // aadhaar,  //Removed For Firebase
       loggedin,
-      dpscst,
-      dpsc,
-      dpsc1,
-      dpsc2,
-      dpsc3,
-      dpsc4,
-      tan,
       question,
       password,
     });
