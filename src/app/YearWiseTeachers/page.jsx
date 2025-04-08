@@ -112,7 +112,7 @@ const YearWiseTeachers = () => {
     //eslint-disable-next-line
   }, []);
   useEffect(() => {
-    document.title=`Year Wise ${isWBTPTA ? "WBTPTA" : ""} Teachers List`
+    document.title = `Year Wise ${isWBTPTA ? "WBTPTA" : ""} Teachers List`;
     //eslint-disable-next-line
   }, [data]);
   return (
@@ -184,20 +184,26 @@ const YearWiseTeachers = () => {
               <option className="text-center text-primary" value="">
                 Select Joining Year
               </option>
-              {serviceArray.map((el, i) => (
-                <option
-                  className="text-center text-success text-wrap"
-                  key={i}
-                  value={el}
-                >
-                  {el +
-                    " - " +
-                    (new Date().getFullYear() - parseInt(el)) +
-                    " Year - " +
-                    getArrayLength(el) +
-                    ` ${getArrayLength(el) > 1 ? " Teachers" : " Teacher"}`}
-                </option>
-              ))}
+              {serviceArray.map((el, i) => {
+                if (getArrayLength(el) > 0) {
+                  return (
+                    <option
+                      className="text-center text-success text-wrap"
+                      key={i}
+                      value={el}
+                    >
+                      {el +
+                        " - " +
+                        (new Date().getFullYear() - parseInt(el)
+                          ? new Date().getFullYear() - parseInt(el)
+                          : "This") +
+                        " Year - " +
+                        getArrayLength(el) +
+                        ` ${getArrayLength(el) > 1 ? " Teachers" : " Teacher"}`}
+                    </option>
+                  );
+                }
+              })}
             </select>
           </div>
           {selectedYear ? (
@@ -232,26 +238,34 @@ const YearWiseTeachers = () => {
                   <option value="" className="text-center text-primary">
                     Select Joining Month
                   </option>
-                  {joiningMonths.map((month, index) => (
-                    <option
-                      className="text-center text-success"
-                      key={index}
-                      value={JSON.stringify(month)}
-                    >
-                      {month.monthName +
-                        " - " +
-                        moreFilteredData.filter(
-                          (m) => m.doj.split("-")[1] === month.index
-                        ).length +
-                        ` ${
-                          moreFilteredData.filter(
-                            (m) => m.doj.split("-")[1] === month.index
-                          ).length > 1
-                            ? " Teachers"
-                            : " Teacher"
-                        }`}
-                    </option>
-                  ))}
+                  {joiningMonths.map((month, index) => {
+                    if (
+                      moreFilteredData.filter(
+                        (m) => m.doj.split("-")[1] === month.index
+                      ).length > 0
+                    ) {
+                      return (
+                        <option
+                          className="text-center text-success"
+                          key={index}
+                          value={JSON.stringify(month)}
+                        >
+                          {month.monthName +
+                            " - " +
+                            moreFilteredData.filter(
+                              (m) => m.doj.split("-")[1] === month.index
+                            ).length +
+                            ` ${
+                              moreFilteredData.filter(
+                                (m) => m.doj.split("-")[1] === month.index
+                              ).length > 1
+                                ? " Teachers"
+                                : " Teacher"
+                            }`}
+                        </option>
+                      );
+                    }
+                  })}
                 </select>
               </div>
             )}
@@ -294,7 +308,8 @@ const YearWiseTeachers = () => {
 
               {moreFilteredData.length > 1 ? (
                 <div>
-                  <h4 className="text-center text-primary">Total {isWBTPTA ? "WBTPTA" : ""}
+                  <h4 className="text-center text-primary">
+                    Total {isWBTPTA ? "WBTPTA" : ""}
                     {moreFilteredData.length > 1
                       ? `${moreFilteredData.length} Teachers`
                       : `${moreFilteredData.length} Teacher`}{" "}
