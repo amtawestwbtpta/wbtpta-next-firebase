@@ -134,7 +134,7 @@ const YearWiseTeachers = () => {
               </div>
               <div className="modal-body">
                 <div className="mx-auto my-2 noprint">
-                  <div className="m-1 noprint">
+                  <div className="m-4 noprint">
                     <button
                       type="button"
                       className="btn btn-primary p-2 rounded"
@@ -147,7 +147,7 @@ const YearWiseTeachers = () => {
                       All Teachers
                     </button>
                   </div>
-                  <div className="m-1 noprint">
+                  <div className="m-4 noprint">
                     <button
                       type="button"
                       className="btn btn-success p-2 rounded"
@@ -294,10 +294,10 @@ const YearWiseTeachers = () => {
 
               {moreFilteredData.length > 1 ? (
                 <div>
-                  <h4 className="text-center text-primary">
+                  <h4 className="text-center text-primary">Total {isWBTPTA ? "WBTPTA" : ""}
                     {moreFilteredData.length > 1
-                      ? `Total ${moreFilteredData.length} Teachers`
-                      : `Total ${moreFilteredData.length} Teacher`}{" "}
+                      ? `${moreFilteredData.length} Teachers`
+                      : `${moreFilteredData.length} Teacher`}{" "}
                     Joined on Year {selectedYear}
                   </h4>
                   {monthText && (
@@ -332,7 +332,7 @@ const YearWiseTeachers = () => {
               ) : (
                 <div>
                   <h4 className="text-center text-primary">
-                    1 Teacher Joined on{" "}
+                    1 {isWBTPTA ? "WBTPTA" : ""} Teacher Joined on{" "}
                     {filteredData.length > 0 &&
                       months[
                         parseInt(filteredData[0].doj?.split("-")[1]) - 1
@@ -461,7 +461,7 @@ const YearWiseTeachers = () => {
                       >
                         Date of Joining
                       </th>
-                      <th
+                      {/* <th
                         style={{
                           border: "1px solid",
                           padding: 2,
@@ -469,7 +469,7 @@ const YearWiseTeachers = () => {
                         scope="col"
                       >
                         Mobile
-                      </th>
+                      </th> */}
                       <th
                         style={{
                           border: "1px solid",
@@ -524,7 +524,7 @@ const YearWiseTeachers = () => {
                           >
                             {el.doj}
                           </td>
-                          <td
+                          {/* <td
                             style={{
                               border: "1px solid",
                               padding: 2,
@@ -537,7 +537,7 @@ const YearWiseTeachers = () => {
                             >
                               {el.phone}
                             </a>
-                          </td>
+                          </td> */}
                           <td
                             style={{
                               border: "1px solid",
