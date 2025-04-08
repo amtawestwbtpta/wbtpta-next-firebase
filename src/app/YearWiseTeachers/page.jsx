@@ -309,10 +309,14 @@ const YearWiseTeachers = () => {
               {moreFilteredData.length > 1 ? (
                 <div>
                   <h4 className="text-center text-primary">
-                    Total {isWBTPTA ? "WBTPTA" : ""}
+                    Total{" "}
                     {moreFilteredData.length > 1
-                      ? `${moreFilteredData.length} Teachers`
-                      : `${moreFilteredData.length} Teacher`}{" "}
+                      ? `${moreFilteredData.length} ${
+                          isWBTPTA ? "WBTPTA" : ""
+                        } Teachers`
+                      : `${moreFilteredData.length} ${
+                          isWBTPTA ? "WBTPTA" : ""
+                        } Teacher`}{" "}
                     Joined on Year {selectedYear}
                   </h4>
                   {monthText && (
