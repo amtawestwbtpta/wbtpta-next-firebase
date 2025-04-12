@@ -1,18 +1,12 @@
 "use client";
-
 import ropa from "../../modules/ropa";
-
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { decryptObjData, getCookie } from "../../modules/encryption";
-import { DA, HRA, NEXTDA } from "../../modules/constants";
+import {HRA } from "../../modules/constants";
 import {
   GetMonthName,
   NumInWords,
-  RoundTo,
-  months,
   printDate,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
@@ -28,7 +22,6 @@ const PayslipWbtpta = () => {
     }
   );
   const thisYear = new Date().getFullYear();
-  const nextYear = thisYear + 1;
   const prevYear = thisYear - 1;
   const dataExist = true;
   let PAYSLIPMONTHS;
@@ -73,9 +66,6 @@ const PayslipWbtpta = () => {
     ptax,
     gsli,
     udise,
-    bank,
-    account,
-    ifsc,
     ir;
 
   id = details.id;
@@ -86,16 +76,12 @@ const PayslipWbtpta = () => {
   empid = details.empid;
   pan = details.pan;
   udise = details.udise;
-  bank = details.bank;
-  account = details.account;
-  ifsc = details.ifsc;
   dataYear = details.dataYear;
 
   let netpay;
 
   let basicpay;
   let pfund;
-  let date = new Date();
   let today = new Date();
   // let date = new Date();
   const [loader, setLoader] = useState(false);
@@ -413,40 +399,25 @@ const PayslipWbtpta = () => {
                   tname,
                   desig,
                   school,
-                  disability,
                   empid,
                   pan,
-                  basic,
-                  mbasic,
-                  prevmbasic,
+                  ir,
                   addl,
                   da,
                   hra,
                   ma,
                   gross,
-                  gpf,
-                  gpfprev,
-                  julyGpf,
                   ptax,
                   gsli,
                   udise,
-                  dataYear,
-                  index,
-                  ir,
-                  netpay,
-                  pfund,
-                  basicpay,
-                  today,
-                  date,
-                  lastmonth,
                   month,
                   netpay,
                   basicpay,
                   pfund,
-                  today,
                   level,
                   cell,
                   deduction,
+                  year,
                 }}
               />
             }
