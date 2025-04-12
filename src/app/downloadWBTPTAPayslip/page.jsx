@@ -81,17 +81,11 @@ export default function Page() {
     empid,
     pan,
     dataYear,
-    basic,
-    mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
-    prevmbasic,
-    gpf,
-    gpfprev,
-    julyGpf,
     pfund,
     ptax,
     gsli,
@@ -110,14 +104,6 @@ export default function Page() {
   disability = details.disability;
   empid = details.empid;
   pan = details.pan;
-  basic = parseInt(details.basic);
-  mbasic = parseInt(details.mbasic);
-  addl = parseInt(details.addl);
-  ma = parseInt(details.ma);
-  gpf = parseInt(details.gpf);
-  gpfprev = parseInt(details.gpfprev);
-  julyGpf = parseInt(details.julyGpf);
-  gsli = parseInt(details.gsli);
   udise = details.udise;
   bank = details.bank;
   account = details.account;
@@ -255,15 +241,15 @@ export default function Page() {
     myData = decryptObjData("tid");
     circle = myData?.circle;
   }
-  useEffect(() => {
-    if (circle !== "admin") {
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-      return;
-    }
-    //eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   if (circle !== "admin") {
+  //     setTimeout(() => {
+  //       router.push("/");
+  //     }, 2000);
+  //     return;
+  //   }
+  //   //eslint-disable-next-line
+  // }, []);
   return (
     <Suspense>
       <div>
@@ -296,7 +282,7 @@ export default function Page() {
             })}
           </select>
         </div>
-        {/* <PDFDownloadLink
+        <PDFDownloadLink
           document={<WBTPTAPaySLip data={salary} />}
           fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()}.pdf`}
           style={{
@@ -312,8 +298,8 @@ export default function Page() {
           {({ blob, url, loading, error }) =>
             loading ? "Please Wait..." : "Download Payslip"
           }
-        </PDFDownloadLink> */}
-        <h3 className="text-danger">This Service is Temporary Unavailable</h3>
+        </PDFDownloadLink>
+        {/* <h3 className="text-danger">This Service is Temporary Unavailable</h3> */}
       </div>
     </Suspense>
   );

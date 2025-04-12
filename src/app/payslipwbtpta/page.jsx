@@ -58,45 +58,33 @@ const PayslipWbtpta = () => {
   const router = useRouter();
   let details = stateObject;
   let tname,
+    id,
     desig,
     school,
     disability,
     empid,
     pan,
     dataYear,
-    basic,
-    mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
-    prevmbasic,
-    gpf,
-    gpfprev,
-    julyGpf,
     ptax,
     gsli,
     udise,
     bank,
     account,
-    ifsc;
+    ifsc,
+    ir;
 
+  id = details.id;
   tname = details.tname;
   desig = details.desig;
   school = details.school;
   disability = details.disability;
   empid = details.empid;
   pan = details.pan;
-  basic = parseInt(details.basic);
-  mbasic = parseInt(details.mbasic);
-  let ir = Math.round(mbasic * 0.04);
-  addl = parseInt(details.addl);
-  ma = parseInt(details.ma);
-  gpf = parseInt(details.gpf);
-  gpfprev = parseInt(details.gpfprev);
-  julyGpf = parseInt(details.julyGpf);
-  gsli = parseInt(details.gsli);
   udise = details.udise;
   bank = details.bank;
   account = details.account;

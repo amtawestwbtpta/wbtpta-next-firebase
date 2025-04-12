@@ -86,17 +86,11 @@ const PayslipWbtpta = () => {
     empid,
     pan,
     dataYear,
-    basic,
-    mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
-    prevmbasic,
-    gpf,
-    gpfprev,
-    julyGpf,
     pfund,
     ptax,
     gsli,
@@ -108,21 +102,13 @@ const PayslipWbtpta = () => {
     cell,
     ir;
 
-  tname = details.tname;
   id = details.id;
+  tname = details.tname;
   desig = details.desig;
   school = details.school;
   disability = details.disability;
   empid = details.empid;
   pan = details.pan;
-  basic = parseInt(details.basic);
-  mbasic = parseInt(details.mbasic);
-  addl = parseInt(details.addl);
-  ma = parseInt(details.ma);
-  gpf = parseInt(details.gpf);
-  gpfprev = parseInt(details.gpfprev);
-  julyGpf = parseInt(details.julyGpf);
-  gsli = parseInt(details.gsli);
   udise = details.udise;
   bank = details.bank;
   account = details.account;
