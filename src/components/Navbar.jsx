@@ -486,6 +486,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/HolisticPRCardAny"
+              onClick={handleNavCollapse}
+            >
+              HPRCard Any School
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/update_self"
               onClick={handleNavCollapse}
             >
@@ -812,6 +821,15 @@ const Navbar = () => {
               onClick={handleNavCollapse}
             >
               IT Reloded
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/HolisticPRCardAny"
+              onClick={handleNavCollapse}
+            >
+              HPRCard Any School
             </Link>
           </li>
           <li className="nav-item">
