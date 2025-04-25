@@ -401,6 +401,16 @@ const Navbar = () => {
               IT Reloded
             </Link>
           </li>
+          
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/YearWiseTeachers"
+              onClick={handleNavCollapse}
+            >
+              Year Wise Teachers
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -409,14 +419,13 @@ const Navbar = () => {
             >
               Teacher Service Life
             </Link>
-          </li>
-          <li className="nav-item">
+          </li><li className="nav-item">
             <Link
               className="nav-link"
-              href="/YearWiseTeachers"
+              href="/MonthlyAWSalary"
               onClick={handleNavCollapse}
             >
-              Year Wise Teachers
+              AW All Teachers Salary
             </Link>
           </li>
           <li className="nav-item">

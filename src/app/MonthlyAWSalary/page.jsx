@@ -14,10 +14,11 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 const TechSalary = () => {
-  const { state, stateArray, setStateObject } = useGlobalContext();
+  const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
-  const [filteredData, setFilteredData] = useState([]);
-  const [school, setSchool] = useState("");
+  const [filteredData, setFilteredData] = useState(teachersState);
+  const [search, setSearch] = useState("");
+  const [schSearch, setSchSearch] = useState("");
   const thisYear = new Date().getFullYear();
   const preYear = thisYear - 1;
   const pre2ndYear = thisYear - 2;
@@ -71,9 +72,9 @@ const TechSalary = () => {
   );
   const [year, setYear] = useState(today.getFullYear());
 
-  const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
+  //   const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
   const paySlipArray = thisYearMonths
-    .slice(0, lastMonthIndex)
+    // .slice(0, lastMonthIndex)
     .reverse()
     .concat(preYearMonths.reverse())
     .concat(pre2ndYearMonths.reverse());
@@ -107,18 +108,17 @@ const TechSalary = () => {
   };
 
   useEffect(() => {
-    if (!state) {
+    if (state !== "admin") {
       router.push("/login");
     }
-    setFilteredData(stateArray);
-    setSchool(stateArray[0]?.school);
+
     getModifiedSalary(month, year);
-    document.title = `All Teacher's Salary Data of ${stateArray[0]?.school}`;
+    document.title = `All Teacher's Salary Data of Amta West Circle`;
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [monthSalary, aprilSalary]);
+  }, [monthSalary, aprilSalary, teachersState]);
 
   return (
     <div className="container-fluid my-5">
@@ -127,6 +127,50 @@ const TechSalary = () => {
       ) : (
         <>
           <div className="table-resposive text-center my-2">
+            <div className="mx-auto my-3 noprint">
+              <button
+                type="button"
+                className="btn btn-primary text-white p-2 rounded"
+                onClick={() => {
+                  if (typeof window !== undefined) {
+                    window.print();
+                  }
+                }}
+              >
+                Print Statement
+              </button>
+            </div>
+            <div className="mx-auto my-3 noprint">
+              <button
+                type="button"
+                className="btn btn-warning  p-2 rounded"
+                onClick={() => router.back()}
+              >
+                Go Back
+              </button>
+            </div>
+            <div className="mx-auto my-3 noprint">
+              <button
+                type="button"
+                className="btn btn-success  p-2 rounded"
+                onClick={() => setFilteredData(teachersState)}
+              >
+                All Teacher
+              </button>
+            </div>
+            <div className="mx-auto my-3 noprint">
+              <button
+                type="button"
+                className="btn btn-info  p-2 rounded"
+                onClick={() =>
+                  setFilteredData(
+                    teachersState.filter((el) => el.association === "WBTPTA")
+                  )
+                }
+              >
+                WBTPTA Teachers
+              </button>
+            </div>
             <div className="mx-auto my-3 col-md-2 noprint">
               <h6 className="text-primary">Select Salary Month:</h6>
               <select
@@ -148,11 +192,59 @@ const TechSalary = () => {
               </select>
             </div>
             <h3 className="text-center text-primary">
-              All Teacher's Salary Data for The Month of {month.toUpperCase()}'{" "}
-              {year} of {school}
+              {teachersState.length === filteredData.length
+                ? "All Teacher's"
+                : filteredData.length ===
+                  teachersState.filter((el) => el.association === "WBTPTA")
+                    .length
+                ? "WBTPTA Teachers"
+                : ""}{" "}
+              Salary Data for The Month of {month.toUpperCase()}' {year} of Amta
+              West Circle
             </h3>
-            <div className="table-resposive-md" style={{ overflowX: "scroll" }}>
-              <table className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center">
+            <div className="col-md-6 text-center  mx-auto noprint gap-4">
+              <div className="mb-2">
+                <input
+                  type="text"
+                  placeholder="Search by Teacher"
+                  className="form-control"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setFilteredData(
+                      teachersState.filter((el) =>
+                        el.tname
+                          .toLowerCase()
+                          .includes(e.target.value.toLowerCase())
+                      )
+                    );
+                  }}
+                />
+              </div>
+              <div className="mb-2">
+                <input
+                  type="text"
+                  placeholder="Search by School"
+                  className="form-control"
+                  value={schSearch}
+                  onChange={(e) => {
+                    setSchSearch(e.target.value);
+                    setFilteredData(
+                      teachersState.filter((el) =>
+                        el.school
+                          .toLowerCase()
+                          .includes(e.target.value.toLowerCase())
+                      )
+                    );
+                  }}
+                />
+              </div>
+            </div>
+            <div
+              className="table-resposive-md my-3"
+              style={{ overflowX: "scroll" }}
+            >
+              <table className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center" style={{zoom:.8}}>
                 <thead>
                   <tr>
                     <th className="text-center" style={{ border: "1px solid" }}>
@@ -160,6 +252,9 @@ const TechSalary = () => {
                     </th>
                     <th className="text-center" style={{ border: "1px solid" }}>
                       TEACHER'S NAME
+                    </th>
+                    <th className="text-center" style={{ border: "1px solid" }}>
+                      SCHOOL
                     </th>
                     <th className="text-center" style={{ border: "1px solid" }}>
                       DESIGNATION
@@ -335,6 +430,12 @@ const TechSalary = () => {
                           </td>
                           <td
                             className="text-center"
+                            style={{ border: "1px solid", fontSize: 10 }}
+                          >
+                            {el?.school}
+                          </td>
+                          <td
+                            className="text-center"
                             style={{ border: "1px solid" }}
                           >
                             {el.desig}
@@ -459,28 +560,6 @@ const TechSalary = () => {
               onClick={() => router.back()}
             >
               Go Back
-            </button>
-          </div>
-          <div className="mx-auto my-3 noprint">
-            <button
-              type="button"
-              className="btn btn-success  p-2 rounded"
-              onClick={() => {
-                router.push(`/TeacherPhotoCorner`);
-              }}
-            >
-              Teacher's Photo Corner
-            </button>
-          </div>
-          <div className="mx-auto my-3 noprint">
-            <button
-              type="button"
-              className="btn btn-info  p-2 rounded"
-              onClick={() => {
-                router.push(`/TechersAccuitance`);
-              }}
-            >
-              Teacher's Accuitance
             </button>
           </div>
         </>
