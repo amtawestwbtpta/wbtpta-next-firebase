@@ -3,13 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import Link from "next/link";
-import { DA, HRA, NEXTDA, PREV6DA, PREVDA } from "../../modules/constants";
-import {
-  GetMonthName,
-  RoundTo,
-  months,
-} from "../../modules/calculatefunctions";
-import ropa from "../../modules/ropa";
+import { GetMonthName } from "../../modules/calculatefunctions";
+
 import axios from "axios";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
@@ -17,6 +12,7 @@ const TechSalary = () => {
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState(teachersState);
+  const [zoom, setZoom] = useState(100);
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
   const thisYear = new Date().getFullYear();
@@ -72,12 +68,21 @@ const TechSalary = () => {
   );
   const [year, setYear] = useState(today.getFullYear());
 
-  //   const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
-  const paySlipArray = thisYearMonths
-    // .slice(0, lastMonthIndex)
-    .reverse()
-    .concat(preYearMonths.reverse())
-    .concat(pre2ndYearMonths.reverse());
+  const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
+  let paySlipArray = [];
+  if (state === "admin") {
+    paySlipArray = thisYearMonths
+      // .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  } else {
+    paySlipArray = thisYearMonths
+      .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  }
 
   const [monthSalary, setMonthSalary] = useState([]);
   const [aprilSalary, setAprilSalary] = useState([]);
@@ -113,12 +118,23 @@ const TechSalary = () => {
     }
 
     getModifiedSalary(month, year);
-    document.title = `All Teacher's Salary Data of Amta West Circle`;
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [monthSalary, aprilSalary, teachersState]);
+  }, [monthSalary, aprilSalary]);
+  useEffect(() => {
+    document.title = `${
+      teachersState.length === filteredData.length
+        ? "All Teacher's"
+        : filteredData.length ===
+          teachersState.filter((el) => el.association === "WBTPTA").length
+        ? "WBTPTA Teachers"
+        : ""
+    }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta
+              West Circle`;
+    // eslint-disable-next-line
+  }, [filteredData, month, year]);
 
   return (
     <div className="container-fluid my-5">
@@ -127,7 +143,7 @@ const TechSalary = () => {
       ) : (
         <>
           <div className="table-resposive text-center my-2">
-            <div className="mx-auto my-3 noprint">
+            <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
                 className="btn btn-primary text-white p-2 rounded"
@@ -140,7 +156,34 @@ const TechSalary = () => {
                 Print Statement
               </button>
             </div>
-            <div className="mx-auto my-3 noprint">
+            <div
+              className="btn-group mx-auto mb-3 noprint gap-2 align-items-center fs-4"
+              role="group"
+              aria-label="Basic example"
+            >
+              <button
+                type="button"
+                className="btn btn-dark"
+                onClick={() => {
+                  setZoom((prev) => prev - 5);
+                }}
+              >
+                -
+              </button>
+              <span className="text-black noprint text-center">
+                {zoom / 100}
+              </span>
+              <button
+                type="button"
+                className="btn btn-dark"
+                onClick={() => {
+                  setZoom((prev) => prev + 5);
+                }}
+              >
+                +
+              </button>
+            </div>
+            <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
                 className="btn btn-warning  p-2 rounded"
@@ -149,7 +192,7 @@ const TechSalary = () => {
                 Go Back
               </button>
             </div>
-            <div className="mx-auto my-3 noprint">
+            <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
                 className="btn btn-success  p-2 rounded"
@@ -158,7 +201,7 @@ const TechSalary = () => {
                 All Teacher
               </button>
             </div>
-            <div className="mx-auto my-3 noprint">
+            <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
                 className="btn btn-info  p-2 rounded"
@@ -171,7 +214,7 @@ const TechSalary = () => {
                 WBTPTA Teachers
               </button>
             </div>
-            <div className="mx-auto my-3 col-md-2 noprint">
+            <div className="mx-auto mb-3 col-md-2 noprint">
               <h6 className="text-primary">Select Salary Month:</h6>
               <select
                 className="form-select form-select-sm mb-3"
@@ -241,10 +284,13 @@ const TechSalary = () => {
               </div>
             </div>
             <div
-              className="table-resposive-md my-3"
+              className="table-resposive-md mb-3"
               style={{ overflowX: "scroll" }}
             >
-              <table className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center" style={{zoom:.8}}>
+              <table
+                className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center"
+                style={{ zoom: zoom / 100 }}
+              >
                 <thead>
                   <tr>
                     <th className="text-center" style={{ border: "1px solid" }}>
@@ -257,7 +303,7 @@ const TechSalary = () => {
                       SCHOOL
                     </th>
                     <th className="text-center" style={{ border: "1px solid" }}>
-                      DESIGNATION
+                      DESIG.
                     </th>
                     <th className="text-center" style={{ border: "1px solid" }}>
                       BASIC PAY
@@ -316,29 +362,15 @@ const TechSalary = () => {
                       disability,
                       empid,
                       pan,
-                      dataYear,
-                      basic,
-                      mbasic,
                       addl,
                       da,
                       hra,
                       ma,
                       gross,
-                      prevmbasic,
-                      gpf,
-                      gpfprev,
-                      julyGpf,
                       pfund,
                       ptax,
                       gsli,
-                      udise,
-                      bank,
-                      account,
-                      ifsc,
-                      level,
-                      cell,
                       ir;
-
                     tname = el.tname;
                     id = el.id;
                     desig = el.desig;
@@ -346,24 +378,8 @@ const TechSalary = () => {
                     disability = el.disability;
                     empid = el.empid;
                     pan = el.pan;
-                    basic = parseInt(el.basic);
-                    mbasic = parseInt(el.mbasic);
-                    addl = parseInt(el.addl);
-                    ma = parseInt(el.ma);
-                    gpf = parseInt(el.gpf);
-                    gpfprev = parseInt(el.gpfprev);
-                    julyGpf = parseInt(el.julyGpf);
-                    gsli = parseInt(el.gsli);
-                    udise = el.udise;
-                    bank = el.bank;
-                    account = el.account;
-                    ifsc = el.ifsc;
-                    dataYear = el.dataYear;
-
                     let netpay;
-
                     let basicpay;
-
                     const techersSalary = monthSalary?.filter(
                       (el) => el.id === id
                     )[0];
@@ -390,8 +406,6 @@ const TechSalary = () => {
                     ma = techersSalary?.ma;
                     pfund = techersSalary?.gpf;
                     gsli = techersSalary?.gsli;
-                    level = ropa(basicpay).lv;
-                    cell = ropa(basicpay).ce;
                     gross = basicpay + da + ir + hra + addl + ma;
                     if (gross > 40000) {
                       ptax = 200;
@@ -430,7 +444,7 @@ const TechSalary = () => {
                           </td>
                           <td
                             className="text-center"
-                            style={{ border: "1px solid", fontSize: 10 }}
+                            style={{ border: "1px solid" }}
                           >
                             {el?.school}
                           </td>
@@ -540,7 +554,7 @@ const TechSalary = () => {
               </table>
             </div>
           </div>
-          <div className="mx-auto my-3 noprint">
+          <div className="mx-auto mb-3 noprint">
             <button
               type="button"
               className="btn btn-primary text-white p-2 rounded"
@@ -553,7 +567,7 @@ const TechSalary = () => {
               Print Statement
             </button>
           </div>
-          <div className="mx-auto my-3 noprint">
+          <div className="mx-auto mb-3 noprint">
             <button
               type="button"
               className="btn btn-warning  p-2 rounded"

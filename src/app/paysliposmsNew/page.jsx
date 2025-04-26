@@ -28,8 +28,8 @@ const PaySlipOsmsNew = () => {
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
   const thisYear = new Date().getFullYear();
-  const nextYear = thisYear + 1;
   const preYear = thisYear - 1;
+  const pre2ndYear = thisYear - 2;
   const thisYearMonths = [
     `January-${thisYear}`,
     `February-${thisYear}`,
@@ -58,6 +58,20 @@ const PaySlipOsmsNew = () => {
     `November-${preYear}`,
     `December-${preYear}`,
   ];
+  const pre2ndYearMonths = [
+    `January-${pre2ndYear}`,
+    `February-${pre2ndYear}`,
+    `March-${pre2ndYear}`,
+    `April-${pre2ndYear}`,
+    `May-${pre2ndYear}`,
+    `June-${pre2ndYear}`,
+    `July-${pre2ndYear}`,
+    `August-${pre2ndYear}`,
+    `September-${pre2ndYear}`,
+    `October-${pre2ndYear}`,
+    `November-${pre2ndYear}`,
+    `December-${pre2ndYear}`,
+  ];
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
@@ -70,10 +84,20 @@ const PaySlipOsmsNew = () => {
   const [year, setYear] = useState(today.getFullYear());
   const lastmonth = GetMonthName(today.getMonth() - 1);
   const lastMonthIndex = today.getMonth();
-  const paySlipArray = thisYearMonths
-    .slice(0, lastMonthIndex)
-    .reverse()
-    .concat(preYearMonths.reverse());
+  let paySlipArray = [];
+  if (state === "admin") {
+    paySlipArray = thisYearMonths
+      // .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  } else {
+    paySlipArray = thisYearMonths
+      .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  }
   let details = stateObject;
   let tname,
     id,

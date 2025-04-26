@@ -72,11 +72,20 @@ const TechSalary = () => {
   const [year, setYear] = useState(today.getFullYear());
 
   const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
-  const paySlipArray = thisYearMonths
-    .slice(0, lastMonthIndex)
-    .reverse()
-    .concat(preYearMonths.reverse())
-    .concat(pre2ndYearMonths.reverse());
+  let paySlipArray = [];
+  if (state === "admin") {
+    paySlipArray = thisYearMonths
+      // .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  } else {
+    paySlipArray = thisYearMonths
+      .slice(0, lastMonthIndex)
+      .reverse()
+      .concat(preYearMonths.reverse())
+      .concat(pre2ndYearMonths.reverse());
+  }
 
   const [monthSalary, setMonthSalary] = useState([]);
   const [aprilSalary, setAprilSalary] = useState([]);
@@ -221,29 +230,15 @@ const TechSalary = () => {
                       disability,
                       empid,
                       pan,
-                      dataYear,
-                      basic,
-                      mbasic,
                       addl,
                       da,
                       hra,
                       ma,
                       gross,
-                      prevmbasic,
-                      gpf,
-                      gpfprev,
-                      julyGpf,
                       pfund,
                       ptax,
                       gsli,
-                      udise,
-                      bank,
-                      account,
-                      ifsc,
-                      level,
-                      cell,
                       ir;
-
                     tname = el.tname;
                     id = el.id;
                     desig = el.desig;
@@ -251,22 +246,7 @@ const TechSalary = () => {
                     disability = el.disability;
                     empid = el.empid;
                     pan = el.pan;
-                    basic = parseInt(el.basic);
-                    mbasic = parseInt(el.mbasic);
-                    addl = parseInt(el.addl);
-                    ma = parseInt(el.ma);
-                    gpf = parseInt(el.gpf);
-                    gpfprev = parseInt(el.gpfprev);
-                    julyGpf = parseInt(el.julyGpf);
-                    gsli = parseInt(el.gsli);
-                    udise = el.udise;
-                    bank = el.bank;
-                    account = el.account;
-                    ifsc = el.ifsc;
-                    dataYear = el.dataYear;
-
                     let netpay;
-
                     let basicpay;
 
                     const techersSalary = monthSalary?.filter(
@@ -295,8 +275,6 @@ const TechSalary = () => {
                     ma = techersSalary?.ma;
                     pfund = techersSalary?.gpf;
                     gsli = techersSalary?.gsli;
-                    level = ropa(basicpay).lv;
-                    cell = ropa(basicpay).ce;
                     gross = basicpay + da + ir + hra + addl + ma;
                     if (gross > 40000) {
                       ptax = 200;
