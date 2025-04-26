@@ -3,16 +3,11 @@
 import ropa from "../../modules/ropa";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { decryptObjData, getCookie } from "../../modules/encryption";
-import { DA, HRA, NEXTDA } from "../../modules/constants";
 import {
   GetMonthName,
   NumInWords,
-  RoundTo,
-  months,
   printDate,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
