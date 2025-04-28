@@ -401,7 +401,7 @@ const Navbar = () => {
               IT Reloded
             </Link>
           </li>
-          
+
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -419,7 +419,8 @@ const Navbar = () => {
             >
               Teacher Service Life
             </Link>
-          </li><li className="nav-item">
+          </li>
+          <li className="nav-item">
             <Link
               className="nav-link"
               href="/MonthlyAWSalary"

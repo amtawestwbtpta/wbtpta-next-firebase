@@ -8,7 +8,8 @@ import { GetMonthName } from "../../modules/calculatefunctions";
 import axios from "axios";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
-const TechSalary = () => {
+// import * as XLSX from "xlsx";
+const MonthlyAWSalary = () => {
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState(teachersState);
@@ -110,8 +111,56 @@ const TechSalary = () => {
     setLoader(false);
     setMonthSalary(q1.data);
     setAprilSalary(q2.data);
+    // const specificMonthSalary = await axios.get(
+    //   `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.csv`
+    // );
+    // const findAprilIR = await axios.get(
+    //   `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.csv`
+    // );
+    // const specificMonthSalaryData = new Blob([specificMonthSalary.data], {
+    //   type: "text/csv",
+    // });
+    // const findAprilIRData = new Blob([findAprilIR.data], { type: "text/csv" });
+    // const specificMonthSalaryFile = new File(
+    //   [specificMonthSalaryData],
+    //   `${month}-${year}.csv`,
+    //   {
+    //     type: "text/csv",
+    //   }
+    // );
+    // const findAprilIRFile = new File([findAprilIRData], `april-2024.csv`, {
+    //   type: "text/csv",
+    // });
+    // setLoader(false);
+    // setMonthSalary(await readFile(specificMonthSalaryFile));
+    // setAprilSalary(await readFile(findAprilIRFile));
   };
-
+  // const readFile = async (file) => {
+  //   const reader = new FileReader();
+  //   const data = await new Promise((resolve) => {
+  //     reader.onload = (e) => {
+  //       const text = e.target.result;
+  //       const workbook = XLSX.read(text, { type: "binary" });
+  //       const sheetName = workbook.SheetNames[0];
+  //       const worksheet = workbook.Sheets[sheetName];
+  //       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  //       resolve(jsonData);
+  //     };
+  //     reader.readAsArrayBuffer(file);
+  //   });
+  //   const headers = data[0];
+  //   const jsonData = data.slice(1).map((row) => {
+  //     const obj = {};
+  //     headers.forEach((header, index) => {
+  //       obj[header] = row[index];
+  //     });
+  //     return obj;
+  //   });
+  //   const modifiedData = jsonData.map((el) => {
+  //     return el;
+  //   });
+  //   return modifiedData;
+  // };
   useEffect(() => {
     if (state !== "admin") {
       router.push("/login");
@@ -582,4 +631,4 @@ const TechSalary = () => {
   );
 };
 
-export default TechSalary;
+export default MonthlyAWSalary;
