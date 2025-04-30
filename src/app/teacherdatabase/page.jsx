@@ -229,10 +229,10 @@ const TeacherDatabase = () => {
       name: "Leave Proposal",
       cell: (row) => (
         <button
-        type="button"
+          type="button"
           className="btn btn-sm btn-success"
           onClick={() => {
-            setStateObject(row)
+            setStateObject(row);
             router.push("/LeaveProposalNew");
           }}
         >
@@ -379,7 +379,6 @@ const TeacherDatabase = () => {
           <h6 className="text-success">Teacher Registered</h6>
         ),
     },
-    
   ];
   const delColumns = [
     {
@@ -618,12 +617,10 @@ const TeacherDatabase = () => {
           const techerData = {
             teachersID: user.id,
             tname: user.tname,
-            tsname: user.tsname,
             school: user.school,
             desig: user.desig,
             pan: user.pan,
             udise: user.udise,
-            sis: user.sis,
             circle: user.circle,
             showAccount: user.showAccount,
             empid: user.empid,
@@ -649,35 +646,10 @@ const TeacherDatabase = () => {
             await axios
               .post(backendUrl, techerData)
               .then(async () => {
-                await setDoc(doc(firestore, "userteachers", techerData.id), {
-                  teachersID: techerData.teachersID,
-                  tname: techerData.tname,
-                  tsname: techerData.tsname,
-                  school: techerData.school,
-                  desig: techerData.desig,
-                  pan: techerData.pan,
-                  udise: techerData.udise,
-                  sis: techerData.sis,
-                  circle: techerData.circle,
-                  showAccount: techerData.showAccount || false,
-                  empid: techerData.empid,
-                  question: techerData.question,
-                  email: techerData.email,
-                  phone: techerData.phone,
-                  id: techerData.id,
-                  dpscst: techerData.dpscst,
-                  dpsc: techerData.dpsc,
-                  dpsc1: techerData.dpsc1,
-                  dpsc2: techerData.dpsc2,
-                  dpsc3: techerData.dpsc3,
-                  dpsc4: techerData.dpsc4,
-                  tan: techerData.tan,
-                  username: techerData.username,
-                  password: techerData.password,
-                  createdAt: techerData.createdAt,
-                  url: techerData.url,
-                  photoName: techerData.photoName,
-                });
+                await setDoc(
+                  doc(firestore, "userteachers", techerData.id),
+                  techerData
+                );
                 await setDoc(doc(firestore, "profileImage", techerData.id), {
                   title: techerData.tname,
                   description: techerData.school,

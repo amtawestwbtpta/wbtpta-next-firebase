@@ -30,6 +30,7 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
     serverComponentsExternalPackages: ['@react-pdf/renderer'],
   },
+  // output:'export'
 };
 
 export default nextConfig;
