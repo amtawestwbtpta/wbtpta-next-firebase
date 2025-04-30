@@ -87,7 +87,7 @@ const page = () => {
   const today = new Date();
   const year = today.getFullYear();
   const [month, setMonth] = useState(
-    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+    GetMonthName(today.getMonth())
   );
   const [salary, setSalary] = useState({
     basic: 0,
