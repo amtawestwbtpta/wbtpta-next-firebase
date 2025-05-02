@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
 import { createDownloadLink } from "../../modules/calculatefunctions";
+import Image from "next/image";
 const DisplayDatabase = () => {
   const {
     state,
@@ -39,6 +40,28 @@ const DisplayDatabase = () => {
   const [profileImageData, setProfileImageData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [userField, setUserField] = useState({
+    teachersID: "",
+    photoName: "",
+    disabled: false,
+    school: "",
+    circle: "",
+    pan: "",
+    udise: "",
+    question: "",
+    showAccount: false,
+    id: "",
+    tname: "",
+    password: "",
+    empid: "",
+    desig: "",
+    email: "",
+    username: "",
+    phone: "",
+    url: "",
+    sis: "",
+  });
+  const [showUserData, setShowUserData] = useState(false);
   const userData = async () => {
     const querySnapshot = await getDocs(
       query(collection(firestore, "userteachers"))
@@ -76,155 +99,52 @@ const DisplayDatabase = () => {
   const columns = [
     {
       name: "Sl",
-      selector: (row, index) => index + 1,
+      selector: (row, index) => data.findIndex((i) => i.id === row.id) + 1,
       sortable: true,
+      wrap: +true,
+      center: +true,
+    },
+    {
+      name: "View",
+      cell: (row) => (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            setUserField(row);
+            setShowUserData(true);
+          }}
+        >
+          View
+        </button>
+      ),
+      wrap: +true,
+      center: +true,
+    },
+
+    {
+      name: "Teacher Name",
+      selector: (row) => row.tname,
+      sortable: true,
+      wrap: +true,
+      center: +true,
+    },
+
+    {
+      name: "Username",
+      selector: (row) => row.username,
+
+      wrap: +true,
+      center: +true,
     },
     {
       name: "ID",
       selector: (row, index) => row.id,
       sortable: true,
-    },
-    {
-      name: "Teacher Name",
-      selector: (row) => row.tname,
-      sortable: true,
-      wrap: true,
-    },
-    {
-      name: "Photo",
-      selector: (row) => {
-        return (
-          <img
-            src={row.url}
-            alt="profilephoto"
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-        );
-      },
-      wrap: true,
-    },
-    {
-      name: "School Name",
-      selector: (row) => row.school,
-      sortable: true,
-      wrap: true,
-    },
-    {
-      name: "Username",
-      selector: (row) => row.username,
-
-      wrap: true,
-    },
-    {
-      name: "Email",
-      selector: (row) => row.email,
-
-      wrap: true,
-    },
-    {
-      name: "Pan",
-      selector: (row) => row.pan.toLowerCase(),
-      wrap: true,
-    },
-    {
-      name: "EmpID",
-      selector: (row) => row.empid,
-      wrap: true,
-    },
-    {
-      name: "IsMatched",
-      selector: (row) =>
-        compare(row.pan.toLowerCase(), row.password) ? (
-          <h6 className="text-success">Yes</h6>
-        ) : (
-          <h6 className="text-primary">No</h6>
-        ),
-    },
-    {
-      name: "Access",
-      selector: (row) => row.circle,
-      sortable: true,
-    },
-    {
-      name: "Registered On",
-      selector: (row) => {
-        let date = new Date(row.createdAt);
-        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-      },
-      wrap: true,
-    },
-    {
-      name: "Delete User",
-      cell: (row) => (
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => {
-            // eslint-disable-next-line
-            let message = confirm(`Are You Sure To Delete User ${row.tname}`);
-            message ? deleteUser(row) : alert("Teacher Not Deleted");
-          }}
-        >
-          Delete
-        </button>
-      ),
-    },
-    {
-      name: "Disable Login",
-      cell: (row) =>
-        row.disabled ? (
-          <button
-            type="button"
-            className="btn btn-sm btn-success"
-            onClick={() => {
-              // eslint-disable-next-line
-              let message = confirm(
-                `Are You Sure To Restore User ${row.tname}'s Login? `
-              );
-              message ? restoreUser(row.id) : alert("User Login Not Restored!");
-            }}
-          >
-            Unlock User
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-sm btn-warning"
-            onClick={() => {
-              // eslint-disable-next-line
-              let message = confirm(
-                `Are You Sure To Disable User ${row.tname}'s Login? `
-              );
-              message ? disableUser(row.id) : alert("User Login Not Disabled!");
-            }}
-          >
-            Lock User
-          </button>
-        ),
-    },
-    {
-      name: "Reset Password",
-      cell: (row) =>
-        !compare(row.pan.toLowerCase(), row.password) ? (
-          <button
-            type="button"
-            className="btn btn-sm btn-warning"
-            onClick={() => {
-              // eslint-disable-next-line
-              let message = confirm(
-                `Are You Sure To Reset Password of ${row.tname}? `
-              );
-              message ? resetPassword(row) : alert("User Password Not Rested!");
-            }}
-          >
-            Reset Password
-          </button>
-        ) : (
-          <h6 className="text-primary">Password Need not to be Reset</h6>
-        ),
+      wrap: +true,
+      center: +true,
     },
   ];
-  // console.log(inputField);
   const deleteUser = async (user) => {
     const url = `/api/delteacher`;
     try {
@@ -397,7 +317,7 @@ const DisplayDatabase = () => {
     }
   }, []);
   return (
-    <div className="container text-center my-5">
+    <div className="container-fluid text-center my-5">
       <ToastContainer
         position="top-right"
         autoClose={1500}
@@ -418,22 +338,13 @@ const DisplayDatabase = () => {
           </h3>
           <button
             type="button"
-            className="btn btn-sm m-3 btn-warning"
+            className="btn m-3 btn-sm m-3 btn-warning"
             onClick={() => {
               createDownloadLink(data, "userteachers");
             }}
           >
             Download User Data
           </button>
-          {/* <button
-            type="button"
-            className="btn btn-sm m-3 btn-primary"
-            onClick={() => {
-              createDownloadLink(profileImageData, "profileImage");
-            }}
-          >
-            Download Profile Image Data
-          </button> */}
           <DataTable
             columns={columns}
             data={filteredData}
@@ -452,6 +363,161 @@ const DisplayDatabase = () => {
             }
             subHeaderAlign="right"
           />
+          {showUserData && (
+            <div
+              className="modal fade show"
+              tabIndex="-1"
+              role="dialog"
+              style={{ display: "block" }}
+              aria-modal="true"
+            >
+              <div className="modal-dialog modal-xl">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                      Viewing User Data of {userField?.tname}
+                    </h1>
+                    <button
+                      type="button"
+                      className="btn m-3-close"
+                      aria-label="Close"
+                      onClick={() => {
+                        setShowUserData(false);
+                      }}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <Image
+                      src={userField?.url}
+                      alt="profilephoto"
+                      width={200}
+                      height={200}
+                      style={{
+                        width: 200,
+                        height: 200,
+                        borderRadius: 10,
+                      }}
+                    />
+                    <div className="mt-5">
+                      <h5 className="text-primary">User ID: {userField?.id}</h5>
+                      <h5 className="text-primary">
+                        Teacher Name: {userField?.tname}
+                      </h5>
+                      <h5 className="text-primary">
+                        Username: {userField?.username}
+                      </h5>
+                      <h5 className="text-primary">
+                        Email: {userField?.email}
+                      </h5>
+                      <h5 className="text-primary">
+                        Phone: {userField?.phone}
+                      </h5>
+                      <h5 className="text-primary">
+                        School: {userField?.school}
+                      </h5>
+                      <h5 className="text-primary">
+                        Access:{" "}
+                        {userField?.circle === "admin" ? "Admin" : "User"}
+                      </h5>
+                      <h5 className="text-primary">
+                        UDISE: {userField?.udise}
+                      </h5>
+                      <h5 className="text-primary">
+                        Designation: {userField?.desig}
+                      </h5>
+                      <h5 className="text-primary">PAN: {userField?.pan}</h5>
+                      <h5 className="text-primary">
+                        EmpID: {userField?.empid}
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn m-3 btn-danger"
+                        onClick={() => {
+                          // eslint-disable-next-line
+                          let message = confirm(
+                            `Are You Sure To Delete User ${userField.tname}`
+                          );
+                          message
+                            ? deleteUser(userField)
+                            : alert("Teacher Not Deleted");
+                        }}
+                      >
+                        Delete
+                      </button>
+                      {userField.disabled ? (
+                        <button
+                          type="button"
+                          className="btn m-3 btn-sm btn-success"
+                          onClick={() => {
+                            // eslint-disable-next-line
+                            let message = confirm(
+                              `Are You Sure To Restore User ${userField.tname}'s Login? `
+                            );
+                            message
+                              ? restoreUser(userField.id)
+                              : alert("User Login Not Restored!");
+                          }}
+                        >
+                          Unlock User
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn m-3 btn-sm btn-warning"
+                          onClick={() => {
+                            // eslint-disable-next-line
+                            let message = confirm(
+                              `Are You Sure To Disable User ${userField.tname}'s Login? `
+                            );
+                            message
+                              ? disableUser(userField.id)
+                              : alert("User Login Not Disabled!");
+                          }}
+                        >
+                          Lock User
+                        </button>
+                      )}
+                      {!compare(
+                        userField.pan.toLowerCase(),
+                        userField.password
+                      ) ? (
+                        <button
+                          type="button"
+                          className="btn m-3 btn-sm btn-warning"
+                          onClick={() => {
+                            // eslint-disable-next-line
+                            let message = confirm(
+                              `Are You Sure To Reset Password of ${userField.tname}? `
+                            );
+                            message
+                              ? resetPassword(row)
+                              : alert("User Password Not Rested!");
+                          }}
+                        >
+                          Reset Password
+                        </button>
+                      ) : (
+                        <h6 className="text-primary">
+                          Password Need not to be Reset
+                        </h6>
+                      )}
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn m-3 btn-sm btn-danger"
+                      onClick={() => {
+                        setShowUserData(false);
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       ) : (
         <Loader />
