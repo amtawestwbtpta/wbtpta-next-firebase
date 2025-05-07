@@ -379,7 +379,7 @@ const DisplayDatabase = () => {
                     </h1>
                     <button
                       type="button"
-                      className="btn m-3-close"
+                      className="btn-close"
                       aria-label="Close"
                       onClick={() => {
                         setShowUserData(false);
