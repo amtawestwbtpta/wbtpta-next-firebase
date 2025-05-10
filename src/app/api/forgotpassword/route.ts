@@ -12,8 +12,8 @@ function generateOTP() {
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { email, empid }: any = reqBody;
-    const data = await User.findOne({ email, empid });
+    const { email }: any = reqBody;
+    const data = await User.findOne({ email });
 
     const name = data.tname;
     const username = data.username;
