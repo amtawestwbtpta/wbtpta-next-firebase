@@ -15,10 +15,9 @@ export async function POST(request: NextRequest) {
     const { email }: any = reqBody;
     const data = await User.findOne({ email });
 
-    const name = data.tname;
-    const username = data.username;
-
     if (data) {
+      const name = data.tname;
+      const username = data.username;
       const otp = generateOTP();
       await Otp.create({
         email: email,
@@ -40,7 +39,7 @@ export async function POST(request: NextRequest) {
           message: "User Not Found",
           success: false,
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
   } catch (error: any) {
