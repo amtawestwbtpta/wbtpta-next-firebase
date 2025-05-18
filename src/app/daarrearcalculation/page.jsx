@@ -455,7 +455,7 @@ export default function DAArrearCalculation() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter amount"
+                  placeholder="Enter Basic Pay (incl. Grade Pay)"
                   aria-label="basicpay"
                   aria-describedby="basicpay"
                   value={basicPay}
@@ -488,7 +488,8 @@ export default function DAArrearCalculation() {
                 <div className="promotion-list">
                   {promotions.map((promo, index) => (
                     <div key={index} className="promotion-item mb-3">
-                      <div className="row g-3 align-items-center">
+                      <h5 className="text-success">Promotion {index + 1}:</h5>
+                      <div className="row g-3 align-items-end">
                         <div className="col-md-5">
                           <label className="form-label">Effective Date:</label>
                           <input
@@ -509,7 +510,7 @@ export default function DAArrearCalculation() {
 
                         <div className="col-md-5">
                           <label className="form-label">
-                            Revised Basic Pay:
+                            Revised Basic Pay (incl. Grade Pay):
                           </label>
                           <input
                             type="number"
@@ -522,7 +523,7 @@ export default function DAArrearCalculation() {
                                 e.target.value
                               )
                             }
-                            placeholder="Enter revised amount"
+                            placeholder="Enter Revised Basic Pay"
                             min={
                               basicPay ? parseFloat(basicPay) + 1 : undefined
                             }
@@ -536,7 +537,7 @@ export default function DAArrearCalculation() {
                               className="btn btn-outline-danger w-100"
                               onClick={() => removePromotion(index)}
                             >
-                              Remove
+                              <i className="bi bi-dash-circle-fill"> Remove</i>
                             </button>
                           )}
                         </div>
