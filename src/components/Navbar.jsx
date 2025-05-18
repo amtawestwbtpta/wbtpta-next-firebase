@@ -562,6 +562,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/daarrearcalculation"
+              onClick={handleNavCollapse}
+            >
+              DA Arrear Calculation
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/agecalculator"
               onClick={handleNavCollapse}
             >
@@ -882,6 +891,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/daarrearcalculation"
+              onClick={handleNavCollapse}
+            >
+              DA Arrear Calculation
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/Ropa2019"
               onClick={handleNavCollapse}
             >
@@ -1075,6 +1093,15 @@ const Navbar = () => {
               onClick={handleNavCollapse}
             >
               Tax Calculator
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/daarrearcalculation"
+              onClick={handleNavCollapse}
+            >
+              DA Arrear Calculation
             </Link>
           </li>
           <li className="nav-item">

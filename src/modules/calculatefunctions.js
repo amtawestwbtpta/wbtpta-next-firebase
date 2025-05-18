@@ -14,7 +14,10 @@ export function round2dec(value) {
     return value;
   }
 }
-
+export function excelCeilingRound(number, multiplier) {
+  const rounded = Math.round(number); // Step 1: Round to the nearest integer
+  return Math.ceil(rounded / multiplier) * multiplier; // Step 2: Round up to the nearest multiple
+}
 export function NumInWords(number) {
   const first = [
     "",
