@@ -478,7 +478,7 @@ export default function DAArrearCalculation() {
                 <label>Promotion/Revision Date:</label>
                 <input
                   type="date"
-                  className="form-control"
+                  className="form-control mb-3"
                   value={promotionDate}
                   onChange={(e) => setPromotionDate(e.target.value)}
                   min="2008-04-01"
@@ -490,7 +490,7 @@ export default function DAArrearCalculation() {
                 <label>Revised Basic Pay (incl. Grade Pay):</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className="form-control mb-3"
                   value={promotionAmount}
                   onChange={(e) => setPromotionAmount(e.target.value)}
                 />
@@ -503,7 +503,16 @@ export default function DAArrearCalculation() {
                 className="btn btn-primary"
                 onClick={calculateArrears}
                 disabled={
-                  !basicPay || (joiningPeriod === "between" && !joiningDate)
+                  !basicPay ||
+                  (joiningPeriod === "between" && !joiningDate) ||
+                  (hasPromotion &&
+                    (!promotionDate ||
+                      !promotionAmount ||
+                      parseFloat(promotionAmount) <= parseFloat(basicPay) ||
+                      new Date(promotionDate) < new Date("2008-04-01") ||
+                      new Date(promotionDate) > new Date("2019-12-31") ||
+                      (joiningPeriod === "between" &&
+                        new Date(promotionDate) <= new Date(joiningDate))))
                 }
               >
                 Calculate
