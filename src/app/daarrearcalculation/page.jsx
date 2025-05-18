@@ -187,53 +187,83 @@ export default function DAArrearCalculation() {
   const [joiningPeriod, setJoiningPeriod] = useState("before");
   const [joiningDate, setJoiningDate] = useState("");
   const [basicPay, setBasicPay] = useState("");
-  const [hasPromotion, setHasPromotion] = useState(false);
-  const [promotionDate, setPromotionDate] = useState("");
-  const [promotionAmount, setPromotionAmount] = useState("");
   const [arrears, setArrears] = useState([]);
   const [totalArrear, setTotalArrear] = useState(0);
+  // ... other state variables ...
+  const [showPromotionSection, setShowPromotionSection] = useState(false);
+  const [promotions, setPromotions] = useState([{ date: "", amount: "" }]);
+
+  // Add new promotion fields
+  const addPromotion = () => {
+    setPromotions([...promotions, { date: "", amount: "" }]);
+  };
+
+  // Remove promotion fields
+  const removePromotion = (index) => {
+    const updated = promotions.filter((_, i) => i !== index);
+    setPromotions(updated);
+  };
+
+  // Handle promotion input changes
+  const handlePromotionChange = (index, field, value) => {
+    const updated = promotions.map((promo, i) =>
+      i === index ? { ...promo, [field]: value } : promo
+    );
+    setPromotions(updated);
+  };
+
+  const handleReset = () => {
+    setJoiningPeriod("before");
+    setJoiningDate("");
+    setBasicPay("");
+    setShowPromotionSection(false);
+    setPromotions([{ date: "", amount: "" }]);
+    setArrears([]);
+    setTotalArrear(0);
+  };
 
   const calculateArrears = () => {
     if (!basicPay || (joiningPeriod === "between" && !joiningDate)) return;
-    if (hasPromotion && (!promotionDate || !promotionAmount)) {
-      alert("Please fill all promotion details");
-      return;
+
+    // Validate promotions
+    let validPromotions = [];
+    if (showPromotionSection) {
+      validPromotions = promotions
+        .filter((p) => p.date && p.amount)
+        .map((p) => ({
+          date: new Date(p.date),
+          amount: parseFloat(p.amount),
+          originalDate: p.date,
+        }))
+        .sort((a, b) => a.date - b.date);
     }
 
-    // Initialize variables
-    const startYear = 2008;
-    const endYear = 2019;
+    // Check promotion sequence
+    let prevAmount = parseFloat(basicPay);
+    for (const promo of validPromotions) {
+      if (promo.amount <= prevAmount) {
+        alert(
+          `Promotion amount (₹${promo.amount}) must be greater than previous value (₹${prevAmount})`
+        );
+        return;
+      }
+      prevAmount = promo.amount;
+    }
+
+    // Initialize calculation
     let currentBasic = parseFloat(basicPay);
     let results = [];
     let grandTotal = 0;
-
-    // Date handling
     const joinDate = new Date(joiningDate);
-    const promoDate = new Date(promotionDate);
-    let promotionApplied = false;
+    let promoIndex = 0;
 
-    // Validate dates
-    if (hasPromotion) {
-      if (
-        promoDate < new Date("2008-04-01") ||
-        promoDate > new Date("2019-12-31")
-      ) {
-        alert("Promotion date must be between 01/04/2008 and 31/12/2019");
-        return;
-      }
-      if (joiningPeriod === "between" && promoDate < joinDate) {
-        alert("Promotion date cannot be before joining date");
-        return;
-      }
-    }
-
-    // Determine start point
-    let startFromYear =
-      joiningPeriod === "between" ? joinDate.getFullYear() : startYear;
-    let startFromMonth =
+    // Date ranges
+    const startFromYear =
+      joiningPeriod === "between" ? joinDate.getFullYear() : 2008;
+    const startFromMonth =
       joiningPeriod === "between" ? joinDate.getMonth() + 1 : 4;
+    const endYear = 2019;
 
-    // Main calculation loop
     for (let year = startFromYear; year <= endYear; year++) {
       let yearTotal = 0;
       const yearData = DADifference.find((d) => d.year === year);
@@ -243,128 +273,96 @@ export default function DAArrearCalculation() {
         if (year === startFromYear && month < startFromMonth) continue;
         if (year === endYear && month > 12) break;
 
-        // Get month details
-        const monthDate = new Date(year, month - 1);
-        const monthName = monthDate.toLocaleString("default", {
-          month: "short",
-        });
-        const daRate = yearData ? yearData[monthName] : 0;
-        const daysInMonth = new Date(year, month, 0).getDate();
+        const monthStart = new Date(year, month - 1);
+        const monthEnd = new Date(year, month, 0);
+        const daysInMonth = monthEnd.getDate();
+        let dailyArrears = [];
 
-        // Handle annual increment
-        if (
-          month === 7 &&
-          year >
-            (joiningPeriod === "between" ? joinDate.getFullYear() : startYear)
-        ) {
-          if (
-            !(
-              joiningPeriod === "between" &&
-              year === joinDate.getFullYear() &&
-              joinDate.getMonth() + 1 > 7
-            )
-          ) {
-            currentBasic = excelCeilingRound(currentBasic * 1.03, 10);
+        // Check for promotions in this month
+        const monthPromotions = validPromotions.filter(
+          (p) =>
+            p.date.getFullYear() === year && p.date.getMonth() + 1 === month
+        );
+
+        // Split month into periods
+        let periods = [];
+        let currentDate = new Date(monthStart);
+
+        if (monthPromotions.length > 0) {
+          for (const promo of monthPromotions) {
+            const promoDay = promo.date.getDate();
+
+            // Add pre-promotion period
+            if (currentDate.getDate() < promoDay) {
+              periods.push({
+                from: new Date(currentDate),
+                to: new Date(year, month - 1, promoDay - 1),
+                basic: currentBasic,
+              });
+            }
+
+            // Update current basic
+            currentBasic = promo.amount;
+            currentDate = new Date(year, month - 1, promoDay);
           }
         }
 
-        // Check for promotion
-        if (
-          hasPromotion &&
-          !promotionApplied &&
-          year === promoDate.getFullYear() &&
-          month === promoDate.getMonth() + 1
-        ) {
-          const promoDay = promoDate.getDate();
-          const daysBefore = promoDay - 1;
-          const daysAfter = daysInMonth - daysBefore;
+        // Add remaining period
+        periods.push({
+          from: new Date(currentDate),
+          to: monthEnd,
+          basic: currentBasic,
+        });
 
-          // Calculate before promotion
-          if (daysBefore > 0) {
-            let effectiveDays = daysBefore;
-            if (
-              year === startFromYear &&
-              month === startFromMonth &&
-              joiningPeriod === "between"
-            ) {
-              effectiveDays = Math.min(
-                daysBefore,
-                daysInMonth - joinDate.getDate() + 1
-              );
-            }
-
-            const arrearBefore =
-              currentBasic * daRate * (effectiveDays / daysInMonth);
-            yearTotal += arrearBefore;
-            grandTotal += arrearBefore;
-
-            results.push({
-              year,
-              month: `${monthName}`,
-              basicPay: currentBasic,
-              daRate: `${(daRate * 100).toFixed(0)}%`,
-              arrear: arrearBefore.toFixed(2),
-            });
-          }
-
-          // Calculate after promotion
-          const newBasic = parseFloat(promotionAmount);
-          let effectiveDaysAfter = daysAfter;
+        // Calculate for each period
+        for (const period of periods) {
+          // Handle annual increment
           if (
-            year === startFromYear &&
-            month === startFromMonth &&
-            joiningPeriod === "between"
+            month === 7 &&
+            year >
+              (joiningPeriod === "between" ? joinDate.getFullYear() : 2008) &&
+            period.from.getMonth() === 6
           ) {
-            const joinDay = joinDate.getDate();
-            effectiveDaysAfter = daysInMonth - Math.max(joinDay, promoDay) + 1;
+            // July is month 6 (0-indexed)
+            currentBasic = excelCeilingRound(currentBasic * 1.03, 10);
           }
 
-          const arrearAfter =
-            newBasic * daRate * (effectiveDaysAfter / daysInMonth);
-          yearTotal += arrearAfter;
-          grandTotal += arrearAfter;
+          const startDay = Math.max(
+            period.from.getDate(),
+            year === startFromYear && month === startFromMonth
+              ? joinDate.getDate()
+              : 1
+          );
 
-          results.push({
-            year,
-            month: `${monthName}`,
-            basicPay: newBasic,
-            daRate: `${(daRate * 100).toFixed(0)}%`,
-            arrear: arrearAfter.toFixed(2),
+          const endDay = period.to.getDate();
+          const daysCount = endDay - startDay + 1;
+
+          if (daysCount <= 0) continue;
+
+          const monthName = period.from.toLocaleString("default", {
+            month: "short",
           });
+          const daRate = yearData ? yearData[monthName] : 0;
+          const arrear = period.basic * daRate * (daysCount / daysInMonth);
 
-          currentBasic = newBasic;
-          promotionApplied = true;
-        } else {
-          // Normal calculation
-          let daysCount = daysInMonth;
-          if (
-            year === startFromYear &&
-            month === startFromMonth &&
-            joiningPeriod === "between"
-          ) {
-            daysCount = daysInMonth - joinDate.getDate() + 1;
-          }
-
-          const monthlyArrear =
-            currentBasic * daRate * (daysCount / daysInMonth);
-          yearTotal += monthlyArrear;
-          grandTotal += monthlyArrear;
+          yearTotal += arrear;
+          grandTotal += arrear;
 
           results.push({
             year,
             month: monthName,
-            basicPay: currentBasic,
+            basicPay: period.basic,
             daRate: `${(daRate * 100).toFixed(0)}%`,
-            arrear: monthlyArrear.toFixed(2),
+            arrear: arrear.toFixed(2),
           });
         }
       }
 
       // Add year total
-      if (results.length > 0 && results[results.length - 1].year === year) {
+      if (results.length > 0) {
         results.push({
           year,
-          month: "Monthly Gross Total",
+          month: "Monthly Total",
           basicPay: "-",
           daRate: "-",
           arrear: yearTotal.toFixed(2),
@@ -374,17 +372,6 @@ export default function DAArrearCalculation() {
 
     setArrears(results);
     setTotalArrear(grandTotal);
-  };
-  const handleReset = () => {
-    // Reset all states
-    setJoiningPeriod("before");
-    setJoiningDate("");
-    setBasicPay("");
-    setHasPromotion(false);
-    setPromotionDate("");
-    setPromotionAmount("");
-    setArrears([]);
-    setTotalArrear(0);
   };
   return (
     <div className="container my-4">
@@ -458,44 +445,107 @@ export default function DAArrearCalculation() {
               onChange={(e) => setBasicPay(e.target.value)}
             />
           </div>
-          <div className="form-group mb-3 mx-auto">
+          {/* Promotion Section */}
+          <div className="form-group mb-3">
             <div className="form-check">
               <input
                 className="form-check-input"
                 type="checkbox"
-                checked={hasPromotion}
-                onChange={(e) => setHasPromotion(e.target.checked)}
-                id="promotionCheck"
+                id="promotionToggle"
+                checked={showPromotionSection}
+                onChange={(e) => setShowPromotionSection(e.target.checked)}
               />
-              <label className="form-check-label" htmlFor="promotionCheck">
-                Had a Promotion / Pay Revision during Apr 2008 - Dec 2019?
+              <label className="form-check-label" htmlFor="promotionToggle">
+                Had Promotion/Pay Revision during 2008-2019?
               </label>
             </div>
           </div>
-          {hasPromotion && (
-            <>
-              <div className="form-group mb-3 col-md-6 mx-auto">
-                <label>Promotion/Revision Date:</label>
-                <input
-                  type="date"
-                  className="form-control mb-3"
-                  value={promotionDate}
-                  onChange={(e) => setPromotionDate(e.target.value)}
-                  min="2008-04-01"
-                  max="2019-12-31"
-                />
-              </div>
 
-              <div className="form-group mb-3 col-md-6 mx-auto">
-                <label>Revised Basic Pay (incl. Grade Pay):</label>
-                <input
-                  type="number"
-                  className="form-control mb-3"
-                  value={promotionAmount}
-                  onChange={(e) => setPromotionAmount(e.target.value)}
-                />
+          {showPromotionSection && (
+            <div className="card p-3 mb-4 mx-auto">
+              <div className="promotion-section">
+                <h5 className="mb-3">Promotion/Revision Details</h5>
+
+                <div className="promotion-list">
+                  {promotions.map((promo, index) => (
+                    <div key={index} className="promotion-item mb-3">
+                      <div className="row g-3 align-items-center">
+                        <div className="col-md-5">
+                          <label className="form-label">Effective Date:</label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            value={promo.date}
+                            onChange={(e) =>
+                              handlePromotionChange(
+                                index,
+                                "date",
+                                e.target.value
+                              )
+                            }
+                            min="2008-04-01"
+                            max="2019-12-31"
+                          />
+                        </div>
+
+                        <div className="col-md-5">
+                          <label className="form-label">
+                            Revised Basic Pay:
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            value={promo.amount}
+                            onChange={(e) =>
+                              handlePromotionChange(
+                                index,
+                                "amount",
+                                e.target.value
+                              )
+                            }
+                            placeholder="Enter revised amount"
+                            min={
+                              basicPay ? parseFloat(basicPay) + 1 : undefined
+                            }
+                          />
+                        </div>
+
+                        <div className="col-md-2 d-flex align-items-end">
+                          {index > 0 && (
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger w-100"
+                              onClick={() => removePromotion(index)}
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-success"
+                    onClick={addPromotion}
+                  >
+                    <i className="bi bi-plus-lg me-2"></i>
+                    Add Another Promotion
+                  </button>
+                </div>
+
+                <div className="alert alert-info mt-3 mb-0">
+                  <small>
+                    <i className="bi bi-info-circle me-2"></i>
+                    Add promotions in chronological order. Each revision amount
+                    must be greater than previous basic pay.
+                  </small>
+                </div>
               </div>
-            </>
+            </div>
           )}
           <div className="mx-auto my-3 d-flex justify-content-between">
             <div>
@@ -505,14 +555,17 @@ export default function DAArrearCalculation() {
                 disabled={
                   !basicPay ||
                   (joiningPeriod === "between" && !joiningDate) ||
-                  (hasPromotion &&
-                    (!promotionDate ||
-                      !promotionAmount ||
-                      parseFloat(promotionAmount) <= parseFloat(basicPay) ||
-                      new Date(promotionDate) < new Date("2008-04-01") ||
-                      new Date(promotionDate) > new Date("2019-12-31") ||
-                      (joiningPeriod === "between" &&
-                        new Date(promotionDate) <= new Date(joiningDate))))
+                  (showPromotionSection &&
+                    promotions.some(
+                      (promo) =>
+                        !promo.date ||
+                        !promo.amount ||
+                        parseFloat(promo.amount) <= parseFloat(basicPay) ||
+                        new Date(promo.date) < new Date("2008-04-01") ||
+                        new Date(promo.date) > new Date("2019-12-31") ||
+                        (joiningPeriod === "between" &&
+                          new Date(promo.date) <= new Date(joiningDate))
+                    ))
                 }
               >
                 Calculate
