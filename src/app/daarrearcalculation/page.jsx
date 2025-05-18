@@ -194,7 +194,6 @@ export default function DAArrearCalculation() {
   const [totalArrear, setTotalArrear] = useState(0);
 
   const calculateArrears = () => {
-    // Validate required inputs
     if (!basicPay || (joiningPeriod === "between" && !joiningDate)) return;
     if (hasPromotion && (!promotionDate || !promotionAmount)) {
       alert("Please fill all promotion details");
@@ -213,13 +212,17 @@ export default function DAArrearCalculation() {
     const promoDate = new Date(promotionDate);
     let promotionApplied = false;
 
-    // Validate promotion date
+    // Validate dates
     if (hasPromotion) {
       if (
         promoDate < new Date("2008-04-01") ||
         promoDate > new Date("2019-12-31")
       ) {
         alert("Promotion date must be between 01/04/2008 and 31/12/2019");
+        return;
+      }
+      if (joiningPeriod === "between" && promoDate < joinDate) {
+        alert("Promotion date cannot be before joining date");
         return;
       }
     }
@@ -240,22 +243,20 @@ export default function DAArrearCalculation() {
         if (year === startFromYear && month < startFromMonth) continue;
         if (year === endYear && month > 12) break;
 
-        // Handle promotion
-        if (hasPromotion && !promotionApplied) {
-          const currentDate = new Date(year, month - 1);
-          if (currentDate >= promoDate) {
-            currentBasic = parseFloat(promotionAmount);
-            promotionApplied = true;
-          }
-        }
+        // Get month details
+        const monthDate = new Date(year, month - 1);
+        const monthName = monthDate.toLocaleString("default", {
+          month: "short",
+        });
+        const daRate = yearData ? yearData[monthName] : 0;
+        const daysInMonth = new Date(year, month, 0).getDate();
 
-        // Apply annual increment
+        // Handle annual increment
         if (
           month === 7 &&
           year >
             (joiningPeriod === "between" ? joinDate.getFullYear() : startYear)
         ) {
-          // Skip increment in joining year if joined after July
           if (
             !(
               joiningPeriod === "between" &&
@@ -267,45 +268,103 @@ export default function DAArrearCalculation() {
           }
         }
 
-        // Get month name and DA rate
-        const monthName = new Date(year, month - 1).toLocaleString("default", {
-          month: "short",
-        });
-        const daRate = yearData ? yearData[monthName] : 0;
-
-        // Calculate days in month and effective days
-        const daysInMonth = new Date(year, month, 0).getDate();
-        let daysCount = daysInMonth;
-
-        // Handle partial month for joining month
+        // Check for promotion
         if (
-          year === startFromYear &&
-          month === startFromMonth &&
-          joiningPeriod === "between"
+          hasPromotion &&
+          !promotionApplied &&
+          year === promoDate.getFullYear() &&
+          month === promoDate.getMonth() + 1
         ) {
-          daysCount = daysInMonth - joinDate.getDate() + 1;
+          const promoDay = promoDate.getDate();
+          const daysBefore = promoDay - 1;
+          const daysAfter = daysInMonth - daysBefore;
+
+          // Calculate before promotion
+          if (daysBefore > 0) {
+            let effectiveDays = daysBefore;
+            if (
+              year === startFromYear &&
+              month === startFromMonth &&
+              joiningPeriod === "between"
+            ) {
+              effectiveDays = Math.min(
+                daysBefore,
+                daysInMonth - joinDate.getDate() + 1
+              );
+            }
+
+            const arrearBefore =
+              currentBasic * daRate * (effectiveDays / daysInMonth);
+            yearTotal += arrearBefore;
+            grandTotal += arrearBefore;
+
+            results.push({
+              year,
+              month: `${monthName}`,
+              basicPay: currentBasic,
+              daRate: `${(daRate * 100).toFixed(0)}%`,
+              arrear: arrearBefore.toFixed(2),
+            });
+          }
+
+          // Calculate after promotion
+          const newBasic = parseFloat(promotionAmount);
+          let effectiveDaysAfter = daysAfter;
+          if (
+            year === startFromYear &&
+            month === startFromMonth &&
+            joiningPeriod === "between"
+          ) {
+            const joinDay = joinDate.getDate();
+            effectiveDaysAfter = daysInMonth - Math.max(joinDay, promoDay) + 1;
+          }
+
+          const arrearAfter =
+            newBasic * daRate * (effectiveDaysAfter / daysInMonth);
+          yearTotal += arrearAfter;
+          grandTotal += arrearAfter;
+
+          results.push({
+            year,
+            month: `${monthName}`,
+            basicPay: newBasic,
+            daRate: `${(daRate * 100).toFixed(0)}%`,
+            arrear: arrearAfter.toFixed(2),
+          });
+
+          currentBasic = newBasic;
+          promotionApplied = true;
+        } else {
+          // Normal calculation
+          let daysCount = daysInMonth;
+          if (
+            year === startFromYear &&
+            month === startFromMonth &&
+            joiningPeriod === "between"
+          ) {
+            daysCount = daysInMonth - joinDate.getDate() + 1;
+          }
+
+          const monthlyArrear =
+            currentBasic * daRate * (daysCount / daysInMonth);
+          yearTotal += monthlyArrear;
+          grandTotal += monthlyArrear;
+
+          results.push({
+            year,
+            month: monthName,
+            basicPay: currentBasic,
+            daRate: `${(daRate * 100).toFixed(0)}%`,
+            arrear: monthlyArrear.toFixed(2),
+          });
         }
-
-        // Calculate monthly arrear
-        const monthlyArrear = currentBasic * daRate * (daysCount / daysInMonth);
-        yearTotal += monthlyArrear;
-        grandTotal += monthlyArrear;
-
-        // Store results
-        results.push({
-          year,
-          month: monthName,
-          basicPay: currentBasic,
-          daRate: `${(daRate * 100).toFixed(0)}%`,
-          arrear: monthlyArrear.toFixed(2),
-        });
       }
 
       // Add year total
       if (results.length > 0 && results[results.length - 1].year === year) {
         results.push({
           year,
-          month: "Monthly Total Year-",
+          month: "Monthly Gross Total",
           basicPay: "-",
           daRate: "-",
           arrear: yearTotal.toFixed(2),
@@ -313,7 +372,6 @@ export default function DAArrearCalculation() {
       }
     }
 
-    // Update state
     setArrears(results);
     setTotalArrear(grandTotal);
   };
@@ -331,6 +389,7 @@ export default function DAArrearCalculation() {
   return (
     <div className="container my-4">
       <div className="my-3">
+        <h2 className="mb-4 text-primary for">WBTPTA AMTA WEST CIRCLE</h2>
         <h2 className="mb-4">DA Arrear Calculator</h2>
         <h5 className="mb-4">
           For West Bengal State Government Employees (April 2008 - December
@@ -339,7 +398,7 @@ export default function DAArrearCalculation() {
         <img
           src="https://wbpay.in/wp-content/smush-webp/2025/05/Arrear-DA-Calculator-780x470.jpg.webp"
           alt="daimage"
-          className="w-50 rounded"
+          className="w-75 rounded"
         />
       </div>
       <div className="container mx-auto">
