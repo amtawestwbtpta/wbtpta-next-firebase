@@ -385,33 +385,39 @@ export default function DAArrearCalculation() {
         <img
           src="https://wbpay.in/wp-content/smush-webp/2025/05/Arrear-DA-Calculator-780x470.jpg.webp"
           alt="daimage"
-          className="w-75 rounded"
+          className="rounded img-fluid img-thumbnail"
         />
       </div>
-      <div className="container mx-auto">
+      <div className="mx-auto">
         <div className="card p-3 mb-4 mx-auto">
           <div className="form-group mb-3 mx-auto">
-            <label>Joining Period:</label>
-            <div className="ml-3">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={joiningPeriod === "before"}
-                  onChange={() => setJoiningPeriod("before")}
-                />
-                <label className="form-check-label">
+            <label className="mb-3 fs-5">Select Joining Period:</label>
+            <div className="mx-auto">
+              <div className="mx-auto mb-3 d-flex flex-column justify-content-between align-items-center">
+                <div className="form-check form-switch mb-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="joiningBefore"
+                    checked={joiningPeriod === "before"}
+                    onChange={() => setJoiningPeriod("before")}
+                  />
+                </div>
+                <label className="input-group-text" for="joiningBefore">
                   Joined before 01/04/2008
                 </label>
               </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  checked={joiningPeriod === "between"}
-                  onChange={() => setJoiningPeriod("between")}
-                />
-                <label className="form-check-label">
+              <div className="mx-auto d-flex flex-column justify-content-between align-items-center">
+                <div className="form-check form-switch mb-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="joiningAfter"
+                    checked={joiningPeriod === "between"}
+                    onChange={() => setJoiningPeriod("between")}
+                  />
+                </div>
+                <label className="input-group-text" for="joiningAfter">
                   Joined between 01/04/2008 and 31/12/2019
                 </label>
               </div>
@@ -419,46 +425,59 @@ export default function DAArrearCalculation() {
           </div>
 
           {joiningPeriod === "between" && (
-            <div className="form-group mb-3 col-md-6 mx-auto">
-              <label>Actual Joining Date:</label>
-              <input
-                type="date"
-                className="form-control m-3"
-                value={joiningDate}
-                onChange={(e) => setJoiningDate(e.target.value)}
-                min="2008-04-01"
-                max="2019-12-31"
-              />
+            <div className="mx-auto">
+              <div className="mb-3 mx-auto">
+                <label className="mb-3" for="joiningDate">
+                  Actual Joining Date:
+                </label>
+                <div className="input-group-text">
+                  <input
+                    type="date"
+                    id="joiningDate"
+                    className="form-control"
+                    value={joiningDate}
+                    onChange={(e) => setJoiningDate(e.target.value)}
+                    min="2008-04-01"
+                    max="2019-12-31"
+                  />
+                </div>
+              </div>
             </div>
           )}
-
-          <div className="form-group mb-3 col-md-6 mx-auto">
-            <label>
-              {joiningPeriod === "before"
-                ? "Basic Pay (incl. Grade Pay) as on 01/04/2008:"
-                : "Basic Pay (incl. Grade Pay) as on Actual Joining Date:"}
-            </label>
-            <input
-              type="number"
-              className="form-control m-3"
-              value={basicPay}
-              onChange={(e) => setBasicPay(e.target.value)}
-            />
+          <div className="mx-auto">
+            <div className="mb-3 mx-auto">
+              <label className="input-group-text mb-3" for="basicpay">
+                {joiningPeriod === "before"
+                  ? "Basic Pay (incl. Grade Pay) as on 01/04/2008:"
+                  : "Basic Pay (incl. Grade Pay) as on Actual Joining Date:"}
+              </label>
+              <div className="input-group-text">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter amount"
+                  aria-label="basicpay"
+                  aria-describedby="basicpay"
+                  value={basicPay}
+                  onChange={(e) => setBasicPay(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
           {/* Promotion Section */}
-          <div className="form-group mb-3">
-            <div className="form-check">
+          <div className="mb-3 d-flex flex-column justify-content-between align-items-center mx-auto">
+            <div className="form-check form-switch">
               <input
-                className="form-check-input"
+                className="form-check-input mb-3"
                 type="checkbox"
                 id="promotionToggle"
                 checked={showPromotionSection}
                 onChange={(e) => setShowPromotionSection(e.target.checked)}
               />
-              <label className="form-check-label" htmlFor="promotionToggle">
-                Had Promotion/Pay Revision during 2008-2019?
-              </label>
             </div>
+            <label className="input-group-text mx-auto">
+              Had Promotion/Pay Revision during 2008-2019?
+            </label>
           </div>
 
           {showPromotionSection && (
