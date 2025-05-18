@@ -500,6 +500,17 @@ export default function DAArrearCalculation() {
           >
             Reset
           </button>
+          <button
+            type="button"
+            className="btn btn-primary ms-2"
+            onClick={() => {
+              if (typeof window !== undefined) {
+                window.print();
+              }
+            }}
+          >
+            Print
+          </button>
         </div>
       )}
     </div>
