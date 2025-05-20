@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  excelCeilingRound,
-  IndianFormat,
-} from "../../modules/calculatefunctions";
+import { excelCeilingRound } from "../../modules/calculatefunctions";
 export default function DAArrearCalculation() {
   const DADifference = [
     {
@@ -286,10 +283,13 @@ export default function DAArrearCalculation() {
 
         // Apply annual increment in July
         if (month === 7) {
+          const isFirstYear = year === joinDate.getFullYear();
+          const joinedBeforeJuly = joinDate.getMonth() < 6; // June (0-11)
+
           const shouldApplyIncrement =
             joiningPeriod === "before"
               ? year >= 2008
-              : year > joinDate.getFullYear(); // Changed logic here
+              : !isFirstYear || (isFirstYear && joinedBeforeJuly);
 
           if (shouldApplyIncrement) {
             currentBasic = excelCeilingRound(currentBasic * 1.03, 10);
@@ -384,10 +384,10 @@ export default function DAArrearCalculation() {
         // Push monthly result
         results.push({
           year,
-          month: `${monthName}`, // Format: "Jan 2014"
-          basicPay: IndianFormat(Math.round(monthlyBasic)),
+          month: `${monthName} ${year}`, // Format: "Jan 2014"
+          basicPay: monthlyBasic.toFixed(2),
           daRate: daRate ? `${(daRate * 100).toFixed(0)}%` : "0%",
-          arrear: IndianFormat(Math.round(monthlyArrear)),
+          arrear: monthlyArrear.toFixed(2),
         });
       }
 
@@ -396,20 +396,20 @@ export default function DAArrearCalculation() {
         results.push({
           year: year.toString(),
           month: "Yearly Grand Total",
-          basicPay: IndianFormat(Math.round(yearlyBasic)),
+          basicPay: yearlyBasic.toFixed(2),
           daRate: "-",
-          arrear: IndianFormat(Math.round(yearlyArrear)),
+          arrear: yearlyArrear.toFixed(2),
         });
       }
     }
 
     // Add final grand total
     results.push({
-      year: "From 2008 To 2019",
+      year: "2008-2019",
       month: "Grand Total",
-      basicPay: IndianFormat(Math.round(grandTotalBasic)),
+      basicPay: Math.round(grandTotalBasic).toLocaleString(),
       daRate: "-",
-      arrear: IndianFormat(Math.round(grandTotalArrear)),
+      arrear: grandTotalArrear.toFixed(2),
     });
 
     setArrears(results);
@@ -449,7 +449,7 @@ export default function DAArrearCalculation() {
                     onChange={() => setJoiningPeriod("before")}
                   />
                 </div>
-                <label className="input-group-text" htmlFor="joiningBefore">
+                <label className="input-group-text" for="joiningBefore">
                   Joined before 01/04/2008
                 </label>
               </div>
@@ -463,7 +463,7 @@ export default function DAArrearCalculation() {
                     onChange={() => setJoiningPeriod("between")}
                   />
                 </div>
-                <label className="input-group-text" htmlFor="joiningAfter">
+                <label className="input-group-text" for="joiningAfter">
                   Joined between 01/04/2008 and 31/12/2019
                 </label>
               </div>
@@ -473,7 +473,7 @@ export default function DAArrearCalculation() {
           {joiningPeriod === "between" && (
             <div className="mx-auto">
               <div className="mb-3 mx-auto">
-                <label className="mb-3" htmlFor="joiningDate">
+                <label className="mb-3" for="joiningDate">
                   Actual Joining Date:
                 </label>
                 <div className="input-group-text">
@@ -492,7 +492,7 @@ export default function DAArrearCalculation() {
           )}
           <div className="mx-auto">
             <div className="mb-3 mx-auto">
-              <label className="input-group-text mb-3" htmlFor="basicpay">
+              <label className="input-group-text mb-3" for="basicpay">
                 {joiningPeriod === "before"
                   ? "Basic Pay (incl. Grade Pay) as on 01/04/2008:"
                   : "Basic Pay (incl. Grade Pay) as on Actual Joining Date:"}
@@ -664,9 +664,9 @@ export default function DAArrearCalculation() {
                 {arrears.map((row, index) => (
                   <tr key={index}>
                     <td>{`${row.month} ${row.year}`}</td>
-                    <td>₹ {row.basicPay}</td>
+                    <td>{row.basicPay}</td>
                     <td>{row.daRate}</td>
-                    <td>₹ {row.arrear}</td>
+                    <td>{row.arrear}</td>
                   </tr>
                 ))}
               </tbody>
@@ -674,12 +674,10 @@ export default function DAArrearCalculation() {
           </div>
 
           <div className="alert alert-success mt-3">
-            <h4>
-              Grand Total Arrear: ₹ {IndianFormat(Math.round(totalArrear))}
-            </h4>
+            <h4>Grand Total Arrear: ₹{totalArrear.toFixed(0)}</h4>
             <h5>
-              25% of Total Arrear (Indicative): ₹{" "}
-              {IndianFormat(Math.round(totalArrear * 0.25))}
+              25% of Total Arrear (Indicative): ₹
+              {(totalArrear * 0.25).toFixed(0)}
             </h5>
           </div>
           <button
