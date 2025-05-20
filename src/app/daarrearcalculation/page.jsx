@@ -294,13 +294,15 @@ export default function DAArrearCalculation() {
           const promoDate = new Date(promo.date);
           if (promoDate > cursorDate) {
             const preEnd = new Date(promoDate);
-            preEnd.setDate(preEnd.getDate() - 1);
+            if (preEnd.getDate() !== monthStart.getDate()) {
+              preEnd.setDate(preEnd.getDate() - 1);
 
-            periods.push({
-              start: new Date(cursorDate),
-              end: preEnd,
-              basic: currentBasic,
-            });
+              periods.push({
+                start: new Date(cursorDate),
+                end: preEnd,
+                basic: currentBasic,
+              });
+            }
           }
 
           periods.push({
@@ -348,7 +350,7 @@ export default function DAArrearCalculation() {
           results.push({
             year,
             month: monthName,
-            period: `${startDay}-${endDay}`,
+            period: `${endDay - startDay + 1}D`,
             basicPay: IndianFormat(Math.round(basicContribution)),
             daRate: daRate ? `${(daRate * 100).toFixed(0)}%` : "0%",
             arrear: IndianFormat(Math.round(arrearContribution)),
