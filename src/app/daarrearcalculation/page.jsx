@@ -226,49 +226,31 @@ export default function DAArrearCalculation() {
   };
 
   const calculateArrears = () => {
-    // Validate inputs
     if (!basicPay || (joiningPeriod === "between" && !joiningDate)) {
       alert("Please fill all required fields");
       return;
     }
 
-    // Parse numerical values safely
     const initialBasic = parseFloat(basicPay);
     if (isNaN(initialBasic)) {
       alert("Invalid Basic Pay amount");
       return;
     }
 
-    // Process promotions with validation
     const validPromotions = promotions
-      .filter((p) => {
-        const amount = parseFloat(p.amount);
-        return p.date && !isNaN(amount) && amount > 0;
-      })
+      .filter((p) => p.date && !isNaN(parseFloat(p.amount)))
       .map((p) => ({
         date: new Date(p.date),
-        amount: excelCeilingRound(parseFloat(p.amount), 10),
+        amount: parseFloat(p.amount),
       }))
       .sort((a, b) => a.date - b.date);
 
-    // Validate promotion sequence
-    let prevAmount = initialBasic;
-    for (const promo of validPromotions) {
-      if (promo.amount <= prevAmount) {
-        alert(`Promotion amount must be greater than ₹${prevAmount}`);
-        return;
-      }
-      prevAmount = promo.amount;
-    }
-
-    // Initialize calculation
     let currentBasic = initialBasic;
     let results = [];
     let grandTotalArrear = 0;
     let grandTotalBasic = 0;
     const joinDate = new Date(joiningDate);
 
-    // Date parameters
     const startYear =
       joiningPeriod === "between" ? joinDate.getFullYear() : 2008;
     const startMonth =
@@ -280,23 +262,19 @@ export default function DAArrearCalculation() {
       const yearData = DADifference.find((d) => d.year === year) || {};
 
       for (let month = 1; month <= 12; month++) {
-        // Skip months before start period
-        if (year === startYear && month < startMonth) continue;
-        if (year === 2019 && month > 12) break;
-
-        // Apply annual increment in July
         if (month === 7) {
-          const shouldApplyIncrement =
+          const shouldApply =
             joiningPeriod === "before"
               ? year >= 2008
-              : year > joinDate.getFullYear(); // Changed logic here
+              : year > joinDate.getFullYear();
 
-          if (shouldApplyIncrement) {
+          if (shouldApply) {
             currentBasic = excelCeilingRound(currentBasic * 1.03, 10);
           }
         }
+        if (year === startYear && month < startMonth) continue;
+        if (year === 2019 && month > 12) break;
 
-        // Get month parameters
         const monthStart = new Date(year, month - 1);
         const monthEnd = new Date(year, month, 0);
         const daysInMonth = monthEnd.getDate();
@@ -305,93 +283,82 @@ export default function DAArrearCalculation() {
         });
         const daRate = yearData[monthName] || 0;
 
-        // Handle promotions
         const monthPromotions = validPromotions.filter(
           (p) => p.date >= monthStart && p.date <= monthEnd
         );
 
-        // Create calculation periods
         let periods = [];
         let cursorDate = new Date(monthStart);
 
-        // Add promotion periods
         for (const promo of monthPromotions) {
           const promoDate = new Date(promo.date);
           if (promoDate > cursorDate) {
+            const preEnd = new Date(promoDate);
+            preEnd.setDate(preEnd.getDate() - 1);
+
             periods.push({
               start: new Date(cursorDate),
-              end: new Date(promoDate - 86400000), // Previous day
+              end: preEnd,
               basic: currentBasic,
             });
           }
+
           periods.push({
             start: new Date(promoDate),
-            end: monthEnd,
+            end: new Date(monthEnd),
             basic: promo.amount,
           });
-          cursorDate = new Date(promoDate);
+
+          cursorDate = new Date(monthEnd);
+          cursorDate.setDate(cursorDate.getDate() + 1);
           currentBasic = promo.amount;
         }
 
-        // Add remaining period
         if (cursorDate <= monthEnd) {
           periods.push({
             start: new Date(cursorDate),
-            end: monthEnd,
+            end: new Date(monthEnd),
             basic: currentBasic,
           });
         }
 
-        // Calculate monthly values
-        let monthlyBasic = 0;
-        let monthlyArrear = 0;
-
         for (const period of periods) {
-          const startDay = period.start.getDate();
+          let startDay = period.start.getDate();
           const endDay = period.end.getDate();
           let days = endDay - startDay + 1;
 
-          // Handle joining month adjustment
           if (
             year === startYear &&
             month === startMonth &&
             joiningPeriod === "between"
           ) {
             const joinDay = joinDate.getDate();
+            startDay = joinDay;
             days = Math.max(
               0,
               Math.min(endDay, daysInMonth) - Math.max(startDay, joinDay) + 1
             );
           }
 
+          if (days <= 0) continue;
+
           const basicContribution = period.basic * (days / daysInMonth);
           const arrearContribution = basicContribution * daRate;
 
-          monthlyBasic += basicContribution;
-          monthlyArrear += arrearContribution;
+          results.push({
+            year,
+            month: monthName,
+            period: `${startDay}-${endDay}`,
+            basicPay: IndianFormat(Math.round(basicContribution)),
+            daRate: daRate ? `${(daRate * 100).toFixed(0)}%` : "0%",
+            arrear: IndianFormat(Math.round(arrearContribution)),
+          });
+
+          yearlyBasic += basicContribution;
+          yearlyArrear += arrearContribution;
         }
-
-        // Validate calculations
-        if (isNaN(monthlyBasic)) monthlyBasic = 0;
-        if (isNaN(monthlyArrear)) monthlyArrear = 0;
-
-        // Accumulate totals
-        yearlyBasic += monthlyBasic;
-        yearlyArrear += monthlyArrear;
-        grandTotalBasic += monthlyBasic;
-        grandTotalArrear += monthlyArrear;
-
-        // Push monthly result
-        results.push({
-          year,
-          month: `${monthName}`, // Format: "Jan 2014"
-          basicPay: IndianFormat(Math.round(monthlyBasic)),
-          daRate: daRate ? `${(daRate * 100).toFixed(0)}%` : "0%",
-          arrear: IndianFormat(Math.round(monthlyArrear)),
-        });
       }
 
-      // Add yearly total
       if (yearlyArrear > 0) {
         results.push({
           year: year.toString(),
@@ -400,10 +367,11 @@ export default function DAArrearCalculation() {
           daRate: "-",
           arrear: IndianFormat(Math.round(yearlyArrear)),
         });
+        grandTotalBasic += yearlyBasic;
+        grandTotalArrear += yearlyArrear;
       }
     }
 
-    // Add final grand total
     results.push({
       year: "From 2008 To 2019",
       month: "Grand Total",
@@ -414,6 +382,11 @@ export default function DAArrearCalculation() {
 
     setArrears(results);
     setTotalArrear(grandTotalArrear);
+  };
+
+  const excelCeilingRound = (number, multiple) => {
+    const rounded = Math.round(number);
+    return Math.ceil(rounded / multiple) * multiple;
   };
 
   useEffect(() => {
@@ -661,14 +634,30 @@ export default function DAArrearCalculation() {
                 </tr>
               </thead>
               <tbody>
-                {arrears.map((row, index) => (
-                  <tr key={index}>
-                    <td>{`${row.month} ${row.year}`}</td>
-                    <td>₹ {row.basicPay}</td>
-                    <td>{row.daRate}</td>
-                    <td>₹ {row.arrear}</td>
-                  </tr>
-                ))}
+                {arrears.map((row, index) => {
+                  if (
+                    row.month === "Yearly Grand Total" ||
+                    row.month === "Grand Total"
+                  ) {
+                    return (
+                      <tr key={index} className="table-active">
+                        <td>{`${row.month} ${row.year}`}</td>
+                        <td>₹ {row.basicPay}</td>
+                        <td>{row.daRate}</td>
+                        <td>₹ {row.arrear}</td>
+                      </tr>
+                    );
+                  } else {
+                    return (
+                      <tr key={index}>
+                        <td>{`${row.month} ${row.year} (${row.period})`}</td>
+                        <td>₹ {row.basicPay}</td>
+                        <td>{row.daRate}</td>
+                        <td>₹ {row.arrear}</td>
+                      </tr>
+                    );
+                  }
+                })}
               </tbody>
             </table>
           </div>
