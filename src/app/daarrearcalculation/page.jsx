@@ -4,6 +4,7 @@ import {
   excelCeilingRound,
   IndianFormat,
 } from "../../modules/calculatefunctions";
+import { useRouter } from "next/navigation";
 export default function DAArrearCalculation() {
   const DADifference = [
     {
@@ -187,6 +188,7 @@ export default function DAArrearCalculation() {
       Dec: 0.39,
     },
   ];
+  const router = useRouter();
   const [joiningPeriod, setJoiningPeriod] = useState("before");
   const [joiningDate, setJoiningDate] = useState("");
   const [basicPay, setBasicPay] = useState("");
@@ -386,11 +388,6 @@ export default function DAArrearCalculation() {
     setTotalArrear(grandTotalArrear);
   };
 
-  const excelCeilingRound = (number, multiple) => {
-    const rounded = Math.round(number);
-    return Math.ceil(rounded / multiple) * multiple;
-  };
-
   useEffect(() => {
     //eslint-disable-next-line
   }, [arrears]);
@@ -408,6 +405,15 @@ export default function DAArrearCalculation() {
           alt="daimage"
           className="rounded img-fluid img-thumbnail"
         />
+      </div>
+      <div className="mb-3">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => router.push("/monthlyDAArrear")}
+        >
+          Yearwise
+        </button>
       </div>
       <div className="mx-auto">
         <div className="card p-3 mb-4 mx-auto">
