@@ -462,7 +462,7 @@ export default function MonthlyDAArrear() {
           Back
         </button>
       </div>
-      <div className="mx-auto">
+      <div className="mx-auto noprint">
         <div className="card p-3 mb-4 mx-auto">
           <div className="form-group mb-3 mx-auto">
             <div className="input-group mb-3">
