@@ -453,7 +453,7 @@ export default function MonthlyDAArrear() {
   useEffect(() => {}, [showYear]);
   return (
     <div className="container-fluid my-3">
-      <div className="mb-3">
+      <div className="mb-3 noprint">
         <button
           type="button"
           className="btn btn-primary"
