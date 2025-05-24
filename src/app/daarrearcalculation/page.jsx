@@ -198,6 +198,13 @@ export default function DAArrearCalculation() {
   const [showPromotionSection, setShowPromotionSection] = useState(false);
   const [promotions, setPromotions] = useState([{ date: "", amount: "" }]);
 
+  const handleJoiningPeriodChange = () => {
+    if (joiningPeriod === "before") {
+      setJoiningPeriod("between");
+    } else {
+      setJoiningPeriod("before");
+    }
+  };
   // Add new promotion fields
   const addPromotion = () => {
     setPromotions([...promotions, { date: "", amount: "" }]);
@@ -427,10 +434,10 @@ export default function DAArrearCalculation() {
                     type="checkbox"
                     id="joiningBefore"
                     checked={joiningPeriod === "before"}
-                    onChange={() => setJoiningPeriod("before")}
+                    onChange={handleJoiningPeriodChange}
                   />
                 </div>
-                <label className="input-group-text" htmlFor="joiningBefore">
+                <label className="" htmlFor="joiningBefore">
                   Joined before 01/04/2008
                 </label>
               </div>
@@ -441,10 +448,10 @@ export default function DAArrearCalculation() {
                     type="checkbox"
                     id="joiningAfter"
                     checked={joiningPeriod === "between"}
-                    onChange={() => setJoiningPeriod("between")}
+                    onChange={handleJoiningPeriodChange}
                   />
                 </div>
-                <label className="input-group-text" htmlFor="joiningAfter">
+                <label className="" htmlFor="joiningAfter">
                   Joined between 01/04/2008 and 31/12/2019
                 </label>
               </div>
@@ -457,7 +464,7 @@ export default function DAArrearCalculation() {
                 <label className="mb-3" htmlFor="joiningDate">
                   Actual Joining Date:
                 </label>
-                <div className="input-group-text">
+                <div className="">
                   <input
                     type="date"
                     id="joiningDate"
@@ -473,12 +480,12 @@ export default function DAArrearCalculation() {
           )}
           <div className="mx-auto">
             <div className="mb-3 mx-auto">
-              <label className="input-group-text mb-3" htmlFor="basicpay">
+              <label className=" mb-3" htmlFor="basicpay">
                 {joiningPeriod === "before"
                   ? "Basic Pay (incl. Grade Pay) as on 01/04/2008:"
                   : "Basic Pay (incl. Grade Pay) as on Actual Joining Date:"}
               </label>
-              <div className="input-group-text">
+              <div className="">
                 <input
                   type="number"
                   className="form-control"
@@ -502,7 +509,7 @@ export default function DAArrearCalculation() {
                 onChange={(e) => setShowPromotionSection(e.target.checked)}
               />
             </div>
-            <label className="input-group-text mx-auto">
+            <label className=" mx-auto">
               Had Promotion/Pay Revision during 2008-2019?
             </label>
           </div>

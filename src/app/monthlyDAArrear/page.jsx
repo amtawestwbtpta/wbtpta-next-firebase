@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   excelCeilingRound,
   IndianFormat,
@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import AICPI from "./aicpi.json";
 import OLDDA from "./oldDA.json";
 export default function MonthlyDAArrear() {
+  const yearRef = useRef();
   const DADifference = [
     {
       year: 2008,
@@ -200,7 +201,7 @@ export default function MonthlyDAArrear() {
   const [name, setName] = useState("");
   const [school, setSchool] = useState("");
   const [designation, setDesignation] = useState("ASSISTANT TEACHER");
-  const [selectedYear, setSelectedYear] = useState(2008);
+  const [selectedYear, setSelectedYear] = useState("");
   const [joiningPeriod, setJoiningPeriod] = useState("before");
   const [joiningDate, setJoiningDate] = useState("");
   const [basicPay, setBasicPay] = useState("");
@@ -213,7 +214,13 @@ export default function MonthlyDAArrear() {
   // ... other state variables ...
   const [showPromotionSection, setShowPromotionSection] = useState(false);
   const [promotions, setPromotions] = useState([{ date: "", amount: "" }]);
-
+  const handleJoiningPeriodChange = () => {
+    if (joiningPeriod === "before") {
+      setJoiningPeriod("between");
+    } else {
+      setJoiningPeriod("before");
+    }
+  };
   // Add new promotion fields
   const addPromotion = () => {
     setPromotions([...promotions, { date: "", amount: "" }]);
@@ -243,6 +250,7 @@ export default function MonthlyDAArrear() {
     });
     setShowYear(arr);
   };
+
   const calculateArrears = () => {
     if (!basicPay || (joiningPeriod === "between" && !joiningDate)) {
       alert("Please fill all required fields");
@@ -443,14 +451,15 @@ export default function MonthlyDAArrear() {
     setName("");
     setSchool("");
     setDesignation("ASSISTANT TEACHER");
-    setSelectedYear(2008);
+    setSelectedYear("");
+    yearRef.current.value = "";
     setDisabiality(false);
     setArrearDiff(0);
     setShowYear(yearArray);
     setTwentyFiveArrear(0);
     setShowCalculation(false);
   };
-  useEffect(() => {}, [showYear]);
+  useEffect(() => {}, [showYear, selectedYear]);
   return (
     <div className="container-fluid my-3">
       <div className="mb-3 noprint">
@@ -465,8 +474,8 @@ export default function MonthlyDAArrear() {
       <div className="mx-auto noprint">
         <div className="card p-3 mb-4 mx-auto">
           <div className="form-group mb-3 mx-auto">
-            <div className="input-group mb-3">
-              <span className="input-group-text" htmlFor="name">
+            <div className="mb-3">
+              <span className="" htmlFor="name">
                 Your Name
               </span>
               <input
@@ -478,8 +487,8 @@ export default function MonthlyDAArrear() {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="input-group mb-3">
-              <span className="input-group-text" htmlFor="school">
+            <div className="mb-3">
+              <span className="" htmlFor="school">
                 Your School
               </span>
               <input
@@ -491,8 +500,8 @@ export default function MonthlyDAArrear() {
                 onChange={(e) => setSchool(e.target.value)}
               />
             </div>
-            <div className="input-group mb-3">
-              <span className="input-group-text" htmlFor="Designation">
+            <div className="mb-3">
+              <span className="" htmlFor="Designation">
                 Your Designation
               </span>
               <input
@@ -515,10 +524,10 @@ export default function MonthlyDAArrear() {
                       type="checkbox"
                       id="joiningBefore"
                       checked={joiningPeriod === "before"}
-                      onChange={() => setJoiningPeriod("before")}
+                      onChange={handleJoiningPeriodChange}
                     />
                   </div>
-                  <label className="input-group-text" htmlFor="joiningBefore">
+                  <label className="" htmlFor="joiningBefore">
                     Joined before 01/04/2008
                   </label>
                 </div>
@@ -529,10 +538,10 @@ export default function MonthlyDAArrear() {
                       type="checkbox"
                       id="joiningAfter"
                       checked={joiningPeriod === "between"}
-                      onChange={() => setJoiningPeriod("between")}
+                      onChange={handleJoiningPeriodChange}
                     />
                   </div>
-                  <label className="input-group-text" htmlFor="joiningAfter">
+                  <label className="" htmlFor="joiningAfter">
                     Joined between 01/04/2008 and 31/12/2019
                   </label>
                 </div>
@@ -545,7 +554,7 @@ export default function MonthlyDAArrear() {
                   <label className="mb-3" htmlFor="joiningDate">
                     Actual Joining Date:
                   </label>
-                  <div className="input-group-text">
+                  <div className="">
                     <input
                       type="date"
                       id="joiningDate"
@@ -561,12 +570,12 @@ export default function MonthlyDAArrear() {
             )}
             <div className="mx-auto">
               <div className="mb-3 mx-auto">
-                <label className="input-group-text mb-3" htmlFor="basicpay">
+                <label className=" mb-3" htmlFor="basicpay">
                   {joiningPeriod === "before"
                     ? "Basic Pay (incl. Grade Pay) as on 01/04/2008:"
                     : "Basic Pay (incl. Grade Pay) as on Actual Joining Date:"}
                 </label>
-                <div className="input-group-text">
+                <div className="">
                   <input
                     type="number"
                     className="form-control"
@@ -589,9 +598,7 @@ export default function MonthlyDAArrear() {
                   onChange={(e) => setDisabiality(e.target.checked)}
                 />
               </div>
-              <label className="input-group-text mx-auto">
-                Is Physically Changed?
-              </label>
+              <label className=" mx-auto">Is Physically Changed?</label>
             </div>
             {/* Promotion Section */}
             <div className="mb-3 d-flex flex-column justify-content-between align-items-center mx-auto">
@@ -604,7 +611,7 @@ export default function MonthlyDAArrear() {
                   onChange={(e) => setShowPromotionSection(e.target.checked)}
                 />
               </div>
-              <label className="input-group-text mx-auto">
+              <label className=" mx-auto">
                 Had Promotion/Pay Revision during 2008-2019?
               </label>
             </div>
@@ -707,10 +714,14 @@ export default function MonthlyDAArrear() {
               </p>
               <select
                 className="form-select"
+                ref={yearRef}
                 id="selectedYear"
                 aria-label="Default select example"
                 defaultValue={""}
-                onChange={(e) => setSelectedYear(e.target.value)}
+                onChange={(e) => {
+                  setSelectedYear(e.target.value);
+                  setShowCalculation(false);
+                }}
               >
                 <option value={""}>Select Salary Year</option>
                 {showYear.map((year, index) => (
@@ -729,6 +740,9 @@ export default function MonthlyDAArrear() {
                 onClick={calculateArrears}
                 disabled={
                   !basicPay ||
+                  selectedYear === "" ||
+                  name === "" ||
+                  school === "" ||
                   (joiningPeriod === "between" && !joiningDate) ||
                   (showPromotionSection &&
                     promotions.some(
