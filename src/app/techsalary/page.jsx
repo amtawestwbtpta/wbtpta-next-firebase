@@ -8,6 +8,7 @@ import {
   GetMonthName,
   RoundTo,
   months,
+  readCSVFile,
 } from "../../modules/calculatefunctions";
 import ropa from "../../modules/ropa";
 import axios from "axios";
@@ -104,15 +105,11 @@ const TechSalary = () => {
 
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
-    );
-    const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
-    );
+    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
+    const q2 = await readCSVFile(`april-2024`);
     setLoader(false);
-    setMonthSalary(q1.data);
-    setAprilSalary(q2.data);
+    setMonthSalary(q1);
+    setAprilSalary(q2);
   };
 
   useEffect(() => {

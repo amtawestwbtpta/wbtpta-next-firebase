@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import Link from "next/link";
-import { GetMonthName } from "../../modules/calculatefunctions";
+import { GetMonthName, readCSVFile } from "../../modules/calculatefunctions";
 
 import axios from "axios";
 import Loader from "../../components/Loader";
@@ -102,65 +102,12 @@ const MonthlyAWSalary = () => {
 
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
-    );
-    const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
-    );
+    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
+    const q2 = await readCSVFile(`april-2024`);
     setLoader(false);
-    setMonthSalary(q1.data);
-    setAprilSalary(q2.data);
-    // const specificMonthSalary = await axios.get(
-    //   `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.csv`
-    // );
-    // const findAprilIR = await axios.get(
-    //   `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.csv`
-    // );
-    // const specificMonthSalaryData = new Blob([specificMonthSalary.data], {
-    //   type: "text/csv",
-    // });
-    // const findAprilIRData = new Blob([findAprilIR.data], { type: "text/csv" });
-    // const specificMonthSalaryFile = new File(
-    //   [specificMonthSalaryData],
-    //   `${month}-${year}.csv`,
-    //   {
-    //     type: "text/csv",
-    //   }
-    // );
-    // const findAprilIRFile = new File([findAprilIRData], `april-2024.csv`, {
-    //   type: "text/csv",
-    // });
-    // setLoader(false);
-    // setMonthSalary(await readFile(specificMonthSalaryFile));
-    // setAprilSalary(await readFile(findAprilIRFile));
+    setMonthSalary(q1);
+    setAprilSalary(q2);
   };
-  // const readFile = async (file) => {
-  //   const reader = new FileReader();
-  //   const data = await new Promise((resolve) => {
-  //     reader.onload = (e) => {
-  //       const text = e.target.result;
-  //       const workbook = XLSX.read(text, { type: "binary" });
-  //       const sheetName = workbook.SheetNames[0];
-  //       const worksheet = workbook.Sheets[sheetName];
-  //       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  //       resolve(jsonData);
-  //     };
-  //     reader.readAsArrayBuffer(file);
-  //   });
-  //   const headers = data[0];
-  //   const jsonData = data.slice(1).map((row) => {
-  //     const obj = {};
-  //     headers.forEach((header, index) => {
-  //       obj[header] = row[index];
-  //     });
-  //     return obj;
-  //   });
-  //   const modifiedData = jsonData.map((el) => {
-  //     return el;
-  //   });
-  //   return modifiedData;
-  // };
   useEffect(() => {
     if (state !== "admin") {
       router.push("/login");

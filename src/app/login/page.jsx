@@ -77,12 +77,9 @@ const page = () => {
     if (validForm()) {
       setLoader(true);
       try {
-        const username = inputField.username.replace(/\s/g, '').toLowerCase();
+        const username = inputField.username.replace(/\s/g, "").toLowerCase();
         const collectionRef = collection(firestore, "userteachers");
-        const q = query(
-          collectionRef,
-          where("username", "==", username)
-        );
+        const q = query(collectionRef, where("username", "==", username));
         const querySnapshot = await getDocs(q);
         // console.log(querySnapshot.docs[0].data().pan);
         if (querySnapshot.docs.length > 0) {
@@ -100,7 +97,6 @@ const page = () => {
               );
               const querySnapshot2 = await getDocs(q2);
               const teacherData = querySnapshot2.docs[0].data();
-              console.log(teacherData);
               setState(teacherData.circle);
               setUSER(teacherData);
               encryptObjData("uid", userData, 10080);
@@ -111,22 +107,22 @@ const page = () => {
               router.push("/dashboard");
             } else {
               setLoader(false);
-              toast.error("Your Account is Disabled!", );
+              toast.error("Your Account is Disabled!");
             }
           } else {
             setLoader(false);
-            toast.error("Wrong Password!", );
+            toast.error("Wrong Password!");
           }
         } else {
           setLoader(false);
-          toast.error("Invalid Username!", );
+          toast.error("Invalid Username!");
         }
       } catch (error) {
         console.log(error);
 
         const url = `/api/login`;
-        const username = inputField.username.replace(/\s/g, '').toLowerCase();
-        inputField.username = username
+        const username = inputField.username.replace(/\s/g, "").toLowerCase();
+        inputField.username = username;
         const response = await axios.post(url, inputField);
         const record = response.data;
         const userData = record.data;

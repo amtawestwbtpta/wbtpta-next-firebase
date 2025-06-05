@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   GetMonthName,
   months,
+  readCSVFile,
   RoundTo,
 } from "../../modules/calculatefunctions";
 import { DA, HRA, NEXTDA } from "../../modules/constants";
@@ -165,14 +166,10 @@ export default function Page() {
   };
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
-    );
-    const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
-    );
-    const monthSalary = q1.data?.filter((el) => el.id === id)[0];
-    const aprilSalary = q2.data?.filter((el) => el.id === id)[0];
+    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
+    const q2 = await readCSVFile(`april-2024`);
+    const monthSalary = q1?.filter((el) => el.id === id)[0];
+    const aprilSalary = q2?.filter((el) => el.id === id)[0];
     if (month === "July" && year === 2024 && aprilSalary?.basic > 0) {
       ir = Math.round(aprilSalary?.basic * 0.04);
     } else {

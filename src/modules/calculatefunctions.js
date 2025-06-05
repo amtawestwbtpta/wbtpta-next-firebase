@@ -1,3 +1,4 @@
+import axios from "axios";
 import { DA, HRA } from "./constants";
 import bcrypt from "bcryptjs";
 export const comparePassword = (userPassword, serverPassword) => {
@@ -827,4 +828,31 @@ export const calStrLength = (value) => {
   } else {
     return 0;
   }
+};
+export const readCSVFile = async (fileName) => {
+  const response = await axios.get(
+    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${fileName}.csv`
+  );
+  const { data: text } = response;
+  const rows = text.split("\n").filter((row) => row.trim());
+
+  if (!rows.length) return;
+
+  const headers = rows[0].split(",").map((h) => h.trim());
+  const parsedData = rows.slice(1).map((row) => {
+    const values = row.split(",");
+    return headers.reduce((obj, header, i) => {
+      obj[header] = convertValue(values[i]);
+      return obj;
+    }, {});
+  });
+  return parsedData;
+};
+// Convert CSV string values to proper types
+const convertValue = (value = "") => {
+  const str = value.trim();
+  if (!isNaN(str) && str !== "") return Number(str);
+  if (str.toLowerCase() === "TRUE") return true;
+  if (str.toLowerCase() === "FALSE") return false;
+  return str;
 };

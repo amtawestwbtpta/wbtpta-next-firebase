@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
-import { months, titleCase } from "../../modules/calculatefunctions";
+import {
+  months,
+  readCSVFile,
+  titleCase,
+} from "../../modules/calculatefunctions";
 import { DA, HRA, PREV6DA, PREVDA } from "../../modules/constants";
 import axios from "axios";
 import Loader from "../../components/Loader";
@@ -37,55 +41,31 @@ const TechersAccuitance = () => {
   const [february, setFebruary] = useState([]);
   const getModifiedSalary = async (year) => {
     setShowTable(false);
-    const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/january-${year}.json`
-    );
-    const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/february-${year}.json`
-    );
-    const q3 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/march-${year}.json`
-    );
-    const q4 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-${year}.json`
-    );
-    const q5 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/may-${year}.json`
-    );
-    const q6 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/june-${year}.json`
-    );
-    const q7 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/july-${year}.json`
-    );
-    const q8 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/august-${year}.json`
-    );
-    const q9 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/september-${year}.json`
-    );
-    const q10 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/october-${year}.json`
-    );
-    const q11 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/november-${year}.json`
-    );
-    const q12 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/december-${year}.json`
-    );
+    const q1 = await readCSVFile(`january-${year}`);
+    const q2 = await readCSVFile(`february-${year}`);
+    const q3 = await readCSVFile(`march-${year}`);
+    const q4 = await readCSVFile(`april-${year}`);
+    const q5 = await readCSVFile(`may-${year}`);
+    const q6 = await readCSVFile(`june-${year}`);
+    const q7 = await readCSVFile(`july-${year}`);
+    const q8 = await readCSVFile(`august-${year}`);
+    const q9 = await readCSVFile(`september-${year}`);
+    const q10 = await readCSVFile(`october-${year}`);
+    const q11 = await readCSVFile(`november-${year}`);
+    const q12 = await readCSVFile(`december-${year}`);
 
-    setJanuary(q1.data);
-    setFebruary(q2.data);
-    setMarch(q3.data);
-    setApril(q4.data);
-    setMay(q5.data);
-    setJune(q6.data);
-    setJuly(q7.data);
-    setAugust(q8.data);
-    setSeptember(q9.data);
-    setOctober(q10.data);
-    setNovember(q11.data);
-    setDecember(q12.data);
+    setJanuary(q1);
+    setFebruary(q2);
+    setMarch(q3);
+    setApril(q4);
+    setMay(q5);
+    setJune(q6);
+    setJuly(q7);
+    setAugust(q8);
+    setSeptember(q9);
+    setOctober(q10);
+    setNovember(q11);
+    setDecember(q12);
     setShowTable(true);
   };
   useEffect(() => {

@@ -8,6 +8,7 @@ import {
   randBetween,
   roundSo,
   CalculateIncomeTax,
+  readCSVFile,
 } from "../../modules/calculatefunctions";
 import DataTable from "react-data-table-component";
 import { firestore } from "../../context/FirbaseContext";
@@ -21,6 +22,7 @@ import IncomeTaxNew2025 from "../../pdfs/IncomeTaxNew2025";
 import IncomeTaxOld2025 from "../../pdfs/IncomeTaxOld2025";
 import Form16New from "../../pdfs/Form16New";
 import Form16NewRegime from "../../pdfs/Form16NewRegime";
+import * as XLSX from "xlsx";
 export default function IncomeTaxReloded() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -457,17 +459,23 @@ export default function IncomeTaxReloded() {
   });
   const date = new Date();
   const month = date.getMonth() + 1;
-  let thisYear, nextYear, prevYear;
-  if (month < 4) {
-    thisYear = date.getFullYear();
-    nextYear = date.getFullYear() + 1;
-    prevYear = date.getFullYear() - 1;
-  } else {
-    thisYear = date.getFullYear() - 1;
-    nextYear = date.getFullYear();
-    prevYear = date.getFullYear() - 2;
-  }
-  const finYear = `${thisYear}-${nextYear}`;
+  // let thisYear, nextYear, prevYear;
+  // if (month < 4) {
+  // thisYear = date.getFullYear();
+  // nextYear = date.getFullYear() + 1;
+  // prevYear = date.getFullYear() - 1;
+  // } else {
+  //   thisYear = date.getFullYear() - 1;
+  //   nextYear = date.getFullYear();
+  //   prevYear = date.getFullYear() - 2;
+  // }
+  // const finYear = `${thisYear}-${nextYear}`;
+  const [thisYear, setThisYear] = useState(date.getFullYear());
+  const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
+  const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
+  const [finYear, setFinYear] = useState(`${thisYear}-${nextYear}`);
+  const yearArray = [2024, 2025, 2026];
+  const [showYearSelection, setShowYearSelection] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showOldModal, setShowOldModal] = useState(false);
   const [march, setMarch] = useState([]);
@@ -1748,10 +1756,8 @@ export default function IncomeTaxReloded() {
   };
   const getSalary = async () => {
     setLoader(true);
-    const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary.json"
-    );
-    const data = q1.data;
+    const data = await readCSVFile("Salary");
+
     const onlyWbtptaTeachers = data?.filter(
       (teacher) => teacher?.association === "WBTPTA"
     );
@@ -1760,71 +1766,47 @@ export default function IncomeTaxReloded() {
     setSalaryState(data);
     setLoader(false);
   };
-  const getMonthlySalary = async () => {
+  const getMonthlySalary = async (thisYear, prevYear) => {
     setLoader(false);
-    const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/january-${thisYear}.json`
-    );
-    const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/february-${thisYear}.json`
-    );
-    const q3 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/march-${prevYear}.json`
-    );
-    const q4 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-${prevYear}.json`
-    );
-    const q5 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/may-${prevYear}.json`
-    );
-    const q6 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/june-${prevYear}.json`
-    );
-    const q7 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/july-${prevYear}.json`
-    );
-    const q8 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/august-${prevYear}.json`
-    );
-    const q9 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/september-${prevYear}.json`
-    );
-    const q10 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/october-${prevYear}.json`
-    );
-    const q11 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/november-${prevYear}.json`
-    );
-    const q12 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/december-${prevYear}.json`
-    );
+    const q1 = await readCSVFile(`january-${thisYear}`);
+    const q2 = await readCSVFile(`february-${thisYear}`);
+    const q3 = await readCSVFile(`march-${prevYear}`);
+    const q4 = await readCSVFile(`april-${prevYear}`);
+    const q5 = await readCSVFile(`may-${prevYear}`);
+    const q6 = await readCSVFile(`june-${prevYear}`);
+    const q7 = await readCSVFile(`july-${prevYear}`);
+    const q8 = await readCSVFile(`august-${prevYear}`);
+    const q9 = await readCSVFile(`september-${prevYear}`);
+    const q10 = await readCSVFile(`october-${prevYear}`);
+    const q11 = await readCSVFile(`november-${prevYear}`);
+    const q12 = await readCSVFile(`december-${prevYear}`);
 
-    setJanuary(q1.data);
-    setFebruary(q2.data);
-    setMarch(q3.data);
-    setApril(q4.data);
-    setMay(q5.data);
-    setJune(q6.data);
-    setJuly(q7.data);
-    setAugust(q8.data);
-    setSeptember(q9.data);
-    setOctober(q10.data);
-    setNovember(q11.data);
-    setDecember(q12.data);
+    setJanuary(q1);
+    setFebruary(q2);
+    setMarch(q3);
+    setApril(q4);
+    setMay(q5);
+    setJune(q6);
+    setJuly(q7);
+    setAugust(q8);
+    setSeptember(q9);
+    setOctober(q10);
+    setNovember(q11);
+    setDecember(q12);
     setLoader(true);
     setIndSalaryState({
-      march: q1.data,
-      april: q2.data,
-      may: q3.data,
-      june: q4.data,
-      july: q5.data,
-      august: q6.data,
-      september: q7.data,
-      october: q8.data,
-      november: q9.data,
-      december: q10.data,
-      january: q11.data,
-      february: q12.data,
+      march: q1,
+      april: q2,
+      may: q3,
+      june: q4,
+      july: q5,
+      august: q6,
+      september: q7,
+      october: q8,
+      november: q9,
+      december: q10,
+      january: q11,
+      february: q12,
     });
     setLoader(false);
   };
@@ -1840,22 +1822,7 @@ export default function IncomeTaxReloded() {
       setSalary(state === "admin" ? salaryState : onlyWbtptaTeachers);
       setFilteredData(state === "admin" ? salaryState : onlyWbtptaTeachers);
     }
-    if (indSalaryState.march.length === 0) {
-      getMonthlySalary();
-    } else {
-      setMarch(indSalaryState.march);
-      setApril(indSalaryState.april);
-      setMay(indSalaryState.may);
-      setJune(indSalaryState.june);
-      setJuly(indSalaryState.july);
-      setAugust(indSalaryState.august);
-      setSeptember(indSalaryState.september);
-      setOctober(indSalaryState.october);
-      setNovember(indSalaryState.november);
-      setDecember(indSalaryState.december);
-      setJanuary(indSalaryState.january);
-      setFebruary(indSalaryState.february);
-    }
+
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
@@ -1865,6 +1832,113 @@ export default function IncomeTaxReloded() {
     <div className="container-fluid">
       {loader ? (
         <Loader />
+      ) : showYearSelection ? (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Select Financial Year
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setShowYearSelection(false);
+                    if (indSalaryState.march.length === 0) {
+                      getMonthlySalary(thisYear, prevYear);
+                    } else {
+                      setMarch(indSalaryState.march);
+                      setApril(indSalaryState.april);
+                      setMay(indSalaryState.may);
+                      setJune(indSalaryState.june);
+                      setJuly(indSalaryState.july);
+                      setAugust(indSalaryState.august);
+                      setSeptember(indSalaryState.september);
+                      setOctober(indSalaryState.october);
+                      setNovember(indSalaryState.november);
+                      setDecember(indSalaryState.december);
+                      setJanuary(indSalaryState.january);
+                      setFebruary(indSalaryState.february);
+                    }
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="col-md-6 mx-auto noprint my-5">
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    defaultValue={""}
+                    onChange={(e) => {
+                      const selectedFinYear = e.target.value;
+                      if (selectedFinYear !== "Select Financial Year") {
+                        setFinYear(selectedFinYear);
+                        setShowYearSelection(false);
+                        const yearParts = selectedFinYear.split("-");
+                        const startYear = parseInt(yearParts[0]);
+                        const endYear = parseInt(yearParts[1]);
+                        setThisYear(startYear + 1);
+                        setPrevYear(startYear);
+                        setNextYear(endYear + 1);
+
+                        getMonthlySalary(startYear + 1, startYear);
+                      } else {
+                        toast.error("Please select a valid financial year.");
+                      }
+                    }}
+                  >
+                    <option>Select Financial Year</option>
+                    {yearArray
+                      .slice(0, yearArray.length - 1)
+                      .map((year, index) => (
+                        <option
+                          value={`${yearArray[index]}-${yearArray[index + 1]}`}
+                          key={index}
+                        >
+                          {yearArray[index]}-{yearArray[index + 1]}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    setShowYearSelection(false);
+                    if (indSalaryState.march.length === 0) {
+                      getMonthlySalary();
+                    } else {
+                      setMarch(indSalaryState.march);
+                      setApril(indSalaryState.april);
+                      setMay(indSalaryState.may);
+                      setJune(indSalaryState.june);
+                      setJuly(indSalaryState.july);
+                      setAugust(indSalaryState.august);
+                      setSeptember(indSalaryState.september);
+                      setOctober(indSalaryState.october);
+                      setNovember(indSalaryState.november);
+                      setDecember(indSalaryState.december);
+                      setJanuary(indSalaryState.january);
+                      setFebruary(indSalaryState.february);
+                    }
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div>
           <div className="my-3">
@@ -1978,6 +2052,15 @@ export default function IncomeTaxReloded() {
                   Print
                 </button>
               </div>
+            </div>
+            <div>
+              <button
+                type="button"
+                className="btn btn-sm btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => setShowYearSelection(true)}
+              >
+                Change Financial Year
+              </button>
             </div>
 
             <h3 className="text-black">All Teacher IT Data</h3>

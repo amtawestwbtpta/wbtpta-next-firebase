@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { DA, HRA } from "../../modules/constants";
 import axios from "axios";
 import Loader from "../../components/Loader";
+import { readCSVFile } from "../../modules/calculatefunctions";
 
 const JulySalary = () => {
   const router = useRouter();
@@ -14,16 +15,13 @@ const JulySalary = () => {
   const [isclicked, setIsclicked] = useState(false);
   const [july, setJuly] = useState([]);
   const [april, setApril] = useState([]);
+  const year = new Date().getFullYear();
   const getSalary = async () => {
     setLoader(true);
-    const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
-    );
-    const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
-    );
-    setApril(q1.data);
-    setJuly(q5.data);
+    const q1 = await readCSVFile(`april-${year}`);
+    const q5 = await readCSVFile(`july-${year}`);
+    setApril(q1);
+    setJuly(q5);
     setLoader(false);
   };
   useEffect(() => {
