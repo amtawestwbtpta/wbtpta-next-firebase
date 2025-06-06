@@ -1916,32 +1916,6 @@ export default function IncomeTaxReloded() {
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
                   Select Financial Year
                 </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={() => {
-                    setShowYearSelection(false);
-                    if (indSalaryState.march.length === 0) {
-                      getMonthlySalary(thisYear, prevYear);
-                    } else {
-                      setMarch(indSalaryState.march);
-                      setApril(indSalaryState.april);
-                      setMay(indSalaryState.may);
-                      setJune(indSalaryState.june);
-                      setJuly(indSalaryState.july);
-                      setAugust(indSalaryState.august);
-                      setSeptember(indSalaryState.september);
-                      setOctober(indSalaryState.october);
-                      setNovember(indSalaryState.november);
-                      setDecember(indSalaryState.december);
-                      setJanuary(indSalaryState.january);
-                      setFebruary(indSalaryState.february);
-                    }
-
-                    getSalary(prevYear);
-                  }}
-                ></button>
               </div>
               <div className="modal-body">
                 <div className="col-md-6 mx-auto noprint my-5">
@@ -1982,34 +1956,7 @@ export default function IncomeTaxReloded() {
                   </select>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    setShowYearSelection(false);
-                    if (indSalaryState.march.length === 0) {
-                      getMonthlySalary();
-                    } else {
-                      setMarch(indSalaryState.march);
-                      setApril(indSalaryState.april);
-                      setMay(indSalaryState.may);
-                      setJune(indSalaryState.june);
-                      setJuly(indSalaryState.july);
-                      setAugust(indSalaryState.august);
-                      setSeptember(indSalaryState.september);
-                      setOctober(indSalaryState.october);
-                      setNovember(indSalaryState.november);
-                      setDecember(indSalaryState.december);
-                      setJanuary(indSalaryState.january);
-                      setFebruary(indSalaryState.february);
-                    }
-                    getSalary(prevYear);
-                  }}
-                >
-                  Close
-                </button>
-              </div>
+              <div className="modal-footer"></div>
             </div>
           </div>
         </div>
