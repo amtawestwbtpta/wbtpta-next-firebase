@@ -1,6 +1,7 @@
 import axios from "axios";
 import { DA, HRA } from "./constants";
 import bcrypt from "bcryptjs";
+import * as XLSX from "xlsx";
 export const comparePassword = (userPassword, serverPassword) => {
   let match = bcrypt.compareSync(userPassword, serverPassword);
 
@@ -855,4 +856,33 @@ const convertValue = (value = "") => {
   if (str.toLowerCase() === "TRUE") return true;
   if (str.toLowerCase() === "FALSE") return false;
   return str;
+};
+export const readExcelData = async (fileName) => {
+  try {
+    const response = await axios.get(
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${fileName}.xlsx`,
+      { responseType: "arraybuffer" }
+    );
+
+    const arrayBuffer = response.data;
+    const workbook = XLSX.read(arrayBuffer, { type: "array" });
+
+    // Get first sheet name
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    // Convert to JSON with automatic type detection
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+      raw: false, // Use raw values (true for numbers/dates)
+      dateNF: "dd-mm-yyyy", // Date format
+      defval: null, // Default value for empty cells
+      blankrows: false, // Skip empty rows
+    });
+
+    return jsonData;
+  } catch (err) {
+    return Promise.reject(`Error fetching Excel data: ${err.message}`);
+  } finally {
+    console.log("Excel data fetch completed.");
+  }
 };

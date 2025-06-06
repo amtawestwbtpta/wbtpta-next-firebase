@@ -4,25 +4,15 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import { firestore } from "../../context/FirbaseContext";
-import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import Loader from "../../components/Loader";
 import {
-  RoundTo,
-  NumInWords,
-  ptaxCalc,
   calculateRetirementDate,
-  funcda,
-  funchra,
-  funcmda,
-  funcmhra,
-  gross,
-  netpay,
   getCurrentDateInput,
   getSubmitDateInput,
   getSubmitDateSlashInput,
   generateID,
 } from "../../modules/calculatefunctions";
-import { DA, HRA } from "../../modules/constants";
 
 import { v4 as uuid } from "uuid";
 import axios from "axios";
@@ -53,12 +43,10 @@ const AddTeacher = () => {
     udise: "",
     tname: "",
     gender: "male",
-    // ph: 0,
     disability: "MO",
     desig: "AT",
     fname: "",
     circle: "taw",
-    sis: "AMTA WEST CIRCLE",
     gp: "",
     association: "WBTPTA",
     phone: "",
@@ -74,34 +62,11 @@ const AddTeacher = () => {
     training: "TRAINED",
     pan: "",
     address: "",
-    basic: 28900,
-    mbasic: 28900,
-    prevmbasic: 28900,
-    addl: 0,
-    da: 0,
-    mda: 0,
-    hra: 0,
-    mhra: 0,
-    ma: 500,
-    gross: 0,
-    mgross: 0,
-    mptax: 0,
-    gpf: 0,
-    gpfprev: 0,
-    julyGpf: 0,
-    ptax: 150,
-    gsli: 0,
-    jptax: 0,
-    netpay: 0,
-    mnetpay: 0,
-    bonus: 0,
-    arrear: 0,
     question: "taw",
     hoi: "No",
     service: "inservice",
     id: "",
     rank: 3,
-    newHt: false,
     registered: false,
     showAccount: false,
     dataYear: new Date().getFullYear(),
@@ -111,7 +76,6 @@ const AddTeacher = () => {
     errudise: "",
     errtname: "",
     errgender: "",
-    // errtsname: "",
     errDisability: "",
     errdesig: "",
     errfname: "",
@@ -130,13 +94,6 @@ const AddTeacher = () => {
     errtraining: "",
     errpan: "",
     erraddress: "",
-    // errbasic: "",
-    // errmbasic: "",
-    // errma: "",
-    // errgpf: "",
-    // errgsli: "",
-    // errarrear: "",
-    // errbonus: "",
     errquestion: "",
     errhoi: "",
     errservice: "",
@@ -171,28 +128,12 @@ const AddTeacher = () => {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
 
-  const julyBasicPay = (junebasic) => {
-    if (junebasic >= 24000) {
-      return RoundTo(junebasic + junebasic * 0.03, 100);
-    } else {
-      return 0;
-    }
-  };
-  const prevmbasic = (junebasic) => {
-    if (junebasic >= 24000) {
-      return RoundTo(junebasic - junebasic * 0.03, 100);
-    } else {
-      return 0;
-    }
-  };
-
   const validForm = () => {
     let formIsValid = true;
     setErrField({
       errschool: "",
       errudise: "",
       errtname: "",
-      // errtsname: "",
       errgender: "",
       errDisability: "",
       errdesig: "",
@@ -212,13 +153,6 @@ const AddTeacher = () => {
       errtraining: "",
       errpan: "",
       erraddress: "",
-      // errbasic: "",
-      // errmbasic: "",
-      // errma: "",
-      // errgpf: "",
-      // errgsli: "",
-      // errarrear: "",
-      // errbonus: "",
       errquestion: "",
       errhoi: "",
       errservice: "",
@@ -360,57 +294,6 @@ const AddTeacher = () => {
         erraddress: "Please Enter Address",
       }));
     }
-    // if (inputField.basic === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errbasic: "Please Enter Basic",
-    //   }));
-    // }
-    // if (inputField.mbasic === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errmbasic: "Please Enter March Basic",
-    //   }));
-    // }
-    // if (inputField.ma === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errma: "Please Enter MA",
-    //   }));
-    // }
-    // if (inputField.gpf === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errgpf: "Please Enter GPF",
-    //   }));
-    // }
-
-    // if (inputField.gsli === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errgsli: "Please Enter GSLI",
-    //   }));
-    // }
-    // if (inputField.arrear === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errarrear: "Please Enter Arrear",
-    //   }));
-    // }
-    // if (inputField.bonus === "") {
-    //   formIsValid = false;
-    //   setErrField((prevState) => ({
-    //     ...prevState,
-    //     errbonus: "Please Enter bonus",
-    //   }));
-    // }
-
     return formIsValid;
   };
   function ValidateEmail(mail) {
@@ -504,7 +387,6 @@ const AddTeacher = () => {
       errudise: "",
       errtname: "",
       errgender: "",
-      // errtsname: "",
       errDisability: "",
       errdesig: "",
       errfname: "",
@@ -523,13 +405,6 @@ const AddTeacher = () => {
       errtraining: "",
       errpan: "",
       erraddress: "",
-      // errbasic: "",
-      // errmbasic: "",
-      // errma: "",
-      // errgpf: "",
-      // errgsli: "",
-      // errarrear: "",
-      // errbonus: "",
       errquestion: "",
       errhoi: "",
       errservice: "",
@@ -539,12 +414,10 @@ const AddTeacher = () => {
       udise: "",
       tname: "",
       gender: "male",
-      // ph: 0,
       disability: "MO",
       desig: "AT",
       fname: "",
       circle: "taw",
-      // sis: "AMTA WEST CIRCLE",
       gp: "",
       association: "WBTPTA",
       phone: "",
@@ -560,34 +433,11 @@ const AddTeacher = () => {
       training: "TRAINED",
       pan: "",
       address: "",
-      // basic: 28900,
-      // mbasic: 28900,
-      // prevmbasic: 28900,
-      // addl: 0,
-      // da: 0,
-      // mda: 0,
-      // hra: 0,
-      // mhra: 0,
-      // ma: 500,
-      // gross: 0,
-      // mgross: 0,
-      // mptax: 0,
-      // gpf: 0,
-      // gpfprev: 0,
-      // julyGpf: 0,
-      // ptax: 150,
-      // gsli: 0,
-      // jptax: 0,
-      // netpay: 0,
-      // mnetpay: 0,
-      // bonus: 0,
-      // arrear: 0,
       question: "taw",
       hoi: "No",
       service: "inservice",
       id: "",
       rank: 3,
-      newHt: false,
       registered: false,
       showAccount: false,
       dataYear: new Date().getFullYear(),
@@ -718,7 +568,6 @@ const AddTeacher = () => {
                       onChange={(e) => {
                         setInputField({
                           ...inputField,
-                          // ph: e.target.value,
                           disability: e.target.value === 1 ? "YES" : "NO",
                         });
                       }}
@@ -1107,150 +956,6 @@ const AddTeacher = () => {
                     )}
                   </div>
 
-                  {/* <div className="mb-3 col-md-3">
-                    <label className="form-label">March Basic</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="mbasic"
-                      name="mbasic"
-                      placeholder="March Basic"
-                      value={inputField.mbasic}
-                      onChange={(e) => {
-                        setInputField({
-                          ...inputField,
-                          mbasic: parseInt(e.target.value),
-                          basic: julyBasicPay(parseInt(e.target.value)),
-                          prevmbasic: prevmbasic(parseInt(e.target.value)),
-                        });
-                      }}
-                    />
-                    {errField.errmbasic.length > 0 && (
-                      <span className="error">{errField.errmbasic}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">July Basic</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="basic"
-                      name="basic"
-                      placeholder="July Basic"
-                      value={inputField.basic}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          basic: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errbasic.length > 0 && (
-                      <span className="error">{errField.errbasic}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">Medical Allowance</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="ma"
-                      name="ma"
-                      placeholder="Medical Allowance"
-                      value={inputField.ma}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          ma: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errma.length > 0 && (
-                      <span className="error">{errField.errma}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">GPF</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="gpf"
-                      name="gpf"
-                      placeholder="GPF"
-                      value={inputField.gpf}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          gpf: parseInt(e.target.value),
-                          gpfprev: parseInt(e.target.value),
-                          julyGpf: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errgpf.length > 0 && (
-                      <span className="error">{errField.errgpf}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">GSLI</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="gsli"
-                      name="gsli"
-                      placeholder="GSLI"
-                      value={inputField.gsli}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          gsli: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errgsli.length > 0 && (
-                      <span className="error">{errField.errgsli}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">Total Arrear Received</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="arrear"
-                      name="arrear"
-                      placeholder="Total Arrear Received"
-                      value={inputField.arrear}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          arrear: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errarrear.length > 0 && (
-                      <span className="error">{errField.errarrear}</span>
-                    )}
-                  </div>
-                  <div className="mb-3 col-md-3">
-                    <label className="form-label">Bonus Recived</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="bonus"
-                      name="bonus"
-                      placeholder="Bonus Recived"
-                      value={inputField.bonus}
-                      onChange={(e) =>
-                        setInputField({
-                          ...inputField,
-                          bonus: parseInt(e.target.value),
-                        })
-                      }
-                    />
-                    {errField.errbonus.length > 0 && (
-                      <span className="error">{errField.errbonus}</span>
-                    )}
-                  </div> */}
                   <div className="mb-0 col-md-3">
                     <label className="form-label">GRAM PANCHAYET</label>
                     <br />

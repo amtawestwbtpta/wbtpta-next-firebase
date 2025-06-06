@@ -232,8 +232,8 @@ export default function IncomeTaxOld2025({ data }) {
                 ]}
               >
                 <Text style={styles.text3}>
-                  FINANCIAL YEAR {`${prevYear} - ${thisYear}`} (RELEVANT TO
-                  ASSESMENT YEAR {finYear})
+                  FINANCIAL YEAR {finYear} (RELEVANT TO ASSESMENT YEAR{" "}
+                  {`${thisYear}-${nextYear}`})
                 </Text>
               </View>
               <View

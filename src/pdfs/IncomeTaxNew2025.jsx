@@ -166,6 +166,8 @@ export default function IncomeTaxNew2025({ data }) {
     IncomeTaxAfterRelief,
     ThirtyIT,
     ThirtyITTax,
+    TwentyFiveIT,
+    TwentyFiveITTax,
     TwentyIT,
     TwentyITTax,
     FifteenIT,
@@ -189,6 +191,7 @@ export default function IncomeTaxNew2025({ data }) {
     grossNetpay,
     TotalGross,
     GrossArrear,
+    year,
   } = data;
   return (
     <Document
@@ -216,8 +219,8 @@ export default function IncomeTaxNew2025({ data }) {
                 ]}
               >
                 <Text style={styles.text3}>
-                  FINANCIAL YEAR {`${prevYear} - ${thisYear}`} (RELEVANT TO
-                  ASSESMENT YEAR {finYear})
+                  FINANCIAL YEAR {finYear} (RELEVANT TO ASSESMENT YEAR{" "}
+                  {`${thisYear}-${nextYear}`})
                 </Text>
               </View>
               <View
@@ -1515,189 +1518,485 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                   </View>
                 </View>
-                <View
-                  style={{
-                    width: "60%",
-                    borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ width: "20%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>1</Text>
-                    </View>
-                    <View style={{ width: "50%", borderRightWidth: 1 }}>
-                      <Text style={[styles.text, { textAlign: "center" }]}>
-                        Up to Rs. 3,00,000 = Nil
-                      </Text>
-                    </View>
+                {year === 2024 ? (
+                  <View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>1</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Up to Rs. 3,00,000 = Nil
+                          </Text>
+                        </View>
 
-                    <View style={{ width: "5%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>Rs.</Text>
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>NIL</Text>
+                        </View>
+                      </View>
                     </View>
-                    <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>NIL</Text>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>2</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 3,00,001 - 7,00,000 = 5%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {FiveITTax > 0
+                              ? IndianFormat(Math.floor(FiveIT * 0.05))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>3</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 7,00,001/- to Rs. 10,00,000 = 10%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {TenITTax > 0
+                              ? IndianFormat(Math.floor(TenIT * 0.1))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>4</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 10,00,001/- to Rs. 12,00,000 = 15%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {FifteenITTax > 0
+                              ? IndianFormat(Math.floor(FifteenIT * 0.15))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>5</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 12,00,001/- to Rs. 15,00,000 = 20%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {TwentyITTax > 0
+                              ? IndianFormat(Math.floor(TwentyIT * 0.2))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>6</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Above Rs. 15,00,000 = 30%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>NIL</Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View
-                  style={{
-                    width: "60%",
-                    borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ width: "20%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>2</Text>
-                    </View>
-                    <View style={{ width: "50%", borderRightWidth: 1 }}>
-                      <Text style={[styles.text, { textAlign: "center" }]}>
-                        Rs. 3,00,001 - 7,00,000 = 5%
-                      </Text>
-                    </View>
+                ) : year == 2025 ? (
+                  <View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>1</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Up to Rs. 4,00,000 = Nil
+                          </Text>
+                        </View>
 
-                    <View style={{ width: "5%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>Rs.</Text>
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>NIL</Text>
+                        </View>
+                      </View>
                     </View>
-                    <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>
-                        {FiveITTax > 0
-                          ? IndianFormat(Math.floor(FiveIT * 0.05))
-                          : "NIL"}
-                      </Text>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>2</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 4,00,001 - 8,00,000 = 5%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {FiveITTax > 0
+                              ? IndianFormat(Math.floor(FiveIT * 0.05))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>3</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 8,00,001/- to Rs. 12,00,000 = 10%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {TenITTax > 0
+                              ? IndianFormat(Math.floor(TenIT * 0.1))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>4</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 12,00,001/- to Rs. 16,00,000 = 15%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {FifteenITTax > 0
+                              ? IndianFormat(Math.floor(FifteenIT * 0.15))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>5</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 16,00,001/- to Rs. 20,00,000 = 20%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {TwentyITTax > 0
+                              ? IndianFormat(Math.floor(TwentyIT * 0.2))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>6</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Rs. 20,00,001/- to Rs. 24,00,000 = 25%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>
+                            {TwentyFiveITTax > 0
+                              ? IndianFormat(Math.floor(TwentyFiveIT * 0.25))
+                              : "NIL"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "60%",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderLeftWidth: 0,
+                        borderBottomWidth: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "100%",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: "20%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>7</Text>
+                        </View>
+                        <View style={{ width: "50%", borderRightWidth: 1 }}>
+                          <Text style={[styles.text, { textAlign: "center" }]}>
+                            Above Rs. 24,00,001 = 30%
+                          </Text>
+                        </View>
+
+                        <View style={{ width: "5%", borderRightWidth: 1 }}>
+                          <Text style={styles.text}>Rs.</Text>
+                        </View>
+                        <View style={{ width: "25%" }}>
+                          <Text style={styles.text}>NIL</Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View
-                  style={{
-                    width: "60%",
-                    borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ width: "20%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>3</Text>
-                    </View>
-                    <View style={{ width: "50%", borderRightWidth: 1 }}>
-                      <Text style={[styles.text, { textAlign: "center" }]}>
-                        Rs. 7,00,001/- to Rs. 10,00,000 = 10%
-                      </Text>
-                    </View>
-
-                    <View style={{ width: "5%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>Rs.</Text>
-                    </View>
-                    <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>
-                        {TenITTax > 0
-                          ? IndianFormat(Math.floor(TenIT * 0.1))
-                          : "NIL"}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "60%",
-                    borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                    borderBottomWidth: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ width: "20%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>4</Text>
-                    </View>
-                    <View style={{ width: "50%", borderRightWidth: 1 }}>
-                      <Text style={[styles.text, { textAlign: "center" }]}>
-                        Rs. 10,00,001/- to Rs. 12,00,000 = 30%
-                      </Text>
-                    </View>
-
-                    <View style={{ width: "5%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>Rs.</Text>
-                    </View>
-                    <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>
-                        {FifteenITTax > 0
-                          ? IndianFormat(Math.floor(FifteenIT * 0.15))
-                          : "NIL"}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "60%",
-                    borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                    borderBottomWidth: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View style={{ width: "20%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>5</Text>
-                    </View>
-                    <View style={{ width: "50%", borderRightWidth: 1 }}>
-                      <Text style={[styles.text, { textAlign: "center" }]}>
-                        Rs. 12,00,001/- to Rs. 15,00,000 = 20%
-                      </Text>
-                    </View>
-
-                    <View style={{ width: "5%", borderRightWidth: 1 }}>
-                      <Text style={styles.text}>Rs.</Text>
-                    </View>
-                    <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>
-                        {TwentyITTax > 0
-                          ? IndianFormat(Math.floor(TwentyIT * 0.2))
-                          : "NIL"}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
+                ) : null}
               </View>
               <View
                 style={[
