@@ -134,7 +134,7 @@ export default function Page() {
           ? 730
           : leaveNature === "PATERNITY"
           ? 30
-          : `${serviceAge} x 30\n=${earnedLeave} HP`,
+          : `${serviceAge} x 30\n=${earnedLeave} HPL`,
       c3: startingDate,
       c4: endingDate,
       c5: leaveDays,
