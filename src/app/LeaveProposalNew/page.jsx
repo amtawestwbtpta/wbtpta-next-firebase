@@ -151,7 +151,7 @@ export default function Page() {
           : leaveNature == "PATERNITY"
           ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
           : leaveNature === "CCL"
-          ? 730 - leaveDays
+          ? `(730 - ${leaveDays})\n=${730 - leaveDays}`
           : `(${serviceAge * 30} - ${
               serviceAge * 30 - balanceLeave
             })\n= ${balanceLeave}`,
