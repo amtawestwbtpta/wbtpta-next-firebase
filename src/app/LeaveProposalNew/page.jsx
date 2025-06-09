@@ -121,21 +121,37 @@ export default function Page() {
   const fillLines = () => {
     setLineThree({
       c1:
-        leaveNature !== "MATERNITY"
+        leaveNature === "HPL" ||
+        leaveNature === "COMMUTED" ||
+        leaveNature === "MEDICAL" ||
+        leaveNature === "LWP"
           ? `${doj}\nTo\n${endingDate}`
           : endingDate.split("-")[2],
       c2:
         leaveNature === "MATERNITY"
           ? leaveDays
+          : leaveNature === "CCL"
+          ? 730
+          : leaveNature === "PATERNITY"
+          ? 30
           : `${serviceAge} x 30\n=${earnedLeave}`,
       c3: startingDate,
       c4: endingDate,
       c5: leaveDays,
-      c6: leaveNature === "MATERNITY" ? "N/A" : leaveDays * 2,
+      c6:
+        leaveNature === "COMMUTED" ||
+        leaveNature === "MEDICAL" ||
+        leaveNature === "HPL"
+          ? leaveDays * 2
+          : "N/A",
       c7: leaveDays,
       c8:
         leaveNature == "MATERNITY"
           ? "NIL"
+          : leaveNature == "PATERNITY"
+          ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
+          : leaveNature === "CCL"
+          ? 730 - leaveDays
           : `(${serviceAge * 30} - ${
               serviceAge * 30 - balanceLeave
             })\n= ${balanceLeave}`,
@@ -328,8 +344,8 @@ export default function Page() {
                     type="button"
                     disabled={
                       leaveNature === "" ||
-                      village === "" ||
-                      po === "" ||
+                      // village === "" ||
+                      // po === "" ||
                       leaveDays === 0
                     }
                     onClick={() => {
@@ -350,8 +366,8 @@ export default function Page() {
                     type="button"
                     disabled={
                       leaveNature === "" ||
-                      village === "" ||
-                      po === "" ||
+                      // village === "" ||
+                      // po === "" ||
                       leaveDays === 0
                     }
                     onClick={() => {
