@@ -912,7 +912,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineOne?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineOne?.c2}</Text>
+                  <Text style={styles.text2}>{lineOne?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -984,7 +984,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineOne?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineOne?.c8}</Text>
+                  <Text style={styles.text2}>{lineOne?.c8}</Text>
                 </View>
 
                 <View
@@ -1026,7 +1026,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineTwo?.c2}</Text>
+                  <Text style={styles.text2}>{lineTwo?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1098,7 +1098,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineTwo?.c8}</Text>
+                  <Text style={styles.text2}>{lineTwo?.c8}</Text>
                 </View>
 
                 <View
@@ -1144,7 +1144,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineThree?.c2}</Text>
+                  <Text style={styles.text2}>{lineThree?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1218,7 +1218,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineThree?.c8}</Text>
+                  <Text style={styles.text2}>{lineThree?.c8}</Text>
                 </View>
 
                 <View
@@ -1269,7 +1269,7 @@ export default function LeaveProposalNew({ data }) {
                         : styles.text
                     }
                   >
-                    {lineFour?.c2}
+                    {lineFour?.c2}2{" "}
                   </Text>
                 </View>
                 <View
@@ -1344,7 +1344,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFour?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFour?.c8}</Text>
+                  <Text style={styles.text2}>{lineFour?.c8}</Text>
                 </View>
 
                 <View
@@ -1388,7 +1388,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFive?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFive?.c2}</Text>
+                  <Text style={styles.text2}>{lineFive?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1462,7 +1462,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFive?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFive?.c8}</Text>
+                  <Text style={styles.text2}>{lineFive?.c8}</Text>
                 </View>
 
                 <View
@@ -1503,7 +1503,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineSix?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineSix?.c2}</Text>
+                  <Text style={styles.text2}>{lineSix?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1575,7 +1575,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineSix?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineSix?.c8}</Text>
+                  <Text style={styles.text2}>{lineSix?.c8}</Text>
                 </View>
 
                 <View
