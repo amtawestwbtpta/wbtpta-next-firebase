@@ -134,7 +134,7 @@ export default function Page() {
           ? 730
           : leaveNature === "PATERNITY"
           ? 30
-          : `${serviceAge} x 30\n=${earnedLeave}`,
+          : `${serviceAge} x 30\n=${earnedLeave} HP`,
       c3: startingDate,
       c4: endingDate,
       c5: leaveDays,
@@ -152,9 +152,9 @@ export default function Page() {
           ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
           : leaveNature === "CCL"
           ? `(730 - ${leaveDays})\n=${730 - leaveDays}`
-          : `(${serviceAge * 30} - ${
-              serviceAge * 30 - balanceLeave
-            })\n= ${balanceLeave}`,
+          : `(${(serviceAge * 30) / 2} - ${
+              (serviceAge * 30) / 2 - leaveDays
+            })\n= ${leaveDays}`,
       c9: "NIL",
     });
   };
