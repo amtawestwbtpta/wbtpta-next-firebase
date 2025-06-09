@@ -152,9 +152,9 @@ export default function Page() {
           ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
           : leaveNature === "CCL"
           ? `(730 - ${leaveDays})\n=${730 - leaveDays}`
-          : `(${(serviceAge * 30) / 2} - ${
-              (serviceAge * 30) / 2 - leaveDays
-            })\n= ${leaveDays}`,
+          : `(${earnedLeave / 2} - ${leaveDays})\n= ${
+              earnedLeave / 2 - leaveDays
+            }`,
       c9: "NIL",
     });
   };
