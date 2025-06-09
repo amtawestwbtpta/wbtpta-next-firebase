@@ -2791,7 +2791,7 @@ export default function LeaveProposalNew({ data }) {
                   leaveNature === "PATERNITY" ||
                   leaveNature === "CCL"
                     ? "-"
-                    : leaveDays}
+                    : leaveDays * 2}
                 </Text>
               </View>
               <View

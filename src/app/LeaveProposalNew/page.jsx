@@ -126,7 +126,7 @@ export default function Page() {
         leaveNature === "MEDICAL" ||
         leaveNature === "LWP"
           ? `${doj}\nTo\n${endingDate}`
-          : endingDate.split("-")[2],
+          : startingDate.split("-")[2],
       c2:
         leaveNature === "MATERNITY"
           ? leaveDays
