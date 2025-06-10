@@ -37,6 +37,7 @@ export default function Page() {
   const [balanceLeave, setBalanceLeave] = useState("");
   const [showEditLeave, setShowEditLeave] = useState(false);
   const [showEditLines, setShowEditLines] = useState(false);
+  const [leaveReason, setLeaveReason] = useState("");
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
@@ -308,6 +309,22 @@ export default function Page() {
                         />
                       </div>
                     )}
+
+                    <div className="mb-3">
+                      <label htmlFor="date" className="form-label">
+                        Reason of Leave
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Reason of Leave"
+                        id="leaveReason"
+                        onChange={(e) => {
+                          setLeaveReason(e.target.value);
+                        }}
+                      />
+                    </div>
+
                     <div className="mb-3">
                       <label className="form-label">School Village</label>
                       <input
@@ -1402,7 +1419,7 @@ export default function Page() {
           </div>
         </div>
       )}
-      {showDownloadBtn && (
+      {/* {showDownloadBtn && (
         <div className="my-3">
           <PDFDownloadLink
             document={
@@ -1413,6 +1430,7 @@ export default function Page() {
                   desig,
                   doj,
                   leaveNature,
+                  leaveReason,
                   leaveDays,
                   startingDate,
                   endingDate,
@@ -1450,9 +1468,9 @@ export default function Page() {
             }
           </PDFDownloadLink>
         </div>
-      )}
+      )} */}
 
-      {/* {showDownloadBtn && (
+      {showDownloadBtn && (
         <div className="mt-3 mx-auto">
           <LeaveProposalNew
             data={{
@@ -1461,6 +1479,7 @@ export default function Page() {
               desig,
               doj,
               leaveNature,
+              leaveReason,
               leaveDays,
               startingDate,
               endingDate,
@@ -1482,7 +1501,7 @@ export default function Page() {
             }}
           />
         </div>
-      )} */}
+      )}
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default function LeaveProposalNew({ data }) {
     doj,
     phone,
     leaveNature,
+    leaveReason,
     leaveDays,
     startingDate,
     endingDate,
@@ -42,7 +43,7 @@ export default function LeaveProposalNew({ data }) {
   } = data;
 
   return (
-    // <PDFViewer style={{ height: height / 3, width: width / 3 }}>
+    <PDFViewer style={{ height: height / 3, width: width / 3 }}>
     <Document
       style={{ margin: 5, padding: 5 }}
       title={`Leave Proposal Form of ${tname} of ${school}`}
@@ -247,7 +248,7 @@ export default function LeaveProposalNew({ data }) {
                   width: "60%",
                 }}
               >
-                <Text style={styles.text}>{leaveNature}</Text>
+                <Text style={styles.text}>{leaveNature} LEAVE {leaveReason!==""&& `, (${leaveReason})`}</Text>
               </View>
             </View>
             <View
@@ -3179,7 +3180,7 @@ export default function LeaveProposalNew({ data }) {
         </View>
       </Page>
     </Document>
-    // </PDFViewer>
+     </PDFViewer>
   );
 }
 const styles = StyleSheet.create({
