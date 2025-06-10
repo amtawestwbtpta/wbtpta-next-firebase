@@ -1269,7 +1269,7 @@ export default function LeaveProposalNew({ data }) {
                         : styles.text
                     }
                   >
-                    {lineFour?.c2}2{" "}
+                    {lineFour?.c2}{" "}
                   </Text>
                 </View>
                 <View
