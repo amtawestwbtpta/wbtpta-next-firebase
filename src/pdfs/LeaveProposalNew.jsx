@@ -43,7 +43,7 @@ export default function LeaveProposalNew({ data }) {
   } = data;
 
   return (
-    <PDFViewer style={{ height: height / 3, width: width / 3 }}>
+    // <PDFViewer style={{ height: height / 3, width: width / 3 }}>
     <Document
       style={{ margin: 5, padding: 5 }}
       title={`Leave Proposal Form of ${tname} of ${school}`}
@@ -3180,7 +3180,7 @@ export default function LeaveProposalNew({ data }) {
         </View>
       </Page>
     </Document>
-     </PDFViewer>
+    // </PDFViewer>
   );
 }
 const styles = StyleSheet.create({
