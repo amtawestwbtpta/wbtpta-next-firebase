@@ -22,7 +22,6 @@ export default function LeaveProposalNew({ data }) {
     doj,
     phone,
     leaveNature,
-    leaveReason,
     leaveDays,
     startingDate,
     endingDate,
@@ -248,7 +247,10 @@ export default function LeaveProposalNew({ data }) {
                   width: "60%",
                 }}
               >
-                <Text style={styles.text}>{leaveNature} LEAVE {leaveReason!==""&& `, (${leaveReason})`}</Text>
+                <Text style={styles.text}>
+                  {leaveNature} LEAVE{" "}
+                  {leaveReason !== "" && `, (${leaveReason})`}
+                </Text>
               </View>
             </View>
             <View

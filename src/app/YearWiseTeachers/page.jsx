@@ -12,6 +12,7 @@ import ServiceConfirmation from "../../pdfs/ServiceConfirmation";
 import BenefitProforma from "../../pdfs/BenefitProforma";
 import BenefitApplication from "../../pdfs/BenefitApplication";
 import dynamic from "next/dynamic";
+import NewTeacherArrear from "../../pdfs/NewTeacherArrear";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -37,6 +38,7 @@ const YearWiseTeachers = () => {
   const [showConfForm, setShowConfForm] = useState(false);
   const [showProforma, setShowProforma] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [showArrearForm, setShowArrearForm] = useState(false);
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -623,6 +625,17 @@ const YearWiseTeachers = () => {
                   </button>
                 </div>
               )}
+              {new Date().getFullYear() - parseInt(selectedYear) <= 2 && (
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-primary m-2 p-2 rounded"
+                    onClick={() => setShowArrearForm(!showArrearForm)}
+                  >
+                    {showArrearForm ? "Hide Arrear Form" : "Show Arrear Form"}
+                  </button>
+                </div>
+              )}
               {new Date().getFullYear() - parseInt(selectedYear) === 2 &&
                 showConfForm && (
                   <div className="my-5">
@@ -646,6 +659,30 @@ const YearWiseTeachers = () => {
                     </PDFDownloadLink>
                   </div>
                 )}
+
+              {showArrearForm && (
+                <div className="my-5">
+                  <PDFDownloadLink
+                    document={<NewTeacherArrear data={filteredData} />}
+                    fileName={`Year ${selectedYear} New Teacher Arrear Form.pdf`}
+                    style={{
+                      textDecoration: "none",
+                      padding: 11,
+                      color: "#fff",
+                      backgroundColor: "darkgreen",
+                      border: "1px solid #4a4a4a",
+                      width: "40%",
+                      borderRadius: 10,
+                      margin: 20,
+                    }}
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Please Wait..." : "Download Form"
+                    }
+                  </PDFDownloadLink>
+                  {/* <NewTeacherArrear data={filteredData} /> */}
+                </div>
+              )}
               {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
                 new Date().getFullYear() - parseInt(selectedYear) === 20) && (
                 <div>
