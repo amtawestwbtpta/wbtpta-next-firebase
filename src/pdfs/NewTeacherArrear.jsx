@@ -37,7 +37,7 @@ export default function NewTeacherArrear({ data }) {
               <Text style={styles.text}>Howrah.</Text>
               <View style={{ alignSelf: "center", marginVertical: 5 }}>
                 <Text style={styles.text}>
-                  Through: The Sub-Inspector of School, Amta West Circle.
+                  Through: The Sub-Inspector of Schools, Amta West Circle.
                 </Text>
               </View>
               <View style={{ alignSelf: "center", marginVertical: 5 }}>
