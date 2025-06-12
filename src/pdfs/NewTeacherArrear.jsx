@@ -50,7 +50,8 @@ export default function NewTeacherArrear({ data }) {
                     },
                   ]}
                 >
-                  Sub: Prayer for Arrear Payment w.e.f. {teacher?.doj} to
+                  Sub: Prayer for Arrear Payment w.e.f.{" "}
+                  {"                          "} to
                   {"                          "}.
                 </Text>
               </View>
@@ -117,7 +118,7 @@ export default function NewTeacherArrear({ data }) {
                       },
                     ]}
                   >
-                    {teacher?.doj}
+                    {"                          "}
                   </Text>{" "}
                   to .................................
                 </Text>
