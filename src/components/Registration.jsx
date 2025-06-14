@@ -43,15 +43,19 @@ const Registration = ({ data, setSignUpTrue }) => {
   //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/;
   const [inputField, setInputField] = useState({
     teachersID: data.id,
-    tname: data.tname,
-    pan: data.pan,
-    udise: data.udise,
-    question: data.question,
-    email: data.email,
-    empid: data.empid,
-    phone: data.phone,
     id: docId,
     username: "",
+    email: data.email,
+    tname: data.tname,
+    school: data.school,
+    udise: data.udise,
+    desig: data.desig,
+    circle: data.circle,
+    empid: data.empid,
+    pan: data.pan,
+    loggedin: Date.now(),
+    question: data.question,
+    phone: data.phone,
     password: "",
     cpassword: "",
   });
@@ -95,17 +99,8 @@ const Registration = ({ data, setSignUpTrue }) => {
 
           try {
             let response = await axios.post(url, {
-              teachersID: inputField.teachersID,
-              tname: inputField.tname,
-              desig: inputField.desig,
-              pan: inputField.pan,
-              udise: inputField.udise,
-              empid: inputField.empid,
-              question: inputField.question,
-              email: inputField.email,
-              phone: inputField.phone,
-              id: docId,
-              username: username,
+              ...inputField,
+              username,
               password: bcrypt.hashSync(inputField.password, 10),
             });
             if (response.status === 200) {
@@ -136,18 +131,7 @@ const Registration = ({ data, setSignUpTrue }) => {
 
                       try {
                         await setDoc(doc(firestore, "userteachers", docId), {
-                          teachersID: inputField.teachersID,
-                          tname: inputField.tname,
-                          school: inputField.school,
-                          desig: inputField.desig,
-                          pan: inputField.pan,
-                          udise: inputField.udise,
-                          circle: inputField.circle,
-                          empid: inputField.empid,
-                          question: inputField.question,
-                          email: inputField.email,
-                          phone: inputField.phone,
-                          id: docId,
+                          ...inputField,
                           photoName: inputField.teachersID + "-" + file.name,
                           url: photourl,
                           username: username,

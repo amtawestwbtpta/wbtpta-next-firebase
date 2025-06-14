@@ -17,12 +17,11 @@ export async function POST(request: NextRequest) {
       desig,
       circle,
       empid,
-      photoName,
-      url,
       pan,
       loggedin,
       question,
       password,
+      phone,
     }: any = reqBody;
 
     const newUser = new User({
@@ -36,12 +35,11 @@ export async function POST(request: NextRequest) {
       desig,
       circle,
       empid,
-      photoName,
-      url,
       pan,
       loggedin,
       question,
       password,
+      phone,
     });
     const savedUser = await newUser.save();
 
