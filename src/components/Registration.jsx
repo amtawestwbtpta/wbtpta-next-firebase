@@ -48,6 +48,7 @@ const Registration = ({ data, setSignUpTrue }) => {
     udise: data.udise,
     question: data.question,
     email: data.email,
+    empid: data.empid,
     phone: data.phone,
     id: docId,
     username: "",
