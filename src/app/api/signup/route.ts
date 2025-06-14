@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
       question,
       password,
       phone,
+      url,
+      photoName,
     }: any = reqBody;
 
     const newUser = new User({
@@ -40,6 +42,8 @@ export async function POST(request: NextRequest) {
       question,
       password,
       phone,
+      url,
+      photoName,
     });
     const savedUser = await newUser.save();
 
