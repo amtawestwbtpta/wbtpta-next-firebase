@@ -165,7 +165,7 @@ export default function Page() {
           : `(${earnedLeave / 2} - ${leaveDays})\n= ${
               earnedLeave / 2 - leaveDays
             }`,
-      c9: "NIL",
+      c9: "",
     });
   };
   useEffect(() => {
