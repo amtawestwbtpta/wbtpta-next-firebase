@@ -22,6 +22,7 @@ export default function LeaveProposalNew({ data }) {
     doj,
     phone,
     leaveNature,
+    leaveReason,
     leaveDays,
     startingDate,
     endingDate,
