@@ -2265,7 +2265,7 @@ export default function LeaveProposalNew({ data }) {
                   leaveNature === "CCL" ||
                   leaveNature === "MEDICAL"
                     ? "-"
-                    : balanceLeave}
+                    : earnedLeave}
                 </Text>
               </View>
               <View style={{ width: "30%" }}>
