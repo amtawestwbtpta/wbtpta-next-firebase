@@ -29,6 +29,7 @@ export default function Page() {
   const [startingDate, setStartingDate] = useState(todayInString());
   const [endingDate, setEndingDate] = useState(todayInString());
   const [leaveDays, setLeaveDays] = useState(0);
+  const [hpayLeave, setHpayLeave] = useState("");
   const [childBirthDate, setChildBirthDate] = useState(todayInString());
   const [village, setVillage] = useState("");
   const [po, setPo] = useState("");
@@ -50,6 +51,17 @@ export default function Page() {
     setServiceAge(sAge);
     setEarnedLeave(sAge * 30);
     setBalanceLeave(sAge * 30 - diffDays);
+
+    if (
+      leaveNature === "MATERNITY" ||
+      leaveNature === "CCL" ||
+      leaveNature === "PATERNITY" ||
+      leaveNature === "MEDICAL"
+    ) {
+      setHpayLeave("-");
+    } else {
+      setHpayLeave(`${diffDays * 2}HP`);
+    }
     return diffDays;
   };
 
@@ -135,16 +147,13 @@ export default function Page() {
           ? 730
           : leaveNature === "PATERNITY"
           ? 30
+          : leaveNature === "MEDICAL"
+          ? `${serviceAge} x 15\n=${serviceAge * 15} `
           : `${serviceAge} x 30\n=${earnedLeave} HPL`,
       c3: startingDate,
       c4: endingDate,
       c5: leaveDays,
-      c6:
-        leaveNature === "COMMUTED" ||
-        leaveNature === "MEDICAL" ||
-        leaveNature === "HPL"
-          ? leaveDays * 2
-          : "N/A",
+      c6: hpayLeave,
       c7: leaveDays,
       c8:
         leaveNature == "MATERNITY"
@@ -451,7 +460,6 @@ export default function Page() {
                       <input
                         type="number"
                         className="form-control"
-                        id="date"
                         placeholder="Total Leave Days"
                         value={leaveDays}
                         onChange={(e) => {
@@ -470,7 +478,6 @@ export default function Page() {
                       <input
                         type="number"
                         className="form-control"
-                        id="date"
                         placeholder="Total Leaves Earned"
                         value={earnedLeave}
                         onChange={(e) => {
@@ -489,7 +496,6 @@ export default function Page() {
                       <input
                         type="number"
                         className="form-control"
-                        id="date"
                         placeholder="Balance of Leave"
                         value={balanceLeave}
                         onChange={(e) => {
@@ -498,6 +504,20 @@ export default function Page() {
                           } else {
                             setBalanceLeave("");
                           }
+                        }}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="date" className="form-label">
+                        Edit Half Pay Leave
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Edit Half Pay Leave"
+                        value={hpayLeave}
+                        onChange={(e) => {
+                          setHpayLeave(e.target.value);
                         }}
                       />
                     </div>
@@ -1432,6 +1452,7 @@ export default function Page() {
                   leaveNature,
                   leaveReason,
                   leaveDays,
+                  hpayLeave,
                   startingDate,
                   endingDate,
                   childBirthDate,
@@ -1481,6 +1502,7 @@ export default function Page() {
               leaveNature,
               leaveReason,
               leaveDays,
+              hpayLeave,
               startingDate,
               endingDate,
               childBirthDate,

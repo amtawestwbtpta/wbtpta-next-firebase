@@ -24,6 +24,7 @@ export default function LeaveProposalNew({ data }) {
     leaveNature,
     leaveReason,
     leaveDays,
+    hpayLeave,
     startingDate,
     endingDate,
     childBirthDate,
@@ -2238,13 +2239,7 @@ export default function LeaveProposalNew({ data }) {
                   width: "30%",
                 }}
               >
-                <Text style={styles.text}>
-                  {leaveNature === "MATERNITY" ||
-                  leaveNature === "PATERNITY" ||
-                  leaveNature === "CCL"
-                    ? "-"
-                    : `${leaveDays * 2} HP`}
-                </Text>
+                <Text style={styles.text}>{hpayLeave}</Text>
               </View>
               <View style={{ width: "10%" }}>
                 <Text style={styles.text}>of</Text>
@@ -2259,7 +2254,8 @@ export default function LeaveProposalNew({ data }) {
                 <Text style={styles.text}>
                   {leaveNature === "MATERNITY" ||
                   leaveNature === "PATERNITY" ||
-                  leaveNature === "CCL"
+                  leaveNature === "CCL" ||
+                  leaveNature === "MEDICAL"
                     ? "-"
                     : serviceAge * 30}
                 </Text>
@@ -2790,13 +2786,7 @@ export default function LeaveProposalNew({ data }) {
                   width: "20%",
                 }}
               >
-                <Text style={styles.text}>
-                  {leaveNature === "MATERNITY" ||
-                  leaveNature === "PATERNITY" ||
-                  leaveNature === "CCL"
-                    ? "-"
-                    : leaveDays * 2}
-                </Text>
+                <Text style={styles.text}>{hpayLeave}</Text>
               </View>
               <View
                 style={{
