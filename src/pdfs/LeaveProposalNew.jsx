@@ -1149,7 +1149,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineThree?.c2}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineThree?.c2) > 18
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineThree?.c2}
+                  </Text>
                 </View>
                 <View
                   style={{
