@@ -583,7 +583,7 @@ const Navbar = () => {
               href="/RetirementCalculator"
               onClick={handleNavCollapse}
             >
-              Retirement Date Calculator
+              Date Calculator
             </Link>
           </li>
           <li className="nav-item">
@@ -921,7 +921,7 @@ const Navbar = () => {
               href="/RetirementCalculator"
               onClick={handleNavCollapse}
             >
-              Retirement Date Calculator
+              Date Calculator
             </Link>
           </li>
           <li className="nav-item">
@@ -1128,7 +1128,7 @@ const Navbar = () => {
               href="/RetirementCalculator"
               onClick={handleNavCollapse}
             >
-              Retirement Date Calculator
+              Date Calculator
             </Link>
           </li>
 

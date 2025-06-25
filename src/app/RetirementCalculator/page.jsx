@@ -70,35 +70,120 @@ function RetirementCalculator() {
       return;
     }
   };
+  const [startDate, setStartDate] = useState("");
+  const [stDate, setStDate] = useState("");
+  const [numDays, setNumDays] = useState(0);
+  const [endDate, setEndDate] = useState("");
+  const [error, setError] = useState("");
+
+  const calculateEndDate = () => {
+    if (!startDate || numDays <= 0) {
+      setError("Please enter a valid date and positive number of days");
+      setEndDate("");
+      return;
+    }
+
+    try {
+      const dateObj = new Date(startDate);
+      if (isNaN(dateObj.getTime())) throw new Error("Invalid date");
+
+      const newDate = new Date(dateObj);
+      newDate.setDate(newDate.getDate() + parseInt(numDays) - 1);
+
+      setStDate(
+        dateObj.toISOString().split("T")[0].split("-").reverse().join("-")
+      );
+      setEndDate(
+        newDate.toISOString().split("T")[0].split("-").reverse().join("-")
+      );
+      setError("");
+    } catch (err) {
+      setError("Invalid date format");
+      setEndDate("");
+    }
+  };
 
   return (
     <div className="container">
-      <h3 className="my-3 text-center text-primary">
-        Retirement Date Calculator
-      </h3>
-      <h5 className="mb-3 text-center text-primary" htmlFor="joiningDate">
-        Set Date Of Birth:
-      </h5>
-      <input
-        type="date"
-        className="form-control mb-3"
-        id="joiningDate"
-        value={joiningDate}
-        onChange={(e) => setJoiningDate(e.target.value)}
-      />
-      <button
-        className="btn btn-sm btn-primary mb-3"
-        onClick={calculateRetirementDate}
-      >
-        Calculate
-      </button>
-      <br />
-
-      {retirementDate && (
-        <h5 className="mb-3 text-center text-primary">
-          Your retirement date will be: {retirementDate}
+      <div className="my-3">
+        <h3 className="my-3 text-center text-primary">
+          Retirement Date Calculator
+        </h3>
+        <h5 className="mb-3 text-center text-primary" htmlFor="joiningDate">
+          Set Date Of Birth:
         </h5>
-      )}
+        <input
+          type="date"
+          className="form-control mb-3"
+          id="joiningDate"
+          value={joiningDate}
+          onChange={(e) => setJoiningDate(e.target.value)}
+        />
+        <button
+          className="btn btn-sm btn-primary mb-3"
+          onClick={calculateRetirementDate}
+        >
+          Calculate
+        </button>
+        <br />
+
+        {retirementDate && (
+          <h5 className="mb-3 text-center text-primary">
+            Your retirement date will be: {retirementDate}
+          </h5>
+        )}
+      </div>
+      <div className="col-md-6 mx-auto mt-5">
+        <div className="card p-4 shadow-sm">
+          <h2 className="mb-4">Date Calculator</h2>
+
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label htmlFor="startDate" className="form-label">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="startDate"
+                className="form-control"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="numDays" className="form-label">
+                Number of Days
+              </label>
+              <input
+                type="number"
+                id="numDays"
+                className="form-control"
+                value={numDays}
+                min="1"
+                onChange={(e) => setNumDays(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {error && <div className="alert alert-danger mt-3">{error}</div>}
+
+          <div>
+            <button className="btn btn-primary mt-4" onClick={calculateEndDate}>
+              Calculate End Date
+            </button>
+          </div>
+
+          {endDate && (
+            <div className="mt-4 p-3 bg-light rounded">
+              <h5>Result:</h5>
+              <p className="mb-1">Start Date: {stDate}</p>
+              <p className="mb-1">Days Added: {numDays}</p>
+              <p className="mb-0 fw-bold">End Date: {endDate}</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
