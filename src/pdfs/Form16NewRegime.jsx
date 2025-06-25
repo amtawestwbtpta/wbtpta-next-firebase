@@ -33,7 +33,6 @@ export default function Form16NewRegime({ data }) {
     BankInterest,
     tds,
     GrossRelief,
-    
   } = data;
 
   return (

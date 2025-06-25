@@ -118,9 +118,9 @@ const ViewDetails = () => {
   }, []);
   return (
     <div className="container my-5 text-center d-flex flex-column justify-content-center">
-      <h6 className="text-primary my-3 text center">
+      <h3 className="text-primary my-3 text center">
         Details of {tname} of {school}
-      </h6>
+      </h3>
       <div className="row d-flex justify-content-center text-black">
         <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
           <div>
@@ -310,139 +310,6 @@ const ViewDetails = () => {
           className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2"
           id="ifsc"
         ></div>
-
-        {/* <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>BASIC: </label>
-          </div>
-          <div>
-            <p>{basicpay}</p>
-          </div>
-        </div>
-        {addl > 0 ? (
-          <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-            <div>
-              <label>Additional Allowance: </label>
-            </div>
-            <div>
-              <p>{addl}</p>
-            </div>
-          </div>
-        ) : null}
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>DA: </label>
-          </div>
-          <div>
-            <p>{da}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>HRA: </label>
-          </div>
-          <div>
-            <p>{hra}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>MA: </label>
-          </div>
-          <div>
-            <p>{ma}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>Gross Pay: </label>
-          </div>
-          <div>
-            <p>{gross}</p>
-          </div>
-        </div>
-
-        {gpf > 0 ? (
-          gpf !== julyGpf && gpf === gpfprev ? (
-            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>June GPF: </label>
-              </div>
-              <div>
-                <p>{gpf}</p>
-              </div>
-              <div>
-                <label>July GPF: </label>
-              </div>
-              <div>
-                <p>{julyGpf}</p>
-              </div>
-            </div>
-          ) : gpf === julyGpf && gpf === gpfprev ? (
-            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>GPF: </label>
-              </div>
-              <div>
-                <p>{gpf}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-              <div>
-                <label>March GPF: </label>
-              </div>
-              <div>
-                <p>{gpfprev}</p>
-              </div>
-              <div>
-                <label>April GPF: </label>
-              </div>
-              <div>
-                <p>{gpf}</p>
-              </div>
-            </div>
-          )
-        ) : null}
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>P. TAX: </label>
-          </div>
-          <div>
-            <p>{ptax}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>GSLI: </label>
-          </div>
-          <div>
-            <p>{gsli}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>Netpay: </label>
-          </div>
-          <div>
-            <p>{netpay}</p>
-          </div>
-        </div>
-
-        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
-          <div>
-            <label>Netpay in Words: </label>
-          </div>
-          <div>
-            <p>{NumInWords(netpay)}</p>
-          </div>
-        </div> */}
         {question === "admin" ? (
           <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
             <div>
@@ -465,6 +332,13 @@ const ViewDetails = () => {
           }}
         >
           Print
+        </button>
+        <button
+          type="button"
+          className="btn btn-info btn-sm noprint m-3"
+          onClick={() => router.push("/EditTeacher")}
+        >
+          Edit Details
         </button>
         <button
           type="button"

@@ -44,7 +44,7 @@ const JulySalary = () => {
       {loader ? (
         <Loader />
       ) : (
-        <div className="container-fluid">
+        <div className="container-fluid mx-auto">
           <button
             type="button"
             className="btn btn-success btn-sm noprint m-3"
@@ -90,22 +90,22 @@ const JulySalary = () => {
           )}
           <h3 className="text-center text-primary mb-3">
             {!isclicked
-              ? " All Teacher's July Salary Data"
-              : "All WBTPTA Teacher's July Salary Data"}
+              ? `All Teacher's July ${year} Salary Data`
+              : `All WBTPTA Teacher's July ${year} Salary Data`}
           </h3>
-          <table className="table table-responsive table-bordered table-striped text-center text-black">
+          <table className="table table-responsive table-bordered table-white table-striped text-center table-hover text-black">
             <thead>
               <tr>
                 <th>Sl</th>
                 <th>Teacher Name</th>
                 <th>School Name</th>
-                <th>Designation</th>
+                <th>Desig.</th>
                 <th>Basic Pay</th>
                 <th>Da</th>
                 <th>HRA</th>
                 <th>Addl.</th>
                 <th>MA</th>
-                <th>IR</th>
+                {year === 2024 && <th>IR</th>}
                 <th>Gross Pay</th>
                 <th>GPF</th>
                 <th>GSLI</th>
@@ -123,7 +123,8 @@ const JulySalary = () => {
                 let hra = Math.round(basic * HRA);
                 let addl = filteredData?.addl;
                 let ma = filteredData?.ma;
-                const ir = aprilData?.basic * aprilData?.daPercent;
+                const ir =
+                  year === 2024 ? aprilData?.basic * aprilData?.daPercent : 0;
                 let gross = basic + da + hra + addl + ma + ir;
                 let gpf = filteredData?.gpf;
                 let gsli = filteredData?.gsli;
@@ -149,18 +150,24 @@ const JulySalary = () => {
                   return (
                     <tr key={ind} className="nobreak">
                       <td className="nobreak">{ind + 1}</td>
-                      <td className="nobreak">{el.tname}</td>
-                      <td className="nobreak">{el.school}</td>
+                      <td className="nobreak">
+                        <p className="m-0 p-0" style={{ fontSize: 11 }}>
+                          {el.tname}
+                        </p>
+                      </td>
+                      <td className="nobreak">
+                        <p className="m-0 p-0" style={{ fontSize: 11 }}>
+                          {el.school}
+                        </p>
+                      </td>
                       <td className="nobreak">{el.desig}</td>
                       <td className="nobreak">{basic}</td>
                       <td className="nobreak">{da}</td>
                       <td className="nobreak">{hra}</td>
                       <td className="nobreak">{addl}</td>
                       <td className="nobreak">{ma}</td>
-                      {ir != 0 ? (
-                        <td className="nobreak">{ir}</td>
-                      ) : (
-                        <td className="nobreak">NIL</td>
+                      {year === 2024 && ir != 0 && (
+                        <td className="nobreak">{ir != 0 ? ir : "NIL"}</td>
                       )}
                       <td className="nobreak">{gross}</td>
                       <td className="nobreak">{gpf}</td>

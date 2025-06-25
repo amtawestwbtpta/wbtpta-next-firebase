@@ -4,6 +4,8 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {
+  compareObjects,
+  createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
   titleCase,
@@ -11,6 +13,18 @@ import {
 } from "../../modules/calculatefunctions";
 import LeaveProposalNew from "../../pdfs/LeaveProposalNew";
 import dynamic from "next/dynamic";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { firestore } from "../../context/FirbaseContext";
+import Loader from "../../components/Loader";
+import { v4 as uuid } from "uuid";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -21,8 +35,81 @@ export default function Page() {
     }
   );
   const router = useRouter();
-  const { state, stateObject } = useGlobalContext();
+  const { state, stateObject, leaveState, setLeaveState } = useGlobalContext();
+  const docId = uuid().split("-")[0];
   const { tname, desig, school, doj, phone, hoi, gender, id } = stateObject;
+  const [teacherData, setTeacherData] = useState([
+    {
+      id: "",
+      teachersId: "",
+      tname: "",
+      leaveNature: "",
+      startingDate: "",
+      endingDate: "",
+      leaveDays: 0,
+      leaveReason: "",
+      hpayLeave: 0,
+      medicalLeave: "",
+      ccl: "",
+      childBirthDate: "",
+      paternity: "",
+      memoNo: "",
+    },
+  ]);
+  const [editData, setEditData] = useState({
+    id: "",
+    teachersId: "",
+    tname: "",
+    leaveNature: "",
+    startingDate: "",
+    endingDate: "",
+    leaveDays: 0,
+    leaveReason: "",
+    hpayLeave: 0,
+    medicalLeave: "",
+    ccl: "",
+    childBirthDate: "",
+    paternity: "",
+    memoNo: "",
+    preMemo: "",
+  });
+  const [newData, setNewData] = useState({
+    id: `l-${docId}`,
+    teachersId: "",
+    tname: "",
+    leaveNature: "",
+    startingDate: todayInString(),
+    endingDate: todayInString(),
+    leaveDays: 0,
+    leaveReason: "",
+    hpayLeave: 0,
+    medicalLeave: "",
+    ccl: "",
+    childBirthDate: "",
+    paternity: "",
+    memoNo: "",
+    preMemo: "",
+  });
+  const [orgData, setOrgData] = useState({
+    id: "",
+    teachersId: "",
+    tname: "",
+    leaveNature: "",
+    startingDate: "",
+    endingDate: "",
+    leaveDays: 0,
+    leaveReason: "",
+    hpayLeave: 0,
+    medicalLeave: "",
+    ccl: "",
+    childBirthDate: "",
+    paternity: "",
+    memoNo: "",
+    preMemo: "",
+  });
+  const [addModal, setAddModal] = useState(false);
+  const [leaveEditModal, setLeaveEditModal] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [leaveNature, setLeaveNature] = useState("");
@@ -39,6 +126,97 @@ export default function Page() {
   const [showEditLeave, setShowEditLeave] = useState(false);
   const [showEditLines, setShowEditLines] = useState(false);
   const [leaveReason, setLeaveReason] = useState("");
+  const getData = async () => {
+    setLoader(true);
+    const querySnapshot = await getDocs(query(collection(firestore, "leaves")));
+    const data = querySnapshot.docs
+      .map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .sort(
+        (a, b) =>
+          Date.parse(getCurrentDateInput(b.startingDate)) -
+          Date.parse(getCurrentDateInput(a.startingDate))
+      );
+    setLoader(false);
+    setLeaveState(data);
+    const prevLeaves = data.filter((item) => item.teachersId === id);
+    setTeacherData(prevLeaves);
+    setNewData({
+      ...newData,
+      tname,
+      teachersId: id,
+    });
+  };
+  const addLeave = async () => {
+    await setDoc(doc(firestore, "leaves", newData.id), newData)
+      .then(() => {
+        const x = [...leaveState, newData];
+        const sorted = x.sort(
+          (a, b) =>
+            Date.parse(getCurrentDateInput(b.startingDate)) -
+            Date.parse(getCurrentDateInput(a.startingDate))
+        );
+        setLeaveState(sorted);
+        const prevLeaves = sorted.filter((item) => item.teachersId === id);
+        setTeacherData(prevLeaves);
+        toast.success("Leave Added Successfully!");
+        setShowModal(true);
+        setLoader(false);
+      })
+      .catch((e) => {
+        setLoader(false);
+        toast.error("Error Adding Leave!");
+        console.log(e);
+      });
+  };
+  const updateData = async () => {
+    const docRef = doc(firestore, "leaves", orgData.id);
+    setLoader(true);
+    await updateDoc(docRef, editData)
+      .then(() => {
+        setLoader(false);
+        const data = leaveState.map((item) =>
+          item.id === editData.id ? editData : item
+        );
+        const sorted = data.sort(
+          (a, b) =>
+            Date.parse(getCurrentDateInput(b.startingDate)) -
+            Date.parse(getCurrentDateInput(a.startingDate))
+        );
+        setLeaveState(sorted);
+        const prevLeaves = sorted.filter((item) => item.teachersId === id);
+        setTeacherData(prevLeaves);
+        toast.success("Leave Updated Successfully!");
+        setLeaveEditModal(false);
+        setShowModal(true);
+        setLoader(false);
+      })
+      .catch((e) => {
+        setLoader(false);
+        toast.error("Error Updating Leave!");
+        console.log(e);
+      });
+  };
+  const delLeave = async (leaveId) => {
+    setLoader(true);
+    await deleteDoc(doc(firestore, "leaves", leaveId))
+      .then(() => {
+        toast.success("Leave Deleted Successfully");
+        const othLeaves = leaveState.filter((el) => el.id === leaveId);
+        setLeaveState(othLeaves);
+        const teacherOthLeave = leaveState.filter((el) => el.teachersId !== id);
+        setTeacherData(teacherOthLeave);
+        setLoader(false);
+      })
+      .catch((e) => {
+        toast.error("Failed to Delete Leave");
+        console.log(e);
+        setLoader(false);
+      });
+  };
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
@@ -63,6 +241,13 @@ export default function Page() {
       setHpayLeave(`${diffDays * 2}HP`);
     }
     return diffDays;
+  };
+  const calNewDate = () => {
+    const start = new Date(getCurrentDateInput(newData.startingDate));
+    const end = new Date(getCurrentDateInput(newData.endingDate));
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    setNewData({ ...newData, leaveDays: diffDays });
   };
 
   const [lineOne, setLineOne] = useState({
@@ -172,16 +357,33 @@ export default function Page() {
     if (state !== "admin") {
       router.push("/");
     }
-
+    if (leaveState.length === 0) {
+      getData();
+    } else {
+      setNewData({
+        ...newData,
+        tname,
+        teachersId: id,
+      });
+      const prevLeaves = leaveState
+        .sort(
+          (a, b) =>
+            Date.parse(getCurrentDateInput(b.startingDate)) -
+            Date.parse(getCurrentDateInput(a.startingDate))
+        )
+        .filter((item) => item.teachersId === id);
+      setTeacherData(prevLeaves);
+    }
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [startingDate, endingDate, leaveDays, leaveNature]);
+  }, [startingDate, endingDate, leaveDays, leaveNature, teacherData]);
   return (
     <div className="container">
+      {loader && <Loader />}
       <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto"
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint"
         style={{ width: "50%" }}
       >
         <button
@@ -190,6 +392,22 @@ export default function Page() {
           onClick={() => router.push("/teacherdatabase")}
         >
           Go Back
+        </button>
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => {
+            setAddModal(true);
+          }}
+        >
+          Add Leave
+        </button>
+        <button
+          type="button"
+          className="btn btn-success m-5"
+          onClick={() => createDownloadLink(leaveState, "leaves")}
+        >
+          Download Leave Data
         </button>
         <button
           type="button"
@@ -228,6 +446,81 @@ export default function Page() {
                 ></button>
               </div>
               <div className="modal-body">
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  onClick={() => {
+                    setShowModal(false);
+                    setAddModal(true);
+                  }}
+                >
+                  Add Leave
+                </button>
+                {teacherData.length > 0 && (
+                  <div className="mx-auto m-2">
+                    <h5 className="text-center">
+                      Previous Leave Details of {tname}
+                    </h5>
+                    <div
+                      className="mx-auto"
+                      style={{
+                        width: "100%",
+                        overflowX: "scroll",
+                      }}
+                    >
+                      <table className="table table-responsive table-striped table-success table-hover table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Sl</th>
+                            <th>Leave Nature</th>
+                            <th>Starting Date</th>
+                            <th>End Date</th>
+                            <th>Leave Days</th>
+                            <th>Reason</th>
+                            <th>Memo</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teacherData.map((item, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{item.leaveNature}</td>
+                              <td>{item.startingDate}</td>
+                              <td>{item.endingDate}</td>
+                              <td>{item.leaveDays}</td>
+                              <td>{item.leaveReason}</td>
+                              <td>{item?.memoNo ? item?.memoNo : ""}</td>
+                              <td>
+                                <button
+                                  className="btn btn-primary btn-sm m-1"
+                                  type="button"
+                                  onClick={() => {
+                                    setEditData(item);
+                                    setOrgData(item);
+                                    setShowModal(false);
+                                    setLeaveEditModal(true);
+                                  }}
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  className="btn btn-danger btn-sm m-1"
+                                  type="button"
+                                  onClick={() => {
+                                    delLeave(item.id);
+                                  }}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
                 <div className="currentLeave">
                   <h5 className="m-0 p-0">Details of Current Leave</h5>
                   <div className="mx-auto col-md-6 my-2">
@@ -411,6 +704,499 @@ export default function Page() {
                       setShowModal(false);
                       setShowDownloadBtn(false);
                       setShowEditLines(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-success m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      setShowDownloadBtn(false);
+                      setAddModal(true);
+                      setNewData({
+                        ...newData,
+                        leaveNature,
+                        leaveDays,
+                        leaveReason,
+                        startingDate,
+                        endingDate,
+                        hpayLeave,
+                        childBirthDate:
+                          leaveNature === "MATERNITY" ? childBirthDate : "",
+                        medicalLeave:
+                          leaveNature === "MEDICAL" ? leaveDays : "",
+                        ccl: leaveNature === "CCL" ? leaveDays : "",
+                        paternity: leaveNature === "PATERNITY" ? leaveDays : "",
+                      });
+                    }}
+                  >
+                    Add to Database
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {addModal && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Add Leave Details of {titleCase(tname)}
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setShowModal(true);
+                    setAddModal(false);
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
+                  <div className="col-md-6 m-3">
+                    <label htmlFor="purpose_type" className="form-label">
+                      Nature of Leave
+                    </label>
+                    <select
+                      className="form-select"
+                      id="purpose_type"
+                      defaultValue={newData.leaveNature}
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setNewData({
+                            ...newData,
+                            leaveNature: e.target.value,
+                          });
+                        } else {
+                          toast.error("Select Nature of Leave");
+                        }
+                      }}
+                    >
+                      <option value="">Select nature of Leave</option>
+                      <option value="HPL">HPL</option>
+                      <option value="COMMUTED">COMMUTED</option>
+                      <option value="MATERNITY">MATERNITY</option>
+                      <option value="MEDICAL">MEDICAL</option>
+                      <option value="LWP">LWP</option>
+                      <option value="CCL">CCL</option>
+                      <option value="PATERNITY">PATERNITY</option>
+                    </select>
+                  </div>
+                  <div className="m-3 col-md-6">
+                    <label className="form-label">Starting Date:</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="dob"
+                      name="dob"
+                      placeholder="Starting Date"
+                      defaultValue={getCurrentDateInput(newData.startingDate)}
+                      onChange={(e) => {
+                        setNewData({
+                          ...newData,
+                          startingDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="m-3 col-md-6">
+                    <label className="form-label">End Date:</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="dob"
+                      name="dob"
+                      placeholder="End Date"
+                      defaultValue={getCurrentDateInput(newData.endingDate)}
+                      onChange={(e) => {
+                        setNewData({
+                          ...newData,
+                          endingDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary m-2"
+                      type="button"
+                      onClick={calNewDate}
+                    >
+                      Calculate
+                    </button>
+                  </div>
+                  {newData.leaveNature === "MATERNITY" && (
+                    <div className="m-3 col-md-6">
+                      <label className="form-label">Child Birth Date:</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="dob"
+                        name="dob"
+                        placeholder="End Date"
+                        defaultValue={getCurrentDateInput(newData.endingDate)}
+                        onChange={(e) => {
+                          setNewData({
+                            ...newData,
+                            childBirthDate: getSubmitDateInput(e.target.value),
+                          });
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Leave Days
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={newData.leaveDays}
+                      placeholder="Leave Days"
+                      onChange={(e) =>
+                        setNewData({
+                          ...newData,
+                          leaveDays: parseInt(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Leave Reason
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={newData.leaveReason}
+                      placeholder="Leave Reason"
+                      rows={3}
+                      cols={5}
+                      onChange={(e) =>
+                        setNewData({
+                          ...newData,
+                          leaveReason: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Memo No.
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.memoNo ? newData?.memoNo : ""}
+                      placeholder="Memo No."
+                      onChange={(e) =>
+                        setNewData({ ...newData, memoNo: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Previous Memo No.
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.preMemo ? newData?.preMemo : ""}
+                      placeholder="Memo No."
+                      onChange={(e) =>
+                        setNewData({ ...newData, preMemo: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Half Pay Leaves
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.hpayLeave}
+                      placeholder="Half Pay Leaves"
+                      onChange={(e) =>
+                        setNewData({ ...newData, hpayLeave: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Medical Leaves
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.medicalLeave}
+                      placeholder="Medical Leaves"
+                      onChange={(e) =>
+                        setNewData({ ...newData, medicalLeave: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Child Care Leaves
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.ccl}
+                      placeholder="Child Care Leaves"
+                      onChange={(e) =>
+                        setNewData({ ...newData, ccl: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Paternity Leaves
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={newData?.paternity}
+                      placeholder="Paternity Leaves"
+                      onChange={(e) =>
+                        setNewData({ ...newData, paternity: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer d-flex flex-column">
+                <div>
+                  <button
+                    className="btn btn-primary m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(true);
+                      setAddModal(false);
+                      addLeave();
+                    }}
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    className="btn btn-danger m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(true);
+                      setAddModal(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {leaveEditModal && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Edit Leave Details of {titleCase(tname)}
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setShowModal(true);
+                    setLeaveEditModal(false);
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
+                  <div className="col-md-6 m-3">
+                    <label htmlFor="purpose_type" className="form-label">
+                      Nature of Leave
+                    </label>
+                    <select
+                      className="form-select"
+                      id="purpose_type"
+                      defaultValue={editData.leaveNature}
+                      onChange={(e) => {
+                        if (e.target.value !== "") {
+                          setEditData({
+                            ...editData,
+                            leaveNature: e.target.value,
+                          });
+                        } else {
+                          toast.error("Select Nature of Leave");
+                        }
+                      }}
+                    >
+                      <option value="">Select nature of Leave</option>
+                      <option value="HPL">HPL</option>
+                      <option value="COMMUTED">COMMUTED</option>
+                      <option value="MATERNITY">MATERNITY</option>
+                      <option value="MEDICAL">MEDICAL</option>
+                      <option value="LWP">LWP</option>
+                      <option value="CCL">CCL</option>
+                      <option value="PATERNITY">PATERNITY</option>
+                    </select>
+                  </div>
+                  <div className="m-3 col-md-6">
+                    <label className="form-label">Starting Date:</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="dob"
+                      name="dob"
+                      placeholder="Starting Date"
+                      defaultValue={getCurrentDateInput(editData.startingDate)}
+                      onChange={(e) => {
+                        setEditData({
+                          ...editData,
+                          startingDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="m-3 col-md-6">
+                    <label className="form-label">End Date:</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="dob"
+                      name="dob"
+                      placeholder="End Date"
+                      defaultValue={getCurrentDateInput(editData.endingDate)}
+                      onChange={(e) => {
+                        setEditData({
+                          ...editData,
+                          endingDate: getSubmitDateInput(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Leave Days
+                    </h6>
+                    <input
+                      type="number"
+                      className="form-control mb-3  mx-auto"
+                      value={editData.leaveDays}
+                      placeholder="Leave Days"
+                      onChange={(e) =>
+                        setEditData({
+                          ...editData,
+                          leaveDays: parseInt(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Leave Reason
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={editData.leaveReason}
+                      placeholder="Leave Reason"
+                      rows={3}
+                      cols={5}
+                      onChange={(e) =>
+                        setEditData({
+                          ...editData,
+                          leaveReason: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Memo No.
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={editData?.memoNo ? editData?.memoNo : ""}
+                      placeholder="Memo No."
+                      onChange={(e) =>
+                        setEditData({ ...editData, memoNo: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Previous Memo No.
+                    </h6>
+                    <textarea
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={editData?.preMemo ? editData?.preMemo : ""}
+                      placeholder="Memo No."
+                      onChange={(e) =>
+                        setEditData({ ...editData, preMemo: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6 m-3">
+                    <h6 className="modal-title fs-5" id="addmemoLabel">
+                      Teachers ID
+                    </h6>
+                    <input
+                      type="text"
+                      className="form-control mb-3  mx-auto"
+                      value={editData?.teachersId}
+                      placeholder="Teachers ID"
+                      onChange={(e) =>
+                        setEditData({ ...editData, teachersId: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer d-flex flex-column">
+                <div>
+                  <button
+                    className="btn btn-primary m-2"
+                    type="button"
+                    disabled={compareObjects(editData, orgData)}
+                    onClick={() => {
+                      setShowModal(true);
+                      setLeaveEditModal(false);
+                      updateData();
+                    }}
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    className="btn btn-danger m-2"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(true);
+                      setLeaveEditModal(false);
                     }}
                   >
                     Cancel

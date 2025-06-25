@@ -8,6 +8,7 @@ import {
   randBetween,
   roundSo,
   CalculateIncomeTax,
+  readCSVFile,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirbaseContext";
@@ -38,17 +39,14 @@ export default function Page() {
   } = useGlobalContext();
   const { id, tname, school, pan, disability, desig, fname } = data;
   const date = new Date();
-  const month = date.getMonth() + 1;
-  let thisYear, nextYear, prevYear;
-  if (month < 4) {
-    thisYear = date.getFullYear();
-    nextYear = date.getFullYear() + 1;
-    prevYear = date.getFullYear() - 1;
-  } else {
-    thisYear = date.getFullYear();
-    nextYear = date.getFullYear() + 1;
-    prevYear = date.getFullYear();
-  }
+  const [thisYear, setThisYear] = useState(date.getFullYear());
+  const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
+  const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
+  const [finYear, setFinYear] = useState(`${thisYear}-${nextYear}`);
+  const yearArray = [2024, 2025, 2026];
+  const [showYearSelection, setShowYearSelection] = useState(true);
+  const [showNewModal, setShowNewModal] = useState(false);
+  const [showOldModal, setShowOldModal] = useState(false);
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
   const [may, setMay] = useState([]);
@@ -61,7 +59,6 @@ export default function Page() {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
-  const finYear = `${thisYear}-${nextYear}`;
   const marchSalary = march.filter((el) => el.id === id)[0];
   const marchArrear = marchSalary?.arrear;
   const marchBasic = marchSalary?.basic;
@@ -223,71 +220,6 @@ export default function Page() {
   const februaryGPF = februarySalary?.gpf;
   const februaryGSLI = februarySalary?.gsli;
   const februaryPTax = disability === "YES" ? 0 : ptaxCalc(februaryGross);
-  const grossBasic =
-    marchBasic +
-    aprilBasic +
-    mayBasic +
-    juneBasic +
-    julyBasic +
-    augustBasic +
-    septemberBasic +
-    octoberBasic +
-    novemberBasic +
-    decemberBasic +
-    januaryBasic +
-    februaryBasic;
-  const grossAddl =
-    marchAddl +
-    aprilAddl +
-    mayAddl +
-    juneAddl +
-    julyAddl +
-    augustAddl +
-    septemberAddl +
-    octoberAddl +
-    novemberAddl +
-    decemberAddl +
-    januaryAddl +
-    februaryAddl;
-  const grossDA =
-    marchDA +
-    aprilDA +
-    mayDA +
-    juneDA +
-    julyDA +
-    augustDA +
-    septemberDA +
-    octoberDA +
-    novemberDA +
-    decemberDA +
-    januaryDA +
-    februaryDA;
-  const grossHRA =
-    marchHRA +
-    aprilHRA +
-    mayHRA +
-    juneHRA +
-    julyHRA +
-    augustHRA +
-    septemberHRA +
-    octoberHRA +
-    novemberHRA +
-    decemberHRA +
-    januaryHRA +
-    februaryHRA;
-  const grossMA =
-    marchMA +
-    aprilMA +
-    mayMA +
-    juneMA +
-    julyMA +
-    augustMA +
-    septemberMA +
-    octoberMA +
-    novemberMA +
-    decemberMA +
-    januaryMA +
-    februaryMA;
   const GrossPAY =
     marchGross +
     aprilGross +
@@ -425,91 +357,54 @@ export default function Page() {
     }
   };
 
-  const getSalary = async () => {
+  const getMonthlySalary = async (thisYear, prevYear) => {
     setLoader(true);
-    const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
-    );
-    const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
-    );
-    const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
-    );
-    const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
-    );
-    const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
-    );
-    const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
-    );
-    const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
-    );
-    const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
-    );
-    const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
-    );
-    const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
-    );
-    const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
-    );
-    const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
-    );
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
+    const q1 = await readCSVFile(`january-${thisYear}`);
+    const q2 = await readCSVFile(`february-${thisYear}`);
+    const q3 = await readCSVFile(`march-${prevYear}`);
+    const q4 = await readCSVFile(`april-${prevYear}`);
+    const q5 = await readCSVFile(`may-${prevYear}`);
+    const q6 = await readCSVFile(`june-${prevYear}`);
+    const q7 = await readCSVFile(`july-${prevYear}`);
+    const q8 = await readCSVFile(`august-${prevYear}`);
+    const q9 = await readCSVFile(`september-${prevYear}`);
+    const q10 = await readCSVFile(`october-${prevYear}`);
+    const q11 = await readCSVFile(`november-${prevYear}`);
+    const q12 = await readCSVFile(`december-${prevYear}`);
+
+    setJanuary(q1);
+    setFebruary(q2);
+    setMarch(q3);
+    setApril(q4);
+    setMay(q5);
+    setJune(q6);
+    setJuly(q7);
+    setAugust(q8);
+    setSeptember(q9);
+    setOctober(q10);
+    setNovember(q11);
+    setDecember(q12);
+    setLoader(true);
     setIndSalaryState({
-      march: q1.data,
-      april: q2.data,
-      may: q3.data,
-      june: q4.data,
-      july: q5.data,
-      august: q6.data,
-      september: q7.data,
-      october: q8.data,
-      november: q9.data,
-      december: q10.data,
-      january: q11.data,
-      february: q12.data,
+      march: q1,
+      april: q2,
+      may: q3,
+      june: q4,
+      july: q5,
+      august: q6,
+      september: q7,
+      october: q8,
+      november: q9,
+      december: q10,
+      january: q11,
+      february: q12,
     });
     setLoader(false);
   };
 
   useEffect(() => {
     getDeduction();
-    if (indSalaryState.march.length === 0) {
-      getSalary();
-    } else {
-      setMarch(indSalaryState.march);
-      setApril(indSalaryState.april);
-      setMay(indSalaryState.may);
-      setJune(indSalaryState.june);
-      setJuly(indSalaryState.july);
-      setAugust(indSalaryState.august);
-      setSeptember(indSalaryState.september);
-      setOctober(indSalaryState.october);
-      setNovember(indSalaryState.november);
-      setDecember(indSalaryState.december);
-      setJanuary(indSalaryState.january);
-      setFebruary(indSalaryState.february);
-    }
+
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
@@ -532,6 +427,62 @@ export default function Page() {
     <div className="container-fluid my-3">
       {loader ? (
         <Loader />
+      ) : showYearSelection ? (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Select Financial Year
+                </h1>
+              </div>
+              <div className="modal-body">
+                <div className="col-md-6 mx-auto noprint my-5">
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    defaultValue={""}
+                    onChange={(e) => {
+                      const selectedFinYear = e.target.value;
+                      if (selectedFinYear !== "Select Financial Year") {
+                        setFinYear(selectedFinYear);
+                        setShowYearSelection(false);
+                        const yearParts = selectedFinYear.split("-");
+                        const startYear = parseInt(yearParts[0]);
+                        const endYear = parseInt(yearParts[1]);
+                        setThisYear(startYear + 1);
+                        setPrevYear(startYear);
+                        setNextYear(endYear + 1);
+                        getMonthlySalary(thisYear, prevYear);
+                      } else {
+                        toast.error("Please select a valid financial year.");
+                      }
+                    }}
+                  >
+                    <option>Select Financial Year</option>
+                    {yearArray
+                      .slice(0, yearArray.length - 1)
+                      .map((year, index) => (
+                        <option
+                          value={`${yearArray[index]}-${yearArray[index + 1]}`}
+                          key={index}
+                        >
+                          {yearArray[index]}-{yearArray[index + 1]}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              <div className="modal-footer"></div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div>
           <h3 className="my-3">Download Form 16</h3>
@@ -542,6 +493,7 @@ export default function Page() {
               pan,
               desig,
               fname,
+              prevYear,
               thisYear,
               nextYear,
               finYear,
@@ -574,6 +526,7 @@ export default function Page() {
                   pan,
                   desig,
                   fname,
+                  prevYear,
                   thisYear,
                   nextYear,
                   finYear,

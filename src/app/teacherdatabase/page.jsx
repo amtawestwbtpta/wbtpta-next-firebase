@@ -195,36 +195,21 @@ const TeacherDatabase = () => {
       center: +true,
     },
     {
-      name: "View Details",
+      name: "View / Edit Details",
       cell: (row) => (
         <button
           type="button"
-          className="btn btn-sm btn-success"
+          className="btn btn-sm btn-primary"
           onClick={() => {
             setStateObject(row);
             router.push("/ViewDetails");
           }}
         >
-          View Details
+          View / Edit Details
         </button>
       ),
     },
 
-    {
-      name: "Update Details",
-      cell: (row) => (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => {
-            setStateObject(row);
-            router.push("/EditTeacher");
-          }}
-        >
-          Update Details
-        </button>
-      ),
-    },
     {
       name: "Leave Proposal",
       cell: (row) => (
