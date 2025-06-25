@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -38,6 +38,9 @@ export default function Page() {
   const { state, stateObject, leaveState, setLeaveState } = useGlobalContext();
   const docId = uuid().split("-")[0];
   const { tname, desig, school, doj, phone, hoi, gender, id } = stateObject;
+  const leaveNatureRef = useRef();
+  const startingDateRef = useRef();
+  const endingDateRef = useRef();
   const [teacherData, setTeacherData] = useState([
     {
       id: "",
@@ -493,6 +496,33 @@ export default function Page() {
                               <td>{item?.memoNo ? item?.memoNo : ""}</td>
                               <td>
                                 <button
+                                  className="btn btn-success btn-sm m-1"
+                                  type="button"
+                                  onClick={() => {
+                                    setLeaveNature(item.leaveNature);
+                                    setLeaveReason(item.leaveReason);
+                                    leaveNatureRef.current.value =
+                                      item.leaveNature;
+                                    setStartingDate(item.startingDate);
+                                    startingDateRef.current.value =
+                                      getCurrentDateInput(item.startingDate);
+                                    setEndingDate(item.endingDate);
+                                    endingDateRef.current.value =
+                                      getCurrentDateInput(item.endingDate);
+
+                                    setTimeout(() => {
+                                      document
+                                        .getElementById("calculateDays")
+                                        .click();
+                                    }, 200);
+                                    if (item.leaveNature === "MATERNITY") {
+                                      setChildBirthDate(item.childBirthDate);
+                                    }
+                                  }}
+                                >
+                                  Create
+                                </button>
+                                <button
                                   className="btn btn-primary btn-sm m-1"
                                   type="button"
                                   onClick={() => {
@@ -532,6 +562,7 @@ export default function Page() {
                         className="form-select"
                         id="purpose_type"
                         defaultValue={leaveNature}
+                        ref={leaveNatureRef}
                         onChange={(e) => {
                           if (e.target.value !== "") {
                             setLeaveNature(e.target.value);
@@ -559,6 +590,7 @@ export default function Page() {
                         type="date"
                         className="form-control"
                         id="date"
+                        ref={startingDateRef}
                         defaultValue={getCurrentDateInput(startingDate)}
                         onChange={(e) => {
                           setStartingDate(getSubmitDateInput(e.target.value));
@@ -573,6 +605,7 @@ export default function Page() {
                         type="date"
                         className="form-control"
                         id="date"
+                        ref={endingDateRef}
                         defaultValue={getCurrentDateInput(endingDate)}
                         onChange={(e) => {
                           setEndingDate(getSubmitDateInput(e.target.value));
@@ -580,6 +613,7 @@ export default function Page() {
                       />
                     </div>
                     <button
+                      id="calculateDays"
                       className="btn btn-success m-3"
                       onClick={() => {
                         calculateDays();
@@ -621,6 +655,7 @@ export default function Page() {
                         className="form-control"
                         placeholder="Reason of Leave"
                         id="leaveReason"
+                        value={leaveReason}
                         onChange={(e) => {
                           setLeaveReason(e.target.value);
                         }}
