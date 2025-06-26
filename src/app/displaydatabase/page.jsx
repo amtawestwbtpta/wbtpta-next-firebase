@@ -59,7 +59,7 @@ const DisplayDatabase = () => {
     username: "",
     phone: "",
     url: "",
-    sis: "",
+    createdAt: "",
   });
   const [showUserData, setShowUserData] = useState(false);
   const userData = async () => {
@@ -429,6 +429,17 @@ const DisplayDatabase = () => {
                       <h5 className="text-primary">
                         EmpID: {userField?.empid}
                       </h5>
+                      {userField?.createdAt && (
+                        <h5 className="text-primary">
+                          Registered On:{" "}
+                          {new Date(userField?.createdAt)
+                            .toISOString()
+                            .split("T")[0]
+                            .split("-")
+                            .reverse()
+                            .join("-")}
+                        </h5>
+                      )}
                       <button
                         type="button"
                         className="btn m-3 btn-danger"
