@@ -53,7 +53,7 @@ const Registration = ({ data, setSignUpTrue }) => {
     circle: data.circle,
     empid: data.empid,
     pan: data.pan,
-    loggedin: Date.now(),
+    createdAt: Date.now(),
     question: data.question,
     phone: data.phone,
     password: "",
