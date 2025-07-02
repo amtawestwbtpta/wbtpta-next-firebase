@@ -423,9 +423,7 @@ export default function LeaveProposalNew({ data }) {
                   8. ENCLOSURES: TREATMENT CERTIFICATE/ MEDICAL CERTIFICATE OF
                   FITNESS/ JOINING REPORT
                 </Text>
-                {leaveNature === "MATERNITY" ||
-                leaveNature === "MEDICAL" ||
-                leaveNature === "PATERNITY" ? (
+                {leaveNature === "MATERNITY" || leaveNature === "MEDICAL" ? (
                   <View>
                     <Image
                       source={{

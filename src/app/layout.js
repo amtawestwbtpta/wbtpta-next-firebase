@@ -26,7 +26,6 @@ const dejaVuCondensed = localFont({
   variable: "--font-dejaVuCondensed",
 });
 
-
 const timesNewRoman = localFont({
   src: [
     {
