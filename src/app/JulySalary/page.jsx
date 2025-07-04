@@ -120,7 +120,10 @@ const JulySalary = () => {
                 const filteredData = july.filter((item) => item.id === id)[0];
                 let basic = filteredData?.basic;
                 let da = Math.round(basic * filteredData?.daPercent);
-                let hra = Math.round(basic * HRA);
+                let hra =
+                  filteredData?.hraPercent < 1
+                    ? Math.round(basic * filteredData?.hraPercent)
+                    : filteredData?.hraPercent;
                 let addl = filteredData?.addl;
                 let ma = filteredData?.ma;
                 const ir =
