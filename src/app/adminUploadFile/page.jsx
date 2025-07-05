@@ -178,10 +178,12 @@ const AdminUploadFile = () => {
                   }
                 })
                 .catch((error) => {
+                  setLoader(false);
                   console.error(error);
                   toast.error("Failed to Upload Image");
                 });
             } catch (error) {
+              setLoader(false);
               console.error("Error:", error);
               toast.error("Failed to Upload File to Cloudinary!");
             }
