@@ -13,7 +13,7 @@ import BenefitProforma from "../../pdfs/BenefitProforma";
 import BenefitApplication from "../../pdfs/BenefitApplication";
 import dynamic from "next/dynamic";
 import NewTeacherArrear from "../../pdfs/NewTeacherArrear";
-import AppServiceConfirmation from "@/pdfs/AppServiceConfirmation";
+import AppServiceConfirmation from "../../pdfs/AppServiceConfirmation";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(
     async () =>
