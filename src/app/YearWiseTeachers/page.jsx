@@ -13,6 +13,7 @@ import BenefitProforma from "../../pdfs/BenefitProforma";
 import BenefitApplication from "../../pdfs/BenefitApplication";
 import dynamic from "next/dynamic";
 import NewTeacherArrear from "../../pdfs/NewTeacherArrear";
+import AppServiceConfirmation from "@/pdfs/AppServiceConfirmation";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -654,7 +655,27 @@ const YearWiseTeachers = () => {
                       }}
                     >
                       {({ blob, url, loading, error }) =>
-                        loading ? "Please Wait..." : "Download Form"
+                        loading
+                          ? "Please Wait..."
+                          : "Download Confirmation Proforma"
+                      }
+                    </PDFDownloadLink>
+                    <PDFDownloadLink
+                      document={<AppServiceConfirmation data={filteredData} />}
+                      fileName={`Service Confirmation Application Form.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        padding: 11,
+                        color: "#fff",
+                        backgroundColor: "blue",
+                        border: "1px solid #4a4a4a",
+                        width: "40%",
+                        borderRadius: 10,
+                        margin: 20,
+                      }}
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Please Wait..." : "Download Application Form"
                       }
                     </PDFDownloadLink>
                   </div>
