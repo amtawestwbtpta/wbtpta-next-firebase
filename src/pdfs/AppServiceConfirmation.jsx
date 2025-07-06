@@ -77,7 +77,7 @@ export default function AppServiceConfirmation({ data }) {
                 কোন শ্রেনীতে নিয়োগঃ (A) (B) ( {`  চিহ্ন দিন`})
               </Text>
               <Image
-                source={Check}
+                src={Check.src}
                 style={[styles.checkImage, { marginLeft: 188, marginTop: 10 }]}
               />
             </View>
