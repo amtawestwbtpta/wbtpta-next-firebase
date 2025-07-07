@@ -77,7 +77,9 @@ export default function AppServiceConfirmation({ data }) {
                 কোন শ্রেনীতে নিয়োগঃ (A) (B) ( {`  চিহ্ন দিন`})
               </Text>
               <Image
-                src={Check.src}
+                source={{
+                  uri: "https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/check.png",
+                }}
                 style={[styles.checkImage, { marginLeft: 188, marginTop: 10 }]}
               />
             </View>

@@ -46,6 +46,7 @@ export default function Page() {
       id: "",
       teachersId: "",
       tname: "",
+      desig: "",
       leaveNature: "",
       startingDate: "",
       endingDate: "",
@@ -63,6 +64,7 @@ export default function Page() {
     id: "",
     teachersId: "",
     tname: "",
+    desig: "",
     leaveNature: "",
     startingDate: "",
     endingDate: "",
@@ -80,6 +82,7 @@ export default function Page() {
     id: `l-${docId}`,
     teachersId: "",
     tname: "",
+    desig: "",
     leaveNature: "",
     startingDate: todayInString(),
     endingDate: todayInString(),
@@ -97,6 +100,7 @@ export default function Page() {
     id: "",
     teachersId: "",
     tname: "",
+    desig: "",
     leaveNature: "",
     startingDate: "",
     endingDate: "",
@@ -151,6 +155,7 @@ export default function Page() {
       ...newData,
       tname,
       teachersId: id,
+      desig,
     });
   };
   const addLeave = async () => {
@@ -435,7 +440,8 @@ export default function Page() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Enter Leave Details of {titleCase(tname)}
+                  Enter Leave Details of {titleCase(tname)}, {desig} of{" "}
+                  {titleCase(school)}
                 </h1>
                 <button
                   type="button"
@@ -787,7 +793,8 @@ export default function Page() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Add Leave Details of {titleCase(tname)}
+                  Add Leave Details of {titleCase(tname)}, {desig} of{" "}
+                  {titleCase(school)}
                 </h1>
                 <button
                   type="button"
@@ -1054,7 +1061,8 @@ export default function Page() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Edit Leave Details of {titleCase(tname)}
+                  Edit Leave Details of {titleCase(tname)}, {desig} of{" "}
+                  {titleCase(school)}
                 </h1>
                 <button
                   type="button"
@@ -1254,7 +1262,8 @@ export default function Page() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Enter Leave Line Details of {titleCase(tname)}
+                  Enter Leave Line Details of {titleCase(tname)}, {desig} of{" "}
+                  {titleCase(school)}
                 </h1>
                 <button
                   type="button"
