@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { readCSVFile } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
 import HRADeclaration from "../../pdfs/HRADeclaration";
+import Loader from "../../components/Loader";
 
 export default function HRA() {
   const PDFDownloadLink = dynamic(
@@ -86,6 +87,7 @@ export default function HRA() {
           }
         </PDFDownloadLink>
       )}
+      {loader && <Loader />}
     </div>
   );
 }
