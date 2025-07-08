@@ -307,7 +307,7 @@ const MonthlyAWSalary = () => {
                     <th className="text-center" style={{ border: "1px solid" }}>
                       ADDL.
                       <br />
-                      ALLOWANCE
+                      ALLO.
                     </th>
                     <th className="text-center" style={{ border: "1px solid" }}>
                       DA
