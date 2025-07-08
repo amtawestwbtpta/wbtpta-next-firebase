@@ -37,7 +37,8 @@ export default function Page() {
   const router = useRouter();
   const { state, stateObject, leaveState, setLeaveState } = useGlobalContext();
   const docId = uuid().split("-")[0];
-  const { tname, desig, school, doj, phone, hoi, gender, id } = stateObject;
+  const { tname, desig, doj, phone, hoi, gender, id } = stateObject;
+  const [school, setSchool] = useState(stateObject.school);
   const leaveNatureRef = useRef();
   const startingDateRef = useRef();
   const endingDateRef = useRef();
@@ -470,7 +471,7 @@ export default function Page() {
                 >
                   Add Leave
                 </button>
-                {teacherData.length > 0 && (
+                {teacherData[0]?.tname && (
                   <div className="mx-auto m-2">
                     <h5 className="text-center">
                       Previous Leave Details of {tname}
@@ -674,6 +675,19 @@ export default function Page() {
                     </div>
 
                     <div className="mb-3">
+                      <label className="form-label">School Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="School Name"
+                        id="date"
+                        value={school}
+                        onChange={(e) => {
+                          setSchool(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="mb-3">
                       <label className="form-label">School Village</label>
                       <input
                         type="text"
@@ -813,6 +827,22 @@ export default function Page() {
               </div>
               <div className="modal-body">
                 <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
+                  <div className="mb-3">
+                    <label className="form-label">School Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="School Name"
+                      id="date"
+                      value={newData.school}
+                      onChange={(e) => {
+                        setNewData({
+                          ...newData,
+                          school: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
                   <div className="col-md-6 m-3">
                     <label htmlFor="purpose_type" className="form-label">
                       Nature of Leave
@@ -1081,6 +1111,22 @@ export default function Page() {
               </div>
               <div className="modal-body">
                 <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
+                  <div className="mb-3">
+                    <label className="form-label">School Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="School Name"
+                      id="date"
+                      value={editData.school}
+                      onChange={(e) => {
+                        setEditData({
+                          ...editData,
+                          school: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
                   <div className="col-md-6 m-3">
                     <label htmlFor="purpose_type" className="form-label">
                       Nature of Leave
@@ -1288,6 +1334,19 @@ export default function Page() {
                     <h6>Designation: {desig}</h6>
                   </div>
                   <div className="editLeave">
+                    <div className="mb-3">
+                      <label className="form-label">School School</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="School School"
+                        id="date"
+                        value={school}
+                        onChange={(e) => {
+                          setSchool(e.target.value);
+                        }}
+                      />
+                    </div>
                     <div className="mb-3">
                       <label htmlFor="date" className="form-label">
                         Total Leave Days
