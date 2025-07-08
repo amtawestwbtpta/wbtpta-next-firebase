@@ -827,7 +827,7 @@ export default function Page() {
               </div>
               <div className="modal-body">
                 <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
-                  <div className="mb-3">
+                  <div className="col-md-6 mb-3">
                     <label className="form-label">School Name</label>
                     <input
                       type="text"
@@ -1111,7 +1111,7 @@ export default function Page() {
               </div>
               <div className="modal-body">
                 <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
-                  <div className="mb-3">
+                  <div className="col-md-6 mb-3">
                     <label className="form-label">School Name</label>
                     <input
                       type="text"

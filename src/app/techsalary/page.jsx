@@ -396,6 +396,16 @@ const TechSalary = () => {
                                 PRINT PAYSLIP
                               </Link>
                             ) : null}
+                            {state === "admin" ||
+                            el.association === "WBTPTA" ? (
+                              <Link
+                                className="btn btn-primary m-1 text-decoration-none"
+                                href={`/HRADeclaration`}
+                                onClick={() => setStateObject(el)}
+                              >
+                                HRA Declaration
+                              </Link>
+                            ) : null}
                             {state === "admin" ? (
                               <Link
                                 className="btn btn-success m-1 text-decoration-none"
