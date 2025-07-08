@@ -46,6 +46,7 @@ export default function Page() {
       id: "",
       teachersId: "",
       tname: "",
+      school: "",
       desig: "",
       leaveNature: "",
       startingDate: "",
@@ -64,6 +65,7 @@ export default function Page() {
     id: "",
     teachersId: "",
     tname: "",
+    school: "",
     desig: "",
     leaveNature: "",
     startingDate: "",
@@ -82,6 +84,7 @@ export default function Page() {
     id: `l-${docId}`,
     teachersId: "",
     tname: "",
+    school: "",
     desig: "",
     leaveNature: "",
     startingDate: todayInString(),
@@ -100,6 +103,7 @@ export default function Page() {
     id: "",
     teachersId: "",
     tname: "",
+    school: "",
     desig: "",
     leaveNature: "",
     startingDate: "",
@@ -156,6 +160,7 @@ export default function Page() {
       tname,
       teachersId: id,
       desig,
+      school,
     });
   };
   const addLeave = async () => {
