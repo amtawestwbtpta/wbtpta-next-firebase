@@ -226,6 +226,21 @@ const TeacherDatabase = () => {
       ),
     },
     {
+      name: "Leave Proposal",
+      cell: (row) => (
+        <button
+          type="button"
+          className="btn btn-sm btn-dark"
+          onClick={() => {
+            setStateObject(row);
+            router.push("/HRADeclaration");
+          }}
+        >
+          HRA Declaration
+        </button>
+      ),
+    },
+    {
       name: "Payslip WBTPTA",
       cell: (row) => (
         <Link
