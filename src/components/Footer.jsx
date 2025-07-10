@@ -76,7 +76,7 @@ const Footer = () => {
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
-          href="https://school.banglarshiksha.wb.gov.in/sms/"
+          href="https://school.banglarshiksha.gov.in/sms/"
           target="_blank"
           rel="noopener noreferrer"
         >
