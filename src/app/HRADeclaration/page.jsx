@@ -121,7 +121,7 @@ export default function HRA() {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Enter Spouse Details of {titleCase(tname)}
+                  Enter Spouse Details of {titleCase(salary?.tname)}
                 </h1>
                 <button
                   type="button"
@@ -134,11 +134,11 @@ export default function HRA() {
                 ></button>
               </div>
               <div className="modal-body">
-                <div className="spouseDetails">
+                <div className="spouseDetails col-md-6 mx-auto">
                   <h5 className="m-0 p-0">Details of Spouse</h5>
                   <h6 className="m-0 p-0 text-danger text-center">
-                    * Leave unchanged and Click Save if Spouse is Unemployed or
-                    you do not want to fill
+                    * Leave unchanged and Click Save if Spouse is Un employed or
+                    You are Unmarried or you do not want to fill
                   </h6>
                   <div className="mx-auto col-md-6 my-2">
                     <div className="form-check m-1 d-flex justify-content-between align-items-center">
@@ -154,7 +154,7 @@ export default function HRA() {
                         className="form-check-label m-2 text-success fs-6"
                         htmlFor="flexRadioDefault1"
                       >
-                        Spouse is Un Employed
+                        Spouse is Un Employed or You are Un married
                       </label>
                     </div>
                     <div className="form-check m-1 d-flex justify-content-between align-items-center">
@@ -286,8 +286,11 @@ export default function HRA() {
                         <label className="form-label">
                           House Rent Paid regarding Govt. Flat
                         </label>
+                        <label className="form-label text-danger p-2">
+                          {`(* Leave Blank if not applicable)`}
+                        </label>
                         <input
-                          type="number"
+                          type="text"
                           className="form-control"
                           placeholder="House Rent Paid"
                           value={salary.spouseHouseRenntPaid}
