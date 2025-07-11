@@ -9,21 +9,17 @@ import {
   roundSo,
   CalculateIncomeTax,
   readCSVFile,
-  readExcelData,
 } from "../../modules/calculatefunctions";
-import DataTable from "react-data-table-component";
 import { firestore } from "../../context/FirbaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import IncomeTaxNew2025 from "../../pdfs/IncomeTaxNew2025";
 import IncomeTaxOld2025 from "../../pdfs/IncomeTaxOld2025";
 import Form16New from "../../pdfs/Form16New";
 import Form16NewRegime from "../../pdfs/Form16NewRegime";
-import * as XLSX from "xlsx";
 export default function IncomeTaxReloded() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -38,9 +34,7 @@ export default function IncomeTaxReloded() {
     deductionState,
     setDeductionState,
     teachersState,
-    salaryState,
     setSalaryState,
-    indSalaryState,
     setIndSalaryState,
     state,
   } = useGlobalContext();
@@ -560,7 +554,7 @@ export default function IncomeTaxReloded() {
     const julyBasic = julySalary?.basic;
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
-    const aprilIR = Math.round(aprilSalary?.basic * 0.04);
+    const aprilIR = year == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
     const julyHRA =
       julySalary?.hraPercent > 10
         ? julySalary?.hraPercent
@@ -1188,7 +1182,7 @@ export default function IncomeTaxReloded() {
     const julyBasic = julySalary?.basic;
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
-    const aprilIR = Math.round(aprilSalary?.basic * 0.04);
+    const aprilIR = year == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
     const julyHRA =
       julySalary?.hraPercent > 10
         ? julySalary?.hraPercent
