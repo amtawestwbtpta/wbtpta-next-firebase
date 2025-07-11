@@ -471,19 +471,27 @@ export default function BenefitProforma({ data, year }) {
                   </Text>
                 </View>
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.text, { textAlign: "left" }]}>
-                    : Rs. {RoundTo(teacher.basic + teacher.basic * 0.03, 100)} (
-                    {
-                      Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
-                        .lv
-                    }
-                    ,{" "}
-                    {
-                      Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
-                        .ce
-                    }
-                    )
-                  </Text>
+                  {parseInt(teacher?.doj?.slice(3, 5)) >= 7 ? (
+                    <Text style={[styles.text, { textAlign: "left" }]}>
+                      : Rs. {RoundTo(teacher.basic + teacher.basic * 0.03, 100)}{" "}
+                      (
+                      {
+                        Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
+                          .lv
+                      }
+                      ,{" "}
+                      {
+                        Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
+                          .ce
+                      }
+                      )
+                    </Text>
+                  ) : (
+                    <Text style={[styles.text, { textAlign: "left" }]}>
+                      : Rs. {teacher.basic} ({Ropa(teacher.basic).lv},{" "}
+                      {Ropa(teacher.basic).ce})
+                    </Text>
+                  )}
                 </View>
               </View>
               <View
@@ -503,19 +511,27 @@ export default function BenefitProforma({ data, year }) {
                   </Text>
                 </View>
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.text, { textAlign: "left" }]}>
-                    : Rs. {RoundTo(teacher.basic + teacher.basic * 0.03, 100)} (
-                    {
-                      Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
-                        .lv
-                    }
-                    ,{" "}
-                    {
-                      Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
-                        .ce
-                    }
-                    )
-                  </Text>
+                  {parseInt(teacher?.doj?.slice(3, 5)) >= 7 ? (
+                    <Text style={[styles.text, { textAlign: "left" }]}>
+                      : Rs. {RoundTo(teacher.basic + teacher.basic * 0.03, 100)}{" "}
+                      (
+                      {
+                        Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
+                          .lv
+                      }
+                      ,{" "}
+                      {
+                        Ropa(RoundTo(teacher.basic + teacher.basic * 0.03, 100))
+                          .ce
+                      }
+                      )
+                    </Text>
+                  ) : (
+                    <Text style={[styles.text, { textAlign: "left" }]}>
+                      : Rs. {teacher.basic} ({Ropa(teacher.basic).lv},{" "}
+                      {Ropa(teacher.basic).ce})
+                    </Text>
+                  )}
                 </View>
               </View>
               <View
