@@ -393,6 +393,24 @@ const YearWiseTeachers = () => {
                               Mobile: {el.phone}
                             </a>
                           </h6>
+                          <div
+                            className={`d-flex flex-${
+                              filteredData.length !== 1 ? "row" : "column"
+                            } justify-content-evenly align-items-center`}
+                          >
+                            <h6 className={`text-center text-black`}>
+                              Association:{" "}
+                            </h6>
+                            <h6
+                              className={`text-center ${
+                                el.association === "WBTPTA"
+                                  ? "text-success"
+                                  : "text-danger"
+                              }`}
+                            >
+                              {el.association}
+                            </h6>
+                          </div>
                           <h6 className="text-center text-black">
                             Service Life:
                             <br /> {getServiceLife(el.doj)}
