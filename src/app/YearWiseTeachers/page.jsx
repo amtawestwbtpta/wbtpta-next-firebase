@@ -131,7 +131,14 @@ const YearWiseTeachers = () => {
           januaryMonthSalary.basic + januaryMonthSalary.basic * 0.03,
           100
         );
-        teacher.basic = RoundTo(normalIncrement + normalIncrement * 0.03, 100);
+        if (joiningMonth < 7) {
+          teacher.basic = RoundTo(
+            normalIncrement + normalIncrement * 0.03,
+            100
+          );
+        } else {
+          teacher.basic = normalIncrement;
+        }
 
         fData = [...fData, teacher];
       });
@@ -833,9 +840,9 @@ const YearWiseTeachers = () => {
                       }
                     </PDFDownloadLink>
                     {/* <BenefitApplication
-                  data={filteredData}
-                  year={parseInt(selectedYear)}
-                /> */}
+                      data={filteredData}
+                      year={parseInt(selectedYear)}
+                    /> */}
                   </div>
                 )}
             </div>
