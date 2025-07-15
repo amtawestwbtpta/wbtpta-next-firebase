@@ -831,11 +831,16 @@ const YearWiseTeachers = () => {
                                 reader.readAsDataURL(blob);
                               }
                             }}
-                            style={
-                              {
-                                /* your button styles */
-                              }
-                            }
+                            style={{
+                              textDecoration: "none",
+                              padding: 11,
+                              color: "#fff",
+                              backgroundColor: "darkgreen",
+                              border: "1px solid #4a4a4a",
+                              width: "40%",
+                              borderRadius: 10,
+                              margin: 20,
+                            }}
                           >
                             Download Form
                           </button>
