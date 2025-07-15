@@ -149,10 +149,15 @@ export default function WBTPTAPaySLip({ data }) {
                     <Text style={styles.text2}>MA</Text>
                     <Text style={styles.text}>{ma}</Text>
                   </View>
-                  {ir > 0 && (
+                  {ir > 0 ? (
+                    <View style={styles.salaryView}>
+                      <Text style={styles.text2}>DA ARREAR</Text>
+                      <Text style={styles.text}>{ir}</Text>
+                    </View>
+                  ) : (
                     <View style={styles.salaryView}>
                       <Text style={styles.text2}>IR</Text>
-                      <Text style={styles.text}>{ir}</Text>
+                      <Text style={styles.text}> 0</Text>
                     </View>
                   )}
                 </View>
