@@ -42,6 +42,11 @@ const YearWiseTeachers = () => {
   const [showProforma, setShowProforma] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [showArrearForm, setShowArrearForm] = useState(false);
+  const isReactNativeWebView = () => {
+    if (typeof window !== undefined) {
+      return window.ReactNativeWebView !== undefined;
+    }
+  };
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -795,20 +800,62 @@ const YearWiseTeachers = () => {
                         />
                       }
                       fileName={`Benefit Proforma of Teachers.pdf`}
-                      style={{
-                        textDecoration: "none",
-                        padding: 11,
-                        color: "#fff",
-                        backgroundColor: "darkgreen",
-                        border: "1px solid #4a4a4a",
-                        width: "40%",
-                        borderRadius: 10,
-                        margin: 20,
-                      }}
-                    >
-                      {({ blob, url, loading, error }) =>
-                        loading ? "Please Wait..." : "Download Form"
+                      style={
+                        {
+                          /* your styles */
+                        }
                       }
+                    >
+                      {({ blob, loading, error }) => {
+                        if (loading) return "Please Wait...";
+
+                        return (
+                          <button
+                            onClick={async (e) => {
+                              // Prevent default in WebView environment
+                              if (isReactNativeWebView()) {
+                                e.preventDefault();
+
+                                if (blob) {
+                                  // Convert blob to base64 for React Native
+                                  const reader = new FileReader();
+                                  reader.readAsDataURL(blob);
+                                  reader.onloadend = () => {
+                                    const base64 = reader.result;
+                                    window.ReactNativeWebView.postMessage(
+                                      JSON.stringify({
+                                        type: "pdfDownload",
+                                        fileName:
+                                          "Benefit Proforma of Teachers.pdf",
+                                        base64Data: base64,
+                                      })
+                                    );
+                                  };
+                                }
+                              }
+                            }}
+                            style={{
+                              // Copy the same styles from the link
+                              textDecoration: "none",
+                              padding: 11,
+                              color: "#fff",
+                              backgroundColor: "darkgreen",
+                              border: "1px solid #4a4a4a",
+                              width: "100%",
+                              borderRadius: 10,
+                              margin: 0,
+                              cursor: "pointer",
+                              // Add button-specific resets
+                              appearance: "none",
+                              textAlign: "center",
+                              boxSizing: "border-box",
+                              font: "inherit",
+                            }}
+                          >
+                            Download Form
+                          </button>
+                        );
+                      }}
                     </PDFDownloadLink>
                   </div>
                 )}
