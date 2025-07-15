@@ -799,53 +799,21 @@ const YearWiseTeachers = () => {
                           year={parseInt(selectedYear)}
                         />
                       }
-                      fileName="Benefit Proforma of Teachers.pdf"
-                      style={
-                        {
-                          /* your styles */
-                        }
-                      }
-                    >
-                      {({ blob, loading, error }) => {
-                        if (loading) return "Please Wait...";
-
-                        return (
-                          <button
-                            data-pdf-download
-                            data-file-name="Benefit Proforma of Teachers.pdf"
-                            data-blob={blob ? "true" : undefined}
-                            onClick={(e) => {
-                              if (window.isReactNativeWebView && blob) {
-                                e.preventDefault();
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  window.ReactNativeWebView.postMessage(
-                                    JSON.stringify({
-                                      type: "pdfDownload",
-                                      fileName:
-                                        "Benefit Proforma of Teachers.pdf",
-                                      base64Data: reader.result.split(",")[1],
-                                    })
-                                  );
-                                };
-                                reader.readAsDataURL(blob);
-                              }
-                            }}
-                            style={{
-                              textDecoration: "none",
-                              padding: 11,
-                              color: "#fff",
-                              backgroundColor: "darkgreen",
-                              border: "1px solid #4a4a4a",
-                              width: "40%",
-                              borderRadius: 10,
-                              margin: 20,
-                            }}
-                          >
-                            Download Form
-                          </button>
-                        );
+                      fileName={`Benefit Proforma of Teachers.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        padding: 11,
+                        color: "#fff",
+                        backgroundColor: "darkgreen",
+                        border: "1px solid #4a4a4a",
+                        width: "40%",
+                        borderRadius: 10,
+                        margin: 20,
                       }}
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Please Wait..." : "Download Benefit Proforma"
+                      }
                     </PDFDownloadLink>
                   </div>
                 )}
