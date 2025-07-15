@@ -799,7 +799,7 @@ const YearWiseTeachers = () => {
                           year={parseInt(selectedYear)}
                         />
                       }
-                      fileName={`Benefit Proforma of Teachers.pdf`}
+                      fileName="Benefit Proforma of Teachers.pdf"
                       style={
                         {
                           /* your styles */
@@ -811,46 +811,31 @@ const YearWiseTeachers = () => {
 
                         return (
                           <button
-                            onClick={async (e) => {
-                              // Prevent default in WebView environment
-                              if (isReactNativeWebView()) {
+                            data-pdf-download
+                            data-file-name="Benefit Proforma of Teachers.pdf"
+                            data-blob={blob ? "true" : undefined}
+                            onClick={(e) => {
+                              if (window.isReactNativeWebView && blob) {
                                 e.preventDefault();
-
-                                if (blob) {
-                                  // Convert blob to base64 for React Native
-                                  const reader = new FileReader();
-                                  reader.readAsDataURL(blob);
-                                  reader.onloadend = () => {
-                                    const base64 = reader.result;
-                                    window.ReactNativeWebView.postMessage(
-                                      JSON.stringify({
-                                        type: "pdfDownload",
-                                        fileName:
-                                          "Benefit Proforma of Teachers.pdf",
-                                        base64Data: base64,
-                                      })
-                                    );
-                                  };
-                                }
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  window.ReactNativeWebView.postMessage(
+                                    JSON.stringify({
+                                      type: "pdfDownload",
+                                      fileName:
+                                        "Benefit Proforma of Teachers.pdf",
+                                      base64Data: reader.result.split(",")[1],
+                                    })
+                                  );
+                                };
+                                reader.readAsDataURL(blob);
                               }
                             }}
-                            style={{
-                              // Copy the same styles from the link
-                              textDecoration: "none",
-                              padding: 11,
-                              color: "#fff",
-                              backgroundColor: "darkgreen",
-                              border: "1px solid #4a4a4a",
-                              width: "100%",
-                              borderRadius: 10,
-                              margin: 0,
-                              cursor: "pointer",
-                              // Add button-specific resets
-                              appearance: "none",
-                              textAlign: "center",
-                              boxSizing: "border-box",
-                              font: "inherit",
-                            }}
+                            style={
+                              {
+                                /* your button styles */
+                              }
+                            }
                           >
                             Download Form
                           </button>
