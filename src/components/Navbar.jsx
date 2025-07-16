@@ -534,6 +534,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/TeacherSelection"
+              onClick={handleNavCollapse}
+            >
+              Teacher Selection
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/FlexibleComp"
               onClick={handleNavCollapse}
             >
