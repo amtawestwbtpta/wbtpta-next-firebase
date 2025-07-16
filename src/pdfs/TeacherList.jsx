@@ -15,10 +15,30 @@ const width = 2480;
 const height = 3508;
 
 export default function TeacherList({ data }) {
-  const pages = sliceArrayIntoChunks(data, 40);
-  useEffect(() => {
-    console.log(pages);
-  }, []);
+  const list = data.sort((a, b) => {
+    if (a.gp < b.gp) {
+      return -1;
+    }
+    if (a.gp > b.gp) {
+      return 1;
+    }
+    if (a.school < b.school) {
+      return -1;
+    }
+    if (a.school > b.school) {
+      return 1;
+    }
+    if (a.tname < b.tname) {
+      return -1;
+    }
+    if (a.tname > b.tname) {
+      return 1;
+    }
+    // If "school" keys are equal, compare the "rank" keys
+    return a.rank - b.rank;
+  });
+  const pages = sliceArrayIntoChunks(list, 40);
+
   return (
     // <PDFViewer
     //   style={{
@@ -118,7 +138,7 @@ export default function TeacherList({ data }) {
                       }}
                     >
                       <Text style={styles.text}>
-                        {data.findIndex((i) => i.id === id) + 1}
+                        {list.findIndex((i) => i.id === id) + 1}
                       </Text>
                     </View>
                     <View
