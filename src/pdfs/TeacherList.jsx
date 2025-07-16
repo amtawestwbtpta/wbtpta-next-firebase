@@ -31,7 +31,7 @@ export default function TeacherList({ data }) {
         <Page size="A4" orientation="portrait" style={styles.page} key={index}>
           <View style={styles.pageMainView}>
             <Text style={[styles.title, { marginBottom: 5 }]}>
-              Teacher List {index + 1}
+              Teacher List Page{index + 1}
             </Text>
             <View style={styles.tableStartBorderView}>
               <View style={styles.rowStartBorderView}>
@@ -68,7 +68,7 @@ export default function TeacherList({ data }) {
                 <View
                   style={{
                     borderRightWidth: 1,
-                    width: "50%",
+                    width: "45%",
                     height: 20,
                     justifyContent: "center",
                   }}
@@ -77,8 +77,18 @@ export default function TeacherList({ data }) {
                 </View>
                 <View
                   style={{
+                    borderRightWidth: 1,
+                    width: "15%",
+                    height: 20,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={styles.text}>GP</Text>
+                </View>
+                <View
+                  style={{
                     borderRightWidth: 0,
-                    width: "20%",
+                    width: "10%",
                     height: 20,
                     justifyContent: "center",
                   }}
@@ -87,7 +97,7 @@ export default function TeacherList({ data }) {
                 </View>
               </View>
               {page?.map((teacher, ind) => {
-                const { tname, desig, school, phone, id } = teacher;
+                const { tname, desig, school, phone, id, gp } = teacher;
                 return (
                   <View
                     style={[
@@ -122,7 +132,7 @@ export default function TeacherList({ data }) {
                       <Text
                         style={[
                           styles.text,
-                          { fontSize: tname.length >= 19 ? 9 : 11 },
+                          { fontSize: tname.length >= 19 ? 9 : 10 },
                         ]}
                       >
                         {tname}
@@ -141,7 +151,7 @@ export default function TeacherList({ data }) {
                     <View
                       style={{
                         borderRightWidth: 1,
-                        width: "50%",
+                        width: "45%",
                         height: 20,
                         justifyContent: "center",
                       }}
@@ -149,7 +159,7 @@ export default function TeacherList({ data }) {
                       <Text
                         style={[
                           styles.text,
-                          { fontSize: school.length >= 19 ? 9 : 11 },
+                          { fontSize: school.length >= 19 ? 9 : 10 },
                         ]}
                       >
                         {school}
@@ -157,13 +167,25 @@ export default function TeacherList({ data }) {
                     </View>
                     <View
                       style={{
-                        borderRightWidth: 0,
-                        width: "20%",
+                        borderRightWidth: 1,
+                        width: "15%",
                         height: 20,
                         justifyContent: "center",
                       }}
                     >
-                      <Text style={styles.text}>{phone}</Text>
+                      <Text style={[styles.text, { fontSize: 9 }]}>{gp}</Text>
+                    </View>
+                    <View
+                      style={{
+                        borderRightWidth: 0,
+                        width: "10%",
+                        height: 20,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={[styles.text, { fontSize: 9 }]}>
+                        {phone}
+                      </Text>
                     </View>
                   </View>
                 );

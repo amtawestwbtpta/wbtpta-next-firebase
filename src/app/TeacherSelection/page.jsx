@@ -28,6 +28,7 @@ const TeacherTransferComponent = () => {
   const [rightSearch, setRightSearch] = useState("");
   const [currentLeftPage, setCurrentLeftPage] = useState(1);
   const [currentRightPage, setCurrentRightPage] = useState(1);
+  const [reportPage, setReportPage] = useState(1);
   const itemsPerPage = 10;
 
   // Filtered lists
@@ -42,7 +43,7 @@ const TeacherTransferComponent = () => {
   // Pagination calculations
   const leftPageCount = Math.ceil(filteredLeft.length / itemsPerPage);
   const rightPageCount = Math.ceil(filteredRight.length / itemsPerPage);
-
+  const reportPageCount = Math.ceil(rightList.length / itemsPerPage);
   // Paginated lists
   const paginatedLeft = filteredLeft.slice(
     (currentLeftPage - 1) * itemsPerPage,
@@ -53,7 +54,10 @@ const TeacherTransferComponent = () => {
     (currentRightPage - 1) * itemsPerPage,
     currentRightPage * itemsPerPage
   );
-
+  const paginatedReport = rightList.slice(
+    (reportPage - 1) * itemsPerPage,
+    reportPage * itemsPerPage
+  );
   // Move item from left to right
   const moveToRight = async (teacher) => {
     setLeftList(leftList.filter((item) => item.id !== teacher.id));
@@ -89,12 +93,9 @@ const TeacherTransferComponent = () => {
   // Handle complete action
   const handleComplete = () => {
     setShowTable(true);
+    setReportPage(1);
   };
 
-  // Handle print action
-  const handlePrint = () => {
-    window.print();
-  };
   const sortTeacher = async (teachers) => {
     const newDatas = teachers.sort((a, b) => {
       // First, compare the "school" keys
@@ -481,17 +482,19 @@ const TeacherTransferComponent = () => {
                       <tr>
                         <th>Sl</th>
                         <th>Name</th>
-                        <th>Phone</th>
                         <th>School</th>
+                        <th>GP</th>
+                        <th>Phone</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {rightList.map((teacher, index) => (
+                      {paginatedReport.map((teacher, index) => (
                         <tr key={teacher.id}>
-                          <td>{index + 1}</td>
+                          <td>{(reportPage - 1) * itemsPerPage + index + 1}</td>
                           <td>{teacher.tname}</td>
-                          <td>{teacher.phone}</td>
                           <td>{teacher.school}</td>
+                          <td>{teacher.gp}</td>
+                          <td>{teacher.phone}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -512,18 +515,74 @@ const TeacherTransferComponent = () => {
                       Total Teachers: <strong>{rightList.length}</strong>
                     </div>
                   </div>
+                  {/* Report Pagination */}
+                  <div className="d-flex justify-content-center mt-4">
+                    <nav>
+                      <ul className="pagination">
+                        <li
+                          className={`page-item ${
+                            reportPage === 1 ? "disabled" : ""
+                          }`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() =>
+                              setReportPage((prev) => Math.max(prev - 1, 1))
+                            }
+                          >
+                            <i className="bi bi-chevron-left"></i>
+                          </button>
+                        </li>
+
+                        {Array.from(
+                          { length: Math.min(5, reportPageCount) },
+                          (_, i) => {
+                            const page =
+                              Math.max(
+                                1,
+                                Math.min(reportPageCount - 4, reportPage - 2)
+                              ) + i;
+                            if (page > reportPageCount) return null;
+                            return (
+                              <li
+                                key={page}
+                                className={`page-item ${
+                                  page === reportPage ? "active" : ""
+                                }`}
+                              >
+                                <button
+                                  className="page-link"
+                                  onClick={() => setReportPage(page)}
+                                >
+                                  {page}
+                                </button>
+                              </li>
+                            );
+                          }
+                        )}
+
+                        <li
+                          className={`page-item ${
+                            reportPage === reportPageCount ? "disabled" : ""
+                          }`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() =>
+                              setReportPage((prev) =>
+                                Math.min(prev + 1, reportPageCount)
+                              )
+                            }
+                          >
+                            <i className="bi bi-chevron-right"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
               </div>
 
-              <div className="text-center mt-4 noprint">
-                <button
-                  className="btn btn-success btn-lg px-5 py-3"
-                  onClick={handlePrint}
-                >
-                  <i className="bi bi-printer me-2"></i>
-                  Print Report
-                </button>
-              </div>
               <div className="my-4">
                 <PDFDownloadLink
                   document={<TeacherList data={rightList} />}
@@ -543,6 +602,7 @@ const TeacherTransferComponent = () => {
                     loading ? "Please Wait..." : "Download Teacher List"
                   }
                 </PDFDownloadLink>
+                {/* <TeacherList data={rightList} /> */}
               </div>
             </div>
           )}
