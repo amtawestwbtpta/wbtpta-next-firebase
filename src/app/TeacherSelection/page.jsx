@@ -2,8 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context/Store";
-
+import TeacherList from "../../pdfs/TeacherList";
+import dynamic from "next/dynamic";
+import Loader from "../../components/Loader";
 const TeacherTransferComponent = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <Loader />,
+    }
+  );
   const { teachersState } = useGlobalContext();
   const [data, setData] = useState([]);
   const [showTeacherSelection, setShowTeacherSelection] = useState(true);
@@ -513,6 +523,26 @@ const TeacherTransferComponent = () => {
                   <i className="bi bi-printer me-2"></i>
                   Print Report
                 </button>
+              </div>
+              <div className="my-4">
+                <PDFDownloadLink
+                  document={<TeacherList data={rightList} />}
+                  fileName={`Teacher List.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "purple",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Teacher List"
+                  }
+                </PDFDownloadLink>
               </div>
             </div>
           )}

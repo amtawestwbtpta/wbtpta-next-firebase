@@ -886,3 +886,21 @@ export const readExcelData = async (fileName) => {
     console.log("Excel data fetch completed.");
   }
 };
+export const sliceArrayIntoChunks = (array, maxChunkSize) => {
+  // If array length is 24 or less, return it as a single chunk
+  if (array.length <= maxChunkSize) {
+    return [array];
+  }
+
+  const result = [];
+  const numberOfChunks = Math.ceil(array.length / maxChunkSize);
+
+  for (let i = 0; i < numberOfChunks; i++) {
+    const startIndex = i * maxChunkSize;
+    const endIndex = startIndex + maxChunkSize;
+    const chunk = array.slice(startIndex, endIndex);
+    result.push(chunk);
+  }
+
+  return result;
+};
