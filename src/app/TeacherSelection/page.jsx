@@ -15,6 +15,28 @@ const TeacherTransferComponent = () => {
     }
   );
   const { teachersState } = useGlobalContext();
+  const asSorted = teachersState.sort((a, b) => {
+    if (a.gp < b.gp) {
+      return -1;
+    }
+    if (a.gp > b.gp) {
+      return 1;
+    }
+    if (a.school < b.school) {
+      return -1;
+    }
+    if (a.school > b.school) {
+      return 1;
+    }
+    if (a.tname < b.tname) {
+      return -1;
+    }
+    if (a.tname > b.tname) {
+      return 1;
+    }
+    // If "school" keys are equal, compare the "rank" keys
+    return a.rank - b.rank;
+  });
   const [data, setData] = useState([]);
   const [showTeacherSelection, setShowTeacherSelection] = useState(true);
   const [isWBTPTA, setIsWBTPTA] = useState(false);
@@ -144,8 +166,8 @@ const TeacherTransferComponent = () => {
                       type="button"
                       className="btn btn-primary p-2 rounded"
                       onClick={() => {
-                        setData(teachersState);
-                        setLeftList(teachersState);
+                        setData(asSorted);
+                        setLeftList(asSorted);
                         setRightList([]);
                         setShowTeacherSelection(false);
                         setIsWBTPTA(false);
@@ -160,14 +182,10 @@ const TeacherTransferComponent = () => {
                       className="btn btn-success p-2 rounded"
                       onClick={() => {
                         setData(
-                          teachersState.filter(
-                            (el) => el.association === "WBTPTA"
-                          )
+                          asSorted.filter((el) => el.association === "WBTPTA")
                         );
                         setLeftList(
-                          teachersState.filter(
-                            (el) => el.association === "WBTPTA"
-                          )
+                          asSorted.filter((el) => el.association === "WBTPTA")
                         );
                         setRightList([]);
                         setShowTeacherSelection(false);

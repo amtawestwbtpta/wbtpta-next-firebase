@@ -68,27 +68,18 @@ export default function TeacherList({ data }) {
                 <View
                   style={{
                     borderRightWidth: 1,
-                    width: "30%",
+                    width: "40%",
                     height: 20,
                     justifyContent: "center",
                   }}
                 >
                   <Text style={styles.text}>NAME</Text>
                 </View>
+
                 <View
                   style={{
                     borderRightWidth: 1,
-                    width: "5%",
-                    height: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={[styles.text, { fontSize: 8 }]}>DESIG.</Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "45%",
+                    width: "50%",
                     height: 20,
                     justifyContent: "center",
                   }}
@@ -97,23 +88,13 @@ export default function TeacherList({ data }) {
                 </View>
                 <View
                   style={{
-                    borderRightWidth: 1,
+                    borderRightWidth: 0,
                     width: "15%",
                     height: 20,
                     justifyContent: "center",
                   }}
                 >
                   <Text style={styles.text}>GP</Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 0,
-                    width: "10%",
-                    height: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={styles.text}>PHONE</Text>
                 </View>
               </View>
               {page?.map((teacher, ind) => {
@@ -144,7 +125,7 @@ export default function TeacherList({ data }) {
                     <View
                       style={{
                         borderRightWidth: 1,
-                        width: "30%",
+                        width: "40%",
                         height: 20,
                         justifyContent: "center",
                       }}
@@ -152,26 +133,17 @@ export default function TeacherList({ data }) {
                       <Text
                         style={[
                           styles.text,
-                          { fontSize: tname.length >= 19 ? 9 : 10 },
+                          { fontSize: tname.length >= 22 ? 11 : 13 },
                         ]}
                       >
                         {tname}
                       </Text>
                     </View>
+
                     <View
                       style={{
                         borderRightWidth: 1,
-                        width: "5%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{desig}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "45%",
+                        width: "50%",
                         height: 20,
                         justifyContent: "center",
                       }}
@@ -179,7 +151,7 @@ export default function TeacherList({ data }) {
                       <Text
                         style={[
                           styles.text,
-                          { fontSize: school.length >= 19 ? 9 : 10 },
+                          { fontSize: school.length >= 19 ? 10 : 11 },
                         ]}
                       >
                         {school}
@@ -187,25 +159,13 @@ export default function TeacherList({ data }) {
                     </View>
                     <View
                       style={{
-                        borderRightWidth: 1,
+                        borderRightWidth: 0,
                         width: "15%",
                         height: 20,
                         justifyContent: "center",
                       }}
                     >
-                      <Text style={[styles.text, { fontSize: 9 }]}>{gp}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 0,
-                        width: "10%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={[styles.text, { fontSize: 9 }]}>
-                        {phone}
-                      </Text>
+                      <Text style={styles.text}>{gp}</Text>
                     </View>
                   </View>
                 );
