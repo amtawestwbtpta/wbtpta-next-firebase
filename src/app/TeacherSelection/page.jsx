@@ -28,18 +28,11 @@ const TeacherTransferComponent = () => {
     if (a.school > b.school) {
       return 1;
     }
-    if (a.tname < b.tname) {
-      return -1;
-    }
-    if (a.tname > b.tname) {
-      return 1;
-    }
-    // If "school" keys are equal, compare the "rank" keys
     return a.rank - b.rank;
   });
   const [data, setData] = useState([]);
   const [showTeacherSelection, setShowTeacherSelection] = useState(true);
-  const [isWBTPTA, setIsWBTPTA] = useState(false);
+  const [title, setTitle] = useState("Teacher List");
   // State management
   const [leftList, setLeftList] = useState([]);
   const [rightList, setRightList] = useState([]);
@@ -120,14 +113,18 @@ const TeacherTransferComponent = () => {
 
   const sortTeacher = async (teachers) => {
     const newDatas = teachers.sort((a, b) => {
-      // First, compare the "school" keys
+      if (a.gp < b.gp) {
+        return -1;
+      }
+      if (a.gp > b.gp) {
+        return 1;
+      }
       if (a.school < b.school) {
         return -1;
       }
       if (a.school > b.school) {
         return 1;
       }
-      // If "school" keys are equal, compare the "rank" keys
       return a.rank - b.rank;
     });
     return newDatas;
@@ -139,7 +136,7 @@ const TeacherTransferComponent = () => {
     //eslint-disable-next-line
   }, []);
   useEffect(() => {
-    document.title = `Teacher Transfer System`;
+    document.title = `Teacher Selection System`;
     //eslint-disable-next-line
   }, [data, leftList, rightList, filteredLeft, filteredRight]);
   return (
@@ -170,7 +167,6 @@ const TeacherTransferComponent = () => {
                         setLeftList(asSorted);
                         setRightList([]);
                         setShowTeacherSelection(false);
-                        setIsWBTPTA(false);
                       }}
                     >
                       All Teachers
@@ -189,7 +185,6 @@ const TeacherTransferComponent = () => {
                         );
                         setRightList([]);
                         setShowTeacherSelection(false);
-                        setIsWBTPTA(true);
                       }}
                     >
                       Only WBTPTA Teachers
@@ -459,14 +454,36 @@ const TeacherTransferComponent = () => {
                   </div>
                 </div>
               </div>
-
+              <div className="mx-auto col-md-6 m-2">
+                <div className="input-group mb-3">
+                  <span className="input-group-text">
+                    <i className="bi bi-card-heading"> Title</i>
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Title"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  />
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={() => setTitle("")}
+                    disabled={!title}
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
               {/* Complete Button */}
               <div className="row mt-4">
                 <div className="col text-center">
                   <button
                     className="btn btn-primary btn-lg px-5 py-3"
                     onClick={handleComplete}
-                    disabled={rightList.length === 0}
+                    disabled={rightList.length === 0 || title === ""}
                   >
                     <i className="bi bi-check-circle me-2"></i>
                     Complete Selection
@@ -502,7 +519,6 @@ const TeacherTransferComponent = () => {
                         <th>Name</th>
                         <th>School</th>
                         <th>GP</th>
-                        <th>Phone</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -512,7 +528,6 @@ const TeacherTransferComponent = () => {
                           <td>{teacher.tname}</td>
                           <td>{teacher.school}</td>
                           <td>{teacher.gp}</td>
-                          <td>{teacher.phone}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -603,8 +618,8 @@ const TeacherTransferComponent = () => {
 
               <div className="my-4">
                 <PDFDownloadLink
-                  document={<TeacherList data={rightList} />}
-                  fileName={`Teacher List.pdf`}
+                  document={<TeacherList data={rightList} title={title} />}
+                  fileName={`${title}.pdf`}
                   style={{
                     textDecoration: "none",
                     padding: 11,

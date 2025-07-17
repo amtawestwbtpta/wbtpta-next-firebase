@@ -14,7 +14,7 @@ import { sliceArrayIntoChunks } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
 
-export default function TeacherList({ data }) {
+export default function TeacherList({ data, title }) {
   const list = data.sort((a, b) => {
     if (a.gp < b.gp) {
       return -1;
@@ -26,12 +26,6 @@ export default function TeacherList({ data }) {
       return -1;
     }
     if (a.school > b.school) {
-      return 1;
-    }
-    if (a.tname < b.tname) {
-      return -1;
-    }
-    if (a.tname > b.tname) {
       return 1;
     }
     // If "school" keys are equal, compare the "rank" keys
@@ -46,13 +40,11 @@ export default function TeacherList({ data }) {
     //     height: height / 3,
     //   }}
     // >
-    <Document style={{ margin: 2, padding: 2 }} title={`Teacher List`}>
+    <Document style={{ margin: 2, padding: 2 }} title={title}>
       {pages.map((page, index) => (
         <Page size="A4" orientation="portrait" style={styles.page} key={index}>
           <View style={styles.pageMainView}>
-            <Text style={[styles.title, { marginBottom: 5 }]}>
-              Teacher List Page{index + 1}
-            </Text>
+            <Text style={[styles.title, { marginBottom: 3 }]}>{title}</Text>
             <View style={styles.tableStartBorderView}>
               <View style={styles.rowStartBorderView}>
                 <View
@@ -171,6 +163,17 @@ export default function TeacherList({ data }) {
                 );
               })}
             </View>
+            <Text style={[styles.text, { marginVertical: 2 }]}>
+              Generated on:{" "}
+              {new Date()
+                .toISOString()
+                .split("T")[0]
+                .split("-")
+                .reverse()
+                .join("-")}{" "}
+              at {new Date().toLocaleTimeString()} Page {index + 1} of{" "}
+              {pages.length}
+            </Text>
           </View>
         </Page>
       ))}

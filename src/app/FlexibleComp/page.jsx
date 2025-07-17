@@ -11,59 +11,69 @@ function FlexibleComp() {
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
   const [teacherData, setTeacherData] = useState([
-    "school",
-    "udise",
-    "tname",
-    "gender",
-    "ph",
-    "desig",
-    "fname",
-    "circle",
-    "sis",
-    "gp",
-    "association",
-    "phone",
-    "email",
-    "dob",
-    "doj",
-    "dojnow",
-    "dor",
-    "bank",
-    "account",
-    "ifsc",
-    "empid",
-    "training",
-    "pan",
-    "address",
-    "basic",
-    "mbasic",
-    "prevmbasic",
-    "addl",
-    "da",
-    "mda",
-    "hra",
-    "mhra",
-    "ma",
-    "gross",
-    "mgross",
-    "gpf",
-    "gpfprev",
-    "mptax",
-    "jptax",
-    "gsli",
-    "netpay",
-    "mnetpay",
-    "bonus",
-    "arrear",
-    "question",
-    "hoi",
-    "newHt",
-    "showAccount",
-    "service",
-    "id",
-    "rank",
-    "dataYear",
+    { id: "key1", keyName: "school", displayName: "SCHOOL" },
+    { id: "key2", keyName: "udise", displayName: "UDISE" },
+    { id: "key3", keyName: "tname", displayName: "TEACHER'S NAME" },
+    { id: "key4", keyName: "gender", displayName: "GENDER" },
+    { id: "key5", keyName: "disability", displayName: "DISABILITY" },
+    { id: "key6", keyName: "desig", displayName: "DESIG." },
+    { id: "key7", keyName: "fname", displayName: "FATHER'S NAME" },
+    { id: "key8", keyName: "circle", displayName: "ACCESS" },
+    { id: "key9", keyName: "gp", displayName: "GP" },
+    { id: "key10", keyName: "association", displayName: "ASSOCIATION" },
+    { id: "key11", keyName: "phone", displayName: "PHONE" },
+    { id: "key12", keyName: "email", displayName: "EMAIL" },
+    { id: "key13", keyName: "dob", displayName: "BIRTHDATE" },
+    { id: "key14", keyName: "doj", displayName: "JOINING DATE" },
+    { id: "key15", keyName: "dojnow", displayName: "DOJ IN THIS SCHOOL" },
+    { id: "key16", keyName: "dor", displayName: "RETIREMENT DATE" },
+    { id: "key17", keyName: "bank", displayName: "BANK" },
+    { id: "key18", keyName: "account", displayName: "ACCOUNT NO." },
+    { id: "key19", keyName: "ifsc", displayName: "IFSC" },
+    { id: "key20", keyName: "empid", displayName: "EMPLOYEE ID" },
+    { id: "key21", keyName: "training", displayName: "TRAINING" },
+    { id: "key22", keyName: "pan", displayName: "PAN NO" },
+    { id: "key23", keyName: "address", displayName: "ADDRESS" },
+    { id: "key24", keyName: "question", displayName: "QUESTION ACCESS" },
+    { id: "key25", keyName: "hoi", displayName: "HOI" },
+    { id: "key26", keyName: "showAccount", displayName: "ACCOUNT SHOWN" },
+    { id: "key27", keyName: "service", displayName: "SERVICE STATUS" },
+    { id: "key28", keyName: "id", displayName: "ID" },
+    { id: "key29", keyName: "rank", displayName: "RANK" },
+    { id: "key30", keyName: "dataYear", displayName: "DATAYEAR" },
   ]);
+  const keysData = [
+    { id: "key1", keyName: "school", displayName: "SCHOOL" },
+    { id: "key2", keyName: "udise", displayName: "UDISE" },
+    { id: "key3", keyName: "tname", displayName: "TEACHER'S NAME" },
+    { id: "key4", keyName: "gender", displayName: "GENDER" },
+    { id: "key5", keyName: "disability", displayName: "DISABILITY" },
+    { id: "key6", keyName: "desig", displayName: "DESIG." },
+    { id: "key7", keyName: "fname", displayName: "FATHER'S NAME" },
+    { id: "key8", keyName: "circle", displayName: "ACCESS" },
+    { id: "key9", keyName: "gp", displayName: "GP" },
+    { id: "key10", keyName: "association", displayName: "ASSOCIATION" },
+    { id: "key11", keyName: "phone", displayName: "PHONE" },
+    { id: "key12", keyName: "email", displayName: "EMAIL" },
+    { id: "key13", keyName: "dob", displayName: "BIRTHDATE" },
+    { id: "key14", keyName: "doj", displayName: "JOINING DATE" },
+    { id: "key15", keyName: "dojnow", displayName: "DOJ IN THIS SCHOOL" },
+    { id: "key16", keyName: "dor", displayName: "RETIREMENT DATE" },
+    { id: "key17", keyName: "bank", displayName: "BANK" },
+    { id: "key18", keyName: "account", displayName: "ACCOUNT NO." },
+    { id: "key19", keyName: "ifsc", displayName: "IFSC" },
+    { id: "key20", keyName: "empid", displayName: "EMPLOYEE ID" },
+    { id: "key21", keyName: "training", displayName: "TRAINING" },
+    { id: "key22", keyName: "pan", displayName: "PAN NO" },
+    { id: "key23", keyName: "address", displayName: "ADDRESS" },
+    { id: "key24", keyName: "question", displayName: "QUESTION ACCESS" },
+    { id: "key25", keyName: "hoi", displayName: "HOI" },
+    { id: "key26", keyName: "showAccount", displayName: "ACCOUNT SHOWN" },
+    { id: "key27", keyName: "service", displayName: "SERVICE STATUS" },
+    { id: "key28", keyName: "id", displayName: "ID" },
+    { id: "key29", keyName: "rank", displayName: "RANK" },
+    { id: "key30", keyName: "dataYear", displayName: "DATAYEAR" },
+  ];
 
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
@@ -92,14 +102,15 @@ function FlexibleComp() {
   };
 
   function handleSelect(e) {
+    const value = e.target.value;
     let y = [];
 
-    y = [...selectedKeys, e.target.value];
-    if (y.filter((el) => el === e.target.value).length > 1) {
+    y = [...selectedKeys, value];
+    if (y.filter((el) => el === value).length > 1) {
       y = uniq(y);
     }
     setSelectedKeys(y);
-    setTeacherData(teacherData.filter((el) => el !== e.target.value));
+    setTeacherData(teacherData.filter((el) => el.keyName !== value));
     if (typeof window !== undefined) {
       document.getElementById("selectForm").value = "";
     }
@@ -131,10 +142,10 @@ function FlexibleComp() {
             >
               <option value="">Select Key Name</option>
               {teacherData
-                .sort((a, b) => a.localeCompare(b))
+                .sort((a, b) => a.keyName.localeCompare(b.keyName))
                 .map((el, ind) => (
-                  <option value={el} key={ind}>
-                    {el}
+                  <option value={el.keyName} key={ind}>
+                    {el.displayName}
                   </option>
                 ))}
             </select>
@@ -142,22 +153,30 @@ function FlexibleComp() {
           {selectedKeys.length > 0 && (
             <>
               <div className=" justify-content-center align-items-center mx-auto">
-                {selectedKeys.map((el, ind) => (
-                  <span
-                    className={`btn btn-sm btn-${
-                      (ind + 1) % 2 === 0 ? "primary" : "success"
-                    } fs-6 m-1`}
-                    key={ind}
-                    onClick={() => {
-                      setSelectedKeys(
-                        selectedKeys.filter((keys) => keys !== el)
-                      );
-                      setTeacherData([...teacherData, el]);
-                    }}
-                  >
-                    {el} <i className={` bi bi-x `}></i>
-                  </span>
-                ))}
+                {selectedKeys.map((el, ind) => {
+                  const currentKey = keysData.filter(
+                    (keys) => keys.keyName === el
+                  )[0];
+                  return (
+                    <span
+                      className={`btn btn-sm btn-${
+                        (ind + 1) % 2 === 0 ? "primary" : "success"
+                      } fs-6 m-1`}
+                      key={ind}
+                      onClick={() => {
+                        setSelectedKeys(
+                          selectedKeys.filter((keys) => keys !== el)
+                        );
+                        const currentKey = keysData.filter(
+                          (keys) => keys.keyName === el
+                        )[0];
+                        setTeacherData([...teacherData, currentKey]);
+                      }}
+                    >
+                      {currentKey.displayName} <i className={` bi bi-x `}></i>
+                    </span>
+                  );
+                })}
               </div>
               <button
                 type="button"
@@ -261,7 +280,7 @@ function FlexibleComp() {
               )}
             </div>
             <div className="my-2 noprint">
-            <button
+              <button
                 type="button"
                 className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
                 onClick={() => {
@@ -278,60 +297,7 @@ function FlexibleComp() {
                 onClick={() => {
                   setIsSubmitted(false);
                   setSelectedKeys([]);
-                  setTeacherData([
-                    "school",
-                    "udise",
-                    "tname",
-                    "gender",
-                    "ph",
-                    "desig",
-                    "fname",
-                    "circle",
-                    "sis",
-                    "gp",
-                    "association",
-                    "phone",
-                    "email",
-                    "dob",
-                    "doj",
-                    "dojnow",
-                    "dor",
-                    "bank",
-                    "account",
-                    "ifsc",
-                    "empid",
-                    "training",
-                    "pan",
-                    "address",
-                    "basic",
-                    "mbasic",
-                    "prevmbasic",
-                    "addl",
-                    "da",
-                    "mda",
-                    "hra",
-                    "mhra",
-                    "ma",
-                    "gross",
-                    "mgross",
-                    "gpf",
-                    "gpfprev",
-                    "mptax",
-                    "jptax",
-                    "gsli",
-                    "netpay",
-                    "mnetpay",
-                    "bonus",
-                    "arrear",
-                    "question",
-                    "hoi",
-                    "newHt",
-                    "showAccount",
-                    "service",
-                    "id",
-                    "rank",
-                    "dataYear",
-                  ]);
+                  setTeacherData(keysData);
                   setHeading("");
                   setFkey("");
                   setFvalue("");
@@ -342,18 +308,22 @@ function FlexibleComp() {
               >
                 Close
               </button>
-              
             </div>
             <h3 className="text-center mx-auto">{heading.toUpperCase()}</h3>
             <table className="table table-white table-hover table-striped table-borderd align-middle table-responsive mx-auto text-center">
               <thead>
                 <tr className="text-center">
                   <th className="text-center">Sl No.</th>
-                  {selectedKeys.map((el, ind) => (
-                    <th className="text-center" key={ind}>
-                      {el.toUpperCase()}
-                    </th>
-                  ))}
+                  {selectedKeys.map((el, ind) => {
+                    const currentKey = keysData.filter(
+                      (keys) => keys.keyName === el
+                    )[0];
+                    return (
+                      <th className="text-center" key={ind}>
+                        {currentKey.displayName}
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
@@ -504,62 +474,8 @@ function FlexibleComp() {
               onClick={() => {
                 setIsSubmitted(false);
                 setSelectedKeys([]);
-                setTeacherData([
-                  "school",
-                  "udise",
-                  "tname",
-                  "gender",
-                  "ph",
-                  "desig",
-                  "fname",
-                  "circle",
-                  "sis",
-                  "gp",
-                  "association",
-                  "phone",
-                  "email",
-                  "dob",
-                  "doj",
-                  "dojnow",
-                  "dor",
-                  "bank",
-                  "account",
-                  "ifsc",
-                  "empid",
-                  "training",
-                  "pan",
-                  "address",
-                  "basic",
-                  "mbasic",
-                  "prevmbasic",
-                  "addl",
-                  "da",
-                  "mda",
-                  "hra",
-                  "mhra",
-                  "ma",
-                  "gross",
-                  "mgross",
-                  "gpf",
-                  "gpfprev",
-                  "mptax",
-                  "jptax",
-                  "gsli",
-                  "netpay",
-                  "mnetpay",
-                  "bonus",
-                  "arrear",
-                  "question",
-                  "hoi",
-                  "newHt",
-                  "showAccount",
-                  "service",
-                  "id",
-                  "rank",
-                  "dataYear",
-                ]);
+                setTeacherData(keysData);
                 setHeading("");
-
                 setFirstItem(0);
                 setVisibleItems(10);
                 setFkey("");
