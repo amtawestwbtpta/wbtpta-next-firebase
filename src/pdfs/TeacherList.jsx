@@ -171,7 +171,7 @@ export default function TeacherList({ data, title }) {
                 .split("-")
                 .reverse()
                 .join("-")}{" "}
-              at {new Date().toLocaleTimeString()} Page {index + 1} of{" "}
+              at {new Date().toLocaleTimeString()}, Page {index + 1} of{" "}
               {pages.length}
             </Text>
           </View>
