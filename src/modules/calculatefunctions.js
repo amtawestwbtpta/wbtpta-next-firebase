@@ -222,6 +222,23 @@ export function validateEmptyValues(obj) {
 
   return emptyFields;
 }
+export function isEmptyObject(obj) {
+  // Check if the argument is an object
+  if (typeof obj !== "object" || obj === null) {
+    return false; // or throw an error if you prefer
+  }
+
+  // For ES5+ environments
+  return Object.keys(obj).length === 0;
+
+  // Alternative for all environments:
+  // for (var key in obj) {
+  //   if (obj.hasOwnProperty(key)) {
+  //     return false;
+  //   }
+  // }
+  // return true;
+}
 
 export function roundSo(number, to) {
   return Math.round(number / to, 0) * to;

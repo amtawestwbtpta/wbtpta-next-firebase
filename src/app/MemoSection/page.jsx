@@ -28,7 +28,9 @@ import {
   DateValueToSring,
   getCurrentDateInput,
   getSubmitDateInput,
+  isEmptyObject,
   todayInString,
+  validateEmptyValues,
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
@@ -77,6 +79,9 @@ const MemoSection = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+  const [editFileName, setEditFileName] = useState("");
+  const [editFile, setEditFile] = useState({});
+  const [editAddImage, setEditAddImage] = useState(false);
   const getData = async () => {
     setLoader(true);
     const querySnapshot = await getDocs(query(collection(firestore, "memos")));
@@ -404,73 +409,181 @@ const MemoSection = () => {
   const updatememo = async () => {
     setLoader(true);
 
-    await updateDoc(doc(firestore, "memos", editID), {
-      title: editTitle,
-      memoText: editmemoText,
-      memoNumber: editMemoNumber,
-      memoDate: editMemoDate,
-      date: Date.now(),
-      addedBy: teacherdetails.tname,
-    })
-      .then(async () => {
-        const url = `/api/updateMemo`;
-        const response = await axios.post(url, {
-          id: editID,
-          title: editTitle,
-          memoText: editmemoText,
-          memoNumber: editMemoNumber,
-          memoDate: editMemoDate,
-          date: Date.now(),
-          addedBy: teacherdetails.tname,
+    if (editFile.name === undefined) {
+      await updateDoc(doc(firestore, "memos", editID), {
+        title: editTitle,
+        memoText: editmemoText,
+        memoNumber: editMemoNumber,
+        memoDate: editMemoDate,
+        date: Date.now(),
+        addedBy: teacherdetails.tname,
+      })
+        .then(async () => {
+          const url = `/api/updateMemo`;
+          const response = await axios.post(url, {
+            id: editID,
+            title: editTitle,
+            memoText: editmemoText,
+            memoNumber: editMemoNumber,
+            memoDate: editMemoDate,
+            date: Date.now(),
+            addedBy: teacherdetails.tname,
+          });
+          const record = response.data;
+          if (record.success) {
+            let x = memoState.filter((el) => el.id === editID)[0];
+            let y = memoState.filter((el) => el.id !== editID);
+            y = [
+              ...y,
+              {
+                id: editID,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: editTitle,
+                memoText: editmemoText,
+                memoNumber: editMemoNumber,
+                memoDate: editMemoDate,
+                url: x.url,
+                photoName: x.photoName,
+                type: x.type,
+              },
+            ];
+
+            let newData = y.sort(
+              (a, b) =>
+                Date.parse(getCurrentDateInput(b.memoDate)) -
+                Date.parse(getCurrentDateInput(a.memoDate))
+            );
+            setMemoState(newData);
+            setAllData(newData);
+            setFilteredData(newData);
+            setMemoUpdateTime(Date.now());
+            setLoader(false);
+            setEditTitle("");
+            setEditmemoText("");
+            setEditMemoNumber("");
+            setEditMemoDate(todayInString());
+            setMemo({});
+            setOrgTitle("");
+            setOrgmemoText("");
+            setOrgMemoNumber("");
+            setOrgMemoDate(todayInString());
+            toast.success("Details Updated Successfully");
+          } else {
+            toast.error("Error Updating memo in Mongo");
+          }
+        })
+        .catch((err) => {
+          toast.error("Memo Updation Failed!");
+          console.log(err);
         });
-        const record = response.data;
-        if (record.success) {
-          let x = memoState.filter((el) => el.id === editID)[0];
-          let y = memoState.filter((el) => el.id !== editID);
-          y = [
-            ...y,
-            {
-              id: editID,
-              date: Date.now(),
-              addedBy: teacherdetails.tname,
+    } else {
+      try {
+        const desertRef = ref(storage, `memoFiles/${editFileName}`);
+        await deleteObject(desertRef);
+        toast.success("File deleted successfully!");
+      } catch (e) {
+        console.log(e);
+      }
+      const uploadableFileName = docId + "-" + editFile.name;
+      const filestorageRef = ref(storage, `/memoFiles/${uploadableFileName}`);
+      const uploadTask = uploadBytesResumable(filestorageRef, editFile);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          setShowPercent(true);
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+
+          // // update progress
+          setProgress(percent);
+        },
+        (err) => console.log(err),
+        () => {
+          // download url
+          getDownloadURL(uploadTask.snapshot.ref).then(async (photourl) => {
+            await updateDoc(doc(firestore, "memos", editID), {
               title: editTitle,
               memoText: editmemoText,
               memoNumber: editMemoNumber,
               memoDate: editMemoDate,
-              url: x.url,
-              photoName: x.photoName,
-              type: x.type,
-            },
-          ];
+              url: photourl,
+              photoName: uploadableFileName,
+              date: Date.now(),
+              addedBy: teacherdetails.tname,
+              type: editFile.type,
+            })
+              .then(async () => {
+                const url = `/api/updateMemo`;
+                const response = await axios.post(url, {
+                  id: editID,
+                  title: editTitle,
+                  memoText: editmemoText,
+                  memoNumber: editMemoNumber,
+                  memoDate: editMemoDate,
+                  url: photourl,
+                  photoName: uploadableFileName,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  type: editFile.type,
+                });
+                const record = response.data;
+                if (record.success) {
+                  let x = memoState.filter((el) => el.id === editID)[0];
+                  let y = memoState.filter((el) => el.id !== editID);
+                  y = [
+                    ...y,
+                    {
+                      id: editID,
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: editTitle,
+                      memoText: editmemoText,
+                      memoNumber: editMemoNumber,
+                      memoDate: editMemoDate,
+                      url: photourl,
+                      photoName: uploadableFileName,
+                      type: editFile.type,
+                    },
+                  ];
 
-          let newData = y.sort(
-            (a, b) =>
-              Date.parse(getCurrentDateInput(b.memoDate)) -
-              Date.parse(getCurrentDateInput(a.memoDate))
-          );
-          setMemoState(newData);
-          setAllData(newData);
-          setFilteredData(newData);
-          setMemoUpdateTime(Date.now());
-          setLoader(false);
-          setEditTitle("");
-          setEditmemoText("");
-          setEditMemoNumber("");
-          setEditMemoDate(todayInString());
-          setMemo({});
-          setOrgTitle("");
-          setOrgmemoText("");
-          setOrgMemoNumber("");
-          setOrgMemoDate(todayInString());
-          toast.success("Details Updated Successfully");
-        } else {
-          toast.error("Error Updating memo in Mongo");
+                  let newData = y.sort(
+                    (a, b) =>
+                      Date.parse(getCurrentDateInput(b.memoDate)) -
+                      Date.parse(getCurrentDateInput(a.memoDate))
+                  );
+                  setMemoState(newData);
+                  setAllData(newData);
+                  setFilteredData(newData);
+                  setMemoUpdateTime(Date.now());
+                  setLoader(false);
+                  setEditTitle("");
+                  setEditmemoText("");
+                  setEditMemoNumber("");
+                  setEditMemoDate(todayInString());
+                  setMemo({});
+                  setOrgTitle("");
+                  setOrgmemoText("");
+                  setOrgMemoNumber("");
+                  setOrgMemoDate(todayInString());
+                  setProgress(0);
+                  setEditAddImage(false);
+                  setEditFile({});
+                  setEditFileName("");
+                  toast.success("Details Updated Successfully");
+                } else {
+                  toast.error("Error Updating memo in Mongo");
+                }
+              })
+              .catch((err) => {
+                toast.error("Memo Updation Failed!");
+                console.log(err);
+              });
+          });
         }
-      })
-      .catch((err) => {
-        toast.error("Memo Updation Failed!");
-        console.log(err);
-      });
+      );
+    }
   };
 
   const deletememo = async (el) => {
@@ -614,6 +727,7 @@ const MemoSection = () => {
                   setOrgmemoText(el.memoText);
                   setOrgMemoDate(el.memoDate);
                   setOrgMemoNumber(el.memoNumber);
+                  setEditFileName(el.photoName);
                   // if (typeof window !== "undefined") {
                   //   setTimeout(() => {
                   //     document.querySelector("#editDate").value =
@@ -1143,6 +1257,88 @@ const MemoSection = () => {
                 value={editmemoText}
                 onChange={(e) => setEditmemoText(e.target.value)}
               />
+              <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
+                <h4 className="col-md-3 text-primary">Without Image/File</h4>
+                <input
+                  className="form-check-input mb-3 col-md-3"
+                  type="checkbox"
+                  id="checkbox"
+                  role="switch"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setEditAddImage(e.target.checked);
+                    } else {
+                      setEditAddImage(e.target.checked);
+                      setEditFile({});
+                      // if (typeof window !== "undefined") {
+                      //   document.getElementById("img").value = "";
+                      // }
+                      setSrc(null);
+                    }
+                  }}
+                  style={{ width: 60, height: 30 }}
+                />
+                <h4 className="col-md-3 text-success">With Image/File</h4>
+              </div>
+              {editAddImage ? (
+                <div className="my-2">
+                  <input
+                    type="file"
+                    id="img"
+                    className="form-control mb-3 w-100 mx-auto"
+                    onChange={(e) => {
+                      setEditFile(e.target.files[0]);
+                      setSrc(URL.createObjectURL(e.target.files[0]));
+                    }}
+                  />
+                  {src !== null && editFile.type?.split("/")[0] === "image" ? (
+                    <div>
+                      <img
+                        src={src}
+                        alt="uploadedImage"
+                        width={150}
+                        className="rounded-2"
+                      />
+                      <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        onClick={() => {
+                          setSrc(null);
+                          setEditFile({});
+                          // if (typeof window !== "undefined") {
+                          //   document.getElementById("img").value = "";
+                          // }
+                        }}
+                      ></button>
+                    </div>
+                  ) : src !== null &&
+                    file.type?.split("/")[0] === "application" ? (
+                    <img
+                      src={
+                        "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                      }
+                      alt="uploadedImage"
+                      width={150}
+                      className="rounded-2"
+                    />
+                  ) : null}
+                  {showPercent && (
+                    <div
+                      className="progress-bar my-2"
+                      style={{
+                        width: progress + "%",
+                        height: "15px",
+                        backgroundColor: "purple",
+                        borderRadius: "10px",
+                        transformOrigin: "start",
+                      }}
+                    ></div>
+                  )}
+                </div>
+              ) : editFileName || validateEmptyValues(editFile) ? (
+                <h6>{editFileName}</h6>
+              ) : null}
             </div>
             <div className="modal-footer">
               <button
@@ -1150,7 +1346,10 @@ const MemoSection = () => {
                 className="btn btn-success"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  if (editTitle !== "" && editmemoText !== "") {
+                  if (
+                    (editTitle !== "" && editmemoText !== "") ||
+                    editFile.name
+                  ) {
                     if (orgTitle !== editTitle) {
                       updatememo();
                     } else if (orgmemoText !== editmemoText) {
@@ -1158,6 +1357,8 @@ const MemoSection = () => {
                     } else if (orgMemoNumber !== editMemoNumber) {
                       updatememo();
                     } else if (orgMemoDate !== editMemoDate) {
+                      updatememo();
+                    } else if (editFile.name) {
                       updatememo();
                     } else {
                       toast.error("Nothing to Update!!!");
