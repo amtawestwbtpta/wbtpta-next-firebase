@@ -239,7 +239,18 @@ export function isEmptyObject(obj) {
   // }
   // return true;
 }
+export function isFileEmpty(file) {
+  // Check if file exists
+  if (!file) return true;
 
+  // Check if it's a File or Blob object
+  if (!(file instanceof File) && !(file instanceof Blob)) {
+    return true;
+  }
+
+  // Check size (in bytes)
+  return file.size <= 0;
+}
 export function roundSo(number, to) {
   return Math.round(number / to, 0) * to;
 }

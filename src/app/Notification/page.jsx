@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { use, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 // import { useNavigate } from "react-router";
 import {
   getDownloadURL,
@@ -27,11 +27,13 @@ import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
   createDownloadLink,
   DateValueToSring,
+  isFileEmpty,
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
+import { type } from "@testing-library/user-event/dist/type";
 const Notification = () => {
   const { noticeState, noticeUpdateTime, setNoticeState, setNoticeUpdateTime } =
     useGlobalContext();
@@ -53,6 +55,7 @@ const Notification = () => {
 
   const [allData, setAllData] = useState([]);
   const [loader, setLoader] = useState(false);
+  const fileRef = useRef();
   const [file, setFile] = useState({});
   const [showPercent, setShowPercent] = useState(false);
   const [title, setTitle] = useState("");
@@ -77,7 +80,10 @@ const Notification = () => {
   const [src, setSrc] = useState(null);
   const docId = uuid().split("-")[0];
   const [progress, setProgress] = useState(0);
-
+  const [editFileName, setEditFileName] = useState("");
+  const [editFile, setEditFile] = useState({});
+  const [editAddImage, setEditAddImage] = useState(false);
+  const editFileRef = useRef();
   const addNotice = async () => {
     setLoader(true);
     if (addImage) {
@@ -306,58 +312,153 @@ const Notification = () => {
   const updateNotice = async () => {
     setLoader(true);
 
-    await updateDoc(doc(firestore, "notices", editID), {
-      title: editTitle,
-      noticeText: editNoticeText,
-      date: Date.now(),
-      addedBy: teacherdetails.tname,
-    })
-      .then(async () => {
-        const url = `/api/updateNotice`;
-        const response = await axios.post(url, {
-          id: editID,
-          title: editTitle,
-          noticeText: editNoticeText,
-          date: Date.now(),
-          addedBy: teacherdetails.tname,
+    if (isFileEmpty(editFile)) {
+      await updateDoc(doc(firestore, "notices", editID), {
+        title: editTitle,
+        noticeText: editNoticeText,
+        date: Date.now(),
+        addedBy: teacherdetails.tname,
+      })
+        .then(async () => {
+          const url = `/api/updateNotice`;
+          const response = await axios.post(url, {
+            id: editID,
+            title: editTitle,
+            noticeText: editNoticeText,
+            date: Date.now(),
+            addedBy: teacherdetails.tname,
+          });
+          const record = response.data;
+          if (record.success) {
+            let x = noticeState.filter((el) => el.id === editID)[0];
+            let y = noticeState.filter((el) => el.id !== editID);
+            y = [
+              ...y,
+              {
+                id: editID,
+                date: Date.now(),
+                addedBy: teacherdetails.tname,
+                title: editTitle,
+                noticeText: editNoticeText,
+                url: x.url,
+                photoName: x.photoName,
+                type: x.type,
+              },
+            ];
+            let newData = y.sort((a, b) => b.date - a.date);
+            setNoticeState(newData);
+            setAllData(newData);
+            setNoticeUpdateTime(Date.now());
+            setLoader(false);
+            setEditTitle("");
+            setEditNoticeText("");
+            setOrgNoticeText("");
+            setOrgTitle("");
+            toast.success("Details Updated Successfully");
+            // getData();
+          } else {
+            toast.error("Notice Updation Failed!");
+            setLoader(false);
+          }
+        })
+        .catch((err) => {
+          toast.error("Notice Updation Failed!");
+          console.log(err);
         });
-        const record = response.data;
-        if (record.success) {
-          let x = noticeState.filter((el) => el.id === editID)[0];
-          let y = noticeState.filter((el) => el.id !== editID);
-          y = [
-            ...y,
-            {
-              id: editID,
-              date: Date.now(),
-              addedBy: teacherdetails.tname,
+    } else {
+      try {
+        const desertRef = ref(storage, `noticeImages/${editFileName}`);
+        await deleteObject(desertRef);
+      } catch (e) {
+        console.log(e);
+      }
+      const filestorageRef = ref(
+        storage,
+        `/noticeImages/${docId + "-" + file.name}`
+      );
+      const uploadTask = uploadBytesResumable(filestorageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          setShowPercent(true);
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+
+          // // update progress
+          setProgress(percent);
+        },
+        (err) => console.log(err),
+        () => {
+          // download url
+          getDownloadURL(uploadTask.snapshot.ref).then(async (photourl) => {
+            await updateDoc(doc(firestore, "notices", editID), {
               title: editTitle,
               noticeText: editNoticeText,
-              url: x.url,
-              photoName: x.photoName,
-              type: x.type,
-            },
-          ];
-          let newData = y.sort((a, b) => b.date - a.date);
-          setNoticeState(newData);
-          setAllData(newData);
-          setNoticeUpdateTime(Date.now());
-          setLoader(false);
-          setEditTitle("");
-          setEditNoticeText("");
-          setOrgNoticeText("");
-          setOrgTitle("");
-          toast.success("Details Updated Successfully");
-          // getData();
-        } else {
-          toast.error("Notice Updation Failed!");
-          setLoader(false);
+              date: Date.now(),
+              addedBy: teacherdetails.tname,
+              url: photourl,
+              type: editFile.type,
+              photoName: docId + "-" + editFile.name,
+            })
+              .then(async () => {
+                const url = `/api/updateNotice`;
+                const response = await axios.post(url, {
+                  id: editID,
+                  title: editTitle,
+                  noticeText: editNoticeText,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  url: photourl,
+                  type: editFile.type,
+                  photoName: docId + "-" + editFile.name,
+                });
+                const record = response.data;
+                if (record.success) {
+                  let x = noticeState.filter((el) => el.id === editID)[0];
+                  let y = noticeState.filter((el) => el.id !== editID);
+                  y = [
+                    ...y,
+                    {
+                      id: editID,
+                      date: Date.now(),
+                      addedBy: teacherdetails.tname,
+                      title: editTitle,
+                      noticeText: editNoticeText,
+                      url: photourl,
+                      type: editFile.type,
+                      photoName: docId + "-" + editFile.name,
+                    },
+                  ];
+                  let newData = y.sort((a, b) => b.date - a.date);
+                  setNoticeState(newData);
+                  setAllData(newData);
+                  setNoticeUpdateTime(Date.now());
+                  setLoader(false);
+                  setEditTitle("");
+                  setEditNoticeText("");
+                  setOrgNoticeText("");
+                  setOrgTitle("");
+                  setEditFile({});
+                  setEditFileName("");
+                  setSrc(null);
+                  setShowPercent(false);
+                  setProgress(0);
+                  toast.success("Details Updated Successfully");
+                  // getData();
+                } else {
+                  toast.error("Notice Updation Failed!");
+                  setLoader(false);
+                }
+              })
+              .catch((err) => {
+                toast.error("Notice Updation Failed!");
+                console.log(err);
+              });
+          });
         }
-      })
-      .catch((err) => {
-        toast.error("Notice Updation Failed!");
-        console.log(err);
-      });
+      );
+    }
   };
 
   const deleteNotice = async (el) => {
@@ -451,18 +552,6 @@ const Notification = () => {
   useEffect(() => {}, [file, allData]);
   return (
     <div className="container my-3">
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {loader && <Loader />}
       <h3 className="text-primary text-center">Notifications</h3>
       {teacherdetails.circle === "admin" && (
@@ -579,6 +668,7 @@ const Notification = () => {
                             setEditNoticeText(el.noticeText);
                             setOrgTitle(el.title);
                             setOrgNoticeText(el.noticeText);
+                            setEditFileName(el.photoName);
                           }}
                         >
                           Edit
@@ -668,6 +758,7 @@ const Notification = () => {
                   setSrc(null);
                   setShowPercent(false);
                   setProgress(0);
+                  fileRef.current.value = "";
                 }}
               ></button>
             </div>
@@ -694,6 +785,7 @@ const Notification = () => {
                   type="checkbox"
                   id="checkbox"
                   role="switch"
+                  checked={addImage}
                   onChange={(e) => {
                     if (e.target.checked) {
                       setAddImage(e.target.checked);
@@ -713,6 +805,7 @@ const Notification = () => {
                   <input
                     type="file"
                     id="img"
+                    ref={fileRef}
                     className="form-control mb-3 w-100 mx-auto"
                     onChange={(e) => {
                       setFile(e.target.files[0]);
@@ -734,6 +827,7 @@ const Notification = () => {
                         onClick={() => {
                           setSrc(null);
                           setFile({});
+                          fileRef.current.value = "";
                         }}
                       ></button>
                     </div>
@@ -792,6 +886,7 @@ const Notification = () => {
                   setSrc(null);
                   setShowPercent(false);
                   setProgress(0);
+                  fileRef.current.value = "";
                 }}
               >
                 Close
@@ -823,11 +918,24 @@ const Notification = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={() => {
+                  setEditTitle("");
+                  setEditNoticeText("");
+                  setOrgNoticeText("");
+                  setOrgTitle("");
+                  setEditFile({});
+                  editFileRef.current.value = "";
+                  setSrc(null);
+                  setShowPercent(false);
+                  setProgress(0);
+                  setEditAddImage(false);
+                }}
               ></button>
             </div>
             <div className="modal-body">
               <input
                 type="text"
+                ref={editFileRef}
                 className="form-control mb-3 w-50 mx-auto"
                 value={editTitle}
                 placeholder="Add Title"
@@ -840,6 +948,83 @@ const Notification = () => {
                 value={editNoticeText}
                 onChange={(e) => setEditNoticeText(e.target.value)}
               />
+              <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
+                <h4 className="col-md-3 text-primary">Without Image/File</h4>
+                <input
+                  className="form-check-input mb-3 col-md-3"
+                  type="checkbox"
+                  id="checkbox"
+                  role="switch"
+                  checked={editAddImage}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setEditAddImage(e.target.checked);
+                    } else {
+                      setEditAddImage(e.target.checked);
+                      setEditFile({});
+                      editFileRef.current.value = "";
+                      setSrc(null);
+                    }
+                  }}
+                  style={{ width: 60, height: 30 }}
+                />
+                <h4 className="col-md-3 text-success">With Image/File</h4>
+              </div>
+              {editAddImage ? (
+                <div className="my-2">
+                  <input
+                    type="file"
+                    id="img"
+                    className="form-control mb-3 w-100 mx-auto"
+                    onChange={(e) => {
+                      setEditFile(e.target.files[0]);
+                      setSrc(URL.createObjectURL(e.target.files[0]));
+                    }}
+                  />
+                  {src !== null && editFile.type?.split("/")[0] === "image" ? (
+                    <div>
+                      <img
+                        src={src}
+                        alt="uploadedImage"
+                        width={150}
+                        className="rounded-2"
+                      />
+                      <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        onClick={() => {
+                          setSrc(null);
+                          setEditFile({});
+                          editFileRef.current.value = "";
+                        }}
+                      ></button>
+                    </div>
+                  ) : src !== null &&
+                    file.type?.split("/")[0] === "application" ? (
+                    <img
+                      src={
+                        "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                      }
+                      alt="uploadedImage"
+                      width={150}
+                      className="rounded-2"
+                    />
+                  ) : null}
+                  {showPercent && (
+                    <div
+                      className="progress-bar my-2"
+                      style={{
+                        width: progress + "%",
+                        height: "15px",
+                        backgroundColor: "purple",
+                        borderRadius: "10px",
+                        transformOrigin: "start",
+                      }}
+                    ></div>
+                  )}
+                </div>
+              ) : null}
             </div>
             <div className="modal-footer">
               <button
@@ -851,6 +1036,8 @@ const Notification = () => {
                     if (orgTitle !== editTitle) {
                       updateNotice();
                     } else if (orgNoticeText !== editNoticeText) {
+                      updateNotice();
+                    } else if (!isFileEmpty(editFile)) {
                       updateNotice();
                     } else {
                       toast.error("Nothing to Update!!!");
@@ -866,6 +1053,18 @@ const Notification = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={() => {
+                  setEditTitle("");
+                  setEditNoticeText("");
+                  setOrgNoticeText("");
+                  setOrgTitle("");
+                  setEditFile({});
+                  editFileRef.current.value = "";
+                  setSrc(null);
+                  setShowPercent(false);
+                  setProgress(0);
+                  setEditAddImage(false);
+                }}
               >
                 Close
               </button>

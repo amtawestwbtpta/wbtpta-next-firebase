@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 import {
   getDownloadURL,
@@ -28,7 +28,7 @@ import {
   DateValueToSring,
   getCurrentDateInput,
   getSubmitDateInput,
-  isEmptyObject,
+  isFileEmpty,
   todayInString,
   validateEmptyValues,
 } from "../../modules/calculatefunctions";
@@ -62,6 +62,7 @@ const MemoSection = () => {
   const [memoDate, setMemoDate] = useState(todayInString());
   const [title, setTitle] = useState("");
   const [addImage, setAddImage] = useState(false);
+  const fileRef = useRef();
   const [memoText, setmemoText] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [editmemoText, setEditmemoText] = useState("");
@@ -81,6 +82,7 @@ const MemoSection = () => {
   const [width, setWidth] = useState(0);
   const [editFileName, setEditFileName] = useState("");
   const [editFile, setEditFile] = useState({});
+  const editFileRef = useRef();
   const [editAddImage, setEditAddImage] = useState(false);
   const getData = async () => {
     setLoader(true);
@@ -818,18 +820,6 @@ const MemoSection = () => {
 
   return (
     <div className="container my-3">
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {loader && <Loader />}
       <h3 className="text-primary text-center">Memo Number Section</h3>
       {(teacherdetails.circle === "admin" ||
@@ -1012,17 +1002,15 @@ const MemoSection = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={() => {
-                  // if (typeof window !== "undefined") {
-                  //   document.getElementById("checkbox").checked = false;
-                  //   if (document.getElementById("img")) {
-                  //     document.getElementById("img").value = "";
-                  //   }
-                  // }
                   setTitle("");
                   setMemoNumber("");
                   setmemoText("");
                   setMemoDate(todayInString());
                   setAddImage(false);
+                  setFile({});
+                  setSrc("");
+                  setShowPercent(false);
+                  setProgress(0);
                 }}
               ></button>
             </div>
@@ -1076,16 +1064,15 @@ const MemoSection = () => {
                   type="checkbox"
                   id="checkbox"
                   role="switch"
+                  checked={addImage}
                   onChange={(e) => {
                     if (e.target.checked) {
                       setAddImage(e.target.checked);
                     } else {
                       setAddImage(e.target.checked);
                       setFile({});
-                      // if (typeof window !== "undefined") {
-                      //   document.getElementById("img").value = "";
-                      // }
                       setSrc(null);
+                      fileRef.current.value = "";
                     }
                   }}
                   style={{ width: 60, height: 30 }}
@@ -1096,6 +1083,7 @@ const MemoSection = () => {
                 <div className="my-2">
                   <input
                     type="file"
+                    ref={fileRef}
                     id="img"
                     className="form-control mb-3 w-100 mx-auto"
                     onChange={(e) => {
@@ -1118,9 +1106,7 @@ const MemoSection = () => {
                         onClick={() => {
                           setSrc(null);
                           setFile({});
-                          // if (typeof window !== "undefined") {
-                          //   document.getElementById("img").value = "";
-                          // }
+                          fileRef.current.value = "";
                         }}
                       ></button>
                     </div>
@@ -1170,12 +1156,7 @@ const MemoSection = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  // if (typeof window !== "undefined") {
-                  //   document.getElementById("checkbox").checked = false;
-                  //   if (document.getElementById("img")) {
-                  //     document.getElementById("img").value = "";
-                  //   }
-                  // }
+                  fileRef.current.value = "";
                   setTitle("");
                   setMemoNumber("");
                   setmemoText("");
@@ -1264,15 +1245,14 @@ const MemoSection = () => {
                   type="checkbox"
                   id="checkbox"
                   role="switch"
+                  checked={editAddImage}
                   onChange={(e) => {
                     if (e.target.checked) {
                       setEditAddImage(e.target.checked);
                     } else {
                       setEditAddImage(e.target.checked);
                       setEditFile({});
-                      // if (typeof window !== "undefined") {
-                      //   document.getElementById("img").value = "";
-                      // }
+                      editFileRef.current.value = "";
                       setSrc(null);
                     }
                   }}
@@ -1284,6 +1264,7 @@ const MemoSection = () => {
                 <div className="my-2">
                   <input
                     type="file"
+                    ref={editFileRef}
                     id="img"
                     className="form-control mb-3 w-100 mx-auto"
                     onChange={(e) => {
@@ -1306,9 +1287,8 @@ const MemoSection = () => {
                         onClick={() => {
                           setSrc(null);
                           setEditFile({});
-                          // if (typeof window !== "undefined") {
-                          //   document.getElementById("img").value = "";
-                          // }
+                          editFileRef.current.value = "";
+                          setEditAddImage(false);
                         }}
                       ></button>
                     </div>
@@ -1336,7 +1316,7 @@ const MemoSection = () => {
                     ></div>
                   )}
                 </div>
-              ) : editFileName || validateEmptyValues(editFile) ? (
+              ) : editFileName || !isFileEmpty(editFile) ? (
                 <h6>{editFileName}</h6>
               ) : null}
             </div>
@@ -1374,6 +1354,18 @@ const MemoSection = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={() => {
+                  editFileRef.current.value = "";
+                  setEditTitle("");
+                  setEditmemoText("");
+                  setEditMemoNumber("");
+                  setEditMemoDate(todayInString());
+                  setEditAddImage(false);
+                  setSrc(null);
+                  setEditFile({});
+                  setShowPercent(false);
+                  setProgress(0);
+                }}
               >
                 Close
               </button>
