@@ -635,7 +635,7 @@ const TeacherTransferComponent = () => {
                     loading ? "Please Wait..." : "Download Teacher List"
                   }
                 </PDFDownloadLink>
-                {/* <TeacherList data={rightList} /> */}
+                {/* <TeacherList data={rightList} title={title} /> */}
               </div>
             </div>
           )}

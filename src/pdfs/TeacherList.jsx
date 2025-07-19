@@ -163,17 +163,42 @@ export default function TeacherList({ data, title }) {
                 );
               })}
             </View>
-            <Text style={[styles.text, { marginVertical: 2 }]}>
-              Generated on:{" "}
-              {new Date()
-                .toISOString()
-                .split("T")[0]
-                .split("-")
-                .reverse()
-                .join("-")}{" "}
-              at {new Date().toLocaleTimeString()}, Page {index + 1} of{" "}
-              {pages.length}
-            </Text>
+            {index !== pages.length - 1 ? (
+              <Text style={[styles.text, { marginVertical: 2 }]}>
+                Generated on:{" "}
+                {new Date()
+                  .toISOString()
+                  .split("T")[0]
+                  .split("-")
+                  .reverse()
+                  .join("-")}{" "}
+                at {new Date().toLocaleTimeString()}, Page {index + 1} of{" "}
+                {pages.length}
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    marginVertical: 2,
+                    position: "absolute",
+                    left: "30%",
+                    right: "30%",
+                    bottom: 0,
+                  },
+                ]}
+              >
+                Generated on:{" "}
+                {new Date()
+                  .toISOString()
+                  .split("T")[0]
+                  .split("-")
+                  .reverse()
+                  .join("-")}{" "}
+                at {new Date().toLocaleTimeString()}, Page {index + 1} of{" "}
+                {pages.length}
+              </Text>
+            )}
           </View>
         </Page>
       ))}
