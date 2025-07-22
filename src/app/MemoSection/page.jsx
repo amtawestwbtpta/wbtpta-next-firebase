@@ -926,14 +926,25 @@ const MemoSection = () => {
                   <PDFViewer pdfUrl={memo.url} />
                 </div>
               ) : memo.url !== "" && width < 500 ? (
-                <a
-                  href={memo.url}
-                  className="btn btn-success my-3 rounded text-decoration-none"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download
-                </a>
+                 <div>
+                  {/* <object
+                    data={memo.url}
+                    type={memo.type}
+                    // width={width}
+                    height={height}
+                    className="w-100"
+                    aria-labelledby="Pdf"
+                  ></object>
+                  <a
+                    href={memo.url}
+                    className="btn btn-success my-3 rounded text-decoration-none"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </a> */}
+                  <PDFViewer pdfUrl={memo.url} />
+                </div>
               ) : (
                 memo.url === "" && (
                   <h5 className={`card-title timesFont`}>No File Available</h5>
