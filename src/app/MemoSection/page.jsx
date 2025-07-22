@@ -905,46 +905,19 @@ const MemoSection = () => {
             <div className="modal-body">
               {memo.type === "image/jpeg" || memo.type === "image/png" ? (
                 <img src={memo.url} className="w-100" alt="..." />
-              ) : memo.url !== "" && width > 500 ? (
+              ) : memo.url !== "" && memo.type === "application/pdf" ? (
                 <div>
-                  {/* <object
-                    data={memo.url}
-                    type={memo.type}
-                    // width={width}
-                    height={height}
-                    className="w-100"
-                    aria-labelledby="Pdf"
-                  ></object>
-                  <a
-                    href={memo.url}
-                    className="btn btn-success my-3 rounded text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download
-                  </a> */}
                   <PDFViewer pdfUrl={memo.url} />
                 </div>
-              ) : memo.url !== "" && width < 500 ? (
-                 <div>
-                  {/* <object
-                    data={memo.url}
-                    type={memo.type}
-                    // width={width}
-                    height={height}
-                    className="w-100"
-                    aria-labelledby="Pdf"
-                  ></object>
-                  <a
-                    href={memo.url}
-                    className="btn btn-success my-3 rounded text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download
-                  </a> */}
-                  <PDFViewer pdfUrl={memo.url} />
-                </div>
+              ) : memo.url !== "" ? (
+                <object
+                  data={memo.url}
+                  type={memo.type}
+                  // width={width}
+                  height={height}
+                  className="w-100"
+                  aria-labelledby="Pdf"
+                ></object>
               ) : (
                 memo.url === "" && (
                   <h5 className={`card-title timesFont`}>No File Available</h5>
