@@ -33,7 +33,6 @@ import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
-import { type } from "@testing-library/user-event/dist/type";
 const Notification = () => {
   const { noticeState, noticeUpdateTime, setNoticeState, setNoticeUpdateTime } =
     useGlobalContext();

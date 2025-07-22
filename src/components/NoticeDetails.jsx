@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
@@ -18,9 +19,13 @@ import { decryptObjData, getCookie } from "../modules/encryption";
 import { DateValueToSring } from "../modules/calculatefunctions";
 import { v4 as uuid } from "uuid";
 import { notifyAll } from "../modules/notification";
-import PDFViewer from "./PDFViewer";
+import dynamic from "next/dynamic";
 
 const NoticeDetails = ({ sata }) => {
+  const PDFViewer = dynamic(() => import("./PDFViewer"), {
+    ssr: false,
+    loading: () => <div>Loading PDF viewer...</div>,
+  });
   let teacherdetails = {
     convenor: "",
     gp: "",

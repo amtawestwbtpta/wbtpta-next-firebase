@@ -30,14 +30,18 @@ import {
   getSubmitDateInput,
   isFileEmpty,
   todayInString,
-  validateEmptyValues,
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
-import PDFViewer from "../../components/PDFViewer";
+import dynamic from "next/dynamic";
+
 const MemoSection = () => {
+  const PDFViewer = dynamic(() => import("../../components/PDFViewer"), {
+    ssr: false,
+    loading: () => <div>Loading PDF viewer...</div>,
+  });
   const { memoState, memoUpdateTime, setMemoState, setMemoUpdateTime } =
     useGlobalContext();
   let teacherdetails = {
