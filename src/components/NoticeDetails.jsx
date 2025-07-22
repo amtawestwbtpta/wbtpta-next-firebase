@@ -18,25 +18,9 @@ import { decryptObjData, getCookie } from "../modules/encryption";
 import { DateValueToSring } from "../modules/calculatefunctions";
 import { v4 as uuid } from "uuid";
 import { notifyAll } from "../modules/notification";
-
-// Core viewer
-// eslint-disable-next-line
-import { Viewer, Worker } from "@react-pdf-viewer/core";
-
-// Plugins
-// eslint-disable-next-line
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-
-// Import styles
-// eslint-disable-next-line
-import "@react-pdf-viewer/core/lib/styles/index.css";
-// eslint-disable-next-line
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import PDFViewer from "./PDFViewer";
 
 const NoticeDetails = ({ sata }) => {
-  // Create new plugin instance
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
   let teacherdetails = {
     convenor: "",
     gp: "",
@@ -221,42 +205,8 @@ const NoticeDetails = ({ sata }) => {
             data-bs-target="#exampleModal"
           />
         ) : sata.type.split("/")[0] === "application" ? (
-          width > 500 ? (
-            <div>
-              <object
-                data={sata.url}
-                type={sata.type}
-                // width={width}
-                height={height}
-                className="w-100"
-                aria-labelledby="Pdf"
-              ></object>
-              <a
-                href={sata.url}
-                className="btn btn-success my-3 rounded text-decoration-none"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download
-              </a>
-            </div>
-          ) : (
-            <a
-              href={sata.url}
-              className="btn btn-success my-3 rounded text-decoration-none"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Download
-            </a>
-          )
-        ) : // <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        //   <Viewer
-        //     fileUrl={sata.url}
-        //     plugins={[defaultLayoutPluginInstance]}
-        //   />
-        // </Worker>
-        null
+          <PDFViewer pdfUrl={sata.url} />
+        ) : null
       ) : null}
 
       <div

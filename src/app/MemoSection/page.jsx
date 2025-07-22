@@ -36,6 +36,7 @@ import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
+import PDFViewer from "../../components/PDFViewer";
 const MemoSection = () => {
   const { memoState, memoUpdateTime, setMemoState, setMemoUpdateTime } =
     useGlobalContext();
@@ -813,10 +814,7 @@ const MemoSection = () => {
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [file, width, allData, filteredData]);
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [search]);
+  }, [file, width, allData, filteredData, search, memo]);
 
   return (
     <div className="container my-3">
@@ -905,7 +903,7 @@ const MemoSection = () => {
                 <img src={memo.url} className="w-100" alt="..." />
               ) : memo.url !== "" && width > 500 ? (
                 <div>
-                  <object
+                  {/* <object
                     data={memo.url}
                     type={memo.type}
                     // width={width}
@@ -920,7 +918,8 @@ const MemoSection = () => {
                     rel="noopener noreferrer"
                   >
                     Download
-                  </a>
+                  </a> */}
+                  <PDFViewer pdfUrl={memo.url} />
                 </div>
               ) : memo.url !== "" && width < 500 ? (
                 <a
