@@ -144,7 +144,27 @@ const Navbar = () => {
     if (details) {
       setShowLoader(true);
 
-      let data = [];
+      let data = {
+        circle: "",
+        createdAt: "",
+        desig: "",
+        disabled: "",
+        email: "",
+        empid: "",
+        id: "",
+        pan: "",
+        password: "",
+        phone: "",
+        photoName: "",
+        question: "",
+        school: "",
+        showAccount: "",
+        teachersID: "",
+        tname: "",
+        udise: "",
+        url: "",
+        username: "",
+      };
       try {
         const collectionRef = collection(firestore, "userteachers");
         const q = query(
