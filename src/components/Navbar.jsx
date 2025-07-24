@@ -48,9 +48,6 @@ const Navbar = () => {
   let details = getCookie("tid");
 
   const [showLoader, setShowLoader] = useState(false);
-  const [url, setUrl] = useState(
-    "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
-  );
   const [question, setQuestion] = useState("taw");
   const navbarSupportedContent = document.querySelector(
     "#navbarSupportedContent"
@@ -184,7 +181,6 @@ const Navbar = () => {
       if (!data?.disabled) {
         setState(data?.circle);
         setUSER(data);
-        setUrl(data?.url);
         setQuestion(data?.question);
         setShowLoader(false);
       } else {
@@ -236,12 +232,7 @@ const Navbar = () => {
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [url, question, state]);
-  useEffect(() => {
-    setQuestion(USER.question);
-    setUrl(USER.url);
-    // eslint-disable-next-line
-  }, [USER, state]);
+  }, [url, question, state, USER]);
 
   const RenderMenu = () => {
     if (state === "admin") {
@@ -668,8 +659,8 @@ const Navbar = () => {
 
               <Image
                 src={
-                  url
-                    ? url
+                  USER?.url
+                    ? USER?.url
                     : "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
                 }
                 height={50}
@@ -1003,8 +994,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Image
                 src={
-                  url
-                    ? url
+                  USER?.url
+                    ? USER?.url
                     : "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
                 }
                 height={50}
