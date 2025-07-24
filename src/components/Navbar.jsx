@@ -232,7 +232,7 @@ const Navbar = () => {
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [url, question, state, USER]);
+  }, [question, state, USER]);
 
   const RenderMenu = () => {
     if (state === "admin") {
