@@ -48,8 +48,10 @@ const Navbar = () => {
   let details = getCookie("tid");
 
   const [showLoader, setShowLoader] = useState(false);
-  const [url, setUrl] = useState(USER?.url);
-  const [question, setQuestion] = useState(USER?.question);
+  const [url, setUrl] = useState(
+    "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
+  );
+  const [question, setQuestion] = useState("taw");
   const navbarSupportedContent = document.querySelector(
     "#navbarSupportedContent"
   );
@@ -214,7 +216,12 @@ const Navbar = () => {
   }, []);
   useEffect(() => {
     // eslint-disable-next-line
-  }, [url, question, state, USER]);
+  }, [url, question, state]);
+  useEffect(() => {
+    setQuestion(USER.question);
+    setUrl(USER.url);
+    // eslint-disable-next-line
+  }, [USER, state]);
 
   const RenderMenu = () => {
     if (state === "admin") {
@@ -628,7 +635,7 @@ const Navbar = () => {
           <div className="row">
             <li className="nav-item">
               {/* <Image
-                src={url}
+                src={url?url:"https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"}
                 height={50}
                 width={50}
                 alt="profile"
@@ -638,11 +645,20 @@ const Navbar = () => {
                   handleNavCollapse();
                 }}
               /> */}
-              <img
-                src={url}
-                alt="profile"
+
+              <Image
+                src={
+                  url
+                    ? url
+                    : "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
+                }
                 height={50}
                 width={50}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                alt="profile"
                 className="navprofileImage"
                 onClick={() => {
                   router.push("/ChangePhoto");
@@ -965,11 +981,19 @@ const Navbar = () => {
           )}
           <div className="row">
             <li className="nav-item">
-              <img
-                src={url}
-                alt="profile"
+              <Image
+                src={
+                  url
+                    ? url
+                    : "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png"
+                }
                 height={50}
                 width={50}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                alt="profile"
                 className="navprofileImage"
                 onClick={() => {
                   router.push("/ChangePhoto");

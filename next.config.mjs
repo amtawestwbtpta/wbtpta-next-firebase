@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "api.qrserver.com",
       },
+      {
+        protocol: "https",
+        hostname: "toppng.com",
+      },
     ],
   },
   eslint: {
@@ -28,7 +32,7 @@ const nextConfig = {
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
-    serverComponentsExternalPackages: ['@react-pdf/renderer'],
+    serverComponentsExternalPackages: ["@react-pdf/renderer"],
   },
   // output:'export'
 };
