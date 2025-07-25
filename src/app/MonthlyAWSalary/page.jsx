@@ -130,24 +130,16 @@ const MonthlyAWSalary = () => {
     // eslint-disable-next-line
   }, [monthSalary, aprilSalary]);
   useEffect(() => {
-    document.title = `${
+    const docTitle = `${
       teachersState.length === filteredData.length
         ? "All Teacher's"
         : filteredData.length ===
           teachersState.filter((el) => el.association === "WBTPTA").length
         ? "WBTPTA Teachers"
         : ""
-    }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta
-              West Circle`;
-    setTitle(`${
-      teachersState.length === filteredData.length
-        ? "All Teacher's"
-        : filteredData.length ===
-          teachersState.filter((el) => el.association === "WBTPTA").length
-        ? "WBTPTA Teachers"
-        : ""
-    }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta
-              West Circle`);
+    }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta West Circle`;
+    document.title = docTitle;
+    setTitle(docTitle);
     // eslint-disable-next-line
   }, [filteredData, month, year]);
 
@@ -298,17 +290,7 @@ const MonthlyAWSalary = () => {
                 /> */}
               </div>
             )}
-            <h3 className="text-center text-primary">
-              {teachersState.length === filteredData.length
-                ? "All Teacher's"
-                : filteredData.length ===
-                  teachersState.filter((el) => el.association === "WBTPTA")
-                    .length
-                ? "WBTPTA Teachers"
-                : ""}{" "}
-              Salary Data for The Month of {month.toUpperCase()}' {year} of Amta
-              West Circle
-            </h3>
+            <h3 className="text-center text-primary">{title}</h3>
             <div className="col-md-6 text-center  mx-auto noprint gap-4">
               <div className="mb-2">
                 <input
