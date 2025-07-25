@@ -4,18 +4,27 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import Link from "next/link";
 import { GetMonthName, readCSVFile } from "../../modules/calculatefunctions";
-
-import axios from "axios";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+import TeacherSalaryPDF from "../../pdfs/TeacherSalaryPDF";
 // import * as XLSX from "xlsx";
 const MonthlyAWSalary = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p className="m-0 p-0">Please Wait...</p>,
+    }
+  );
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
   const [filteredData, setFilteredData] = useState(teachersState);
   const [zoom, setZoom] = useState(100);
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
+  const [title, setTitle] = useState("");
   const thisYear = new Date().getFullYear();
   const preYear = thisYear - 1;
   const pre2ndYear = thisYear - 2;
@@ -64,6 +73,7 @@ const MonthlyAWSalary = () => {
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
+  const [showDldBtn, setShowDldBtn] = useState(false);
   const [month, setMonth] = useState(
     GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
   );
@@ -129,6 +139,15 @@ const MonthlyAWSalary = () => {
         : ""
     }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta
               West Circle`;
+    setTitle(`${
+      teachersState.length === filteredData.length
+        ? "All Teacher's"
+        : filteredData.length ===
+          teachersState.filter((el) => el.association === "WBTPTA").length
+        ? "WBTPTA Teachers"
+        : ""
+    }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta
+              West Circle`);
     // eslint-disable-next-line
   }, [filteredData, month, year]);
 
@@ -210,6 +229,7 @@ const MonthlyAWSalary = () => {
                 WBTPTA Teachers
               </button>
             </div>
+
             <div className="mx-auto mb-3 col-md-2 noprint">
               <h6 className="text-primary">Select Salary Month:</h6>
               <select
@@ -230,6 +250,54 @@ const MonthlyAWSalary = () => {
                 })}
               </select>
             </div>
+            <div className="mx-auto mb-3 noprint">
+              <button
+                type="button"
+                className="btn btn-dark  p-2 rounded"
+                onClick={() => setShowDldBtn(!showDldBtn)}
+              >
+                {showDldBtn ? "Hide Download Button" : "Show Download Button"}
+              </button>
+            </div>
+            {showDldBtn && (
+              <div className="my-4">
+                <PDFDownloadLink
+                  document={
+                    <TeacherSalaryPDF
+                      data={filteredData}
+                      title={title}
+                      monthSalary={monthSalary}
+                      aprilSalary={aprilSalary}
+                      month={month}
+                      year={year}
+                    />
+                  }
+                  fileName={`${title}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "purple",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Teacher Salary"
+                  }
+                </PDFDownloadLink>
+                {/* <TeacherSalaryPDF
+                  data={filteredData}
+                  title={title}
+                  monthSalary={monthSalary}
+                  aprilSalary={aprilSalary}
+                  month={month}
+                  year={year}
+                /> */}
+              </div>
+            )}
             <h3 className="text-center text-primary">
               {teachersState.length === filteredData.length
                 ? "All Teacher's"
@@ -351,14 +419,15 @@ const MonthlyAWSalary = () => {
                 </thead>
                 <tbody id="tbody">
                   {filteredData.map((el, ind) => {
-                    let tname,
+                    const {
+                      tname,
                       id,
                       desig,
                       school,
                       disability,
-                      empid,
-                      pan,
-                      addl,
+                      association,
+                    } = el;
+                    let addl,
                       da,
                       hra,
                       ma,
@@ -366,16 +435,9 @@ const MonthlyAWSalary = () => {
                       pfund,
                       ptax,
                       gsli,
-                      ir;
-                    tname = el.tname;
-                    id = el.id;
-                    desig = el.desig;
-                    school = el.school;
-                    disability = el.disability;
-                    empid = el.empid;
-                    pan = el.pan;
-                    let netpay;
-                    let basicpay;
+                      ir,
+                      netpay,
+                      basicpay;
                     const techersSalary = monthSalary?.filter(
                       (el) => el.id === id
                     )[0];
@@ -425,7 +487,7 @@ const MonthlyAWSalary = () => {
                     return (
                       basicpay !== 0 &&
                       basicpay !== undefined && (
-                        <tr key={el.id}>
+                        <tr key={id}>
                           <td
                             className="text-center"
                             style={{ border: "1px solid" }}
@@ -436,19 +498,19 @@ const MonthlyAWSalary = () => {
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {el.tname}
+                            {tname}
                           </td>
                           <td
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {el?.school}
+                            {school}
                           </td>
                           <td
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {el.desig}
+                            {desig}
                           </td>
                           <td
                             className="text-center"
@@ -522,8 +584,7 @@ const MonthlyAWSalary = () => {
                             className="noprint text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {state === "admin" ||
-                            el.association === "WBTPTA" ? (
+                            {state === "admin" || association === "WBTPTA" ? (
                               <Link
                                 className="btn btn-info m-1 text-decoration-none"
                                 href={`/payslipwbtptaNew`}

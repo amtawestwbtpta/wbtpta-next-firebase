@@ -98,7 +98,7 @@ const page = () => {
               const querySnapshot2 = await getDocs(q2);
               const teacherData = querySnapshot2.docs[0].data();
               setState(teacherData.circle);
-              setUSER(teacherData);
+              setUSER(userData);
               encryptObjData("uid", userData, 10080);
               encryptObjData("tid", teacherData, 10080);
               encryptObjData("CheckAuth", CheckAuth, 10080);
