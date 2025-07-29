@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Page,
@@ -10,7 +9,6 @@ import {
   Font,
   PDFViewer,
 } from "@react-pdf/renderer";
-import ropa from "../modules/ropa";
 const width = 2480;
 const height = 3508;
 
@@ -22,7 +20,6 @@ export default function NewTeacherArrear({ data }) {
       title={`New Teacher Arrear Form`}
     >
       {data.map((teacher, index) => {
-        const level = ropa(teacher?.basic).lv;
         return (
           <Page
             size="A4"
@@ -207,10 +204,10 @@ const styles = StyleSheet.create({
   },
 
   tableStartView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: 1,
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -219,10 +216,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   tableStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -241,10 +238,10 @@ const styles = StyleSheet.create({
   },
 
   view5: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "5%",
     height: 73,
@@ -252,8 +249,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   view25: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
     width: "25%",
     justifyContent: "center",
@@ -274,10 +271,10 @@ const styles = StyleSheet.create({
   },
 
   rowStartView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -286,10 +283,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   rowStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",

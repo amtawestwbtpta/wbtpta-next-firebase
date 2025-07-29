@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import {
   Page,
   Text,
@@ -6,7 +7,6 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
 } from "@react-pdf/renderer";
 import { IndianFormat, roundSo } from "../modules/calculatefunctions";
 const width = 2480;
@@ -17,10 +17,8 @@ export default function IncomeTaxNew2025({ data }) {
     tname,
     school,
     pan,
-    phone,
     desig,
     thisYear,
-    prevYear,
     nextYear,
     finYear,
     marchSalary,
@@ -191,12 +189,11 @@ export default function IncomeTaxNew2025({ data }) {
     grossNetpay,
     TotalGross,
     GrossArrear,
-    year,
   } = data;
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
-      title={`IT Statement of ${tname} of ${school} NEW 2025`}
+      title={`IT Statement of ${tname} of ${school} NEW ${thisYear}`}
     >
       <Page size="A4" orientation="portrait" style={styles.page}>
         <View
@@ -220,7 +217,7 @@ export default function IncomeTaxNew2025({ data }) {
               >
                 <Text style={styles.text3}>
                   FINANCIAL YEAR {finYear} (RELEVANT TO ASSESMENT YEAR{" "}
-                  {`${thisYear}-${nextYear}`})
+                  {`${nextYear}-${nextYear + 1}`})
                 </Text>
               </View>
               <View
@@ -266,7 +263,7 @@ export default function IncomeTaxNew2025({ data }) {
                     flexDirection: "row",
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    borderWidth: 0,
+                    borderWidth: "0px",
                     margin: 0,
                   },
                 ]}
@@ -315,7 +312,7 @@ export default function IncomeTaxNew2025({ data }) {
                   {
                     marginTop: 2,
                     borderWidth: 1,
-                    borderBottomWidth: 0,
+                    borderBottomWidth: "0px",
                   },
                 ]}
               >
@@ -330,7 +327,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -350,8 +347,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "70%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderBottomWidth: "0px",
                     height: 80,
                   }}
                 >
@@ -374,8 +371,8 @@ export default function IncomeTaxNew2025({ data }) {
                           { textAlign: "left", paddingLeft: 2 },
                         ]}
                       >
-                        Grass Pay & Allowances from March'{prevYear - 2000} to
-                        February, {thisYear}
+                        Grass Pay & Allowances from March'{thisYear} to
+                        February, {nextYear}
                       </Text>
                     </View>
                     <View style={{ width: "20%" }}>
@@ -403,8 +400,7 @@ export default function IncomeTaxNew2025({ data }) {
                           { textAlign: "left", paddingLeft: 2 },
                         ]}
                       >
-                        Arrear Salary if any during the Financial year{" "}
-                        {`${prevYear} - ${thisYear}`}
+                        Arrear Salary if any during the Financial year {finYear}
                       </Text>
                     </View>
                     <View style={{ width: "20%" }}>
@@ -528,7 +524,7 @@ export default function IncomeTaxNew2025({ data }) {
                   <View
                     style={{
                       width: "100%",
-                      borderBottomWidth: 0,
+                      borderBottomWidth: "0px",
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "center",
@@ -584,7 +580,7 @@ export default function IncomeTaxNew2025({ data }) {
                   {
                     marginTop: 2,
                     borderWidth: 1,
-                    borderBottomWidth: 0,
+                    borderBottomWidth: "0px",
                   },
                 ]}
               >
@@ -599,7 +595,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -619,8 +615,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "70%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderBottomWidth: "0px",
                     height: 105,
                   }}
                 >
@@ -861,7 +857,7 @@ export default function IncomeTaxNew2025({ data }) {
                   <View
                     style={{
                       width: "100%",
-                      borderBottomWidth: 0,
+                      borderBottomWidth: "0px",
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "center",
@@ -900,7 +896,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -920,8 +916,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "70%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderBottomWidth: "0px",
                   }}
                 >
                   <Text
@@ -943,7 +939,7 @@ export default function IncomeTaxNew2025({ data }) {
                   {
                     marginTop: 2,
                     borderWidth: 1,
-                    borderBottomWidth: 0,
+                    borderBottomWidth: "0px",
                     justifyContent: "center",
                     paddingLeft: 5,
                   },
@@ -962,7 +958,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -982,8 +978,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "70%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderBottomWidth: "0px",
                     height: 65,
                   }}
                 >
@@ -1172,7 +1168,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -1229,7 +1225,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -1284,7 +1280,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -1341,7 +1337,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -1398,7 +1394,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -1455,8 +1451,8 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
 
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderBottomWidth: "0px",
                   },
                 ]}
               >
@@ -1483,7 +1479,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "flex-start",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     // borderBottomWidth: 1,
                   },
                 ]}
@@ -1492,8 +1488,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -1518,14 +1514,14 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                   </View>
                 </View>
-                {year === 2024 ? (
+                {thisYear === 2024 ? (
                   <View>
                     <View
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1557,8 +1553,8 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1594,8 +1590,8 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1631,9 +1627,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1669,9 +1665,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1707,9 +1703,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1738,14 +1734,14 @@ export default function IncomeTaxNew2025({ data }) {
                       </View>
                     </View>
                   </View>
-                ) : year == 2025 ? (
+                ) : thisYear == 2025 ? (
                   <View>
                     <View
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1777,8 +1773,8 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1814,8 +1810,8 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
                       }}
                     >
                       <View
@@ -1851,9 +1847,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1889,9 +1885,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1927,9 +1923,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -1965,9 +1961,9 @@ export default function IncomeTaxNew2025({ data }) {
                       style={{
                         width: "60%",
                         borderWidth: 1,
-                        borderTopWidth: 0,
-                        borderLeftWidth: 0,
-                        borderBottomWidth: 0,
+                        borderTopWidth: "0px",
+                        borderLeftWidth: "0px",
+                        borderBottomWidth: "0px",
                       }}
                     >
                       <View
@@ -2007,7 +2003,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2064,7 +2060,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2124,7 +2120,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2183,7 +2179,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2242,7 +2238,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2298,7 +2294,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2357,7 +2353,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2416,7 +2412,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2471,7 +2467,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -2562,7 +2558,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderRightWidth: 1,
                     borderTopWidth: 1,
-                    borderBottomWidth: 0,
+                    borderBottomWidth: "0px",
                     marginTop: 10,
                   },
                 ]}
@@ -2592,7 +2588,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "flex-start",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     // borderBottomWidth: 1,
                   },
                 ]}
@@ -2601,8 +2597,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2631,8 +2627,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2648,7 +2644,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        March, {prevYear}
+                        March, {thisYear}
                       </Text>
                     </View>
 
@@ -2664,8 +2660,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2681,7 +2677,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        April, {prevYear}
+                        April, {thisYear}
                       </Text>
                     </View>
 
@@ -2697,8 +2693,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2714,7 +2710,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        May, {prevYear}
+                        May, {thisYear}
                       </Text>
                     </View>
 
@@ -2730,8 +2726,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2747,7 +2743,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        June, {prevYear}
+                        June, {thisYear}
                       </Text>
                     </View>
 
@@ -2763,8 +2759,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2780,7 +2776,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        July, {prevYear}
+                        July, {thisYear}
                       </Text>
                     </View>
 
@@ -2796,8 +2792,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2813,7 +2809,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        August, {prevYear}
+                        August, {thisYear}
                       </Text>
                     </View>
 
@@ -2829,8 +2825,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2846,7 +2842,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        September, {prevYear}
+                        September, {thisYear}
                       </Text>
                     </View>
 
@@ -2862,8 +2858,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2879,7 +2875,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        October, {prevYear}
+                        October, {thisYear}
                       </Text>
                     </View>
 
@@ -2895,8 +2891,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2912,7 +2908,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        November, {prevYear}
+                        November, {thisYear}
                       </Text>
                     </View>
 
@@ -2928,8 +2924,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2945,7 +2941,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        December, {prevYear}
+                        December, {thisYear}
                       </Text>
                     </View>
 
@@ -2961,8 +2957,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -2978,7 +2974,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        January, {thisYear}
+                        January, {nextYear}
                       </Text>
                     </View>
 
@@ -2996,8 +2992,8 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
                   }}
                 >
                   <View
@@ -3013,7 +3009,7 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                     <View style={{ width: "50%", borderRightWidth: 1 }}>
                       <Text style={[styles.text, { textAlign: "center" }]}>
-                        February, {thisYear}
+                        February, {nextYear}
                       </Text>
                     </View>
 
@@ -3031,9 +3027,9 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "60%",
                     borderWidth: 1,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                    borderBottomWidth: 0,
+                    borderTopWidth: "0px",
+                    borderLeftWidth: "0px",
+                    borderBottomWidth: "0px",
                   }}
                 >
                   <View
@@ -3072,7 +3068,7 @@ export default function IncomeTaxNew2025({ data }) {
                     alignItems: "center",
                     borderLeftWidth: 1,
                     borderRightWidth: 1,
-                    borderTopWidth: 0,
+                    borderTopWidth: "0px",
                     borderBottomWidth: 1,
                   },
                 ]}
@@ -3180,7 +3176,7 @@ export default function IncomeTaxNew2025({ data }) {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    borderWidth: 0,
+                    borderWidth: "0px",
                     marginTop: 50,
                   },
                 ]}
@@ -3199,7 +3195,7 @@ export default function IncomeTaxNew2025({ data }) {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    borderWidth: 0,
+                    borderWidth: "0px",
                     marginTop: 5,
                   },
                 ]}
@@ -3218,7 +3214,7 @@ export default function IncomeTaxNew2025({ data }) {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    borderWidth: 0,
+                    borderWidth: "0px",
                     marginTop: 5,
                   },
                 ]}
@@ -3238,7 +3234,7 @@ export default function IncomeTaxNew2025({ data }) {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "flex-end",
-                    borderWidth: 0,
+                    borderWidth: "0px",
                     marginTop: 50,
                     marginBottom: 30,
                   },
@@ -3292,7 +3288,7 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{ width: "40%", borderWidth: 1, marginBottom: 20 }}
                 >
                   <Text style={[styles.text]}>
-                    LAST DATE OF SUBMISSION:- 13/01/{thisYear}
+                    LAST DATE OF SUBMISSION:- 13/01/{nextYear}
                   </Text>
                 </View>
               </View>
@@ -3300,7 +3296,6 @@ export default function IncomeTaxNew2025({ data }) {
           </View>
         </View>
       </Page>
-
       <Page size="A4" orientation="landscape" style={styles.page}>
         <View
           style={{
@@ -3411,9 +3406,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -3628,9 +3623,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -3667,7 +3662,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -3882,9 +3877,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -3921,7 +3916,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -4136,9 +4131,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -4175,7 +4170,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -4374,9 +4369,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -4413,7 +4408,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -4620,9 +4615,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -4659,7 +4654,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -4774,7 +4769,7 @@ export default function IncomeTaxNew2025({ data }) {
                   style={{
                     width: "10%",
                     flexDirection: "row",
-                    justifyContent: "space-evenly",
+                    justifyContent: "center",
                     alignItems: "center",
                     borderRightWidth: 1,
                   }}
@@ -4870,9 +4865,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -4909,7 +4904,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -5124,9 +5119,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -5163,7 +5158,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -5378,9 +5373,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -5417,7 +5412,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -5632,9 +5627,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -5671,7 +5666,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -5886,9 +5881,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -5925,7 +5920,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{prevYear}</Text>
+                      <Text style={styles.text}>{thisYear}</Text>
                     </View>
                   </View>
                   <View
@@ -6140,9 +6135,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -6179,7 +6174,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{thisYear}</Text>
+                      <Text style={styles.text}>{nextYear}</Text>
                     </View>
                   </View>
                   <View
@@ -6394,9 +6389,9 @@ export default function IncomeTaxNew2025({ data }) {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   borderWidth: 1,
-                  borderLeftWidth: 0,
-                  borderRightWidth: 0,
-                  borderTopWidth: 0,
+                  borderLeftWidth: "0px",
+                  borderRightWidth: "0px",
+                  borderTopWidth: "0px",
                 }}
               >
                 <View
@@ -6433,7 +6428,7 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text}>{thisYear}</Text>
+                      <Text style={styles.text}>{nextYear}</Text>
                     </View>
                   </View>
                   <View
@@ -7008,10 +7003,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   tableStartView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: 1,
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -7020,9 +7015,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   tableStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
     borderBottomWidth: 1,
     width: "100%",
     height: "auto",
@@ -7032,9 +7027,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   tableStartBorderView2: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
     borderBottomWidth: 1,
     width: "95%",
     height: "auto",
@@ -7052,19 +7047,19 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   view88H20: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "8.78%",
     height: 20,
   },
   view16: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "16%",
     height: 32,
@@ -7074,10 +7069,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   view16H0: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     width: "16%",
     height: 14,
     flexDirection: "row",
@@ -7086,10 +7081,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   view32H0: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     width: "32%",
     height: 14,
     flexDirection: "row",
@@ -7098,10 +7093,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   view10: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "10%",
     height: 32,
@@ -7111,10 +7106,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   view10H0: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "10%",
     height: 14,
@@ -7123,19 +7118,19 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   SecondView10: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "10%",
     height: 15,
   },
   view5: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: "0px",
     paddingRight: 1,
     width: "5%",
     height: 73,
@@ -7143,8 +7138,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   view25: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
     borderRightWidth: 1,
     width: "25%",
     justifyContent: "center",
@@ -7166,10 +7161,10 @@ const styles = StyleSheet.create({
   },
 
   rowStartView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomWidth: 0.5,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
+    borderBottomWidth: 1,
     width: "100%",
     height: "auto",
     flexDirection: "row",
@@ -7178,9 +7173,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   rowStartBorderView: {
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+    borderTopWidth: "0px",
+    borderLeftWidth: "0px",
+    borderRightWidth: "0px",
     borderBottomWidth: 1,
     width: "100%",
     flexDirection: "row",

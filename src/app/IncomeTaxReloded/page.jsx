@@ -72,6 +72,7 @@ export default function IncomeTaxReloded() {
     tds: "",
   });
   const [newITData, setNewITDa] = useState({
+    id: "",
     tname: "",
     school: "",
     pan: "",
@@ -486,9 +487,9 @@ export default function IncomeTaxReloded() {
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
   const calCulateOldIT = async (data) => {
-    const { id, tname, fname, school, pan, phone, disability, desig, gender } =
+    const { id, tname, school, pan, disability, desig, gender, fname, phone } =
       data;
-    const marchSalary = march.filter((el) => el.id === id)[0];
+    const marchSalary = march.filter((el) => el.id == id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
     const marchAddl = marchSalary?.addl;
@@ -502,9 +503,9 @@ export default function IncomeTaxReloded() {
     const marchGPF = marchSalary?.gpf;
     const marchGSLI = marchSalary?.gsli;
     const bonus = marchSalary?.bonus;
-    const marchPTax = disability === "YES" ? 0 : ptaxCalc(marchGross);
+    const marchPTax = disability == "YES" ? 0 : ptaxCalc(marchGross);
     const marchNetpay = marchGross - marchGPF - marchGSLI - marchPTax;
-    const aprilSalary = april.filter((el) => el.id === id)[0];
+    const aprilSalary = april.filter((el) => el.id == id)[0];
     const aprilArrear = aprilSalary?.arrear;
     const aprilBasic = aprilSalary?.basic;
     const aprilAddl = aprilSalary?.addl;
@@ -517,9 +518,9 @@ export default function IncomeTaxReloded() {
     const aprilGross = aprilBasic + aprilDA + aprilHRA + aprilAddl + aprilMA;
     const aprilGPF = aprilSalary?.gpf;
     const aprilGSLI = aprilSalary?.gsli;
-    const aprilPTax = disability === "YES" ? 0 : ptaxCalc(aprilGross);
+    const aprilPTax = disability == "YES" ? 0 : ptaxCalc(aprilGross);
     const aprilNetpay = aprilGross - aprilGPF - aprilGSLI - aprilPTax;
-    const maySalary = may.filter((el) => el.id === id)[0];
+    const maySalary = may.filter((el) => el.id == id)[0];
     const mayArrear = maySalary?.arrear;
     const mayBasic = maySalary?.basic;
     const mayAddl = maySalary?.addl;
@@ -532,9 +533,9 @@ export default function IncomeTaxReloded() {
     const mayGross = mayBasic + mayDA + mayHRA + mayAddl + mayMA;
     const mayGPF = maySalary?.gpf;
     const mayGSLI = maySalary?.gsli;
-    const mayPTax = disability === "YES" ? 0 : ptaxCalc(mayGross);
+    const mayPTax = disability == "YES" ? 0 : ptaxCalc(mayGross);
     const mayNetpay = mayGross - mayGPF - mayGSLI - mayPTax;
-    const juneSalary = june.filter((el) => el.id === id)[0];
+    const juneSalary = june.filter((el) => el.id == id)[0];
     const juneArrear = juneSalary?.arrear;
     const juneBasic = juneSalary?.basic;
     const juneAddl = juneSalary?.addl;
@@ -547,14 +548,15 @@ export default function IncomeTaxReloded() {
     const juneGross = juneBasic + juneDA + juneHRA + juneAddl + juneMA;
     const juneGPF = juneSalary?.gpf;
     const juneGSLI = juneSalary?.gsli;
-    const junePTax = disability === "YES" ? 0 : ptaxCalc(juneGross);
+    const junePTax = disability == "YES" ? 0 : ptaxCalc(juneGross);
     const juneNetpay = juneGross - juneGPF - juneGSLI - junePTax;
-    const julySalary = july.filter((el) => el.id === id)[0];
+    const julySalary = july.filter((el) => el.id == id)[0];
     const julyArrear = julySalary?.arrear;
     const julyBasic = julySalary?.basic;
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
-    const aprilIR = year == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
+    const aprilIR =
+      thisYear == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
     const julyHRA =
       julySalary?.hraPercent > 10
         ? julySalary?.hraPercent
@@ -564,9 +566,9 @@ export default function IncomeTaxReloded() {
       julyBasic + julyDA + julyHRA + julyAddl + julyMA + aprilIR;
     const julyGPF = julySalary?.gpf;
     const julyGSLI = julySalary?.gsli;
-    const julyPTax = disability === "YES" ? 0 : ptaxCalc(julyGross);
+    const julyPTax = disability == "YES" ? 0 : ptaxCalc(julyGross);
     const julyNetpay = julyGross - julyGPF - julyGSLI - julyPTax;
-    const augustSalary = august.filter((el) => el.id === id)[0];
+    const augustSalary = august.filter((el) => el.id == id)[0];
     const augustArrear = augustSalary?.arrear;
     const augustBasic = augustSalary?.basic;
     const augustAddl = augustSalary?.addl;
@@ -580,9 +582,9 @@ export default function IncomeTaxReloded() {
       augustBasic + augustDA + augustHRA + augustAddl + augustMA;
     const augustGPF = augustSalary?.gpf;
     const augustGSLI = augustSalary?.gsli;
-    const augustPTax = disability === "YES" ? 0 : ptaxCalc(augustGross);
+    const augustPTax = disability == "YES" ? 0 : ptaxCalc(augustGross);
     const augustNetpay = augustGross - augustGPF - augustGSLI - augustPTax;
-    const septemberSalary = september.filter((el) => el.id === id)[0];
+    const septemberSalary = september.filter((el) => el.id == id)[0];
     const septemberArrear = septemberSalary?.arrear;
     const septemberBasic = septemberSalary?.basic;
     const septemberAddl = septemberSalary?.addl;
@@ -598,10 +600,10 @@ export default function IncomeTaxReloded() {
       septemberBasic + septemberDA + septemberHRA + septemberAddl + septemberMA;
     const septemberGPF = septemberSalary?.gpf;
     const septemberGSLI = septemberSalary?.gsli;
-    const septemberPTax = disability === "YES" ? 0 : ptaxCalc(septemberGross);
+    const septemberPTax = disability == "YES" ? 0 : ptaxCalc(septemberGross);
     const septemberNetpay =
       septemberGross - septemberGPF - septemberGSLI - septemberPTax;
-    const octoberSalary = october.filter((el) => el.id === id)[0];
+    const octoberSalary = october.filter((el) => el.id == id)[0];
     const octoberArrear = octoberSalary?.arrear;
     const octoberBasic = octoberSalary?.basic;
     const octoberAddl = octoberSalary?.addl;
@@ -617,9 +619,9 @@ export default function IncomeTaxReloded() {
       octoberBasic + octoberDA + octoberHRA + octoberAddl + octoberMA;
     const octoberGPF = octoberSalary?.gpf;
     const octoberGSLI = octoberSalary?.gsli;
-    const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
+    const octoberPTax = disability == "YES" ? 0 : ptaxCalc(octoberGross);
     const octoberNetpay = octoberGross - octoberGPF - octoberGSLI - octoberPTax;
-    const novemberSalary = november.filter((el) => el.id === id)[0];
+    const novemberSalary = november.filter((el) => el.id == id)[0];
     const novemberArrear = novemberSalary?.arrear;
     const novemberBasic = novemberSalary?.basic;
     const novemberAddl = novemberSalary?.addl;
@@ -635,10 +637,10 @@ export default function IncomeTaxReloded() {
       novemberBasic + novemberDA + novemberHRA + novemberAddl + novemberMA;
     const novemberGPF = novemberSalary?.gpf;
     const novemberGSLI = novemberSalary?.gsli;
-    const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
+    const novemberPTax = disability == "YES" ? 0 : ptaxCalc(novemberGross);
     const novemberNetpay =
       novemberGross - novemberGPF - novemberGSLI - novemberPTax;
-    const decemberSalary = december.filter((el) => el.id === id)[0];
+    const decemberSalary = december.filter((el) => el.id == id)[0];
     const decemberArrear = decemberSalary?.arrear;
     const decemberBasic = decemberSalary?.basic;
     const decemberAddl = decemberSalary?.addl;
@@ -654,10 +656,10 @@ export default function IncomeTaxReloded() {
       decemberBasic + decemberDA + decemberHRA + decemberAddl + decemberMA;
     const decemberGPF = decemberSalary?.gpf;
     const decemberGSLI = decemberSalary?.gsli;
-    const decemberPTax = disability === "YES" ? 0 : ptaxCalc(decemberGross);
+    const decemberPTax = disability == "YES" ? 0 : ptaxCalc(decemberGross);
     const decemberNetpay =
       decemberGross - decemberGPF - decemberGSLI - decemberPTax;
-    const januarySalary = january.filter((el) => el.id === id)[0];
+    const januarySalary = january.filter((el) => el.id == id)[0];
     const januaryArrear = januarySalary?.arrear;
     const januaryBasic = januarySalary?.basic;
     const januaryAddl = januarySalary?.addl;
@@ -673,9 +675,9 @@ export default function IncomeTaxReloded() {
       januaryBasic + januaryDA + januaryHRA + januaryAddl + januaryMA;
     const januaryGPF = januarySalary?.gpf;
     const januaryGSLI = januarySalary?.gsli;
-    const januaryPTax = disability === "YES" ? 0 : ptaxCalc(januaryGross);
+    const januaryPTax = disability == "YES" ? 0 : ptaxCalc(januaryGross);
     const januaryNetpay = januaryGross - januaryGPF - januaryGSLI - januaryPTax;
-    const februarySalary = february.filter((el) => el.id === id)[0];
+    const februarySalary = february.filter((el) => el.id == id)[0];
     const februaryArrear = februarySalary?.arrear;
     const februaryBasic = februarySalary?.basic;
     const februaryAddl = februarySalary?.addl;
@@ -691,7 +693,7 @@ export default function IncomeTaxReloded() {
       februaryBasic + februaryDA + februaryHRA + februaryAddl + februaryMA;
     const februaryGPF = februarySalary?.gpf;
     const februaryGSLI = februarySalary?.gsli;
-    const februaryPTax = disability === "YES" ? 0 : ptaxCalc(februaryGross);
+    const februaryPTax = disability == "YES" ? 0 : ptaxCalc(februaryGross);
     const februaryNetpay =
       februaryGross - februaryGPF - februaryGSLI - februaryPTax;
     const grossBasic =
@@ -772,6 +774,19 @@ export default function IncomeTaxReloded() {
       decemberGross +
       januaryGross +
       februaryGross;
+    const GrossArrear =
+      marchArrear +
+      aprilArrear +
+      mayArrear +
+      juneArrear +
+      julyArrear +
+      augustArrear +
+      septemberArrear +
+      octoberArrear +
+      novemberArrear +
+      decemberArrear +
+      januaryArrear +
+      februaryArrear;
     const GrossPAY =
       marchGross +
       aprilGross +
@@ -840,6 +855,7 @@ export default function IncomeTaxReloded() {
       februaryNetpay +
       bonus;
     const BankInterest = randBetween(500, 2000);
+
     const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
     const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
     const hbLoanInterest = teacherDeduction?.hbLoanInterest;
@@ -876,19 +892,7 @@ export default function IncomeTaxReloded() {
       januaryArrear +
       februaryArrear +
       otherIncome;
-    const GrossArrear =
-      marchArrear +
-      aprilArrear +
-      mayArrear +
-      juneArrear +
-      julyArrear +
-      augustArrear +
-      septemberArrear +
-      octoberArrear +
-      novemberArrear +
-      decemberArrear +
-      januaryArrear +
-      februaryArrear;
+
     const GrossTotalIncome =
       AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
     const deductionVIA =
@@ -1115,8 +1119,8 @@ export default function IncomeTaxReloded() {
     });
   };
   const calCulateNewIT = async (data, year) => {
-    const { id, tname, school, pan, phone, disability, desig, gender } = data;
-    const marchSalary = march.filter((el) => el.id === id)[0];
+    const { id, tname, school, pan, disability, desig, gender } = data;
+    const marchSalary = march.filter((el) => el.id == id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
     const marchAddl = marchSalary?.addl;
@@ -1130,9 +1134,9 @@ export default function IncomeTaxReloded() {
     const marchGPF = marchSalary?.gpf;
     const marchGSLI = marchSalary?.gsli;
     const bonus = marchSalary?.bonus;
-    const marchPTax = disability === "YES" ? 0 : ptaxCalc(marchGross);
+    const marchPTax = disability == "YES" ? 0 : ptaxCalc(marchGross);
     const marchNetpay = marchGross - marchGPF - marchGSLI - marchPTax;
-    const aprilSalary = april.filter((el) => el.id === id)[0];
+    const aprilSalary = april.filter((el) => el.id == id)[0];
     const aprilArrear = aprilSalary?.arrear;
     const aprilBasic = aprilSalary?.basic;
     const aprilAddl = aprilSalary?.addl;
@@ -1145,9 +1149,9 @@ export default function IncomeTaxReloded() {
     const aprilGross = aprilBasic + aprilDA + aprilHRA + aprilAddl + aprilMA;
     const aprilGPF = aprilSalary?.gpf;
     const aprilGSLI = aprilSalary?.gsli;
-    const aprilPTax = disability === "YES" ? 0 : ptaxCalc(aprilGross);
+    const aprilPTax = disability == "YES" ? 0 : ptaxCalc(aprilGross);
     const aprilNetpay = aprilGross - aprilGPF - aprilGSLI - aprilPTax;
-    const maySalary = may.filter((el) => el.id === id)[0];
+    const maySalary = may.filter((el) => el.id == id)[0];
     const mayArrear = maySalary?.arrear;
     const mayBasic = maySalary?.basic;
     const mayAddl = maySalary?.addl;
@@ -1160,9 +1164,9 @@ export default function IncomeTaxReloded() {
     const mayGross = mayBasic + mayDA + mayHRA + mayAddl + mayMA;
     const mayGPF = maySalary?.gpf;
     const mayGSLI = maySalary?.gsli;
-    const mayPTax = disability === "YES" ? 0 : ptaxCalc(mayGross);
+    const mayPTax = disability == "YES" ? 0 : ptaxCalc(mayGross);
     const mayNetpay = mayGross - mayGPF - mayGSLI - mayPTax;
-    const juneSalary = june.filter((el) => el.id === id)[0];
+    const juneSalary = june.filter((el) => el.id == id)[0];
     const juneArrear = juneSalary?.arrear;
     const juneBasic = juneSalary?.basic;
     const juneAddl = juneSalary?.addl;
@@ -1175,14 +1179,15 @@ export default function IncomeTaxReloded() {
     const juneGross = juneBasic + juneDA + juneHRA + juneAddl + juneMA;
     const juneGPF = juneSalary?.gpf;
     const juneGSLI = juneSalary?.gsli;
-    const junePTax = disability === "YES" ? 0 : ptaxCalc(juneGross);
+    const junePTax = disability == "YES" ? 0 : ptaxCalc(juneGross);
     const juneNetpay = juneGross - juneGPF - juneGSLI - junePTax;
-    const julySalary = july.filter((el) => el.id === id)[0];
+    const julySalary = july.filter((el) => el.id == id)[0];
     const julyArrear = julySalary?.arrear;
     const julyBasic = julySalary?.basic;
     const julyAddl = julySalary?.addl;
     const julyDA = Math.round(julySalary?.basic * julySalary?.daPercent);
-    const aprilIR = year == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
+    const aprilIR =
+      thisYear == 2024 ? Math.round(aprilSalary?.basic * 0.04) : 0;
     const julyHRA =
       julySalary?.hraPercent > 10
         ? julySalary?.hraPercent
@@ -1192,9 +1197,9 @@ export default function IncomeTaxReloded() {
       julyBasic + julyDA + julyHRA + julyAddl + julyMA + aprilIR;
     const julyGPF = julySalary?.gpf;
     const julyGSLI = julySalary?.gsli;
-    const julyPTax = disability === "YES" ? 0 : ptaxCalc(julyGross);
+    const julyPTax = disability == "YES" ? 0 : ptaxCalc(julyGross);
     const julyNetpay = julyGross - julyGPF - julyGSLI - julyPTax;
-    const augustSalary = august.filter((el) => el.id === id)[0];
+    const augustSalary = august.filter((el) => el.id == id)[0];
     const augustArrear = augustSalary?.arrear;
     const augustBasic = augustSalary?.basic;
     const augustAddl = augustSalary?.addl;
@@ -1208,9 +1213,9 @@ export default function IncomeTaxReloded() {
       augustBasic + augustDA + augustHRA + augustAddl + augustMA;
     const augustGPF = augustSalary?.gpf;
     const augustGSLI = augustSalary?.gsli;
-    const augustPTax = disability === "YES" ? 0 : ptaxCalc(augustGross);
+    const augustPTax = disability == "YES" ? 0 : ptaxCalc(augustGross);
     const augustNetpay = augustGross - augustGPF - augustGSLI - augustPTax;
-    const septemberSalary = september.filter((el) => el.id === id)[0];
+    const septemberSalary = september.filter((el) => el.id == id)[0];
     const septemberArrear = septemberSalary?.arrear;
     const septemberBasic = septemberSalary?.basic;
     const septemberAddl = septemberSalary?.addl;
@@ -1226,10 +1231,10 @@ export default function IncomeTaxReloded() {
       septemberBasic + septemberDA + septemberHRA + septemberAddl + septemberMA;
     const septemberGPF = septemberSalary?.gpf;
     const septemberGSLI = septemberSalary?.gsli;
-    const septemberPTax = disability === "YES" ? 0 : ptaxCalc(septemberGross);
+    const septemberPTax = disability == "YES" ? 0 : ptaxCalc(septemberGross);
     const septemberNetpay =
       septemberGross - septemberGPF - septemberGSLI - septemberPTax;
-    const octoberSalary = october.filter((el) => el.id === id)[0];
+    const octoberSalary = october.filter((el) => el.id == id)[0];
     const octoberArrear = octoberSalary?.arrear;
     const octoberBasic = octoberSalary?.basic;
     const octoberAddl = octoberSalary?.addl;
@@ -1245,9 +1250,9 @@ export default function IncomeTaxReloded() {
       octoberBasic + octoberDA + octoberHRA + octoberAddl + octoberMA;
     const octoberGPF = octoberSalary?.gpf;
     const octoberGSLI = octoberSalary?.gsli;
-    const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
+    const octoberPTax = disability == "YES" ? 0 : ptaxCalc(octoberGross);
     const octoberNetpay = octoberGross - octoberGPF - octoberGSLI - octoberPTax;
-    const novemberSalary = november.filter((el) => el.id === id)[0];
+    const novemberSalary = november.filter((el) => el.id == id)[0];
     const novemberArrear = novemberSalary?.arrear;
     const novemberBasic = novemberSalary?.basic;
     const novemberAddl = novemberSalary?.addl;
@@ -1263,10 +1268,10 @@ export default function IncomeTaxReloded() {
       novemberBasic + novemberDA + novemberHRA + novemberAddl + novemberMA;
     const novemberGPF = novemberSalary?.gpf;
     const novemberGSLI = novemberSalary?.gsli;
-    const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
+    const novemberPTax = disability == "YES" ? 0 : ptaxCalc(novemberGross);
     const novemberNetpay =
       novemberGross - novemberGPF - novemberGSLI - novemberPTax;
-    const decemberSalary = december.filter((el) => el.id === id)[0];
+    const decemberSalary = december.filter((el) => el.id == id)[0];
     const decemberArrear = decemberSalary?.arrear;
     const decemberBasic = decemberSalary?.basic;
     const decemberAddl = decemberSalary?.addl;
@@ -1282,10 +1287,10 @@ export default function IncomeTaxReloded() {
       decemberBasic + decemberDA + decemberHRA + decemberAddl + decemberMA;
     const decemberGPF = decemberSalary?.gpf;
     const decemberGSLI = decemberSalary?.gsli;
-    const decemberPTax = disability === "YES" ? 0 : ptaxCalc(decemberGross);
+    const decemberPTax = disability == "YES" ? 0 : ptaxCalc(decemberGross);
     const decemberNetpay =
       decemberGross - decemberGPF - decemberGSLI - decemberPTax;
-    const januarySalary = january.filter((el) => el.id === id)[0];
+    const januarySalary = january.filter((el) => el.id == id)[0];
     const januaryArrear = januarySalary?.arrear;
     const januaryBasic = januarySalary?.basic;
     const januaryAddl = januarySalary?.addl;
@@ -1301,9 +1306,9 @@ export default function IncomeTaxReloded() {
       januaryBasic + januaryDA + januaryHRA + januaryAddl + januaryMA;
     const januaryGPF = januarySalary?.gpf;
     const januaryGSLI = januarySalary?.gsli;
-    const januaryPTax = disability === "YES" ? 0 : ptaxCalc(januaryGross);
+    const januaryPTax = disability == "YES" ? 0 : ptaxCalc(januaryGross);
     const januaryNetpay = januaryGross - januaryGPF - januaryGSLI - januaryPTax;
-    const februarySalary = february.filter((el) => el.id === id)[0];
+    const februarySalary = february.filter((el) => el.id == id)[0];
     const februaryArrear = februarySalary?.arrear;
     const februaryBasic = februarySalary?.basic;
     const februaryAddl = februarySalary?.addl;
@@ -1319,7 +1324,7 @@ export default function IncomeTaxReloded() {
       februaryBasic + februaryDA + februaryHRA + februaryAddl + februaryMA;
     const februaryGPF = februarySalary?.gpf;
     const februaryGSLI = februarySalary?.gsli;
-    const februaryPTax = disability === "YES" ? 0 : ptaxCalc(februaryGross);
+    const februaryPTax = disability == "YES" ? 0 : ptaxCalc(februaryGross);
     const februaryNetpay =
       februaryGross - februaryGPF - februaryGSLI - februaryPTax;
     const grossBasic =
@@ -1481,9 +1486,7 @@ export default function IncomeTaxReloded() {
       februaryNetpay +
       bonus;
     const BankInterest = randBetween(500, 2000);
-    const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
-    const otherIncome = teacherDeduction?.otherIncome;
-    const tds = teacherDeduction?.tds;
+
     const AllGross =
       GrossPAY +
       marchArrear +
@@ -1497,28 +1500,27 @@ export default function IncomeTaxReloded() {
       novemberArrear +
       decemberArrear +
       januaryArrear +
-      februaryArrear +
-      otherIncome;
+      februaryArrear;
     const GrossTotalIncome = AllGross - 75000 + BankInterest; //H36
     const TotalRoundOffIncome = roundSo(GrossTotalIncome, 10);
-    let ThirtyIT,
-      ThirtyITTax,
-      TwentyIT,
-      TwentyITTax,
-      FifteenIT,
-      FifteenITTax,
-      TenIT,
-      TenITTax,
-      FiveIT,
-      FiveITTax,
-      CalculatedIT,
-      GrossRelief,
-      IncomeTaxAfterRelief,
-      eduCess,
-      AddedEduCess;
+    let ThirtyIT = 0;
+    let ThirtyITTax = 0;
+    let TwentyIT = 0;
+    let TwentyITTax = 0;
+    let FifteenIT = 0;
+    let FifteenITTax = 0;
+    let TenIT = 0;
+    let TenITTax = 0;
+    let FiveIT = 0;
+    let FiveITTax = 0;
+    let CalculatedIT = 0;
+    let GrossRelief = 0;
+    let IncomeTaxAfterRelief = 0;
+    let eduCess = 0;
+    let AddedEduCess = 0;
     let TwentyFiveIT = 0;
     let TwentyFiveITTax = 0;
-    if (year === 2024) {
+    if (thisYear == 2024) {
       ThirtyIT = GrossTotalIncome > 1500000 ? GrossTotalIncome - 1500000 : 0;
       ThirtyITTax = ThirtyIT * 0.3;
       TwentyIT =
@@ -1553,7 +1555,7 @@ export default function IncomeTaxReloded() {
       IncomeTaxAfterRelief = Math.floor(CalculatedIT - GrossRelief);
       eduCess = Math.floor(IncomeTaxAfterRelief * 0.04);
       AddedEduCess = IncomeTaxAfterRelief + eduCess;
-    } else if (year === 2025) {
+    } else if (thisYear == 2025) {
       ThirtyIT = GrossTotalIncome > 2400000 ? GrossTotalIncome - 2400000 : 0;
       ThirtyITTax = ThirtyIT * 0.3;
       TwentyFiveIT =
@@ -1614,11 +1616,9 @@ export default function IncomeTaxReloded() {
       tname,
       school,
       pan,
-      phone,
       desig,
       gender,
       thisYear,
-      prevYear,
       nextYear,
       finYear,
       marchSalary,
@@ -1759,7 +1759,7 @@ export default function IncomeTaxReloded() {
       eduCess,
       AddedEduCess,
       BankInterest,
-      tds,
+
       GrossRelief,
       IncomeTaxAfterRelief,
       ThirtyIT,
@@ -1789,7 +1789,6 @@ export default function IncomeTaxReloded() {
       grossNetpay,
       TotalGross,
       GrossArrear,
-      year,
     });
   };
 
@@ -1925,11 +1924,11 @@ export default function IncomeTaxReloded() {
                         const yearParts = selectedFinYear.split("-");
                         const startYear = parseInt(yearParts[0]);
                         const endYear = parseInt(yearParts[1]);
-                        setThisYear(startYear + 1);
-                        setPrevYear(startYear);
-                        setNextYear(endYear + 1);
+                        setThisYear(startYear);
+                        setPrevYear(startYear - 1);
+                        setNextYear(endYear);
 
-                        getMonthlySalary(startYear + 1, startYear);
+                        getMonthlySalary(endYear, startYear);
                         getSalary(startYear);
                       } else {
                         toast.error("Please select a valid financial year.");
