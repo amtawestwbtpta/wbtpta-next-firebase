@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { getAuth, updatePassword } from "firebase/auth";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import {
   collection,
   doc,

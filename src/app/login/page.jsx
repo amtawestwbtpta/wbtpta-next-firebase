@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { firestore, firbaseAuth } from "../../context/FirbaseContext";
+import { firestore, firebaseAuth } from "../../context/FirebaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import Loader from "../../components/Loader";
@@ -67,7 +67,7 @@ const page = () => {
     return match;
   };
   const signInUser = (email, password) => {
-    signInWithEmailAndPassword(firbaseAuth, email, password)
+    signInWithEmailAndPassword(firebaseAuth, email, password)
       .then((res) => console.log("Log In Successfull"))
       .catch((e) => console.log(e));
   };

@@ -33,6 +33,10 @@ export default function AppLink() {
           className="btn-close"
           data-bs-dismiss="alert"
           aria-label="Close"
+          onClick={() => {
+            setVisible(false);
+            clearTimeout();
+          }}
         ></button>
       </div>
     )

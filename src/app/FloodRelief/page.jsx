@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import { doc, setDoc, getDocs, query, collection } from "firebase/firestore";
 import axios from "axios";
 import { useGlobalContext } from "../../context/Store";

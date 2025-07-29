@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { ToastContainer, toast } from "react-toastify";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import {
   collection,
   doc,

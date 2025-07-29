@@ -21,15 +21,15 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-export const firbaseAuth = getAuth(firebaseApp);
+export const firebaseAuth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 const database = getDatabase(firebaseApp);
-const FirbaseContext = createContext(null);
-export const useFirebase = () => useContext(FirbaseContext);
+const FirebaseContext = createContext(null);
+export const useFirebase = () => useContext(FirebaseContext);
 export const FirebaseProvider = (props) => {
   const signupUserWithEmailAndPass = (email, password) => {
-    return createUserWithEmailAndPassword(firbaseAuth, email, password);
+    return createUserWithEmailAndPassword(firebaseAuth, email, password);
   };
 
   const putData = (key, data) => {
@@ -40,10 +40,10 @@ export const FirebaseProvider = (props) => {
     return deleteUser(email);
   };
   return (
-    <FirbaseContext.Provider
+    <FirebaseContext.Provider
       value={{ signupUserWithEmailAndPass, putData, deleteData }}
     >
       {props.children}
-    </FirbaseContext.Provider>
+    </FirebaseContext.Provider>
   );
 };

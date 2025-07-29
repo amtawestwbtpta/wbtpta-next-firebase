@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import {
   collection,
   deleteDoc,

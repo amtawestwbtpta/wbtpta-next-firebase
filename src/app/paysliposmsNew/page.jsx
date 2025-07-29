@@ -12,7 +12,6 @@ import {
 import OSMSPaySLip from "../../pdfs/OSMSPaySLip";
 import dynamic from "next/dynamic";
 import Loader from "../../components/Loader";
-import axios from "axios";
 import { toast } from "react-toastify";
 const PaySlipOsmsNew = () => {
   const PDFDownloadLink = dynamic(
@@ -459,6 +458,7 @@ const PaySlipOsmsNew = () => {
                     borderCollapse: "separate",
                     borderSpacing: 1,
                   }}
+                  suppressHydrationWarning
                 >
                   <tr className="dejavu">
                     <th
@@ -955,7 +955,7 @@ const PaySlipOsmsNew = () => {
                 className="hr"
                 style={{
                   height: 2,
-                  borderTop: "0.5px solid",
+                  borderTop: "1px solid",
                   width: "100%",
                   margin: "auto",
                 }}

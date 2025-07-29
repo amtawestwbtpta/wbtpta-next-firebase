@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { firestore } from "../../context/FirbaseContext";
-import { storage } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
+import { storage } from "../../context/FirebaseContext";
 import {
   collection,
   deleteDoc,

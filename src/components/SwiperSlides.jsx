@@ -1,16 +1,22 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import ImageViewer from "react-simple-image-viewer";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  EffectCube,
+} from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-cube";
-import { EffectCube } from "swiper";
 import Image from "next/image";
 import { useGlobalContext } from "../context/Store";
 const SwiperSlides = () => {
@@ -45,7 +51,9 @@ const SwiperSlides = () => {
       const response = await axios.post(url);
       data = response.data.data;
     }
-    data.map((el) => images.push(el.url));
+    let imageUrls = [];
+    data.map((el) => imageUrls.push(el.url));
+    setImages(imageUrls);
     setData(data);
     setSlideState(data);
     setShowSlide(true);

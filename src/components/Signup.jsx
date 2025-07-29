@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import Link from "next/link";
 import Registration from "./Registration";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 

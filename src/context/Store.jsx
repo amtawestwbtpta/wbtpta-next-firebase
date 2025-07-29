@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState } from "react";
 
-import { FirebaseProvider } from "./FirbaseContext";
+import { FirebaseProvider } from "./FirebaseContext";
 
 const GlobalContext = createContext({
   state: null,

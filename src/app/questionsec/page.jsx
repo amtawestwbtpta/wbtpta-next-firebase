@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import {
   collection,
   getDocs,
@@ -18,14 +18,20 @@ import {
   where,
 } from "firebase/firestore";
 
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  EffectCube,
+} from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-cube";
-import { EffectCube } from "swiper";
 import { ImSwitch } from "react-icons/im";
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import { v4 as uuid } from "uuid";

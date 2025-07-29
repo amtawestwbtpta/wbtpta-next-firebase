@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import { doc, setDoc } from "firebase/firestore";
 import Loader from "../../components/Loader";
 import {

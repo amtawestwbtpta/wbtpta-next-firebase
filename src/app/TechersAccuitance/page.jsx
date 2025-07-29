@@ -279,22 +279,6 @@ const TechersAccuitance = () => {
                               Add
                             </button>
                           )}
-                          {/* <!-- Button trigger modal --> */}
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                            onClick={() => {
-                              setEditTeacher(teacher);
-                              if (typeof window !== undefined) {
-                                document.getElementById("rank").value =
-                                  teacher.rank;
-                              }
-                            }}
-                          >
-                            Edit
-                          </button>
                         </td>
                       </tr>
                     ))}
@@ -302,179 +286,7 @@ const TechersAccuitance = () => {
                 </table>
               </div>
             </div>
-            {/* <!-- Modal --> */}
-            <div
-              className="modal fade"
-              id="staticBackdrop"
-              data-bs-backdrop="static"
-              data-bs-keyboard="false"
-              tabIndex="-1"
-              aria-labelledby="staticBackdropLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                      {editTeacher?.tname}
-                    </h1>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <form>
-                      <div className="mb-3">
-                        <label htmlFor="tname" className="form-label">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="tname"
-                          name="tname"
-                          value={editTeacher?.tname}
-                          onChange={(e) => {
-                            setEditTeacher({
-                              ...editTeacher,
-                              tname: e.target.value,
-                            });
-                          }}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="rank" className="form-label">
-                          Rank
-                        </label>
 
-                        <select
-                          className="form-select form-select-sm"
-                          name="rank"
-                          id="rank"
-                          aria-label=".form-select-sm example"
-                          defaultValue={editTeacher?.rank}
-                          onChange={(e) => {
-                            setEditTeacher({
-                              ...editTeacher,
-                              rank: parseInt(e.target.value),
-                            });
-                          }}
-                        >
-                          <option value="">Select Teacher Rank</option>
-                          {filteredData.map((teacher, ind) => (
-                            <option key={ind} value={ind + 1}>
-                              {ind + 1}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="rank" className="form-label">
-                          March Basic
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="rank"
-                          name="rank"
-                          value={editTeacher?.mbasic}
-                          onChange={(e) => {
-                            if (e.target.value !== "") {
-                              setEditTeacher({
-                                ...editTeacher,
-                                mbasic: parseInt(e.target.value),
-                              });
-                            } else {
-                              setEditTeacher({
-                                ...editTeacher,
-                                mbasic: "",
-                              });
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="rank" className="form-label">
-                          July Basic
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="rank"
-                          name="rank"
-                          value={editTeacher?.basic}
-                          onChange={(e) => {
-                            if (e.target.value !== "") {
-                              setEditTeacher({
-                                ...editTeacher,
-                                basic: parseInt(e.target.value),
-                              });
-                            } else {
-                              setEditTeacher({
-                                ...editTeacher,
-                                basic: "",
-                              });
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="rank" className="form-label">
-                          Previous March Basic
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="rank"
-                          name="rank"
-                          value={editTeacher?.prevmbasic}
-                          onChange={(e) => {
-                            if (e.target.value !== "") {
-                              setEditTeacher({
-                                ...editTeacher,
-                                prevmbasic: parseInt(e.target.value),
-                              });
-                            } else {
-                              setEditTeacher({
-                                ...editTeacher,
-                                prevmbasic: "",
-                              });
-                            }
-                          }}
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      data-bs-dismiss="modal"
-                      onClick={() => {
-                        const updatedArray = filteredData
-                          .map((t) =>
-                            t.id === editTeacher?.id ? editTeacher : t
-                          )
-                          .sort((a, b) => a.rank - b.rank);
-                        setFilteredData(updatedArray);
-                      }}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="mx-auto my-3 noprint">
               <button
                 type="button"
@@ -541,119 +353,121 @@ const TechersAccuitance = () => {
                       id="team-list"
                     >
                       <thead>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          SL. NO.
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          TEACHER'S NAME
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          DESIG-
-                          <br />
-                          NATION
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          BASIC PAY
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          <p style={{ fontSize: 8 }}>
-                            ADDL.
-                            <br />
-                            ALLOWANCE
-                          </p>
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          DA
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          HRA
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          MA
-                        </th>
-                        {year === 2024 && index === 6 ? (
+                        <tr>
                           <th
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            IR
+                            SL. NO.
                           </th>
-                        ) : null}
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          GROSS
-                          <br /> SALARY
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          GPF
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          GSLI
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          PTAX
-                        </th>
-                        <th
-                          className="text-center text-wrap"
-                          style={{ border: "1px solid" }}
-                        >
-                          TOTAL
-                          <br /> DEDUCTION
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          NET
-                          <br /> SALARY
-                        </th>
-                        <th
-                          className="text-center"
-                          style={{ border: "1px solid" }}
-                        >
-                          SIGNATURE OF THE TEACHER
-                        </th>
-                        <th
-                          className="text-center noprint"
-                          style={{ border: "1px solid" }}
-                        >
-                          ACTION
-                        </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            TEACHER'S NAME
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            DESIG-
+                            <br />
+                            NATION
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            BASIC PAY
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            <p style={{ fontSize: 8 }}>
+                              ADDL.
+                              <br />
+                              ALLOWANCE
+                            </p>
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            DA
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            HRA
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            MA
+                          </th>
+                          {year === 2024 && index === 6 ? (
+                            <th
+                              className="text-center"
+                              style={{ border: "1px solid" }}
+                            >
+                              IR
+                            </th>
+                          ) : null}
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            GROSS
+                            <br /> SALARY
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            GPF
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            GSLI
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            PTAX
+                          </th>
+                          <th
+                            className="text-center text-wrap"
+                            style={{ border: "1px solid" }}
+                          >
+                            TOTAL
+                            <br /> DEDUCTION
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            NET
+                            <br /> SALARY
+                          </th>
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            SIGNATURE OF THE TEACHER
+                          </th>
+                          <th
+                            className="text-center noprint"
+                            style={{ border: "1px solid" }}
+                          >
+                            ACTION
+                          </th>
+                        </tr>
                       </thead>
                       <tbody>
                         {filteredData.map((el, ind) => {

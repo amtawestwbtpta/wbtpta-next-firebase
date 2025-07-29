@@ -22,7 +22,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
 export default function Page() {

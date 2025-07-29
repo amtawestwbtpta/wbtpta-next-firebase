@@ -10,7 +10,7 @@ import {
   CalculateIncomeTax,
   readCSVFile,
 } from "../../modules/calculatefunctions";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";

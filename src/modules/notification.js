@@ -4,7 +4,7 @@ import {
   MESSAGING_KEY,
 } from "../modules/constants";
 import axios from "axios";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
 import { decryptData } from "./encryption";
 

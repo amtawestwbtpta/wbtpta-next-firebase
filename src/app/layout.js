@@ -1,14 +1,16 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-toastify";
 import "./globals.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-image-crop/dist/ReactCrop.css";
 import { GlobalContextProvider } from "../context/Store";
 import BootstrapClient from "../components/BootstrapClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AppLink from "../components/AppLink";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import localFont from "next/font/local";
-import { ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 const dejaVuBold = localFont({
   src: [
     {
@@ -64,7 +66,7 @@ export default function RootLayout({ children }) {
         className={`container-fluid text-center ${kalpurush.variable} ${timesNewRoman.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable} ${algerian.variable}`}
         suppressHydrationWarning={true}
       >
-        {/* <AppLink /> */}
+        <AppLink />
         <GlobalContextProvider>
           <Navbar />
           <div className="my-3">{children}</div>
@@ -78,8 +80,9 @@ export default function RootLayout({ children }) {
             rtl={false}
             pauseOnFocusLoss={false}
             draggable
-            pauseOnHover
+            pauseOnHover={false}
             theme="light"
+            transition={Bounce}
           />
           <BootstrapClient />
         </GlobalContextProvider>

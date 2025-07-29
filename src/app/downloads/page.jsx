@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
 import Loader from "../../components/Loader";
 import { createDownloadLink } from "../../modules/calculatefunctions";

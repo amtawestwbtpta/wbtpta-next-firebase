@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import { getDoc, doc, setDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { BsClipboard, BsClipboard2Check } from "react-icons/bs";

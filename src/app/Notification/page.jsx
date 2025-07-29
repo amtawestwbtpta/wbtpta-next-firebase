@@ -8,8 +8,8 @@ import {
   uploadBytesResumable,
   deleteObject,
 } from "firebase/storage";
-import { storage } from "../../context/FirbaseContext";
-import { firestore } from "../../context/FirbaseContext";
+import { storage } from "../../context/FirebaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import {
   doc,
   setDoc,

@@ -1,8 +1,15 @@
 import nodemailer from "nodemailer";
+
 export const sendUpdateEmail = async ({ reqBody }: any) => {
   try {
     const mail = process.env.WBTPTA_GMAIL_ID;
     const mailpassword = process.env.WBTPTA_GMAIL_PASSWORD;
+
+    // Validate environment variables
+    if (!mail || !mailpassword) {
+      throw new Error("Email credentials are missing in environment variables");
+    }
+
     const transport = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -11,47 +18,14 @@ export const sendUpdateEmail = async ({ reqBody }: any) => {
       },
     });
 
-    // const mailOptions = {
-    //   from: mail,
-    //   to: mail,
-    //   subject: `${reqBody?.tname} has Updated his Details: Mail no ${Math.floor(
-    //     Math.random() * 1000 + 1
-    //   )}`,
-    //   text: `${reqBody?.tname} has Updated his Details: ${JSON.stringify(
-    //     reqBody
-    //   )}`,
-    // };
-    // const mailResponse = await transport.sendMail(
-    //   mailOptions,
-    //   function (error: any, info: any) {
-    //     if (error) {
-    //       console.log("error", error);
-    //     } else {
-    //       console.log("Email Sent: " + info.response);
-    //     }
-    //   }
-    // );
-
-    // return mailResponse;
-
     await new Promise((resolve, reject) => {
-      // verify connection configuration
-      transport.verify(function (error: any, success: any) {
-        if (error) {
-          console.log(error);
-          reject(error);
-        } else {
-          console.log("Server is ready to take our messages");
-          resolve(success);
-        }
+      transport.verify((error: any, success: any) => {
+        error ? reject(error) : resolve(success);
       });
     });
 
     const mailData = {
-      from: {
-        name: `WBTPTA AMTA WEST`,
-        address: mail,
-      },
+      from: `WBTPTA AMTA WEST <${mail}>`, // Fixed format
       replyTo: mail,
       to: mail,
       subject: `${reqBody?.tname} has Updated his Details: Mail no ${Math.floor(
@@ -65,19 +39,14 @@ export const sendUpdateEmail = async ({ reqBody }: any) => {
     };
 
     await new Promise((resolve, reject) => {
-      // send mail
       transport.sendMail(mailData, (err: any, info: any) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-        } else {
-          console.log("Email Sent: " + info.response);
-          resolve(info);
-        }
+        err ? reject(err) : resolve(info);
       });
     });
+
     return "Email sent successfully";
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error; // Propagate error
   }
 };

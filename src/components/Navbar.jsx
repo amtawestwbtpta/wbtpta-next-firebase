@@ -1,13 +1,13 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
-  decryptAuthCookie,
   decryptObjData,
+  encryptObjData,
   getCookie,
 } from "../modules/encryption";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/Store";
@@ -16,7 +16,6 @@ import Image from "next/image";
 import axios from "axios";
 
 import { toast } from "react-toastify";
-
 const Navbar = () => {
   const {
     state,
@@ -119,6 +118,7 @@ const Navbar = () => {
       const response = await axios.post(url);
       data = response.data.data;
     }
+
     setSchoolState(data);
     setSchoolUpdateTime(Date.now());
     setShowLoader(false);
@@ -181,6 +181,7 @@ const Navbar = () => {
       if (!data?.disabled) {
         setState(data?.circle);
         setUSER(data);
+        encryptObjData("uid", data, 10080);
         setQuestion(data?.question);
         setShowLoader(false);
       } else {

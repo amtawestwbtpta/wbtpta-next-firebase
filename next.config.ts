@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -18,10 +19,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "api.qrserver.com",
       },
-      {
-        protocol: "https",
-        hostname: "toppng.com",
-      },
     ],
   },
   eslint: {
@@ -30,11 +27,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-    serverComponentsExternalPackages: ["@react-pdf/renderer"],
-  },
-  // output:'export'
+  // Fixed: Moved and renamed the package configuration
+  serverExternalPackages: ["@react-pdf/renderer"],
 };
 
 export default nextConfig;

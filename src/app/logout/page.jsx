@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useGlobalContext } from "../../context/Store";
-import { firbaseAuth } from "../../context/FirbaseContext";
+import { firebaseAuth } from "../../context/FirebaseContext";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { deleteAllCookies } from "../../modules/encryption";
 import { useRouter } from "next/navigation";
@@ -15,8 +15,8 @@ const LogOut = () => {
   const [user, setUser] = useState(null);
   const signOutFirebase = () => {
     try {
-      signOut(firbaseAuth);
-      onAuthStateChanged(firbaseAuth, (user) => {
+      signOut(firebaseAuth);
+      onAuthStateChanged(firebaseAuth, (user) => {
         if (user) {
           // Yes, You Are Looged In
           // console.log("Yes, You Are Looged In");

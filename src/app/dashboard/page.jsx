@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Typed from "typed.js";
+
 import { decryptObjData, getCookie } from "../../modules/encryption";
 import {
   GetMonthName,
@@ -13,10 +13,11 @@ import { useGlobalContext } from "../../context/Store";
 import ropa from "../../modules/ropa";
 import axios from "axios";
 import Loader from "../../components/Loader";
+import Image from "next/image";
+import TypedAnimation from "../../components/TypedAnimation";
 const page = () => {
   const { state } = useGlobalContext();
   const router = useRouter();
-  const el = React.useRef(null);
   const [tooltip, setTooltip] = useState(false);
   let teacherdetails,
     userdetails,
@@ -86,9 +87,7 @@ const page = () => {
   const [hide, setHide] = useState(false);
   const today = new Date();
   const year = today.getFullYear();
-  const [month, setMonth] = useState(
-    GetMonthName(today.getMonth())
-  );
+  const [month, setMonth] = useState(GetMonthName(today.getMonth()));
   const [salary, setSalary] = useState({
     basic: 0,
     da: 0.14,
@@ -193,21 +192,6 @@ const page = () => {
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Dashboard";
 
-    const typed = new Typed(el.current, {
-      strings: [`Welcome ${tname},<br /> ${desig}, of <br /> ${school}`],
-      typeSpeed: 50,
-      loop: true,
-      loopCount: Infinity,
-      showCursor: true,
-      cursorChar: "|",
-      autoInsertCss: true,
-    });
-
-    return () => {
-      // Destroy Typed instance during cleanup to stop animation
-      typed.destroy();
-    };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -228,9 +212,11 @@ const page = () => {
             onMouseEnter={() => setTooltip(true)}
             onMouseLeave={() => setTooltip(false)}
           >
-            <img
+            <Image
               src={url}
               alt="profile"
+              width={200}
+              height={200}
               className="profileImage"
               onClick={() => router.push("/ChangePhoto")}
               suppressContentEditableWarning
@@ -244,12 +230,9 @@ const page = () => {
           </div>
           <div className="mx-auto my-2" style={{ height: "120px" }}>
             {tname && (
-              <span
-                className="text-primary text-center fs-3 mb-3 web-message"
-                ref={el}
-              >
-                Welcome {tname},<br /> {desig}, of <br /> {school}
-              </span>
+              <TypedAnimation
+                title={`Welcome ${tname},<br /> ${desig}, of <br /> ${school}`}
+              />
             )}
           </div>
 
@@ -557,9 +540,9 @@ const page = () => {
               <Link className="btn btn-primary m-2 rounded" href="/update_self">
                 Update Profile
               </Link>
-              <Link className="btn btn-success m-2 rounded" href="/AiChatBot">
+              {/* <Link className="btn btn-success m-2 rounded" href="/AiChatBot">
                 Chat With AI
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 
 import DataTable from "react-data-table-component";
-import { firestore } from "../../context/FirbaseContext";
+import { firestore } from "../../context/FirebaseContext";
 import {
   query,
   collection,

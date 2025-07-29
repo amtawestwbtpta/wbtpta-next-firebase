@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import "react-toastify/dist/ReactToastify.css";
-import { firestore } from "../context/FirbaseContext";
+import { firestore } from "../context/FirebaseContext";
 import {
   doc,
   updateDoc,
