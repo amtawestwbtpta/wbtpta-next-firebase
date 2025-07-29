@@ -7,7 +7,7 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import Ropa from "../modules/Ropa";
+import Ropa from "../modules/ropa";
 import { RoundTo } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
