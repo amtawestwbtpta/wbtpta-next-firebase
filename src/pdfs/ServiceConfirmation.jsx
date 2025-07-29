@@ -10,7 +10,7 @@ import {
   Font,
   PDFViewer,
 } from "@react-pdf/renderer";
-import Ropa from "../modules/Ropa";
+import Ropa from "../modules/ropa";
 const width = 2480;
 const height = 3508;
 
