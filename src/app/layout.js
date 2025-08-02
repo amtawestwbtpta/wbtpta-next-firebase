@@ -81,6 +81,9 @@ export const metadata = {
   alternates: {
     canonical: "https://awwbtpta.vercel.app",
   },
+  other: {
+    "google-site-verification": "5feTVN8HUu1YyYSlJ_NEkkSDGl-62p7uHUpg7C0UJ",
+  },
 };
 
 export default function RootLayout({ children }) {
