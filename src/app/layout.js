@@ -52,7 +52,10 @@ const algerian = localFont({
   ],
   variable: "--font-algerian",
 });
-
+<meta
+  name="google-site-verification"
+  content="M--8o-fyJCgXlWNQerj9_BpuLxnspuo7gOkTSCzDCU0"
+/>;
 // app/layout.tsx
 export const metadata = {
   title: "Amta West Circle | WBTPTA",
