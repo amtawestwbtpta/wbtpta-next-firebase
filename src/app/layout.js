@@ -65,7 +65,7 @@ export const metadata = {
     "West Bengal",
     "Trinamool",
   ],
-  authors: [{ name: "Sikshak Bhawan" }],
+  authors: [{ name: "WBTPTA Amta West Circle" }],
   creator: "WBTPTA Amta West Circle",
   openGraph: {
     title: "Amta West Circle | WBTPTA",
