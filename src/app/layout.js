@@ -85,7 +85,7 @@ export const metadata = {
     canonical: "https://awwbtpta.vercel.app",
   },
   other: {
-    "google-site-verification": "5feTVN8HUu1YyYSlJ_NEkkSDGl-62p7uHUpg7C0UJ",
+    "google-site-verification": "M--8o-fyJCgXlWNQerj9_BpuLxnspuo7gOkTSCzDCU0",
   },
 };
 
