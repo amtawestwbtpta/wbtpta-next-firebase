@@ -89,6 +89,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head />
       <body
         className={`container-fluid text-center ${kalpurush.variable} ${timesNewRoman.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable} ${algerian.variable}`}
         suppressHydrationWarning={true}
