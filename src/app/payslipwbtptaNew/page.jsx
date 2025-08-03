@@ -364,6 +364,7 @@ const PayslipWbtpta = () => {
                 textAlign: "center",
                 fontSize: "16px",
               }}
+              suppressHydrationWarning
             >
               <tr>
                 <th
