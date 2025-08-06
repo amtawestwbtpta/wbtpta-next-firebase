@@ -1955,117 +1955,119 @@ export default function IncomeTaxReloded() {
       ) : (
         <div>
           <div className="my-3">
-            <div className="noprint">
-              <div className="buttons">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary m-2"
-                  onClick={() => {
-                    const fData = filteredData.filter(
-                      (salary) => salary?.AllGross >= 500000
-                    );
-                    if (fData.length !== 0) {
-                      setFilteredData(fData);
-                    } else {
-                      setFilteredData(
-                        salary.filter((salary) => salary?.AllGross >= 500000)
-                      );
-                    }
-                    setFilterClicked(true);
-                  }}
-                >
-                  Above Five Lakh
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-success m-2"
-                  onClick={() => {
-                    const fData = filteredData.filter(
-                      (salary) => salary?.AllGross <= 500000
-                    );
-                    if (fData.length !== 0) {
-                      setFilteredData(fData);
-                    } else {
-                      setFilteredData(
-                        salary.filter((salary) => salary?.AllGross <= 500000)
-                      );
-                    }
-                    setFilterClicked(true);
-                  }}
-                >
-                  Below Five Lakh
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-info m-2"
-                  onClick={() => {
-                    const fData = filteredData.filter(
-                      (salary) => salary?.NetTax !== 0
-                    );
-                    if (fData.length !== 0) {
-                      setFilteredData(fData);
-                    } else {
-                      setFilteredData(
-                        salary.filter((salary) => salary?.NetTax !== 0)
-                      );
-                    }
-                    setFilterClicked(true);
-                  }}
-                >
-                  Taxable Teachers
-                </button>
-                {state === "admin" && (
+            {state === "admin" && (
+              <div className="noprint">
+                <div className="buttons">
                   <button
                     type="button"
-                    className="btn btn-sm btn-warning m-2"
+                    className="btn btn-sm btn-primary m-2"
                     onClick={() => {
                       const fData = filteredData.filter(
-                        (salary) => salary?.association === "WBTPTA"
+                        (salary) => salary?.AllGross >= 500000
                       );
                       if (fData.length !== 0) {
                         setFilteredData(fData);
                       } else {
                         setFilteredData(
-                          salary.filter(
-                            (salary) => salary?.association === "WBTPTA"
-                          )
+                          salary.filter((salary) => salary?.AllGross >= 500000)
                         );
                       }
                       setFilterClicked(true);
                     }}
                   >
-                    Only WBTPTA Teachers
+                    Above Five Lakh
                   </button>
-                )}
-                {salary.length !== filteredData.length && (
                   <button
                     type="button"
-                    className="btn btn-sm btn-danger m-2"
+                    className="btn btn-sm btn-success m-2"
                     onClick={() => {
-                      setFilteredData(salary);
-                      setFilterClicked(false);
-                      setSearch("");
-                      setSchSearch("");
+                      const fData = filteredData.filter(
+                        (salary) => salary?.AllGross <= 500000
+                      );
+                      if (fData.length !== 0) {
+                        setFilteredData(fData);
+                      } else {
+                        setFilteredData(
+                          salary.filter((salary) => salary?.AllGross <= 500000)
+                        );
+                      }
+                      setFilterClicked(true);
                     }}
                   >
-                    Clear Filter
+                    Below Five Lakh
                   </button>
-                )}
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-info m-2"
+                    onClick={() => {
+                      const fData = filteredData.filter(
+                        (salary) => salary?.NetTax !== 0
+                      );
+                      if (fData.length !== 0) {
+                        setFilteredData(fData);
+                      } else {
+                        setFilteredData(
+                          salary.filter((salary) => salary?.NetTax !== 0)
+                        );
+                      }
+                      setFilterClicked(true);
+                    }}
+                  >
+                    Taxable Teachers
+                  </button>
+                  {state === "admin" && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-warning m-2"
+                      onClick={() => {
+                        const fData = filteredData.filter(
+                          (salary) => salary?.association === "WBTPTA"
+                        );
+                        if (fData.length !== 0) {
+                          setFilteredData(fData);
+                        } else {
+                          setFilteredData(
+                            salary.filter(
+                              (salary) => salary?.association === "WBTPTA"
+                            )
+                          );
+                        }
+                        setFilterClicked(true);
+                      }}
+                    >
+                      Only WBTPTA Teachers
+                    </button>
+                  )}
+                  {salary.length !== filteredData.length && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-danger m-2"
+                      onClick={() => {
+                        setFilteredData(salary);
+                        setFilterClicked(false);
+                        setSearch("");
+                        setSchSearch("");
+                      }}
+                    >
+                      Clear Filter
+                    </button>
+                  )}
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-primary text-white font-weight-bold p-2 m-2 noprint rounded"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        window.print();
+                      }
+                    }}
+                  >
+                    Print
+                  </button>
+                </div>
               </div>
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary text-white font-weight-bold p-2 m-2 noprint rounded"
-                  onClick={() => {
-                    if (typeof window !== "undefined") {
-                      window.print();
-                    }
-                  }}
-                >
-                  Print
-                </button>
-              </div>
-            </div>
+            )}
             <div>
               <button
                 type="button"
@@ -2076,47 +2078,53 @@ export default function IncomeTaxReloded() {
               </button>
             </div>
 
-            <h3 className="text-black">All Teacher IT Data</h3>
+            {state === "admin" ? (
+              <h3 className="text-black">All Teacher IT Data</h3>
+            ) : (
+              <h3 className="text-black">{USER.tname}'s IT Data</h3>
+            )}
             <div>
               <div className="mx-auto">
-                <div className="col-md-4 mx-auto noprint">
-                  <div className="mb-2">
-                    <input
-                      type="text"
-                      placeholder="Search by Teacher"
-                      className="form-control"
-                      value={search}
-                      onChange={(e) => {
-                        setSearch(e.target.value);
-                        setFilteredData(
-                          salary.filter((el) =>
-                            el.tname
-                              .toLowerCase()
-                              .includes(e.target.value.toLowerCase())
-                          )
-                        );
-                      }}
-                    />
+                {state === "admin" && (
+                  <div className="col-md-4 mx-auto noprint">
+                    <div className="mb-2">
+                      <input
+                        type="text"
+                        placeholder="Search by Teacher"
+                        className="form-control"
+                        value={search}
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                          setFilteredData(
+                            salary.filter((el) =>
+                              el.tname
+                                .toLowerCase()
+                                .includes(e.target.value.toLowerCase())
+                            )
+                          );
+                        }}
+                      />
+                    </div>
+                    <div className="mb-2">
+                      <input
+                        type="text"
+                        placeholder="Search by School"
+                        className="form-control"
+                        value={schSearch}
+                        onChange={(e) => {
+                          setSchSearch(e.target.value);
+                          setFilteredData(
+                            salary.filter((el) =>
+                              el.school
+                                .toLowerCase()
+                                .includes(e.target.value.toLowerCase())
+                            )
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="mb-2">
-                    <input
-                      type="text"
-                      placeholder="Search by School"
-                      className="form-control"
-                      value={schSearch}
-                      onChange={(e) => {
-                        setSchSearch(e.target.value);
-                        setFilteredData(
-                          salary.filter((el) =>
-                            el.school
-                              .toLowerCase()
-                              .includes(e.target.value.toLowerCase())
-                          )
-                        );
-                      }}
-                    />
-                  </div>
-                </div>
+                )}
                 <div className="mx-auto  d-flex flex-row justify-content-evenly flex-wrap">
                   {filteredData.map((row, index) => {
                     if (
