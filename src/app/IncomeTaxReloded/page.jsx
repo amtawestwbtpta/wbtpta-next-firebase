@@ -37,6 +37,7 @@ export default function IncomeTaxReloded() {
     setSalaryState,
     setIndSalaryState,
     state,
+    USER,
   } = useGlobalContext();
   const [salary, setSalary] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -1832,11 +1833,9 @@ export default function IncomeTaxReloded() {
       `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary-${year}.json`
     );
     const data = respronse.data;
-    const onlyWbtptaTeachers = data?.filter(
-      (teacher) => teacher?.association === "WBTPTA"
-    );
-    setSalary(state === "admin" ? data : onlyWbtptaTeachers);
-    setFilteredData(state === "admin" ? data : onlyWbtptaTeachers);
+    const thisTeacher = data?.filter((teacher) => teacher?.id === USER.id);
+    setSalary(state === "admin" ? data : thisTeacher);
+    setFilteredData(state === "admin" ? data : thisTeacher);
     setSalaryState(data);
     setLoader(false);
   };
