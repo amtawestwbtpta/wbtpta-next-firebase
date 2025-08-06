@@ -27,6 +27,7 @@ type TeacherData = {
   school: string;
   udise: string;
   desig: string;
+  gender: string;
   circle: string;
   empid: string;
   pan: string;
@@ -43,6 +44,7 @@ type InputField = {
   school: string;
   udise: string;
   desig: string;
+  gender: string;
   circle: string;
   empid: string;
   pan: string;
@@ -94,6 +96,7 @@ const Registration: React.FC<RegistrationProps> = ({ data, setSignUpTrue }) => {
     school: data.school,
     udise: data.udise,
     desig: data.desig,
+    gender: data.gender,
     circle: data.circle,
     empid: data.empid,
     pan: data.pan,

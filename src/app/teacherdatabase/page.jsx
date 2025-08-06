@@ -619,6 +619,7 @@ const TeacherDatabase = () => {
             tname: user.tname,
             school: user.school,
             desig: user.desig,
+            gender: user.gender,
             pan: user.pan,
             udise: user.udise,
             circle: user.circle,
