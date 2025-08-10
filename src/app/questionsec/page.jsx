@@ -343,7 +343,12 @@ function QuestionSec() {
         cl_3_student: selectedData.iii,
         cl_4_student: selectedData.iv,
         cl_5_student: selectedData.v,
-        total_student: selectedData.total_student,
+        total_student:
+          selectedData.i +
+          selectedData.ii +
+          selectedData.iii +
+          selectedData.iv +
+          selectedData.v,
         total_rate: Math.floor(
           // selectedData.pp * questionRateState.pp_rate +
           selectedData.i * questionRateState.i_rate +
