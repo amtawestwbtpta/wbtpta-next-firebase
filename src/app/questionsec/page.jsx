@@ -714,6 +714,28 @@ function QuestionSec() {
             >
               Download Question Rate Data
             </button>
+            <button
+              type="button"
+              className="btn btn-sm m-3 btn-danger"
+              onClick={() => {
+                //eslint-disable-next-line
+                if (confirm("Are you sure you want to flush all data?")) {
+                  questionState.forEach(async (el) => {
+                    await deleteDoc(doc(firestore, "questions", el.id));
+                  });
+                  setQuestionState([]);
+                  setQuestionUpdateTime(Date.now());
+                  setDocId(`questions${101}-${uuid().split("-")[0]}`);
+                  setSerial(1);
+                  toast.success("Question Data Flushed Successfully!");
+                  setShowSlide(false);
+                } else {
+                  return;
+                }
+              }}
+            >
+              Flush Question Data
+            </button>
             <div>
               <p className="text-center text-primary">Question Requisition</p>
 
@@ -835,7 +857,7 @@ function QuestionSec() {
                     </div>
                   )}
 
-                  <div className="mb-3 col-lg-6">
+                  {/* <div className="mb-3 col-lg-6">
                     <label className="form-label">PP</label>
                     <input
                       type="number"
@@ -877,7 +899,7 @@ function QuestionSec() {
                         }
                       }}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="mb-3 col-lg-6">
                     <label className="form-label">Class I</label>
