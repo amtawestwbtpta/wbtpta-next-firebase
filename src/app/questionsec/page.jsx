@@ -336,7 +336,8 @@ function QuestionSec() {
         gp: selectedData.gp,
         id: docId,
         sl: serial,
-        cl_pp_student: selectedData.pp,
+        // cl_pp_student: selectedData.pp,
+        cl_pp_student: 0,
         cl_1_student: selectedData.i,
         cl_2_student: selectedData.ii,
         cl_3_student: selectedData.iii,
@@ -344,8 +345,8 @@ function QuestionSec() {
         cl_5_student: selectedData.v,
         total_student: selectedData.total_student,
         total_rate: Math.floor(
-          selectedData.pp * questionRateState.pp_rate +
-            selectedData.i * questionRateState.i_rate +
+          // selectedData.pp * questionRateState.pp_rate +
+          selectedData.i * questionRateState.i_rate +
             selectedData.ii * questionRateState.ii_rate +
             selectedData.iii * questionRateState.iii_rate +
             selectedData.iv * questionRateState.iv_rate +
