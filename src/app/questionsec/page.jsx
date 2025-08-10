@@ -177,37 +177,33 @@ function QuestionSec() {
       try {
         await setDoc(doc(firestore, "questions", docId), addInputField)
           .then(() => {
-            setQuestionState(
-              [...questionState, addInputField].sort((a, b) => {
-                // Compare by 'gp'
-                if (a.gp < b.gp) {
-                  return -1; // a comes first
-                }
-                if (a.gp > b.gp) {
-                  return 1; // b comes first
-                }
+            const newData = [...questionState, addInputField].sort((a, b) => {
+              // Compare by 'gp'
+              if (a.gp < b.gp) {
+                return -1; // a comes first
+              }
+              if (a.gp > b.gp) {
+                return 1; // b comes first
+              }
 
-                // If 'gp' is the same, compare by 'school'
-                if (a.school < b.school) {
-                  return -1; // a comes first
-                }
-                if (a.school > b.school) {
-                  return 1; // b comes first
-                }
-
-                return 0; // They are equal
-              })
-            );
-            setQuestionUpdateTime(Date.now());
-            toast.success("School Successfully Added!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
+              // If 'gp' is the same, compare by 'school'
+              if (a.school < b.school) {
+                return -1; // a comes first
+              }
+              if (a.school > b.school) {
+                return 1; // b comes first
+              }
+              return 0; // They are equal
             });
+            setQuestionState(newData);
+            setQuestionUpdateTime(Date.now());
+            setDocId(
+              `questions${newData.length + 101}-${uuid().split("-")[0]}`
+            );
+            setSerial(newData.length + 1);
+            setShowSlide(true);
+            setData(newData);
+            toast.success("School Successfully Added!!!");
             setAddInputField({
               id: docId,
               school: "",
