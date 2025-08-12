@@ -43,7 +43,17 @@ import {
 } from "../../modules/calculatefunctions";
 import { notifyAll } from "../../modules/notification";
 import Loader from "../../components/Loader";
+import dynamic from "next/dynamic";
+import QuestionList from "../../pdfs/QuestionList";
 function QuestionSec() {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p className="m-0 p-0">Please Wait...</p>,
+    }
+  );
   const router = useRouter();
   const {
     state,
@@ -100,6 +110,7 @@ function QuestionSec() {
     year: 2024,
     isAccepting: false,
   });
+  const [showDldBtn, setShowDldBtn] = useState(false);
   const userData = async () => {
     const q = query(collection(firestore, "questions"));
 
@@ -697,6 +708,17 @@ function QuestionSec() {
           Print Question All Compact
         </Link>
         {state === "admin" && (
+          <button
+            type="button"
+            className="btn btn-sm m-3 btn-dark"
+            onClick={() => {
+              setShowDldBtn(true);
+            }}
+          >
+            Download Question List
+          </button>
+        )}
+        {state === "admin" && (
           <div>
             <button
               type="button"
@@ -767,6 +789,69 @@ function QuestionSec() {
                     ? "Question Requisition Accepting Allowed"
                     : "Question Requisition Accepting Closed"}
                 </label>
+              </div>
+            </div>
+          </div>
+        )}
+        {showDldBtn && (
+          <div
+            className="modal fade show"
+            tabIndex="-1"
+            role="dialog"
+            style={{ display: "block" }}
+            aria-modal="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                    Download Question List
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={() => {
+                      setShowDldBtn(false);
+                    }}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="col-md-6 mx-auto noprint my-5">
+                    <PDFDownloadLink
+                      document={
+                        <QuestionList
+                          data={data}
+                          title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
+                          qRate={questionRateState}
+                        />
+                      }
+                      fileName={`WBTPTA ${questionRateState.term} Summative Exam, ${questionRateState.year}.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        padding: "10px",
+                        color: "#fff",
+                        backgroundColor: "purple",
+                        border: "1px solid #4a4a4a",
+                        width: "40%",
+                        borderRadius: 10,
+                      }}
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Please Wait..." : "Download Question List"
+                      }
+                    </PDFDownloadLink>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => setShowDldBtn(false)}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
