@@ -36,6 +36,7 @@ export default function Form16New({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
+    IntFrDeposit,
     lic,
     ppf,
     nsc,
@@ -741,7 +742,7 @@ export default function Form16New({ data }) {
                   }}
                 >
                   <Text style={styles.textBold}>
-                    Rs. {IndianFormat(BankInterest)}
+                    Rs. {IndianFormat(BankInterest + IntFrDeposit)}
                   </Text>
                   <Text style={styles.textBold}> </Text>
                 </View>
@@ -788,7 +789,9 @@ export default function Form16New({ data }) {
                 >
                   <Text style={styles.textBold}>
                     Rs.{" "}
-                    {IndianFormat(AllGross - 50000 + grossPTax + BankInterest)}
+                    {IndianFormat(
+                      AllGross - 50000 + grossPTax + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                 </View>
                 <View
@@ -874,7 +877,9 @@ export default function Form16New({ data }) {
                 >
                   <Text style={styles.textBold}>
                     Rs.{" "}
-                    {IndianFormat(AllGross - 50000 + grossPTax + BankInterest)}
+                    {IndianFormat(
+                      AllGross - 50000 + grossPTax + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                   <Text style={styles.textBold}> </Text>
                 </View>
@@ -981,7 +986,9 @@ export default function Form16New({ data }) {
                 >
                   <Text style={styles.textBold}>
                     Rs.{" "}
-                    {IndianFormat(AllGross - 50000 + grossPTax + BankInterest)}
+                    {IndianFormat(
+                      AllGross - 50000 + grossPTax + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                 </View>
               </View>
@@ -1500,6 +1507,7 @@ export default function Form16New({ data }) {
                         limitVIA +
                           disabilityDeduction +
                           BankInterest +
+                          IntFrDeposit +
                           mediclaim
                       )}
                     </Text>

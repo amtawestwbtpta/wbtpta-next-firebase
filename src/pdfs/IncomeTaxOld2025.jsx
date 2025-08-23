@@ -165,6 +165,7 @@ export default function IncomeTaxOld2025({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
+    IntFrDeposit,
     teacherDeduction,
     hbLoanPrincipal,
     hbLoanInterest,
@@ -764,7 +765,11 @@ export default function IncomeTaxOld2025({ data }) {
                       </Text>
                     </View>
                     <View style={{ width: "20%" }}>
-                      <Text style={styles.text}>NIL</Text>
+                      <Text style={styles.text}>
+                        {IntFrDeposit > 0
+                          ? "Rs. " + IndianFormat(IntFrDeposit)
+                          : "NIL"}
+                      </Text>
                     </View>
                   </View>
                   <View
@@ -898,7 +903,7 @@ export default function IncomeTaxOld2025({ data }) {
                     }}
                   ></View>
                   <Text style={styles.text}>
-                    Rs. {IndianFormat(BankInterest)}
+                    Rs. {IndianFormat(BankInterest + IntFrDeposit)}
                   </Text>
                 </View>
               </View>
@@ -944,7 +949,7 @@ export default function IncomeTaxOld2025({ data }) {
 
                 <View style={{ width: "25%" }}>
                   <Text style={styles.text}>
-                    Rs. {IndianFormat(AllGross + BankInterest)}
+                    Rs. {IndianFormat(AllGross + BankInterest + IntFrDeposit)}
                   </Text>
                 </View>
               </View>
@@ -1225,7 +1230,8 @@ export default function IncomeTaxOld2025({ data }) {
 
                     <View style={{ width: "25%" }}>
                       <Text style={styles.text}>
-                        Rs. {IndianFormat(AllGross + BankInterest)}
+                        Rs.{" "}
+                        {IndianFormat(AllGross + BankInterest + IntFrDeposit)}
                       </Text>
                     </View>
                   </View>
@@ -1338,7 +1344,8 @@ export default function IncomeTaxOld2025({ data }) {
 
                     <View style={{ width: "25%" }}>
                       <Text style={styles.text}>
-                        Rs. {IndianFormat(AllGross + BankInterest)}
+                        Rs.{" "}
+                        {IndianFormat(AllGross + BankInterest + IntFrDeposit)}
                       </Text>
                     </View>
                   </View>
@@ -1450,7 +1457,10 @@ export default function IncomeTaxOld2025({ data }) {
 
                     <View style={{ width: "25%" }}>
                       <Text style={styles.text}>
-                        Rs. {IndianFormat(AllGross + BankInterest - 50000)}
+                        Rs.{" "}
+                        {IndianFormat(
+                          AllGross + BankInterest + IntFrDeposit - 50000
+                        )}
                       </Text>
                     </View>
                   </View>
@@ -1680,7 +1690,11 @@ export default function IncomeTaxOld2025({ data }) {
                       <Text style={styles.text}>
                         Rs.{" "}
                         {IndianFormat(
-                          AllGross + BankInterest - 50000 - grossPTax
+                          AllGross +
+                            BankInterest +
+                            IntFrDeposit -
+                            50000 -
+                            grossPTax
                         )}
                       </Text>
                     </View>
@@ -2384,7 +2398,8 @@ export default function IncomeTaxOld2025({ data }) {
                         Rs.{" "}
                         {IndianFormat(
                           AllGross +
-                            BankInterest -
+                            BankInterest +
+                            IntFrDeposit -
                             50000 -
                             grossPTax -
                             hbLoanInterest -
@@ -2505,7 +2520,8 @@ export default function IncomeTaxOld2025({ data }) {
                         Rs.{" "}
                         {IndianFormat(
                           AllGross +
-                            BankInterest -
+                            BankInterest +
+                            IntFrDeposit -
                             50000 -
                             grossPTax -
                             hbLoanInterest -

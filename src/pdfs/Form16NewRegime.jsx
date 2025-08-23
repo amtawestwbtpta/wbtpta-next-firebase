@@ -31,6 +31,7 @@ export default function Form16NewRegime({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
+    IntFrDeposit,
     tds,
     GrossRelief,
   } = data;
@@ -728,7 +729,7 @@ export default function Form16NewRegime({ data }) {
                   }}
                 >
                   <Text style={styles.textBold}>
-                    Rs. {IndianFormat(BankInterest)}
+                    Rs. {IndianFormat(BankInterest + IntFrDeposit)}
                   </Text>
                   <Text style={styles.textBold}> </Text>
                 </View>
@@ -774,7 +775,10 @@ export default function Form16NewRegime({ data }) {
                   }}
                 >
                   <Text style={styles.textBold}>
-                    Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
+                    Rs.{" "}
+                    {IndianFormat(
+                      AllGross - 75000 + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                 </View>
                 <View
@@ -859,7 +863,10 @@ export default function Form16NewRegime({ data }) {
                   }}
                 >
                   <Text style={styles.textBold}>
-                    Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
+                    Rs.{" "}
+                    {IndianFormat(
+                      AllGross - 75000 + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                   <Text style={styles.textBold}> </Text>
                 </View>
@@ -965,7 +972,10 @@ export default function Form16NewRegime({ data }) {
                   }}
                 >
                   <Text style={styles.textBold}>
-                    Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
+                    Rs.{" "}
+                    {IndianFormat(
+                      AllGross - 75000 + BankInterest + IntFrDeposit
+                    )}
                   </Text>
                 </View>
               </View>
@@ -1486,7 +1496,10 @@ export default function Form16NewRegime({ data }) {
                     }}
                   >
                     <Text style={styles.textBold}>
-                      Rs. {IndianFormat(AllGross - 75000 + BankInterest)}
+                      Rs.{" "}
+                      {IndianFormat(
+                        AllGross - 75000 + BankInterest + IntFrDeposit
+                      )}
                     </Text>
                   </View>
                 </View>

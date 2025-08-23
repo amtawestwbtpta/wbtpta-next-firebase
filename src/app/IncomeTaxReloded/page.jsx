@@ -487,6 +487,9 @@ export default function IncomeTaxReloded() {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
+  const [showBnkInt, setShowBnkInt] = useState(false);
+  const [BankInterest, setBankInterest] = useState(randBetween(500, 2000));
+  const [IntFrDeposit, setIntFrDeposit] = useState(0);
   const calCulateOldIT = async (data) => {
     const { id, tname, school, pan, disability, desig, gender, fname, phone } =
       data;
@@ -855,7 +858,6 @@ export default function IncomeTaxReloded() {
       januaryNetpay +
       februaryNetpay +
       bonus;
-    const BankInterest = randBetween(500, 2000);
 
     const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
     const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
@@ -895,7 +897,12 @@ export default function IncomeTaxReloded() {
       otherIncome;
 
     const GrossTotalIncome =
-      AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
+      AllGross -
+      grossPTax -
+      50000 +
+      BankInterest +
+      IntFrDeposit -
+      hbLoanInterest;
     const deductionVIA =
       grossGPF +
       sukanya +
@@ -939,6 +946,7 @@ export default function IncomeTaxReloded() {
       prevYear,
       finYear,
       BankInterest,
+      IntFrDeposit,
       teacherDeduction,
       hbLoanPrincipal,
       hbLoanInterest,
@@ -1486,7 +1494,6 @@ export default function IncomeTaxReloded() {
       januaryNetpay +
       februaryNetpay +
       bonus;
-    const BankInterest = randBetween(500, 2000);
 
     const AllGross =
       GrossPAY +
@@ -1502,7 +1509,7 @@ export default function IncomeTaxReloded() {
       decemberArrear +
       januaryArrear +
       februaryArrear;
-    const GrossTotalIncome = AllGross - 75000 + BankInterest; //H36
+    const GrossTotalIncome = AllGross - 75000 + BankInterest + IntFrDeposit; //H36
     const TotalRoundOffIncome = roundSo(GrossTotalIncome, 10);
     let ThirtyIT = 0;
     let ThirtyITTax = 0;
@@ -1760,6 +1767,7 @@ export default function IncomeTaxReloded() {
       eduCess,
       AddedEduCess,
       BankInterest,
+      IntFrDeposit,
 
       GrossRelief,
       IncomeTaxAfterRelief,
@@ -2086,7 +2094,7 @@ export default function IncomeTaxReloded() {
             <div>
               <div className="mx-auto">
                 {state === "admin" && (
-                  <div className="col-md-4 mx-auto noprint">
+                  <div className="col-md-6 mx-auto mx-auto noprint">
                     <div className="mb-2">
                       <input
                         type="text"
@@ -2183,7 +2191,7 @@ export default function IncomeTaxReloded() {
                             {state === "admin" && (
                               <button
                                 type="button"
-                                className="btn btn-sm btn-warning m-1 noprint"
+                                className="btn btn-sm btn-info m-1 noprint"
                                 onClick={() => {
                                   const fData = deductionState.filter(
                                     (d) => d.id === row?.id
@@ -2196,6 +2204,7 @@ export default function IncomeTaxReloded() {
                                 Update Deduction
                               </button>
                             )}
+
                             <button
                               type="button"
                               className="btn btn-sm btn-success m-1 noprint"
@@ -2224,6 +2233,20 @@ export default function IncomeTaxReloded() {
                             >
                               IT New Regime
                             </button>
+                            {state === "admin" && (
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-warning m-1 noprint"
+                                onClick={() => {
+                                  const fData = deductionState.filter(
+                                    (d) => d.id === row?.id
+                                  )[0];
+                                  setShowBnkInt(true);
+                                }}
+                              >
+                                Update Bank Interest
+                              </button>
+                            )}
                           </div>
                         </div>
                       );
@@ -2260,14 +2283,14 @@ export default function IncomeTaxReloded() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="col-md-6 row mx-auto justify-content-center align-items-baseline">
-                          <div className="mb-3 col-md-4">
+                        <div className="col-md-6  mx-auto justify-content-center align-items-baseline">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               LIC
                             </label>
                             <input
                               type="number"
-                              className="form-control col-md-4"
+                              className="form-control mx-auto"
                               placeholder="LIC"
                               value={teacherDeduction.lic}
                               onChange={(e) => {
@@ -2284,7 +2307,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               PPF
                             </label>
@@ -2307,7 +2330,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Homeloan Principal
                             </label>
@@ -2330,7 +2353,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Homeloan Interest
                             </label>
@@ -2353,7 +2376,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Mediclaim
                             </label>
@@ -2376,7 +2399,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Sukanya
                             </label>
@@ -2399,7 +2422,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               NSC
                             </label>
@@ -2422,7 +2445,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Interest on NSC
                             </label>
@@ -2445,7 +2468,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Tution Fees
                             </label>
@@ -2468,7 +2491,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               F.D. (5 Year)
                             </label>
@@ -2491,7 +2514,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Disabled dependent Treatment
                             </label>
@@ -2514,7 +2537,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Terminal Disease
                             </label>
@@ -2537,7 +2560,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Education Loan Interest
                             </label>
@@ -2560,7 +2583,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Disabled Teacher
                             </label>
@@ -2583,7 +2606,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               Charity
                             </label>
@@ -2606,7 +2629,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               ULIP /ELSS
                             </label>
@@ -2629,7 +2652,7 @@ export default function IncomeTaxReloded() {
                               }}
                             />
                           </div>
-                          <div className="mb-3 col-md-4">
+                          <div className="mb-3 col-md-6 mx-auto">
                             <label htmlFor="date" className="form-label">
                               TDS Submitted
                             </label>
@@ -2680,6 +2703,90 @@ export default function IncomeTaxReloded() {
               )}
             </div>
             <div className="my-3">
+              {showBnkInt && (
+                <div
+                  className="modal fade show"
+                  tabIndex="-1"
+                  role="dialog"
+                  style={{ display: "block" }}
+                  aria-modal="true"
+                >
+                  <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1
+                          className="modal-title fs-5"
+                          id="staticBackdropLabel"
+                        >
+                          Set Bank Interest Data of {teacherDeduction.tname}
+                        </h1>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={() => {
+                            setShowBnkInt(false);
+                          }}
+                        ></button>
+                      </div>
+                      <div className="modal-body">
+                        <div className="col-md-6  mx-auto justify-content-center align-items-baseline">
+                          <div className="mb-3 col-md-6 mx-auto">
+                            <label htmlFor="date" className="form-label">
+                              Savings Bank Interest
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control mx-auto"
+                              placeholder="Savings Bank Interest"
+                              value={BankInterest}
+                              onChange={(e) => {
+                                if (e.target.value) {
+                                  setBankInterest(parseInt(e.target.value));
+                                } else {
+                                  setBankInterest("");
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6 mx-auto">
+                            <label htmlFor="date" className="form-label">
+                              Interest from Deposit(Bank/Post Office/Cooperative
+                              Society)
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control mx-auto"
+                              placeholder="Interest from Deposit"
+                              value={IntFrDeposit}
+                              onChange={(e) => {
+                                if (e.target.value) {
+                                  setIntFrDeposit(parseInt(e.target.value));
+                                } else {
+                                  setIntFrDeposit("");
+                                }
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-success"
+                          onClick={() => {
+                            setShowBnkInt(false);
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="my-3">
               {showOldModal && (
                 <div
                   className="modal fade show"
@@ -2704,6 +2811,8 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowOldModal(false);
                             setShowForm16(false);
+                            setBankInterest(randBetween(500, 2000));
+                            setIntFrDeposit(0);
                           }}
                         ></button>
                       </div>
@@ -2775,6 +2884,8 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowOldModal(false);
                             setShowForm16(false);
+                            setBankInterest(randBetween(500, 2000));
+                            setIntFrDeposit(0);
                           }}
                         >
                           Close
@@ -2810,6 +2921,8 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowNewModal(false);
                             setShowForm16New(false);
+                            setBankInterest(randBetween(500, 2000));
+                            setIntFrDeposit(0);
                           }}
                         ></button>
                       </div>
@@ -2881,6 +2994,8 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowNewModal(false);
                             setShowForm16New(false);
+                            setBankInterest(randBetween(500, 2000));
+                            setIntFrDeposit(0);
                           }}
                         >
                           Close
