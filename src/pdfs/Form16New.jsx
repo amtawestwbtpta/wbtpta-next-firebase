@@ -36,7 +36,6 @@ export default function Form16New({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
-    IntFrDeposit,
     lic,
     ppf,
     nsc,
@@ -44,7 +43,7 @@ export default function Form16New({ data }) {
     disabilityDeduction,
     tds,
   } = data;
-
+  const IntFrDeposit = data.IntFrDeposit || 0;
   return (
     <Document
       style={{ margin: 5, padding: 5 }}

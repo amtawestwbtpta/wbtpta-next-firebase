@@ -31,11 +31,10 @@ export default function Form16NewRegime({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
-    IntFrDeposit,
     tds,
     GrossRelief,
   } = data;
-
+  const IntFrDeposit = data.IntFrDeposit || 0;
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
