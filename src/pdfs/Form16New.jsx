@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Page,
   Text,
@@ -44,10 +44,7 @@ export default function Form16New({ data }) {
     disabilityDeduction,
     tds,
   } = data;
-  useEffect(() => {
-    console.log(data);
-    //eslint-disable-next-line
-  }, []);
+
   return (
     <Document
       style={{ margin: 5, padding: 5 }}
