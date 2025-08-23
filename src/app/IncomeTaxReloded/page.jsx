@@ -1968,6 +1968,15 @@ export default function IncomeTaxReloded() {
                 <div className="buttons">
                   <button
                     type="button"
+                    className="btn m-2 btn-warning"
+                    onClick={() => {
+                      createDownloadLink(deductionState, "deduction");
+                    }}
+                  >
+                    Download Deduction Data
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-sm btn-primary m-2"
                     onClick={() => {
                       const fData = filteredData.filter(
