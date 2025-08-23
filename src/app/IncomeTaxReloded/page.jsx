@@ -2101,6 +2101,7 @@ export default function IncomeTaxReloded() {
             ) : (
               <h3 className="text-black">{USER.tname}'s IT Data</h3>
             )}
+            <h3 className="text-success">Financial Year: {finYear}</h3>
             <div>
               <div className="mx-auto">
                 {state === "admin" && (
