@@ -936,3 +936,9 @@ export const sliceArrayIntoChunks = (array, maxChunkSize) => {
 
   return result;
 };
+export const createYearArray = (startYear) => {
+  const currentYear = new Date().getFullYear();
+  const length = currentYear - startYear + 2;
+
+  return Array.from({ length }, (_, index) => startYear + index);
+};

@@ -9,6 +9,7 @@ import {
   roundSo,
   CalculateIncomeTax,
   readCSVFile,
+  createYearArray,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
 import { firestore } from "../../context/FirebaseContext";
@@ -39,14 +40,14 @@ export default function Form16NewPage() {
   } = useGlobalContext();
   const { id, tname, school, pan, disability, desig, fname } = data;
   const date = new Date();
+  const yearArray = createYearArray(2024);
   const [thisYear, setThisYear] = useState(date.getFullYear());
   const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
   const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
   const [finYear, setFinYear] = useState(`${thisYear}-${nextYear}`);
-  const yearArray = [2024, 2025, 2026];
+  const [finYearSelected, setFinYearSelected] = useState(false);
+
   const [showYearSelection, setShowYearSelection] = useState(true);
-  const [showNewModal, setShowNewModal] = useState(false);
-  const [showOldModal, setShowOldModal] = useState(false);
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
   const [may, setMay] = useState([]);
@@ -59,6 +60,8 @@ export default function Form16NewPage() {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
+  const [BankInterest, setBankInterest] = useState(randBetween(500, 2000));
+  const [IntFrDeposit, setIntFrDeposit] = useState(0);
   const marchSalary = march.filter((el) => el.id === id)[0];
   const marchArrear = marchSalary?.arrear;
   const marchBasic = marchSalary?.basic;
@@ -273,7 +276,6 @@ export default function Form16NewPage() {
     decemberPTax +
     januaryPTax +
     februaryPTax;
-  const BankInterest = randBetween(500, 2000);
   const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
   const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
   const hbLoanInterest = teacherDeduction?.hbLoanInterest;
@@ -311,7 +313,7 @@ export default function Form16NewPage() {
     februaryArrear +
     otherIncome;
   const GrossTotalIncome =
-    AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
+    AllGross - grossPTax - 50000 + BankInterest + IntFrDeposit - hbLoanInterest;
   const deductionVIA =
     grossGPF +
     sukanya +
@@ -452,14 +454,13 @@ export default function Form16NewPage() {
                       const selectedFinYear = e.target.value;
                       if (selectedFinYear !== "Select Financial Year") {
                         setFinYear(selectedFinYear);
-                        setShowYearSelection(false);
                         const yearParts = selectedFinYear.split("-");
                         const startYear = parseInt(yearParts[0]);
                         const endYear = parseInt(yearParts[1]);
                         setThisYear(startYear + 1);
                         setPrevYear(startYear);
                         setNextYear(endYear + 1);
-                        getMonthlySalary(thisYear, prevYear);
+                        setFinYearSelected(true);
                       } else {
                         toast.error("Please select a valid financial year.");
                       }
@@ -478,8 +479,68 @@ export default function Form16NewPage() {
                       ))}
                   </select>
                 </div>
+                <div className="col-md-6  mx-auto justify-content-center align-items-baseline">
+                  <div className="mb-3 col-md-6 mx-auto">
+                    <label htmlFor="date" className="form-label">
+                      Savings Bank Interest
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control mx-auto"
+                      placeholder="Savings Bank Interest"
+                      value={BankInterest}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setBankInterest(parseInt(e.target.value));
+                        } else {
+                          setBankInterest("");
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 col-md-6 mx-auto">
+                    <label htmlFor="date" className="form-label">
+                      Interest from Deposit(Bank/Post Office/Cooperative
+                      Society)
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control mx-auto"
+                      placeholder="Interest from Deposit"
+                      value={IntFrDeposit}
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          setIntFrDeposit(parseInt(e.target.value));
+                        } else {
+                          setIntFrDeposit("");
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="modal-footer"></div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-success"
+                  disabled={!finYearSelected}
+                  onClick={() => {
+                    getMonthlySalary(thisYear, prevYear);
+                    setShowYearSelection(false);
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    router.back();
+                  }}
+                >
+                  Go Back
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -542,6 +603,7 @@ export default function Form16NewPage() {
                   eduCess,
                   AddedEduCess,
                   BankInterest,
+                  IntFrDeposit,
                   lic,
                   ppf,
                   nsc,

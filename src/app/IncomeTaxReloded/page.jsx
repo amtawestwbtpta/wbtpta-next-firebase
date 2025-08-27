@@ -10,6 +10,7 @@ import {
   CalculateIncomeTax,
   readCSVFile,
   createDownloadLink,
+  createYearArray,
 } from "../../modules/calculatefunctions";
 import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
@@ -472,7 +473,7 @@ export default function IncomeTaxReloded() {
   const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
   const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
   const [finYear, setFinYear] = useState(`${thisYear}-${nextYear}`);
-  const yearArray = [2024, 2025, 2026];
+  const yearArray = createYearArray(2024);
   const [showYearSelection, setShowYearSelection] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showOldModal, setShowOldModal] = useState(false);

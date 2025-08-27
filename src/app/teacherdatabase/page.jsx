@@ -276,18 +276,6 @@ const TeacherDatabase = () => {
         );
       },
     },
-    {
-      name: "Generate Form 16 Previous Year",
-      cell: (row) => (
-        <Link
-          className="btn btn-sm btn-info"
-          href={`/Form16Prev`}
-          onClick={() => setStateObject(row)}
-        >
-          Generate Form 16 Previous Year
-        </Link>
-      ),
-    },
 
     {
       name: "Payslip OSMS",
