@@ -1335,11 +1335,11 @@ export default function Page() {
                   </div>
                   <div className="editLeave">
                     <div className="mb-3">
-                      <label className="form-label">School School</label>
+                      <label className="form-label">School</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="School School"
+                        placeholder="School"
                         id="date"
                         value={school}
                         onChange={(e) => {

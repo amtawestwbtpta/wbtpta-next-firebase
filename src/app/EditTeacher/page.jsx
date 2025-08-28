@@ -32,7 +32,7 @@ const EditTeacher = () => {
   } = useGlobalContext();
 
   const router = useRouter();
-  const [inputField, setinputField] = useState(stateObject);
+  const [inputField, setInputField] = useState(stateObject);
   const filteredTeachers = teachersState.filter(
     (teacher) => teacher.udise === stateObject.udise
   );
@@ -224,7 +224,7 @@ const EditTeacher = () => {
             }
             id="school-name"
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 school: e.target.value.split("-")[0],
                 udise: e.target.value.split("-")[1],
@@ -256,7 +256,7 @@ const EditTeacher = () => {
             placeholder="DISE CODE"
             value={inputField?.udise}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 udise: e.target.value,
               });
@@ -273,7 +273,7 @@ const EditTeacher = () => {
             placeholder="Full Name"
             value={inputField?.tname}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 tname: e.target.value,
               });
@@ -290,7 +290,7 @@ const EditTeacher = () => {
             placeholder="Full Name"
             value={inputField?.tsname}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 tsname: e.target.value,
               });
@@ -307,7 +307,7 @@ const EditTeacher = () => {
             placeholder="Father's Name"
             value={inputField?.fname}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 fname: e.target.value,
               });
@@ -338,7 +338,7 @@ const EditTeacher = () => {
             id="disability"
             value={inputField?.disability}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 disability: e.target.value,
               });
@@ -358,7 +358,7 @@ const EditTeacher = () => {
             id="desig"
             value={inputField?.desig}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 desig: e.target.value,
               });
@@ -378,7 +378,7 @@ const EditTeacher = () => {
             id="gender"
             value={inputField?.gender}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 gender: e.target.value,
               });
@@ -397,7 +397,7 @@ const EditTeacher = () => {
             aria-label=".form-select-sm example"
             value={inputField?.hoi}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 hoi: e.target.value,
               });
@@ -418,7 +418,7 @@ const EditTeacher = () => {
             aria-label=".form-select-sm example"
             defaultValue={inputField?.rank}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 rank: parseInt(e.target.value),
               });
@@ -442,7 +442,7 @@ const EditTeacher = () => {
             id="circle"
             value={inputField?.circle}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 circle: e.target.value,
               });
@@ -463,12 +463,12 @@ const EditTeacher = () => {
             value={inputField?.showAccount}
             onChange={(e) => {
               if (e.target.value !== "") {
-                setinputField({
+                setInputField({
                   ...inputField,
                   showAccount: Boolean(e.target.value),
                 });
               } else {
-                setinputField({
+                setInputField({
                   ...inputField,
                   showAccount: false,
                 });
@@ -491,12 +491,12 @@ const EditTeacher = () => {
             value={inputField?.registered}
             onChange={(e) => {
               if (e.target.value !== "") {
-                setinputField({
+                setInputField({
                   ...inputField,
                   registered: Boolean(e.target.value),
                 });
               } else {
-                setinputField({
+                setInputField({
                   ...inputField,
                   registered: false,
                 });
@@ -518,7 +518,7 @@ const EditTeacher = () => {
             id="question"
             value={inputField?.question}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 question: e.target.value,
               });
@@ -538,7 +538,7 @@ const EditTeacher = () => {
             id="gp"
             value={inputField?.gp}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 gp: e.target.value,
               });
@@ -566,7 +566,7 @@ const EditTeacher = () => {
             placeholder="Association"
             value={inputField?.association}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 association: e.target.value,
               });
@@ -583,14 +583,14 @@ const EditTeacher = () => {
         <div className="mb-3 col-md-3">
           <label className="form-label">Mobile No.</label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="phone"
             name="phone"
             placeholder="Mobile No."
             value={inputField?.phone}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 phone: e.target.value,
               });
@@ -608,7 +608,7 @@ const EditTeacher = () => {
             placeholder="Email"
             value={inputField?.email}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 email: e.target.value,
               });
@@ -625,7 +625,7 @@ const EditTeacher = () => {
             name="dob"
             value={getCurrentDateInput(inputField?.dob)}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 dob: getSubmitDateInput(e.target.value),
               });
@@ -643,7 +643,7 @@ const EditTeacher = () => {
             name="doj"
             value={getCurrentDateInput(inputField?.doj)}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 doj: getSubmitDateInput(e.target.value),
               });
@@ -663,7 +663,7 @@ const EditTeacher = () => {
             name="dojnow"
             value={getCurrentDateInput(inputField?.dojnow)}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 dojnow: getSubmitDateInput(e.target.value),
               });
@@ -681,7 +681,7 @@ const EditTeacher = () => {
             name="dor"
             value={getCurrentDateInput(inputField?.dor)}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 dor: getSubmitDateInput(e.target.value),
               });
@@ -699,7 +699,7 @@ const EditTeacher = () => {
             placeholder="Bank"
             value={inputField?.bank}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 bank: e.target.value,
               });
@@ -716,7 +716,7 @@ const EditTeacher = () => {
             placeholder="Salary Account No."
             value={inputField?.account}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 account: e.target.value,
               });
@@ -733,7 +733,7 @@ const EditTeacher = () => {
             placeholder="IFSC CODE"
             value={inputField?.ifsc}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 ifsc: e.target.value,
               });
@@ -755,7 +755,7 @@ const EditTeacher = () => {
             placeholder="Employee ID"
             value={inputField?.empid}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 empid: e.target.value,
               });
@@ -772,7 +772,7 @@ const EditTeacher = () => {
             id="training"
             value={inputField?.training}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 training: e.target.value,
               });
@@ -794,7 +794,7 @@ const EditTeacher = () => {
             placeholder="PAN No."
             value={inputField?.pan}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 pan: e.target.value,
               });
@@ -814,7 +814,7 @@ const EditTeacher = () => {
             style={{ resize: "none" }}
             value={inputField?.address}
             onChange={(e) => {
-              setinputField({
+              setInputField({
                 ...inputField,
                 address: e.target.value,
               });

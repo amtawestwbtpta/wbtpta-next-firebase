@@ -10,7 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 
 const Retirement = () => {
-  const { state, teachersState } = useGlobalContext();
+  const { setStateObject, teachersState } = useGlobalContext();
   const router = useRouter();
   const data = teachersState;
   const [filteredData, setFilteredData] = useState([]);
@@ -107,10 +107,10 @@ const Retirement = () => {
           <option className="text-center text-primary" value="">
             Select Retirement Year
           </option>
-          {serviceArray.map((el) => (
+          {serviceArray.map((el, index) => (
             <option
               className="text-center text-success text-wrap"
-              key={el.id}
+              key={index}
               value={el}
             >
               {el +
@@ -302,6 +302,22 @@ const Retirement = () => {
                       Date of Retirement:
                       <br /> {el?.dor}
                     </h6>
+                    {parseInt(el.dor.split("-")[2]) -
+                      new Date().getFullYear() <=
+                      2 && (
+                      <div className="m-1 noprint">
+                        <button
+                          type="button"
+                          className="btn btn-success p-2 rounded"
+                          onClick={() => {
+                            setStateObject(el);
+                            router.push("/EPensionFiles");
+                          }}
+                        >
+                          e-Pension Files
+                        </button>
+                      </div>
+                    )}
                   </div>
                 );
               })
