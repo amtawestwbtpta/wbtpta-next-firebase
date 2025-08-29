@@ -383,561 +383,561 @@ export default function PensionLeaveForm({ data }) {
   } = data;
 
   return (
-    <PDFViewer
-      style={{
-        width: width / 3,
-        height: height / 3,
-        alignSelf: "center",
-      }}
+    // <PDFViewer
+    //   style={{
+    //     width: width / 3,
+    //     height: height / 3,
+    //     alignSelf: "center",
+    //   }}
+    // >
+    <Document
+      style={{ margin: 5, padding: 5 }}
+      title={`Pension Leave Form OF ${tname}`}
     >
-      <Document
-        style={{ margin: 5, padding: 5 }}
-        title={`Pension Leave Form OF ${tname}`}
-      >
-        <Page size="A4" orientation="landscape" style={styles.page}>
-          <View style={styles.pageMainView}>
-            <Text style={styles.text2}>
-              Leave account of {gender === "male" ? "Sri" : "Smt."}{" "}
-              <Text style={styles.text2BoldunderLine}>{tname}</Text>{" "}
-              {desig === "HT" ? "Head Teacher" : "Asst. Teacher"} of{" "}
-              <Text style={styles.text2BoldunderLine}>{school}</Text>
-              {", "}
-              <Text style={styles.text2BoldunderLine}> Amta West </Text> Circle
-              Howrah
-            </Text>
-            <View style={styles.subView}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
+        <View style={styles.pageMainView}>
+          <Text style={styles.text2}>
+            Leave account of {gender === "male" ? "Sri" : "Smt."}{" "}
+            <Text style={styles.text2BoldunderLine}>{tname}</Text>{" "}
+            {desig === "HT" ? "Head Teacher" : "Asst. Teacher"} of{" "}
+            <Text style={styles.text2BoldunderLine}>{school}</Text>
+            {", "}
+            <Text style={styles.text2BoldunderLine}> Amta West </Text> Circle
+            Howrah
+          </Text>
+          <View style={styles.subView}>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 1,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>½ Pay Leave Earned</Text>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 1,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>Enjoyed Commuted Leave</Text>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 2,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>Enjoyed ½ Pay Leave</Text>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 1,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>
+                  Medical Leave Earned on Full Pay
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 2,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>
+                  Medical Leave Enjoyed With Full Pay
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderRightWidth: 1,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>
+                  Other Leave Enjoyed on ….......... Ground
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: "10%",
+                  borderRightWidth: 0,
+                  height: 40,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}>Remarks</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 2 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 2 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "15%",
+                  borderBottomWidth: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>From</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>To</Text>
+                </View>
+                <View style={{ width: "33%", borderRightWidth: 1 }}>
+                  <Text style={styles.textBold}>Days</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: "10%",
+                  borderRightWidth: 0,
+                  borderBottomWidth: 1,
+                }}
+              >
+                <Text style={styles.textBold}> </Text>
+              </View>
+            </View>
+            <TableRows doj={doj} dor={dor} />
+            {[1, 1, 1, 1].map((_, i) => (
               <View
                 style={{
                   width: "100%",
                   flexDirection: "row",
                   justifyContent: "flex-start",
                   alignItems: "center",
+                  borderBottomWidth: i === 3 ? 0 : 1,
                 }}
+                key={i}
               >
                 <View
                   style={{
                     width: "15%",
-                    borderRightWidth: 1,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>½ Pay Leave Earned</Text>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderRightWidth: 1,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>Enjoyed Commuted Leave</Text>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderRightWidth: 2,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>Enjoyed ½ Pay Leave</Text>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderRightWidth: 1,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>
-                    Medical Leave Earned on Full Pay
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderRightWidth: 2,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>
-                    Medical Leave Enjoyed With Full Pay
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderRightWidth: 1,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>
-                    Other Leave Enjoyed on ….......... Ground
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: "10%",
-                    borderRightWidth: 0,
-                    height: 40,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}>Remarks</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
+                    borderBottomWidth: 0,
                     flexDirection: "row",
                     justifyContent: "flex-start",
                     alignItems: "center",
                   }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 2 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 2 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "15%",
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>From</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>To</Text>
-                  </View>
-                  <View style={{ width: "33%", borderRightWidth: 1 }}>
-                    <Text style={styles.textBold}>Days</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: "10%",
-                    borderRightWidth: 0,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Text style={styles.textBold}> </Text>
-                </View>
-              </View>
-              <TableRows doj={doj} dor={dor} />
-              {[1, 1, 1, 1].map((_, i) => (
-                <View
-                  style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    borderBottomWidth: i === 3 ? 0 : 1,
-                  }}
-                  key={i}
                 >
                   <View
                     style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
+                      width: "33%",
+                      justifyContent: "center",
                       alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 2,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 2,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "15%",
-                      borderBottomWidth: 0,
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRightWidth: 1,
-                        height: 35,
-                      }}
-                    >
-                      <Text style={styles.text}> </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      width: "10%",
-                      borderRightWidth: 0,
+                      borderRightWidth: 1,
                       height: 35,
-                      borderBottomWidth: 0,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
                     }}
                   >
                     <Text style={styles.text}> </Text>
                   </View>
                 </View>
-              ))}
-            </View>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: 5,
-                marginTop: 50,
-              }}
-            >
-              <Text style={styles.text2}>Sub-Inspector of Scchool</Text>
-              <Text style={styles.text2}>
-                .........................................................
-              </Text>
-            </View>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.text2}>Amta West Circle, Howrah</Text>
-              <Text style={styles.text2}>
-                District Inspector Of Schools (P.E.), Howrah
-              </Text>
-            </View>
+                <View
+                  style={{
+                    width: "15%",
+                    borderBottomWidth: 0,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "15%",
+                    borderBottomWidth: 0,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 2,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "15%",
+                    borderBottomWidth: 0,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "15%",
+                    borderBottomWidth: 0,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 2,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "15%",
+                    borderBottomWidth: 0,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRightWidth: 1,
+                      height: 35,
+                    }}
+                  >
+                    <Text style={styles.text}> </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: "10%",
+                    borderRightWidth: 0,
+                    height: 35,
+                    borderBottomWidth: 0,
+                  }}
+                >
+                  <Text style={styles.text}> </Text>
+                </View>
+              </View>
+            ))}
           </View>
-        </Page>
-      </Document>
-    </PDFViewer>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: 5,
+              marginTop: 50,
+            }}
+          >
+            <Text style={styles.text2}>Sub-Inspector of Scchool</Text>
+            <Text style={styles.text2}>
+              .........................................................
+            </Text>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.text2}>Amta West Circle, Howrah</Text>
+            <Text style={styles.text2}>
+              District Inspector Of Schools (P.E.), Howrah
+            </Text>
+          </View>
+        </View>
+      </Page>
+    </Document>
+    // </PDFViewer>
   );
 }
 const styles = StyleSheet.create({

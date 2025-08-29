@@ -925,8 +925,8 @@ export default function Page() {
         </button>
         {showLeaveForm && (
           <div className="my-2 mx-auto">
-            <PensionLeaveForm data={inputField} />
-            {/* <PDFDownloadLink
+            {/* <PensionLeaveForm data={inputField} /> */}
+            <PDFDownloadLink
               document={<PensionLeaveForm data={inputField} />}
               fileName={`Leave Form of ${tname}.pdf`}
               style={{
@@ -942,7 +942,7 @@ export default function Page() {
               {({ blob, url, loading, error }) =>
                 loading ? "Please Wait..." : "Download Leave Form"
               }
-            </PDFDownloadLink> */}
+            </PDFDownloadLink>
           </div>
         )}
       </div>
