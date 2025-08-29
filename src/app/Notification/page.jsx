@@ -49,8 +49,6 @@ const Notification = () => {
     teacherdetails = decryptObjData("tid");
   }
 
-  const [data, setData] = useState(false);
-
   const [allData, setAllData] = useState([]);
   const [loader, setLoader] = useState(false);
   const fileRef = useRef();
@@ -503,6 +501,7 @@ const Notification = () => {
       });
   };
   const getData = async () => {
+    setLoader(true);
     const querySnapshot = await getDocs(
       query(collection(firestore, "notices"))
     );
@@ -513,18 +512,19 @@ const Notification = () => {
         id: doc.id,
       }))
       .sort((a, b) => b.date - a.date);
-    setData(true);
+    setLoader(false);
     setAllData(datas);
     setNoticeState(datas);
     setNoticeUpdateTime(Date.now());
   };
   const getNoticeData = () => {
+    setLoader(true);
     const difference = (Date.now() - noticeUpdateTime) / 1000 / 60 / 15;
     if (noticeState.length === 0 || difference >= 1) {
       getData();
     } else {
       let newData = noticeState.sort((a, b) => b.date - a.date);
-      setData(true);
+      setLoader(false);
       setAllData(newData);
     }
   };
@@ -539,155 +539,150 @@ const Notification = () => {
     <div className="container my-3">
       {loader && <Loader />}
       <h3 className="text-primary text-center">Notifications</h3>
-      {teacherdetails.circle === "admin" && (
-        <div className="my-3 mx-auto">
-          <button
-            type="button"
-            className="btn btn-sm btn-info"
-            onClick={() => {
-              setShowAddNotice(true);
-            }}
-          >
-            Add Notice
-          </button>
-          <button
-            type="button"
-            className="btn btn-sm m-3 btn-warning"
-            onClick={() => {
-              createDownloadLink(noticeState, "notices");
-            }}
-          >
-            Download Notice Data
-          </button>
-        </div>
-      )}
-      {!showNoticeDetails ? (
-        data ? (
-          <div className="container row mx-auto justify-content-center">
-            {allData.map((el, index) => {
-              return (
-                <div
-                  className="row mx-auto justify-content-center align-items-center col-md-3 "
-                  key={index}
-                >
-                  <div className="card m-2 p-1" style={{ width: "18rem" }}>
-                    {el.url !== "" && el.type.split("/")[0] === "image" ? (
-                      <img
-                        src={
-                          el.url !== ""
-                            ? el.url
-                            : "https://raw.githubusercontent.com/awwbtpta/data/main/notice.png"
-                        }
-                        style={{ height: 200, cursor: "pointer" }}
-                        className="card-img-top rounded-2"
-                        alt="..."
-                        onClick={() => {
-                          setSelectedNotice(el);
-                          setShowNoticeDetails(true);
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={
-                          "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
-                        }
-                        style={{ height: 200, cursor: "pointer" }}
-                        className="card-img-top rounded-2 m-0 p-0"
-                        alt="..."
-                        onClick={() => {
-                          setSelectedNotice(el);
-                          setShowNoticeDetails(true);
-                        }}
-                      />
-                    )}
 
-                    <div
-                      className={`card-body ${
+      {!showNoticeDetails ? (
+        <div className="container row mx-auto justify-content-center">
+          {teacherdetails.circle === "admin" && (
+            <div className="my-3 mx-auto">
+              <button
+                type="button"
+                className="btn btn-sm btn-info"
+                onClick={() => {
+                  setShowAddNotice(true);
+                }}
+              >
+                Add Notice
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm m-3 btn-warning"
+                onClick={() => {
+                  createDownloadLink(noticeState, "notices");
+                }}
+              >
+                Download Notice Data
+              </button>
+            </div>
+          )}
+          {allData.map((el, index) => {
+            return (
+              <div
+                className="row mx-auto justify-content-center align-items-center col-md-3 "
+                key={index}
+              >
+                <div className="card m-2 p-1" style={{ width: "18rem" }}>
+                  {el.url !== "" && el.type.split("/")[0] === "image" ? (
+                    <img
+                      src={
+                        el.url !== ""
+                          ? el.url
+                          : "https://raw.githubusercontent.com/awwbtpta/data/main/notice.png"
+                      }
+                      style={{ height: 200, cursor: "pointer" }}
+                      className="card-img-top rounded-2"
+                      alt="..."
+                      onClick={() => {
+                        setSelectedNotice(el);
+                        setShowNoticeDetails(true);
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={
+                        "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                      }
+                      style={{ height: 200, cursor: "pointer" }}
+                      className="card-img-top rounded-2 m-0 p-0"
+                      alt="..."
+                      onClick={() => {
+                        setSelectedNotice(el);
+                        setShowNoticeDetails(true);
+                      }}
+                    />
+                  )}
+
+                  <div
+                    className={`card-body ${
+                      !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
+                        ? "ben"
+                        : "timesFont"
+                    }`}
+                  >
+                    <h5
+                      className={`card-title ${
                         !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
                           ? "ben"
                           : "timesFont"
                       }`}
+                      onClick={() => {
+                        setSelectedNotice(el);
+                        setShowNoticeDetails(true);
+                      }}
+                      style={{ cursor: "pointer" }}
                     >
-                      <h5
-                        className={`card-title ${
-                          !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
-                            ? "ben"
-                            : "timesFont"
-                        }`}
-                        onClick={() => {
-                          setSelectedNotice(el);
-                          setShowNoticeDetails(true);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {el.title}
-                      </h5>
+                      {el.title}
+                    </h5>
 
-                      <p className="card-text text-info timesFont">
-                        {DateValueToSring(el.date)}
-                      </p>
-                      <p
-                        className={`card-title ${
-                          !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
-                            ? "ben"
-                            : "timesFont"
-                        } text-primary`}
-                        onClick={() => {
-                          setSelectedNotice(el);
-                          setShowNoticeDetails(true);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {el.noticeText.slice(0, 30)} ... See More
-                      </p>
-                    </div>
-                    {teacherdetails.circle === "admin" && (
-                      <div className="my-2">
-                        <button
-                          type="button"
-                          className="btn btn-sm m-1 btn-warning"
-                          onClick={() => {
-                            setEditID(el.id);
-                            setEditTitle(el.title);
-                            setEditNoticeText(el.noticeText);
-                            setOrgTitle(el.title);
-                            setOrgNoticeText(el.noticeText);
-                            setEditFileName(el.photoName);
-                            setShowEditNotice(true);
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-sm m-1 btn-danger"
-                          onClick={() => {
-                            // eslint-disable-next-line
-                            let conf = confirm(
-                              "Are you sure you want to Delete this notice?"
-                            );
-                            if (conf) {
-                              deleteNotice(el);
-                            } else {
-                              toast.success("Notice Not Deleted!!!");
-                            }
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
+                    <p className="card-text text-info timesFont">
+                      {DateValueToSring(el.date)}
+                    </p>
+                    <p
+                      className={`card-title ${
+                        !/^[a-zA-Z]+$/.test(el.noticeText.split(" ")[0])
+                          ? "ben"
+                          : "timesFont"
+                      } text-primary`}
+                      onClick={() => {
+                        setSelectedNotice(el);
+                        setShowNoticeDetails(true);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {el.noticeText.slice(0, 30)} ... See More
+                    </p>
                   </div>
+                  {teacherdetails.circle === "admin" && (
+                    <div className="my-2">
+                      <button
+                        type="button"
+                        className="btn btn-sm m-1 btn-warning"
+                        onClick={() => {
+                          setEditID(el.id);
+                          setEditTitle(el.title);
+                          setEditNoticeText(el.noticeText);
+                          setOrgTitle(el.title);
+                          setOrgNoticeText(el.noticeText);
+                          setEditFileName(el.photoName);
+                          setShowEditNotice(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm m-1 btn-danger"
+                        onClick={() => {
+                          // eslint-disable-next-line
+                          let conf = confirm(
+                            "Are you sure you want to Delete this notice?"
+                          );
+                          if (conf) {
+                            deleteNotice(el);
+                          } else {
+                            toast.success("Notice Not Deleted!!!");
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <Loader />
-        )
-      ) : null}
-
-      {showNoticeDetails && (
+              </div>
+            );
+          })}
+        </div>
+      ) : (
         <div className="my-5">
           <button
             type="button"
@@ -710,6 +705,7 @@ const Notification = () => {
           </button>
         </div>
       )}
+
       {showAddNotice && (
         <div
           className="modal fade show"
