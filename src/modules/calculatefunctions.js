@@ -942,3 +942,41 @@ export const createYearArray = (startYear) => {
 
   return Array.from({ length }, (_, index) => startYear + index);
 };
+export const getLastDateOfMonth = (dateStr) => {
+  // dateStr is in "DD-MM-YYYY"
+  const [day, month, year] = dateStr.split("-").map(Number);
+
+  // Create a Date object for the 1st of the *next* month
+  const nextMonth = new Date(year, month, 1);
+
+  // Subtract 1 day → gives last day of the given month
+  nextMonth.setDate(0);
+
+  // Return in DD-MM-YYYY format
+  const dd = String(nextMonth.getDate()).padStart(2, "0");
+  const mm = String(nextMonth.getMonth() + 1).padStart(2, "0");
+  const yyyy = nextMonth.getFullYear();
+
+  return `${dd}-${mm}-${yyyy}`;
+};
+export const monthsBetween = (date1, date2) => {
+  // Convert DD-MM-YYYY → Date objects
+  const [d1, m1, y1] = date1.split("-").map(Number);
+  const [d2, m2, y2] = date2.split("-").map(Number);
+
+  let first = new Date(y1, m1 - 1, d1);
+  let second = new Date(y2, m2 - 1, d2);
+
+  // Ensure first <= second
+  if (first > second) [first, second] = [second, first];
+
+  let years = second.getFullYear() - first.getFullYear();
+  let months = years * 12 + (second.getMonth() - first.getMonth());
+
+  // Adjust if the second day is before the first day in the month
+  if (second.getDate() < first.getDate()) {
+    months -= 1;
+  }
+
+  return months;
+};

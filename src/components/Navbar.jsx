@@ -14,7 +14,8 @@ import { useGlobalContext } from "../context/Store";
 import Loader from "./Loader";
 import Image from "next/image";
 import axios from "axios";
-
+// import T from "./teachers.json";
+// import S from "./schools.json";
 import { toast } from "react-toastify";
 const Navbar = () => {
   const {
@@ -218,10 +219,22 @@ const Navbar = () => {
 
     const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
     if (teacherDifference >= 1 || teachersState.length === 0) {
+      // if (process.env.NODE_ENV === "development") {
+      //   setTeachersState(T);
+      //   setTeacherUpdateTime(Date.now());
+      // } else {
+      //   storeTeachersData();
+      // }
       storeTeachersData();
     }
     const schDifference = (Date.now() - schoolUpdateTime) / 1000 / 60 / 15;
     if (schDifference >= 1 || schoolState.length === 0) {
+      // if (process.env.NODE_ENV === "development") {
+      //   setSchoolState(S);
+      //   setSchoolUpdateTime(Date.now());
+      // } else {
+      //   storeSchoolData();
+      // }
       storeSchoolData();
     }
     const questionRateDifference =

@@ -96,7 +96,7 @@ const Retirement = () => {
   }, []);
   return (
     <div className="container-fluid my-3">
-      <h3 className="text-center text-primary">Year Wise Teachers</h3>
+      <h3 className="text-center text-primary">Retirement Year of Teachers</h3>
       <div className="col-md-4 mx-auto mb-3 noprint">
         <select
           className="form-select"

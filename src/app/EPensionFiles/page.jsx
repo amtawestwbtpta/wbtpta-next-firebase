@@ -21,10 +21,17 @@ import {
   query,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
-import { v4 as uuid } from "uuid";
+import FamilyList from "../../pdfs/FamilyList";
+import TopSheetEPension from "../../pdfs/TopSheetEPension";
+import PensionHRA from "../../pdfs/PensionHRA";
+import DCRGForm from "../../pdfs/DCRGForm";
+import LTAForm from "../../pdfs/LTAForm";
+import { set } from "mongoose";
+import PensionLeaveForm from "../../pdfs/PensionLeaveForm";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -35,8 +42,8 @@ export default function Page() {
     }
   );
   const router = useRouter();
-  const { state, stateObject, leaveState, setLeaveState } = useGlobalContext();
-  const docId = uuid().split("-")[0];
+  const { state, stateObject } = useGlobalContext();
+
   const {
     tname,
     desig,
@@ -51,6 +58,7 @@ export default function Page() {
     id,
     empid,
     school,
+    udise,
     address,
     account,
     ifsc,
@@ -70,12 +78,37 @@ export default function Page() {
     id,
     empid,
     school,
+    udise,
     address,
     account,
     ifsc,
     spouse: "",
     spouseDob: `01-01-${new Date().getFullYear() - 50}`,
     children: [],
+    applicationNo: "",
+  });
+  const [prevData, setPrevData] = useState({
+    tname,
+    desig,
+    dob,
+    doj,
+    dojnow,
+    dor,
+    phone,
+    email,
+    hoi,
+    gender,
+    id,
+    empid,
+    school,
+    udise,
+    address,
+    account,
+    ifsc,
+    spouse: "",
+    spouseDob: `01-01-${new Date().getFullYear() - 50}`,
+    children: [],
+    applicationNo: "",
   });
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -86,6 +119,13 @@ export default function Page() {
       gender: "",
     },
   ]);
+
+  const [showFamily, setShowFamily] = useState(false);
+  const [showTopSheet, setShowTopSheet] = useState(false);
+  const [showHRAForm, setShowHRAForm] = useState(false);
+  const [showDCRGForm, setShowDCRGForm] = useState(false);
+  const [showLTAForm, setShowLTAForm] = useState(false);
+  const [showLeaveForm, setShowLeaveForm] = useState(false);
   const addChildren = () => {
     const newChildren = [
       ...children,
@@ -117,7 +157,8 @@ export default function Page() {
     setInputField({ ...inputField, children: list });
   };
   const ifsc_ser = (ifsc) => {
-    if (ifsc.length === 11) {
+    const bankDiv = document.getElementById("bankdiv");
+    if (ifsc.length === 11 && bankDiv) {
       fetch(`https://ifsc.razorpay.com/${ifsc}`)
         .then((res) => res.json())
         .then((data) => {
@@ -139,13 +180,95 @@ export default function Page() {
             "<br/></p>";
         });
     } else {
-      document.getElementById("bankdiv").innerHTML = "";
+      bankDiv.innerHTML = "";
     }
   };
+
+  const saveData = async () => {
+    if (isFormValid()) {
+      setShowModal(false);
+      setLoader(true);
+      try {
+        await setDoc(doc(firestore, "epension", inputField.id), inputField)
+          .then(() => {
+            toast.success("Pension Data Added Successfully!");
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          })
+          .finally(() => {
+            setLoader(false);
+          });
+      } catch (error) {
+        toast.error(error.message);
+        setLoader(false);
+      }
+    } else {
+      toast.error("Please fill all the fields");
+    }
+  };
+  const isFormValid = () => {
+    if (
+      !inputField.tname ||
+      !inputField.desig ||
+      !inputField.dob ||
+      !inputField.doj ||
+      !inputField.dojnow ||
+      !inputField.dor ||
+      !inputField.phone ||
+      !inputField.email ||
+      !inputField.hoi ||
+      !inputField.gender ||
+      !inputField.id ||
+      !inputField.empid ||
+      !inputField.school ||
+      !inputField.address ||
+      !inputField.account ||
+      !inputField.ifsc ||
+      !inputField.spouse ||
+      !inputField.spouseDob
+    ) {
+      toast.error("Please fill all the fields");
+      return false;
+    }
+    return true;
+  };
+  const getData = async () => {
+    setLoader(true);
+    try {
+      const q = query(
+        collection(firestore, "epension"),
+        where("id", "==", inputField.id)
+      );
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.docs.length === 0) {
+        toast.error("No Previous Data Found");
+        setLoader(false);
+      } else {
+        const data = querySnapshot.docs[0].data();
+        setPrevData(data);
+        setInputField(data);
+        setChildren(data.children);
+        setLoader(false);
+        toast.success("Previous Data Found");
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error.message);
+      setLoader(false);
+    }
+  };
+
   useEffect(() => {
+    getData();
     // eslint-disable-next-line
   }, []);
-
+  useEffect(() => {
+    if (state !== "admin") {
+      router.push("/");
+    }
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="container timesFont">
       {loader && <Loader />}
@@ -175,6 +298,12 @@ export default function Page() {
           className="btn btn-success m-2"
           onClick={() => {
             setShowModal(true);
+            setShowFamily(false);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
             setTimeout(() => {
               ifsc_ser(inputField.ifsc);
             }, 200);
@@ -229,6 +358,18 @@ export default function Page() {
                     value={inputField.school}
                     onChange={(e) => {
                       setInputField({ ...inputField, school: e.target.value });
+                    }}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">UDISE</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="UDISE"
+                    value={inputField.udise}
+                    onChange={(e) => {
+                      setInputField({ ...inputField, udise: e.target.value });
                     }}
                   />
                 </div>
@@ -415,6 +556,21 @@ export default function Page() {
                   style={{ zoom: 0.6 }}
                 ></div>
                 <div className="mb-3">
+                  <label className="form-label">Application No.</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Application No."
+                    value={inputField?.applicationNo}
+                    onChange={(e) => {
+                      setInputField({
+                        ...inputField,
+                        applicationNo: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+                <div className="mb-3">
                   <label className="form-label">Spouse Name</label>
                   <input
                     type="text"
@@ -513,7 +669,8 @@ export default function Page() {
                   <button
                     className="btn btn-primary m-2"
                     type="button"
-                    onClick={() => {}}
+                    // disabled={compareObjects(inputField, prevData)}
+                    onClick={saveData}
                   >
                     Save
                   </button>
@@ -542,8 +699,255 @@ export default function Page() {
           </div>
         </div>
       )}
+
       <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint"
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-primary m-2"
+          onClick={() => {
+            setShowFamily(!showFamily);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showFamily ? "Hide" : "Show"} Family Form
+        </button>
+        {showFamily && (
+          <div className="my-2 mx-auto">
+            {/* <FamilyList data={inputField} /> */}
+            <PDFDownloadLink
+              document={<FamilyList data={inputField} />}
+              fileName={`Family List of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download Family List"
+              }
+            </PDFDownloadLink>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-info m-2"
+          onClick={() => {
+            setShowFamily(false);
+            setShowTopSheet(!showTopSheet);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showTopSheet ? "Hide" : "Show"} Top Sheet Form
+        </button>
+        {showTopSheet && (
+          <div className="my-2 mx-auto">
+            {/* <TopSheetEPension data={inputField} /> */}
+            <PDFDownloadLink
+              document={<TopSheetEPension data={inputField} />}
+              fileName={`Top Sheet of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download Top Sheet"
+              }
+            </PDFDownloadLink>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-primary m-2"
+          onClick={() => {
+            setShowFamily(false);
+            setShowTopSheet(false);
+            setShowHRAForm(!showHRAForm);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showHRAForm ? "Hide" : "Show"} HRA Form
+        </button>
+        {showHRAForm && (
+          <div className="my-2 mx-auto">
+            {/* <PensionHRA data={inputField} /> */}
+            <PDFDownloadLink
+              document={<PensionHRA data={inputField} />}
+              fileName={`HRA Form of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download HRA Form"
+              }
+            </PDFDownloadLink>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-success m-2"
+          onClick={() => {
+            setShowFamily(false);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(!showDCRGForm);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showDCRGForm ? "Hide" : "Show"} DCRG Form
+        </button>
+        {showDCRGForm && (
+          <div className="my-2 mx-auto">
+            {/* <DCRGForm data={inputField} /> */}
+            <PDFDownloadLink
+              document={<DCRGForm data={inputField} />}
+              fileName={`DCRG Form of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download DCRG Form"
+              }
+            </PDFDownloadLink>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-info m-2"
+          onClick={() => {
+            setShowFamily(false);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(!showLTAForm);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showLTAForm ? "Hide" : "Show"} LTA Form
+        </button>
+        {showLTAForm && (
+          <div className="my-2 mx-auto">
+            {/* <LTAForm data={inputField} /> */}
+            <PDFDownloadLink
+              document={<LTAForm data={inputField} />}
+              fileName={`LTA Form of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download LTA Form"
+              }
+            </PDFDownloadLink>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
+          className="btn btn-primary m-2"
+          onClick={() => {
+            setShowFamily(false);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(!showLeaveForm);
+          }}
+        >
+          {showLeaveForm ? "Hide" : "Show"} Leave Form
+        </button>
+        {showLeaveForm && (
+          <div className="my-2 mx-auto">
+            <PensionLeaveForm data={inputField} />
+            {/* <PDFDownloadLink
+              document={<PensionLeaveForm data={inputField} />}
+              fileName={`Leave Form of ${tname}.pdf`}
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                backgroundColor: "navy",
+                border: "1px solid #4a4a4a",
+                width: "40%",
+                borderRadius: 10,
+              }}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Please Wait..." : "Download Leave Form"
+              }
+            </PDFDownloadLink> */}
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-5"
         style={{ width: "50%" }}
       >
         <button
