@@ -11,27 +11,7 @@ import {
 const width = 2480;
 const height = 3508;
 export default function FamilyList({ data }) {
-  const {
-    tname,
-    desig,
-    dob,
-    doj,
-    dojnow,
-    dor,
-    phone,
-    email,
-    hoi,
-    gender,
-    id,
-    empid,
-    school,
-    address,
-    account,
-    ifsc,
-    spouse,
-    spouseDob,
-    children,
-  } = data;
+  const { tname, desig, gender, address, spouse, spouseDob, children } = data;
   return (
     // <PDFViewer
     //   style={{

@@ -358,29 +358,7 @@ const TableRows = ({ doj, dor }) => {
   });
 };
 export default function PensionLeaveForm({ data }) {
-  const {
-    tname,
-    desig,
-    dob,
-    doj,
-    dojnow,
-    dor,
-    phone,
-    email,
-    hoi,
-    gender,
-    id,
-    empid,
-    school,
-    udise,
-    address,
-    account,
-    ifsc,
-    applicationNo,
-    spouse,
-    spouseDob,
-    children,
-  } = data;
+  const { tname, desig, doj, dor, gender, school } = data;
 
   return (
     // <PDFViewer

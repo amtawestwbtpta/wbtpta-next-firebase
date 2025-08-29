@@ -29,7 +29,6 @@ import {
   DateValueToSring,
   isFileEmpty,
 } from "../../modules/calculatefunctions";
-import { notifyAll } from "../../modules/notification";
 import NoticeDetails from "../../components/NoticeDetails";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
@@ -69,6 +68,8 @@ const Notification = () => {
     photoName: "",
     type: "",
   });
+  const [showAddNotice, setShowAddNotice] = useState(false);
+  const [showEditNotice, setShowEditNotice] = useState(false);
   const [showNoticeDetails, setShowNoticeDetails] = useState(false);
   const [noticeText, setNoticeText] = useState("");
   const [editTitle, setEditTitle] = useState("");
@@ -162,26 +163,19 @@ const Notification = () => {
                         },
                       ].sort((a, b) => b.date - a.date)
                     );
-                    let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
-                    let body = noticeText;
-                    await notifyAll(noticeTitle, body)
-                      .then(async () => {
-                        setNoticeText("");
-                        setTitle("");
-                        setLoader(false);
-                        setAddImage(false);
-                        toast.success("Notice Added Successfully!");
-                        // getData();
-                        setFile({});
-                        setSrc(null);
-                        setShowPercent(false);
-                        setProgress(0);
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                        setLoader(false);
-                        toast.error("Error Sending Notification");
-                      });
+
+                    setNoticeText("");
+                    setTitle("");
+                    setLoader(false);
+                    setAddImage(false);
+                    toast.success("Notice Added Successfully!");
+                    if (fileRef.current) {
+                      fileRef.current.value = "";
+                    }
+                    setFile({});
+                    setSrc(null);
+                    setShowPercent(false);
+                    setProgress(0);
                   } else {
                     toast.error("Notice Addition Failed!");
                     setLoader(false);
@@ -263,24 +257,16 @@ const Notification = () => {
                 },
               ]);
 
-              let noticeTitle = `New Notice added By ${teacherdetails.tname}`;
-              let body = noticeText;
-              await notifyAll(noticeTitle, body)
-                .then(async () => {
-                  setNoticeText("");
-                  setTitle("");
-                  setLoader(false);
-                  setAddImage(false);
-                  toast.success("Notice Added Successfully!");
-                  // getData();
-                  setFile({});
-                  setSrc("");
-                })
-                .catch((e) => {
-                  console.log(e);
-                  setLoader(false);
-                  toast.error("Error Sending Notification");
-                });
+              setNoticeText("");
+              setTitle("");
+              setLoader(false);
+              setAddImage(false);
+              toast.success("Notice Added Successfully!");
+              if (fileRef.current) {
+                fileRef.current.value = "";
+              }
+              setFile({});
+              setSrc("");
             } else {
               toast.error("Notice Addition Failed!");
               setLoader(false);
@@ -373,9 +359,9 @@ const Notification = () => {
       }
       const filestorageRef = ref(
         storage,
-        `/noticeImages/${docId + "-" + file.name}`
+        `/noticeImages/${docId + "-" + editFile.name}`
       );
-      const uploadTask = uploadBytesResumable(filestorageRef, file);
+      const uploadTask = uploadBytesResumable(filestorageRef, editFile);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -558,8 +544,9 @@ const Notification = () => {
           <button
             type="button"
             className="btn btn-sm btn-info"
-            data-bs-toggle="modal"
-            data-bs-target="#addNotice"
+            onClick={() => {
+              setShowAddNotice(true);
+            }}
           >
             Add Notice
           </button>
@@ -604,7 +591,7 @@ const Notification = () => {
                         src={
                           "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
                         }
-                        style={{ height: 200, width: 200, cursor: "pointer" }}
+                        style={{ height: 200, cursor: "pointer" }}
                         className="card-img-top rounded-2 m-0 p-0"
                         alt="..."
                         onClick={() => {
@@ -659,8 +646,6 @@ const Notification = () => {
                         <button
                           type="button"
                           className="btn btn-sm m-1 btn-warning"
-                          data-bs-toggle="modal"
-                          data-bs-target="#editNotice"
                           onClick={() => {
                             setEditID(el.id);
                             setEditTitle(el.title);
@@ -668,6 +653,7 @@ const Notification = () => {
                             setOrgTitle(el.title);
                             setOrgNoticeText(el.noticeText);
                             setEditFileName(el.photoName);
+                            setShowEditNotice(true);
                           }}
                         >
                           Edit
@@ -724,353 +710,363 @@ const Notification = () => {
           </button>
         </div>
       )}
-
-      <div
-        className="modal fade"
-        id="addNotice"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="addNotice"
-        aria-hidden="true"
-      >
+      {showAddNotice && (
         <div
-          className={`modal-dialog modal-xl timesFont
-          }`}
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
         >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="addNoticeLabel">
-                Add Notice
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  setNoticeText("");
-                  setTitle("");
-                  setLoader(false);
-                  setAddImage(false);
-                  setFile({});
-                  setSrc(null);
-                  setShowPercent(false);
-                  setProgress(0);
-                  fileRef.current.value = "";
-                }}
-              ></button>
-            </div>
-            <div className="modal-body">
-              <input
-                type="text"
-                className="form-control mb-3 w-75 mx-auto"
-                value={title}
-                placeholder="Add Title"
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <textarea
-                className="form-control mb-3  mx-auto"
-                rows={5}
-                placeholder="Notice Body"
-                value={noticeText}
-                onChange={(e) => setNoticeText(e.target.value)}
-              />
-
-              <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
-                <h4 className="col-md-3 text-primary">Without Image/File</h4>
-                <input
-                  className="form-check-input mb-3 col-md-3"
-                  type="checkbox"
-                  id="checkbox"
-                  role="switch"
-                  checked={addImage}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setAddImage(e.target.checked);
-                    } else {
-                      setAddImage(e.target.checked);
-                      setFile({});
-
-                      setSrc(null);
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="addNoticeLabel">
+                  Add Notice
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setNoticeText("");
+                    setTitle("");
+                    setLoader(false);
+                    setAddImage(false);
+                    setFile({});
+                    setSrc(null);
+                    setShowPercent(false);
+                    setProgress(0);
+                    if (fileRef.current) {
+                      fileRef.current.value = "";
                     }
+                    setShowAddNotice(false);
                   }}
-                  style={{ width: 60, height: 30 }}
-                />
-                <h4 className="col-md-3 text-success">With Image/File</h4>
+                ></button>
               </div>
-              {addImage && (
-                <div className="my-2">
+              <div className="modal-body modal-xl">
+                <input
+                  type="text"
+                  className="form-control mb-3 w-75 mx-auto"
+                  value={title}
+                  placeholder="Add Title"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <textarea
+                  className="form-control mb-3  mx-auto"
+                  rows={5}
+                  placeholder="Notice Body"
+                  value={noticeText}
+                  onChange={(e) => setNoticeText(e.target.value)}
+                />
+
+                <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
+                  <h4 className="col-md-3 text-primary">Without Image/File</h4>
                   <input
-                    type="file"
-                    id="img"
-                    ref={fileRef}
-                    className="form-control mb-3 w-100 mx-auto"
+                    className="form-check-input mb-3 col-md-3"
+                    type="checkbox"
+                    id="checkbox"
+                    role="switch"
+                    checked={addImage}
                     onChange={(e) => {
-                      setFile(e.target.files[0]);
-                      setSrc(URL.createObjectURL(e.target.files[0]));
+                      if (e.target.checked) {
+                        setAddImage(e.target.checked);
+                      } else {
+                        setAddImage(e.target.checked);
+                        setFile({});
+
+                        setSrc(null);
+                      }
                     }}
+                    style={{ width: 60, height: 30 }}
                   />
-                  {src !== null && file.type.split("/")[0] === "image" ? (
-                    <div>
+                  <h4 className="col-md-3 text-success">With Image/File</h4>
+                </div>
+                {addImage && (
+                  <div className="my-2">
+                    <input
+                      type="file"
+                      id="img"
+                      ref={fileRef}
+                      className="form-control mb-3 w-100 mx-auto"
+                      onChange={(e) => {
+                        setFile(e.target.files[0]);
+                        setSrc(URL.createObjectURL(e.target.files[0]));
+                      }}
+                    />
+                    {src !== null && file.type.split("/")[0] === "image" ? (
+                      <div>
+                        <img
+                          src={src}
+                          alt="uploadedImage"
+                          width={150}
+                          className="rounded-2"
+                        />
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={() => {
+                            setSrc(null);
+                            setFile({});
+                            fileRef.current.value = "";
+                          }}
+                        ></button>
+                      </div>
+                    ) : src !== null &&
+                      file.type.split("/")[0] === "application" ? (
                       <img
-                        src={src}
+                        src={
+                          "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                        }
                         alt="uploadedImage"
                         width={150}
                         className="rounded-2"
                       />
-                      <button
-                        type="button"
-                        className="btn-close"
-                        aria-label="Close"
-                        onClick={() => {
-                          setSrc(null);
-                          setFile({});
-                          fileRef.current.value = "";
-                        }}
-                      ></button>
-                    </div>
-                  ) : src !== null &&
-                    file.type.split("/")[0] === "application" ? (
-                    <img
-                      src={
-                        "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
-                      }
-                      alt="uploadedImage"
-                      width={150}
-                      className="rounded-2"
-                    />
-                  ) : null}
+                    ) : null}
 
-                  {showPercent && (
-                    <div
-                      className="progress-bar my-2"
-                      style={{
-                        width: progress + "%",
-                        height: "15px",
-                        backgroundColor: "purple",
-                        borderRadius: "10px",
-                        transformOrigin: "start",
-                      }}
-                    ></div>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-success"
-                data-bs-dismiss="modal"
-                onClick={() => {
-                  if (title !== "" && noticeText !== "") {
-                    addNotice();
-                  } else {
-                    toast.error("Please fill all the fields");
-                  }
-                }}
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-                onClick={() => {
-                  setNoticeText("");
-                  setTitle("");
-                  setLoader(false);
-                  setAddImage(false);
-                  setFile({});
-                  setSrc(null);
-                  setShowPercent(false);
-                  setProgress(0);
-                  fileRef.current.value = "";
-                }}
-              >
-                Close
-              </button>
+                    {showPercent && (
+                      <div
+                        className="progress-bar my-2"
+                        style={{
+                          width: progress + "%",
+                          height: "15px",
+                          backgroundColor: "purple",
+                          borderRadius: "10px",
+                          transformOrigin: "start",
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                )}
+              </div>
+              <div className="modal-footer d-flex flex-column">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => {
+                    if (title !== "" && noticeText !== "") {
+                      addNotice();
+                      setShowAddNotice(false);
+                    } else {
+                      toast.error("Please fill all the fields");
+                    }
+                  }}
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setNoticeText("");
+                    setTitle("");
+                    setLoader(false);
+                    setAddImage(false);
+                    setFile({});
+                    setSrc(null);
+                    setShowPercent(false);
+                    setProgress(0);
+                    if (fileRef.current) {
+                      fileRef.current.value = "";
+                    }
+                    setShowAddNotice(false);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="modal fade"
-        id="editNotice"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="editNotice"
-        aria-hidden="true"
-      >
+      )}
+      {showEditNotice && (
         <div
-          className={`modal-dialog modal-xl timesFont
-          }`}
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+          aria-modal="true"
         >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="editNoticeLabel">
-                Edit Notice
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  setEditTitle("");
-                  setEditNoticeText("");
-                  setOrgNoticeText("");
-                  setOrgTitle("");
-                  setEditFile({});
-                  editFileRef.current.value = "";
-                  setSrc(null);
-                  setShowPercent(false);
-                  setProgress(0);
-                  setEditAddImage(false);
-                }}
-              ></button>
-            </div>
-            <div className="modal-body">
-              <input
-                type="text"
-                ref={editFileRef}
-                className="form-control mb-3 w-50 mx-auto"
-                value={editTitle}
-                placeholder="Add Title"
-                onChange={(e) => setEditTitle(e.target.value)}
-              />
-              <textarea
-                className="form-control mb-3 w-50 mx-auto"
-                rows={5}
-                placeholder="Notice Body"
-                value={editNoticeText}
-                onChange={(e) => setEditNoticeText(e.target.value)}
-              />
-              <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
-                <h4 className="col-md-3 text-primary">Without Image/File</h4>
-                <input
-                  className="form-check-input mb-3 col-md-3"
-                  type="checkbox"
-                  id="checkbox"
-                  role="switch"
-                  checked={editAddImage}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setEditAddImage(e.target.checked);
-                    } else {
-                      setEditAddImage(e.target.checked);
-                      setEditFile({});
-                      editFileRef.current.value = "";
-                      setSrc(null);
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="editNoticeLabel">
+                  Edit Notice
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setEditTitle("");
+                    setEditNoticeText("");
+                    setOrgNoticeText("");
+                    setOrgTitle("");
+                    setEditFile({});
+                    if (editFileRef.current) {
+                      if (editFileRef.current) {
+                        editFileRef.current.value = "";
+                      }
                     }
+                    setSrc(null);
+                    setShowPercent(false);
+                    setProgress(0);
+                    setEditAddImage(false);
+                    setShowEditNotice(false);
                   }}
-                  style={{ width: 60, height: 30 }}
-                />
-                <h4 className="col-md-3 text-success">With Image/File</h4>
+                ></button>
               </div>
-              {editAddImage ? (
-                <div className="my-2">
+              <div className="modal-body">
+                <input
+                  type="text"
+                  ref={editFileRef}
+                  className="form-control mb-3 w-50 mx-auto"
+                  value={editTitle}
+                  placeholder="Add Title"
+                  onChange={(e) => setEditTitle(e.target.value)}
+                />
+                <textarea
+                  className="form-control mb-3 w-50 mx-auto"
+                  rows={5}
+                  placeholder="Notice Body"
+                  value={editNoticeText}
+                  onChange={(e) => setEditNoticeText(e.target.value)}
+                />
+                <div className="d-flex row mx-auto mb-3 justify-content-center align-items-center form-check form-switch">
+                  <h4 className="col-md-3 text-primary">Without Image/File</h4>
                   <input
-                    type="file"
-                    id="img"
-                    className="form-control mb-3 w-100 mx-auto"
+                    className="form-check-input mb-3 col-md-3"
+                    type="checkbox"
+                    id="checkbox"
+                    role="switch"
+                    checked={editAddImage}
                     onChange={(e) => {
-                      setEditFile(e.target.files[0]);
-                      setSrc(URL.createObjectURL(e.target.files[0]));
-                    }}
-                  />
-                  {src !== null && editFile.type?.split("/")[0] === "image" ? (
-                    <div>
-                      <img
-                        src={src}
-                        alt="uploadedImage"
-                        width={150}
-                        className="rounded-2"
-                      />
-                      <button
-                        type="button"
-                        className="btn-close"
-                        aria-label="Close"
-                        onClick={() => {
-                          setSrc(null);
-                          setEditFile({});
+                      if (e.target.checked) {
+                        setEditAddImage(e.target.checked);
+                      } else {
+                        setEditAddImage(e.target.checked);
+                        setEditFile({});
+                        if (editFileRef.current) {
                           editFileRef.current.value = "";
-                        }}
-                      ></button>
-                    </div>
-                  ) : src !== null &&
-                    file.type?.split("/")[0] === "application" ? (
-                    <img
-                      src={
-                        "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                        }
+                        setSrc(null);
                       }
-                      alt="uploadedImage"
-                      width={150}
-                      className="rounded-2"
-                    />
-                  ) : null}
-                  {showPercent && (
-                    <div
-                      className="progress-bar my-2"
-                      style={{
-                        width: progress + "%",
-                        height: "15px",
-                        backgroundColor: "purple",
-                        borderRadius: "10px",
-                        transformOrigin: "start",
-                      }}
-                    ></div>
-                  )}
+                    }}
+                    style={{ width: 60, height: 30 }}
+                  />
+                  <h4 className="col-md-3 text-success">With Image/File</h4>
                 </div>
-              ) : null}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-success"
-                data-bs-dismiss="modal"
-                onClick={() => {
-                  if (editTitle !== "" && editNoticeText !== "") {
-                    if (orgTitle !== editTitle) {
-                      updateNotice();
-                    } else if (orgNoticeText !== editNoticeText) {
-                      updateNotice();
-                    } else if (!isFileEmpty(editFile)) {
-                      updateNotice();
+                {editAddImage ? (
+                  <div className="my-2">
+                    <input
+                      type="file"
+                      id="img"
+                      className="form-control mb-3 w-100 mx-auto"
+                      onChange={(e) => {
+                        setEditFile(e.target.files[0]);
+                        setSrc(URL.createObjectURL(e.target.files[0]));
+                      }}
+                    />
+                    {src !== null &&
+                    editFile.type?.split("/")[0] === "image" ? (
+                      <div>
+                        <img
+                          src={src}
+                          alt="uploadedImage"
+                          width={150}
+                          className="rounded-2"
+                        />
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={() => {
+                            setSrc(null);
+                            setEditFile({});
+                            if (editFileRef.current) {
+                              editFileRef.current.value = "";
+                            }
+                          }}
+                        ></button>
+                      </div>
+                    ) : src !== null &&
+                      file.type?.split("/")[0] === "application" ? (
+                      <img
+                        src={
+                          "https://raw.githubusercontent.com/awwbtpta/data/main/pdf.png"
+                        }
+                        alt="uploadedImage"
+                        width={150}
+                        className="rounded-2"
+                      />
+                    ) : null}
+                    {showPercent && (
+                      <div
+                        className="progress-bar my-2"
+                        style={{
+                          width: progress + "%",
+                          height: "15px",
+                          backgroundColor: "purple",
+                          borderRadius: "10px",
+                          transformOrigin: "start",
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+              <div className="modal-footer d-flex flex-column">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => {
+                    if (editTitle !== "" && editNoticeText !== "") {
+                      if (orgTitle !== editTitle) {
+                        updateNotice();
+                        setShowEditNotice(false);
+                      } else if (orgNoticeText !== editNoticeText) {
+                        updateNotice();
+                        setShowEditNotice(false);
+                      } else if (!isFileEmpty(editFile)) {
+                        updateNotice();
+                        setShowEditNotice(false);
+                      } else {
+                        toast.error("Nothing to Update!!!");
+                      }
                     } else {
-                      toast.error("Nothing to Update!!!");
+                      toast.error("Please fill all the fields");
                     }
-                  } else {
-                    toast.error("Please fill all the fields");
-                  }
-                }}
-              >
-                Update
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-                onClick={() => {
-                  setEditTitle("");
-                  setEditNoticeText("");
-                  setOrgNoticeText("");
-                  setOrgTitle("");
-                  setEditFile({});
-                  editFileRef.current.value = "";
-                  setSrc(null);
-                  setShowPercent(false);
-                  setProgress(0);
-                  setEditAddImage(false);
-                }}
-              >
-                Close
-              </button>
+                  }}
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setEditTitle("");
+                    setEditNoticeText("");
+                    setOrgNoticeText("");
+                    setOrgTitle("");
+                    setEditFile({});
+                    if (editFileRef.current) {
+                      editFileRef.current.value = "";
+                    }
+                    setSrc(null);
+                    setShowPercent(false);
+                    setProgress(0);
+                    setEditAddImage(false);
+                    setShowEditNotice(false);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

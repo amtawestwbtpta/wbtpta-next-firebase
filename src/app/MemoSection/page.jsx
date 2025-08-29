@@ -31,7 +31,6 @@ import {
   isFileEmpty,
   todayInString,
 } from "../../modules/calculatefunctions";
-import { notifyAll } from "../../modules/notification";
 import DataTable from "react-data-table-component";
 import { useGlobalContext } from "../../context/Store";
 import axios from "axios";
@@ -228,28 +227,18 @@ const MemoSection = () => {
                       )
                     );
                     setMemoUpdateTime(Date.now());
-                    let memoTitle = `New memo added By ${teacherdetails.tname}`;
-                    let body = memoText;
-                    await notifyAll(memoTitle, body)
-                      .then(async () => {
-                        setmemoText("");
-                        setTitle("");
-                        setMemoNumber("");
-                        setMemoDate(todayInString());
-                        setLoader(false);
-                        setAddImage(false);
-                        toast.success("memo Added Successfully!");
-                        // getData();
-                        setFile({});
-                        setSrc("");
-                        setShowPercent(false);
-                        setProgress(0);
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                        setLoader(false);
-                        toast.error("Error Sending Notification");
-                      });
+                    setmemoText("");
+                    setTitle("");
+                    setMemoNumber("");
+                    setMemoDate(todayInString());
+                    setLoader(false);
+                    setAddImage(false);
+                    toast.success("memo Added Successfully!");
+                    // getData();
+                    setFile({});
+                    setSrc("");
+                    setShowPercent(false);
+                    setProgress(0);
                   } else {
                     toast.error("Error Adding memo to Mongo");
                     setLoader(false);
@@ -366,26 +355,16 @@ const MemoSection = () => {
                 )
               );
               setMemoUpdateTime(Date.now());
-              let memoTitle = `New memo added By ${teacherdetails.tname}`;
-              let body = memoText;
-              await notifyAll(memoTitle, body)
-                .then(async () => {
-                  setmemoText("");
-                  setTitle("");
-                  setMemoNumber("");
-                  setMemoDate(todayInString());
-                  setLoader(false);
-                  setAddImage(false);
-                  toast.success("memo Added Successfully!");
-                  // getData();
-                  setFile({});
-                  setSrc("");
-                })
-                .catch((e) => {
-                  console.log(e);
-                  setLoader(false);
-                  toast.error("Error Sending Notification");
-                });
+              setmemoText("");
+              setTitle("");
+              setMemoNumber("");
+              setMemoDate(todayInString());
+              setLoader(false);
+              setAddImage(false);
+              toast.success("memo Added Successfully!");
+              // getData();
+              setFile({});
+              setSrc("");
             } else {
               toast.error("Error Adding memo to Mongo");
               setLoader(false);
@@ -630,6 +609,8 @@ const MemoSection = () => {
       name: "Sl",
       selector: (row, index) => index + 1,
       sortable: +true,
+      center: +true,
+      width: width < 500 ? "5%" : "10%",
     },
     {
       name: "Title",
@@ -639,18 +620,19 @@ const MemoSection = () => {
       width: width < 500 ? "30%" : "20%",
     },
     {
-      name: "Memo No.",
-      selector: (row) => row.memoNumber,
+      name: "Memo",
+      selector: (row) => (
+        <div>
+          <p>Memo No: {row.memoNumber}</p>
+          <p>Date: {row.memoDate}</p>
+        </div>
+      ),
       center: +true,
       wrap: +true,
     },
+
     {
-      name: "Date",
-      selector: (row) => row.memoDate,
-      center: +true,
-    },
-    {
-      name: "File Type",
+      name: "Type",
       selector: (row) => (
         <h6>
           {row.type === "application/pdf"
@@ -689,6 +671,7 @@ const MemoSection = () => {
         </h6>
       ),
       center: +true,
+      width: width < 500 ? "5%" : "10%",
     },
     {
       name: "Download",
@@ -706,7 +689,7 @@ const MemoSection = () => {
           "No File Available"
         ),
       center: +true,
-      width: width < 500 ? "18%" : "10%",
+      width: width < 500 ? "20%" : "30%",
     },
     {
       name: "Action",
@@ -719,6 +702,17 @@ const MemoSection = () => {
               role="group"
               aria-label="Basic mixed styles example"
             >
+              <button
+                type="button"
+                className="btn btn-sm m-1 btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#viewMemo"
+                onClick={() => {
+                  setMemo(el);
+                }}
+              >
+                View
+              </button>
               <button
                 type="button"
                 className="btn btn-sm m-1 btn-warning"
@@ -762,17 +756,6 @@ const MemoSection = () => {
               >
                 Delete
               </button>
-              <button
-                type="button"
-                className="btn btn-sm m-1 btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#viewMemo"
-                onClick={() => {
-                  setMemo(el);
-                }}
-              >
-                View
-              </button>
             </div>
           </div>
         ) : (
@@ -789,7 +772,7 @@ const MemoSection = () => {
           </button>
         ),
       center: +true,
-      width: width < 500 ? "70%" : "20%",
+      width: width < 500 ? "20%" : "30%",
     },
   ];
 

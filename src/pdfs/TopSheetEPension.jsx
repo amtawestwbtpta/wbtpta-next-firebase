@@ -13,26 +13,15 @@ const height = 3508;
 export default function TopSheetEPension({ data }) {
   const {
     tname,
-    desig,
     dob,
     doj,
-    dojnow,
     dor,
     phone,
-    email,
-    hoi,
-    gender,
-    id,
     empid,
     school,
     udise,
     address,
-    account,
-    ifsc,
     applicationNo,
-    spouse,
-    spouseDob,
-    children,
   } = data;
   return (
     // <PDFViewer

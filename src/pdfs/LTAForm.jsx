@@ -14,29 +14,7 @@ const width = 2480;
 const height = 3508;
 
 export default function LTAForm({ data }) {
-  const {
-    tname,
-    desig,
-    dob,
-    doj,
-    dojnow,
-    dor,
-    phone,
-    email,
-    hoi,
-    gender,
-    id,
-    empid,
-    school,
-    udise,
-    address,
-    account,
-    ifsc,
-    applicationNo,
-    spouse,
-    spouseDob,
-    children,
-  } = data;
+  const { tname, gender, school, address, spouse, spouseDob, children } = data;
   return (
     // <PDFViewer
     //   style={{
