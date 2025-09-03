@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { firestore } from "../../context/FirebaseContext";
 import { doc, updateDoc } from "firebase/firestore";
-const page = () => {
+const SchoolTeacherData = () => {
   const {
     state,
     schoolState,
@@ -20,7 +20,22 @@ const page = () => {
   const [teacherData, setTeacherData] = useState(teachersState);
   const [schoolData, setschoolData] = useState(schoolState);
   const [filteredData, setFilteredData] = useState([]);
-  const [filteredSchool, setFilteredSchool] = useState([]);
+  const [filteredSchool, setFilteredSchool] = useState({
+    pp: 0,
+    i: 0,
+    ii: 0,
+    iii: 0,
+    iv: 0,
+    v: 0,
+    student_prev2: 0,
+    id: "",
+    school: "",
+    total_student: 0,
+    student: 0,
+    gp: "",
+    year: 2025,
+    udise: "",
+  });
 
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:School Wise Teacher Data";
@@ -106,22 +121,45 @@ const page = () => {
       });
     }
   };
-
-  const getLocalData = () => {
-    setInputField(filteredSchool[0]);
-    if (typeof window !== undefined) {
-      document.getElementById("sch_name").value = filteredSchool[0].school;
-
-      document.getElementById("pp").value = filteredSchool[0].pp;
-      document.getElementById("i").value = filteredSchool[0].i;
-      document.getElementById("ii").value = filteredSchool[0].ii;
-      document.getElementById("iii").value = filteredSchool[0].iii;
-      document.getElementById("iv").value = filteredSchool[0].iv;
-      document.getElementById("v").value = filteredSchool[0].v;
-      document.getElementById("total_student").value =
-        filteredSchool[0].total_student;
+  const handleSelection = (e) => {
+    const value = e.target.value;
+    if (value) {
+      const tData = teacherData.filter((el) => el.udise.match(value));
+      const sData = schoolData.filter((el) => el.udise.match(value))[0];
+      setFilteredData(tData);
+      setStateArray(tData);
+      setFilteredSchool(sData);
+      setInputField(sData);
+    } else {
+      toast.error("Please Select School Name");
     }
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // parse numbers only for student fields
+    const parsedValue =
+      ["pp", "i", "ii", "iii", "iv", "v"].includes(name) && value !== ""
+        ? parseInt(value) || 0
+        : value;
+
+    const updatedField = { ...inputField, [name]: parsedValue };
+
+    // recalculate total only from student fields
+    const total =
+      (parseInt(updatedField.pp) || 0) +
+      (parseInt(updatedField.i) || 0) +
+      (parseInt(updatedField.ii) || 0) +
+      (parseInt(updatedField.iii) || 0) +
+      (parseInt(updatedField.iv) || 0) +
+      (parseInt(updatedField.v) || 0);
+
+    setInputField({
+      ...updatedField,
+      total_student: total,
+    });
+  };
+
   useEffect(() => {
     // eslint-disable-next-line
   }, [inputField, schoolData, filteredSchool, teacherData]);
@@ -150,18 +188,7 @@ const page = () => {
           <select
             className="form-select"
             defaultValue={""}
-            onChange={(e) => {
-              setFilteredData(
-                teacherData.filter((el) => el.udise.match(e.target.value))
-              );
-              setStateArray(
-                teacherData.filter((el) => el.udise.match(e.target.value))
-              );
-
-              setFilteredSchool(
-                schoolData.filter((el) => el.udise.match(e.target.value))
-              );
-            }}
+            onChange={handleSelection}
             aria-label="Default select example"
           >
             <option value="">Select School Name</option>
@@ -176,24 +203,25 @@ const page = () => {
               : null}
           </select>
         </div>
-        {filteredSchool.length > 0 ? (
+
+        {filteredSchool.school && (
           <div className="container my-3 mx-auto">
             <div className="row my-3">
               <div className="col-md-6">
                 <h4 className="text-primary text center">
-                  SCHOOL NAME: {filteredSchool[0].school}
+                  SCHOOL NAME: {filteredSchool.school}
                 </h4>
               </div>
               <div className="col-md-6">
                 <h4 className="text-primary text center">
-                  GP NAME: {filteredSchool[0].gp}
+                  GP NAME: {filteredSchool.gp}
                 </h4>
               </div>
             </div>
             <div className="row">
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  UDISE: {filteredSchool[0].udise}
+                  UDISE: {filteredSchool.udise}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
@@ -203,77 +231,75 @@ const page = () => {
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  Total Student {filteredSchool[0].year - 2}:{" "}
-                  {filteredSchool[0].student_prev2}
+                  Total Student {filteredSchool.year - 2}:{" "}
+                  {filteredSchool.student_prev2}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  Total Student {filteredSchool[0].year - 1}:{" "}
-                  {filteredSchool[0].student}
+                  Total Student {filteredSchool.year - 1}:{" "}
+                  {filteredSchool.student}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  Total Student {filteredSchool[0].year}:{" "}
-                  {filteredSchool[0].total_student}
+                  Total Student {filteredSchool.year}:{" "}
+                  {filteredSchool.total_student}
                 </h6>
               </div>
             </div>
             <div className="row my-2">
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  No. of Pre Primary Students: {filteredSchool[0].pp}
+                  No. of Pre Primary Students: {filteredSchool.pp}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  No. of Class I Students: {filteredSchool[0].i}
+                  No. of Class I Students: {filteredSchool.i}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  No. of Class II Students: {filteredSchool[0].ii}
+                  No. of Class II Students: {filteredSchool.ii}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  No. of Class III Students: {filteredSchool[0].iii}
+                  No. of Class III Students: {filteredSchool.iii}
                 </h6>
               </div>
               <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
-                  No. of Class IV Students: {filteredSchool[0].iv}
+                  No. of Class IV Students: {filteredSchool.iv}
                 </h6>
               </div>
-              {filteredSchool[0].v > 0 ? (
+              {filteredSchool.v > 0 ? (
                 <div className="col-md-3 m-1">
                   <h6 className="text-primary text center">
-                    No. of Class V Students: {filteredSchool[0].v}
+                    No. of Class V Students: {filteredSchool.v}
                   </h6>
                 </div>
               ) : null}
             </div>
             <div className="my-2">
               {(filteredData.length > 2 &&
-                filteredSchool[0].total_student >= 100 &&
+                filteredSchool.total_student >= 100 &&
                 Math.floor(
-                  filteredSchool[0].total_student / filteredData.length
+                  filteredSchool.total_student / filteredData.length
                 ) >= 40) ||
               (filteredData.length > 2 &&
-                filteredSchool[0].total_student < 100 &&
-                Math.floor(
-                  filteredSchool[0].total_student / filteredData.length
-                ) > 35) ||
+                filteredSchool.total_student < 100 &&
+                Math.floor(filteredSchool.total_student / filteredData.length) >
+                  35) ||
               (filteredData.length <= 2 &&
-                Math.floor(
-                  filteredSchool[0].total_student / filteredData.length
-                ) > 35) ? (
+                Math.floor(filteredSchool.total_student / filteredData.length) >
+                  35) ? (
                 <div>
                   <h4 className="m-0 text-danger text-center">
                     Student Teacher Ratio is{" "}
                     {Math.floor(
-                      filteredSchool[0].total_student / filteredData.length
+                      filteredSchool.total_student / filteredData.length
                     )}
                     , Less Teacher
                   </h4>
@@ -281,17 +307,17 @@ const page = () => {
                 </div>
               ) : (filteredData.length > 2 &&
                   Math.floor(
-                    filteredSchool[0].total_student / filteredData.length
+                    filteredSchool.total_student / filteredData.length
                   ) >= 30) ||
                 filteredData.length <= 2 ||
                 Math.floor(
-                  filteredSchool[0].total_student / filteredData.length
+                  filteredSchool.total_student / filteredData.length
                 ) <= 30 ? (
                 <div>
                   <h4 className="m-0 text-success text-center">
                     Student Teacher Ratio is{" "}
                     {Math.floor(
-                      filteredSchool[0].total_student / filteredData.length
+                      filteredSchool.total_student / filteredData.length
                     )}
                     , Normal
                   </h4>
@@ -302,7 +328,7 @@ const page = () => {
                   <h4 className="m-0 text-danger text-center">
                     Student Teacher Ratio is{" "}
                     {Math.floor(
-                      filteredSchool[0].total_student / filteredData.length
+                      filteredSchool.total_student / filteredData.length
                     )}
                     , Excess Teacher
                   </h4>
@@ -319,7 +345,9 @@ const page = () => {
                     className="btn btn-primary mb-3"
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
-                    onClick={getLocalData}
+                    onClick={() => {
+                      setInputField(filteredSchool);
+                    }}
                   >
                     Update Student Data
                   </button>
@@ -395,15 +423,9 @@ const page = () => {
                                 <input
                                   type="text"
                                   className="form-control"
-                                  id="sch_name"
                                   name="school"
-                                  value={inputField.school}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      school: e.target.value,
-                                    });
-                                  }}
+                                  value={inputField.school || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3 col-lg-6">
@@ -414,17 +436,11 @@ const page = () => {
                               <div className="mb-3 col-lg-6">
                                 <label className="form-label">PP Student</label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
                                   name="pp"
-                                  id="pp"
-                                  value={inputField.pp}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      pp: parseInt(e.target.value),
-                                    });
-                                  }}
+                                  value={inputField.pp || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3 col-lg-6">
@@ -432,17 +448,11 @@ const page = () => {
                                   Class I Student
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
-                                  id="i"
                                   name="i"
-                                  value={inputField.i}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      i: parseInt(e.target.value),
-                                    });
-                                  }}
+                                  value={inputField.i || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3 col-lg-6">
@@ -450,17 +460,11 @@ const page = () => {
                                   Class II Student
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
-                                  id="ii"
                                   name="ii"
-                                  value={inputField.ii}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      ii: parseInt(e.target.value),
-                                    });
-                                  }}
+                                  value={inputField.ii || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3 col-lg-6">
@@ -468,17 +472,11 @@ const page = () => {
                                   Class III Student
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
-                                  id="iii"
                                   name="iii"
-                                  value={inputField.iii}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      iii: parseInt(e.target.value),
-                                    });
-                                  }}
+                                  value={inputField.iii || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
                               <div className="mb-3 col-lg-6">
@@ -486,67 +484,37 @@ const page = () => {
                                   Class IV Student
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
-                                  id="iv"
                                   name="iv"
-                                  value={inputField.iv}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      iv: parseInt(e.target.value),
-                                    });
-                                  }}
+                                  value={inputField.iv || ""}
+                                  onChange={handleChange}
                                 />
                               </div>
-                              <div className="mb-3 col-lg-6">
-                                <label className="form-label">
-                                  Class V Student
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="v"
-                                  name="v"
-                                  value={inputField.v}
-                                  onMouseEnter={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      v: parseInt(e.target.value),
-                                    });
-                                  }}
-                                />
-                              </div>
+                              {filteredSchool.v > 0 && (
+                                <div className="mb-3 col-lg-6">
+                                  <label className="form-label">
+                                    Class V Student
+                                  </label>
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    name="v"
+                                    value={inputField.v || ""}
+                                    onChange={handleChange}
+                                  />
+                                </div>
+                              )}
                               <div className="mb-3 col-lg-6">
                                 <label className="form-label">
                                   Total Student
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
-                                  id="total_student"
                                   name="total_student"
-                                  value={parseInt(
-                                    inputField.pp +
-                                      inputField.i +
-                                      inputField.ii +
-                                      inputField.iii +
-                                      inputField.iv +
-                                      inputField.v
-                                  )}
-                                  onChange={(e) => {
-                                    setInputField({
-                                      ...inputField,
-                                      total_student: parseInt(
-                                        inputField.pp +
-                                          inputField.i +
-                                          inputField.ii +
-                                          inputField.iii +
-                                          inputField.iv +
-                                          inputField.v
-                                      ),
-                                    });
-                                  }}
+                                  value={inputField.total_student || 0}
+                                  readOnly
                                 />
                               </div>
                             </div>
@@ -556,6 +524,9 @@ const page = () => {
                               type="button"
                               className="btn btn-secondary"
                               data-bs-dismiss="modal"
+                              onClick={() => {
+                                setInputField(filteredSchool);
+                              }}
                             >
                               Close
                             </button>
@@ -576,7 +547,7 @@ const page = () => {
               ) : null}
             </div>
           </div>
-        ) : null}
+        )}
 
         <div className="row mx-auto my-3 rounded justify-content-evenly">
           {filteredData.map((el) => {
@@ -674,4 +645,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SchoolTeacherData;
