@@ -31,58 +31,45 @@ const page = () => {
   }, []);
 
   const [inputField, setInputField] = useState({
-    id: "",
-    school: "",
     pp: 0,
     i: 0,
     ii: 0,
     iii: 0,
     iv: 0,
     v: 0,
+    student_prev2: 0,
+    id: "",
+    school: "",
     total_student: 0,
+    student: 0,
+    gp: "",
+    year: 2025,
+    udise: "",
   });
   const update = async () => {
+    const newData = {
+      ...inputField,
+      school: inputField.school,
+      pp: inputField.pp,
+      i: inputField.i,
+      ii: inputField.ii,
+      iii: inputField.iii,
+      iv: inputField.iv,
+      v: inputField.v,
+      total_student: parseInt(
+        inputField.pp +
+          inputField.i +
+          inputField.ii +
+          inputField.iii +
+          inputField.iv +
+          inputField.v
+      ),
+    };
     try {
-      const docRef = doc(firestore, "schools", inputField.id);
-      await updateDoc(docRef, {
-        school: inputField.school,
-        pp: inputField.pp,
-        i: inputField.i,
-        ii: inputField.ii,
-        iii: inputField.iii,
-        iv: inputField.iv,
-        v: inputField.v,
-        total_student: parseInt(
-          inputField.pp +
-            inputField.i +
-            inputField.ii +
-            inputField.iii +
-            inputField.iv +
-            inputField.v
-        ),
-      });
+      const docRef = doc(firestore, "schools", newData.id);
+      await updateDoc(docRef, newData);
       let y = schoolState.filter((el) => el.id !== inputField.id);
-      y = [
-        ...y,
-        {
-          school: inputField.school,
-          id: inputField.id,
-          pp: inputField.pp,
-          i: inputField.i,
-          ii: inputField.ii,
-          iii: inputField.iii,
-          iv: inputField.iv,
-          v: inputField.v,
-          total_student: parseInt(
-            inputField.pp +
-              inputField.i +
-              inputField.ii +
-              inputField.iii +
-              inputField.iv +
-              inputField.v
-          ),
-        },
-      ];
+      y = [...y, newData];
       y = y.sort(function (a, b) {
         var nameA = a.school.toLowerCase(),
           nameB = b.school.toLowerCase();
@@ -121,16 +108,7 @@ const page = () => {
   };
 
   const getLocalData = () => {
-    setInputField({
-      id: filteredSchool[0].id,
-      school: filteredSchool[0].school,
-      pp: filteredSchool[0].pp,
-      i: filteredSchool[0].i,
-      ii: filteredSchool[0].ii,
-      iii: filteredSchool[0].iii,
-      iv: filteredSchool[0].iv,
-      v: filteredSchool[0].v,
-    });
+    setInputField(filteredSchool[0]);
     if (typeof window !== undefined) {
       document.getElementById("sch_name").value = filteredSchool[0].school;
 
@@ -399,7 +377,7 @@ const page = () => {
                               className="modal-title fs-5"
                               id="staticBackdropLabel"
                             >
-                              UPDATE {filteredSchool[0].school} DATA:
+                              UPDATE {inputField.school} DATA:
                             </h1>
                             <button
                               type="button"
@@ -419,7 +397,7 @@ const page = () => {
                                   className="form-control"
                                   id="sch_name"
                                   name="school"
-                                  defaultValue={filteredSchool[0].school}
+                                  value={inputField.school}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -440,7 +418,7 @@ const page = () => {
                                   className="form-control"
                                   name="pp"
                                   id="pp"
-                                  defaultValue={filteredSchool[0].pp}
+                                  value={inputField.pp}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -458,7 +436,7 @@ const page = () => {
                                   className="form-control"
                                   id="i"
                                   name="i"
-                                  defaultValue={filteredSchool[0].i}
+                                  value={inputField.i}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -476,7 +454,7 @@ const page = () => {
                                   className="form-control"
                                   id="ii"
                                   name="ii"
-                                  defaultValue={filteredSchool[0].ii}
+                                  value={inputField.ii}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -494,7 +472,7 @@ const page = () => {
                                   className="form-control"
                                   id="iii"
                                   name="iii"
-                                  defaultValue={filteredSchool[0].iii}
+                                  value={inputField.iii}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -512,7 +490,7 @@ const page = () => {
                                   className="form-control"
                                   id="iv"
                                   name="iv"
-                                  defaultValue={filteredSchool[0].iv}
+                                  value={inputField.iv}
                                   onChange={(e) => {
                                     setInputField({
                                       ...inputField,
@@ -530,7 +508,7 @@ const page = () => {
                                   className="form-control"
                                   id="v"
                                   name="v"
-                                  defaultValue={filteredSchool[0].v}
+                                  value={inputField.v}
                                   onMouseEnter={(e) => {
                                     setInputField({
                                       ...inputField,
