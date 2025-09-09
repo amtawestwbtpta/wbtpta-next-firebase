@@ -16,6 +16,10 @@ import {
 } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
+function roundUp(num, decimals = 0) {
+  const factor = Math.pow(10, decimals);
+  return Math.ceil(num * factor) / factor;
+}
 const TableRows = ({ doj, dor }) => {
   const joingDay = parseInt(doj.split("-")[0]);
   const joingMonth = doj.split("-")[1];
@@ -98,7 +102,7 @@ const TableRows = ({ doj, dor }) => {
             >
               <Text style={styles.text}>
                 {years[i + 1] === retirementYear
-                  ? Math.round(
+                  ? roundUp(
                       parseInt(
                         (monthsBetween(
                           joingDay + "-" + joingMonth + "-" + y,
@@ -246,7 +250,7 @@ const TableRows = ({ doj, dor }) => {
             >
               <Text style={styles.text}>
                 {years[i + 1] === retirementYear
-                  ? Math.round(
+                  ? roundUp(
                       parseInt(
                         (monthsBetween(
                           joingDay + "-" + joingMonth + "-" + y,
