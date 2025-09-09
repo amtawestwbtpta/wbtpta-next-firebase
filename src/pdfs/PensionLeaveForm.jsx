@@ -98,13 +98,15 @@ const TableRows = ({ doj, dor }) => {
             >
               <Text style={styles.text}>
                 {years[i + 1] === retirementYear
-                  ? parseInt(
-                      (monthsBetween(
-                        joingDay + "-" + joingMonth + "-" + y,
-                        dor
-                      ) *
-                        30) /
-                        12
+                  ? Math.round(
+                      parseInt(
+                        (monthsBetween(
+                          joingDay + "-" + joingMonth + "-" + y,
+                          dor
+                        ) *
+                          30) /
+                          12
+                      )
                     )
                   : yearDiff * 30}
               </Text>
@@ -244,13 +246,15 @@ const TableRows = ({ doj, dor }) => {
             >
               <Text style={styles.text}>
                 {years[i + 1] === retirementYear
-                  ? parseInt(
-                      (monthsBetween(
-                        joingDay + "-" + joingMonth + "-" + y,
-                        dor
-                      ) *
-                        15) /
-                        12
+                  ? Math.round(
+                      parseInt(
+                        (monthsBetween(
+                          joingDay + "-" + joingMonth + "-" + y,
+                          dor
+                        ) *
+                          15) /
+                          12
+                      )
                     )
                   : yearDiff * 15}
               </Text>
