@@ -228,7 +228,7 @@ const TableRows = ({ doj, dor }) => {
               }}
             >
               <Text style={styles.text}>
-                {years[i + 1] === retirementYear
+                {years[i + 1] !== retirementYear
                   ? joingDay - 1 + "-" + joingMonth + "-" + years[i + 1]
                   : getLastDateOfMonth(dor)}
               </Text>
