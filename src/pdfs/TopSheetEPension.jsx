@@ -292,7 +292,7 @@ export default function TopSheetEPension({ data }) {
                   <Text
                     style={[
                       styles.text,
-                      { textAlign: "justify", paddingHorizontal: 5 },
+                      { textAlign: "center", paddingHorizontal: 5 },
                     ]}
                   >
                     {address}
