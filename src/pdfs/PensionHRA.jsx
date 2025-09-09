@@ -90,14 +90,15 @@ export default function PensionHRA({ data }) {
               >
                 B. HOUSE RENT PAID / RENTAL VALUE OF THE BUILDING :
               </Text>
-              <Text
-                style={[
-                  styles.textBold,
-                  { textAlign: "left", paddingLeft: 10 },
-                ]}
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  marginLeft: 20,
+                  width: "20%",
+                }}
               >
-                Rs. ___________
-              </Text>
+                <Text style={[styles.text, { textAlign: "center" }]}>NIL</Text>
+              </View>
             </View>
             <View style={[styles.subView, { width: "90%" }]}>
               <Text style={[styles.text, { textAlign: "left" }]}>
