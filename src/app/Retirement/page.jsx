@@ -302,8 +302,7 @@ const Retirement = () => {
                       Date of Retirement:
                       <br /> {el?.dor}
                     </h6>
-                    {parseInt(el.dor.split("-")[2]) -
-                      new Date().getFullYear() <=
+                    {parseInt(el.dor.split("-")[2]) - new Date().getFullYear() <
                       2 && (
                       <div className="m-1 noprint">
                         <button
