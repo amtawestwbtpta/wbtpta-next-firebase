@@ -814,7 +814,7 @@ export default function Page() {
                         <input
                           className="form-check-input mt-0"
                           type="checkbox"
-                          value={child.selected}
+                          checked={child.selected}
                           onChange={(e) => {
                             const list = [...children];
                             list[index][e.target.name] = e.target.checked;
