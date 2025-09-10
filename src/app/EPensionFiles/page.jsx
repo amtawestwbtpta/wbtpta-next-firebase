@@ -8,6 +8,8 @@ import {
   createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
+  IndianFormat,
+  readCSVFile,
   titleCase,
   todayInString,
 } from "../../modules/calculatefunctions";
@@ -62,6 +64,7 @@ export default function Page() {
     address,
     account,
     ifsc,
+    disability,
   } = stateObject;
 
   const [inputField, setInputField] = useState({
@@ -86,29 +89,7 @@ export default function Page() {
     spouseDob: `01-01-${new Date().getFullYear() - 50}`,
     children: [],
     applicationNo: "",
-  });
-  const [prevData, setPrevData] = useState({
-    tname,
-    desig,
-    dob,
-    doj,
-    dojnow,
-    dor,
-    phone,
-    email,
-    hoi,
-    gender,
-    id,
-    empid,
-    school,
-    udise,
-    address,
-    account,
-    ifsc,
-    spouse: "",
-    spouseDob: `01-01-${new Date().getFullYear() - 50}`,
-    children: [],
-    applicationNo: "",
+    disability: "",
   });
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -117,6 +98,7 @@ export default function Page() {
       name: "",
       dob: `01-01-${new Date().getFullYear() - 25}`,
       gender: "",
+      selected: false,
     },
   ]);
 
@@ -126,6 +108,30 @@ export default function Page() {
   const [showDCRGForm, setShowDCRGForm] = useState(false);
   const [showLTAForm, setShowLTAForm] = useState(false);
   const [showLeaveForm, setShowLeaveForm] = useState(false);
+  const [showSalary, setShowSalary] = useState(false);
+  const thisYear = new Date().getFullYear();
+  const nextYear = thisYear + 1;
+  const [salaryData, setSalaryData] = useState({
+    basic: "",
+    da: "",
+    hra: "",
+    addl: "",
+    ma: "",
+    gross: "",
+    gpf: "",
+    gsli: "",
+    ptax: "",
+    deduction: "",
+    netpay: "",
+    halfBasicPay: "",
+    commutedPension: "",
+    unCommutedPension: "",
+    daPension: "",
+    netPension: "",
+    gratuity: "",
+    gainAgainstCommutation: "",
+    totalGain: "",
+  });
   const addChildren = () => {
     const newChildren = [
       ...children,
@@ -235,6 +241,7 @@ export default function Page() {
   };
   const getData = async () => {
     setLoader(true);
+    await getModifiedSalary();
     try {
       const q = query(
         collection(firestore, "epension"),
@@ -246,7 +253,6 @@ export default function Page() {
         setLoader(false);
       } else {
         const data = querySnapshot.docs[0].data();
-        setPrevData(data);
         setInputField(data);
         setChildren(data.children);
         setLoader(false);
@@ -258,6 +264,127 @@ export default function Page() {
       setLoader(false);
     }
   };
+  const getModifiedSalary = async () => {
+    try {
+      const salaryMonth = await getRetirementMonthYear();
+      setLoader(true);
+      const q1 = await readCSVFile(salaryMonth);
+
+      const techersSalary = q1?.filter((el) => el.id === id)[0];
+      const { basic, daPercent, hraPercent, addl, ma, gpf, gsli, disability } =
+        techersSalary;
+      const da = Math.round(basic * daPercent);
+      const hra = hraPercent > 10 ? hraPercent : Math.round(basic * hraPercent);
+      const gross = basic + da + hra + addl + ma;
+      let ptax = 0;
+      if (gross > 40000) {
+        ptax = 200;
+      } else if (gross > 25000) {
+        ptax = 150;
+      } else if (gross > 15000) {
+        ptax = 130;
+      } else if (gross > 10000) {
+        ptax = 110;
+      } else {
+        ptax = 0;
+      }
+
+      if (disability === "YES") {
+        ptax = 0;
+      }
+
+      const deduction = gsli + gpf + ptax;
+
+      const netpay = gross - deduction;
+      const halfBasicPay = basic / 2;
+      const commutedPension = Math.round(halfBasicPay * 0.4);
+      const unCommutedPension = Math.round(halfBasicPay * 0.6);
+      const daPension = Math.round(halfBasicPay * daPercent);
+      const netPension = unCommutedPension + daPension;
+      const serviceLength =
+        parseInt(dor.split("-")[2]) - parseInt(doj.split("-")[2]);
+      let halfServiceLength;
+      if (serviceLength >= 33) {
+        halfServiceLength = 16.5;
+      } else {
+        halfServiceLength = serviceLength / 2;
+      }
+
+      const gratuity = Math.round(basic * (1 + daPercent) * halfServiceLength);
+      const gainAgainstCommutation = commutedPension * 98.328;
+      const totalGain = gratuity + gainAgainstCommutation;
+      setSalaryData({
+        basic,
+        da,
+        hra,
+        addl,
+        ma,
+        gross,
+        ptax,
+        deduction,
+        gpf,
+        gsli,
+        netpay,
+        halfBasicPay,
+        commutedPension,
+        unCommutedPension,
+        daPension,
+        netPension,
+        gratuity,
+        gainAgainstCommutation,
+        totalGain,
+      });
+      setLoader(false);
+    } catch (error) {
+      console.log(error.message);
+      setLoader(false);
+    }
+  };
+  async function getRetirementMonthYear() {
+    // Parse retirement date
+    const [dd, mm, yyyy] = dor.split("-").map(Number);
+    const retirementDate = new Date(yyyy, mm - 1, dd);
+
+    const monthNames = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+    ];
+
+    // --- Case 1: Retirement in June 2025
+    if (yyyy === thisYear && retirementDate.getMonth() === 5) {
+      // June = 5
+      return `june-${thisYear}`;
+    }
+
+    // --- Case 2: Retirement between July 2025 and March 2026
+    if (
+      (yyyy === thisYear && retirementDate.getMonth() >= 6) || // July–Dec 2025
+      (yyyy === nextYear && retirementDate.getMonth() <= 2) // Jan–Mar 2026
+    ) {
+      return `${monthNames[retirementDate.getMonth()]}-${yyyy}`;
+    }
+
+    // --- Case 3: Retirement after March 2026
+    if (
+      yyyy > nextYear ||
+      (yyyy === nextYear && retirementDate.getMonth() > 2)
+    ) {
+      return `march-${nextYear}`;
+    }
+
+    // --- Otherwise (before June 2025) → June 2025
+    return `june-${thisYear}`;
+  }
 
   useEffect(() => {
     getData();
@@ -304,6 +431,7 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(false);
             setShowLeaveForm(false);
+            setShowSalary(false);
             setTimeout(() => {
               ifsc_ser(inputField.ifsc);
             }, 200);
@@ -336,7 +464,7 @@ export default function Page() {
                   }}
                 ></button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body mx-auto">
                 <div className="mb-3">
                   <label className="form-label">Name</label>
                   <input
@@ -654,6 +782,24 @@ export default function Page() {
                         <option value="DAUGHTER">DAUGHTER</option>
                       </select>
                     </div>
+                    <div className="input-group mb-3">
+                      <div className="input-group-text">
+                        <input
+                          className="form-check-input mt-0"
+                          type="checkbox"
+                          value={child.selected}
+                          onChange={(e) => {
+                            const list = [...children];
+                            list[index][e.target.name] = e.target.checked;
+                          }}
+                          name="selected"
+                          aria-label="Checkbox for following text input"
+                        />
+                      </div>
+                      <span className="input-group-text">
+                        Select for Nominee
+                      </span>
+                    </div>
                   </div>
                 ))}
                 <button
@@ -672,7 +818,7 @@ export default function Page() {
                     // disabled={compareObjects(inputField, prevData)}
                     onClick={saveData}
                   >
-                    Save
+                    Save To DB
                   </button>
 
                   <button
@@ -683,15 +829,6 @@ export default function Page() {
                     }}
                   >
                     Cancel
-                  </button>
-                  <button
-                    className="btn btn-success m-2"
-                    type="button"
-                    onClick={() => {
-                      setShowModal(false);
-                    }}
-                  >
-                    Add to Database
                   </button>
                 </div>
               </div>
@@ -706,6 +843,147 @@ export default function Page() {
       >
         <button
           type="button"
+          className="btn btn-secondary m-2"
+          onClick={() => {
+            setShowSalary(!showSalary);
+            setShowModal(false);
+            setShowTopSheet(false);
+            setShowHRAForm(false);
+            setShowDCRGForm(false);
+            setShowLTAForm(false);
+            setShowLeaveForm(false);
+          }}
+        >
+          {showSalary ? "Hide" : "Show"} Pension Salary
+        </button>
+        {showSalary && (
+          <div className="my-2 mx-auto">
+            <div
+              className="modal fade show"
+              tabIndex="-1"
+              role="dialog"
+              style={{ display: "block" }}
+              aria-modal="true"
+            >
+              <div className="modal-dialog modal-xl">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                      Salary Details of {titleCase(tname)}, {desig} of{" "}
+                      {titleCase(school)}
+                    </h1>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label="Close"
+                      onClick={() => {
+                        setShowSalary(false);
+                      }}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="card mb-3">
+                      <div className="card-header">
+                        {" "}
+                        <h5 className="card-title">Last Salary Withdrawn</h5>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          Basic Pay: Rs. {IndianFormat(salaryData.basic)}
+                        </h5>
+                        <h5 className="card-title">
+                          DA: Rs. {IndianFormat(salaryData.da)}
+                        </h5>
+                        <h5 className="card-title">
+                          HRA: Rs. {IndianFormat(salaryData.hra)}
+                        </h5>
+                        {salaryData.addl > 0 && (
+                          <h5 className="card-title">
+                            ADDL: Rs. {IndianFormat(salaryData.addl)}
+                          </h5>
+                        )}
+                        {salaryData.ma > 0 && (
+                          <h5 className="card-title">
+                            MA: Rs. {IndianFormat(salaryData.ma)}
+                          </h5>
+                        )}
+                        <h5 className="card-title">
+                          Gross: Rs. {IndianFormat(salaryData.gross)}
+                        </h5>
+                        {salaryData.gpf > 0 && (
+                          <h5 className="card-title">
+                            GPF: Rs. {IndianFormat(salaryData.gpf)}
+                          </h5>
+                        )}
+                        {salaryData.gsli > 0 && (
+                          <h5 className="card-title">
+                            GSLI: Rs. {IndianFormat(salaryData.gsli)}
+                          </h5>
+                        )}
+
+                        <h5 className="card-title">
+                          Ptax: Rs. {IndianFormat(salaryData.ptax)}
+                        </h5>
+                        <h5 className="card-title">
+                          Deduction: Rs. {IndianFormat(salaryData.deduction)}
+                        </h5>
+                        <h5 className="card-title">
+                          Net Pay: Rs. {IndianFormat(salaryData.netpay)}
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="card mb-3">
+                      <div className="card-header">
+                        {" "}
+                        <h5 className="card-title">Pension Details</h5>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          Basic Pay: Rs.{" "}
+                          {IndianFormat(salaryData.unCommutedPension)}
+                        </h5>
+                        <h5 className="card-title">
+                          DA: Rs. {IndianFormat(salaryData.daPension)}
+                        </h5>
+                        <h5 className="card-title">
+                          Net Pension: Rs. {IndianFormat(salaryData.netPension)}
+                        </h5>
+                        <h5 className="card-title">
+                          Gratuity: Rs. {IndianFormat(salaryData.gratuity)}
+                        </h5>
+                        <h5 className="card-title">
+                          Gain Against Commutation: Rs.{" "}
+                          {IndianFormat(salaryData.gainAgainstCommutation)}
+                        </h5>
+                        <h5 className="card-title">
+                          Total Gain: Rs. {IndianFormat(salaryData.totalGain)}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-footer d-flex flex-column">
+                    <button
+                      className="btn btn-danger m-2"
+                      type="button"
+                      onClick={() => {
+                        setShowSalary(false);
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+        style={{ width: "50%" }}
+      >
+        <button
+          type="button"
           className="btn btn-primary m-2"
           onClick={() => {
             setShowFamily(!showFamily);
@@ -714,6 +992,8 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(false);
             setShowLeaveForm(false);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showFamily ? "Hide" : "Show"} Family Form
@@ -755,6 +1035,8 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(false);
             setShowLeaveForm(false);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showTopSheet ? "Hide" : "Show"} Top Sheet Form
@@ -796,6 +1078,8 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(false);
             setShowLeaveForm(false);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showHRAForm ? "Hide" : "Show"} HRA Form
@@ -837,6 +1121,8 @@ export default function Page() {
             setShowDCRGForm(!showDCRGForm);
             setShowLTAForm(false);
             setShowLeaveForm(false);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showDCRGForm ? "Hide" : "Show"} DCRG Form
@@ -878,6 +1164,8 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(!showLTAForm);
             setShowLeaveForm(false);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showLTAForm ? "Hide" : "Show"} LTA Form
@@ -919,6 +1207,8 @@ export default function Page() {
             setShowDCRGForm(false);
             setShowLTAForm(false);
             setShowLeaveForm(!showLeaveForm);
+            setShowModal(false);
+            setShowSalary(false);
           }}
         >
           {showLeaveForm ? "Hide" : "Show"} Leave Form

@@ -344,7 +344,7 @@ export default function LTAForm({ data }) {
                 ]}
               >
                 <Text style={[styles.textBold, { textAlign: "left" }]}>
-                  Name:- {children[0].name}
+                  Name:- {children.filter((el) => el.selected === true)[0].name}
                 </Text>
                 <Text style={[styles.textBold, { textAlign: "left" }]}>
                   Address:- <Text style={styles.text2}>{address}</Text>
@@ -359,7 +359,9 @@ export default function LTAForm({ data }) {
                   },
                 ]}
               >
-                <Text style={styles.text}>{children[0].gender}</Text>
+                <Text style={styles.text}>
+                  {children.filter((el) => el.selected === true)[0].gender}
+                </Text>
               </View>
               <View
                 style={[

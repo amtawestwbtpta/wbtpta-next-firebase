@@ -296,7 +296,7 @@ export default function DCRGForm({ data }) {
                 ]}
               >
                 <Text style={[styles.textBold, { textAlign: "left" }]}>
-                  Name:- {children[0].name}
+                  Name:- {children.filter((el) => el.selected === true)[0].name}
                 </Text>
                 <Text style={[styles.textBold, { textAlign: "left" }]}>
                   Address:- <Text style={styles.text2}>{address}</Text>
