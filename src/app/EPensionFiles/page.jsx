@@ -101,7 +101,7 @@ export default function Page() {
       selected: false,
     },
   ]);
-
+  const [detailsFound, setDetailsFound] = useState(false);
   const [showFamily, setShowFamily] = useState(false);
   const [showTopSheet, setShowTopSheet] = useState(false);
   const [showHRAForm, setShowHRAForm] = useState(false);
@@ -198,9 +198,11 @@ export default function Page() {
         await setDoc(doc(firestore, "epension", inputField.id), inputField)
           .then(() => {
             toast.success("Pension Data Added Successfully!");
+            setDetailsFound(true);
           })
           .catch((error) => {
             toast.error(error.message);
+            setDetailsFound(false);
           })
           .finally(() => {
             setLoader(false);
@@ -251,12 +253,14 @@ export default function Page() {
       if (querySnapshot.docs.length === 0) {
         toast.error("No Previous Data Found");
         setLoader(false);
+        setDetailsFound(false);
       } else {
         const data = querySnapshot.docs[0].data();
         setInputField(data);
         setChildren(data.children);
         setLoader(false);
         toast.success("Previous Data Found");
+        setDetailsFound(true);
       }
     } catch (error) {
       toast.error(error.message);
@@ -978,264 +982,268 @@ export default function Page() {
           </div>
         )}
       </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-primary m-2"
-          onClick={() => {
-            setShowFamily(!showFamily);
-            setShowTopSheet(false);
-            setShowHRAForm(false);
-            setShowDCRGForm(false);
-            setShowLTAForm(false);
-            setShowLeaveForm(false);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showFamily ? "Hide" : "Show"} Family Form
-        </button>
-        {showFamily && (
-          <div className="my-2 mx-auto">
-            {/* <FamilyList data={inputField} /> */}
-            <PDFDownloadLink
-              document={<FamilyList data={inputField} />}
-              fileName={`Family List of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+      {detailsFound && (
+        <div>
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-primary m-2"
+              onClick={() => {
+                setShowFamily(!showFamily);
+                setShowTopSheet(false);
+                setShowHRAForm(false);
+                setShowDCRGForm(false);
+                setShowLTAForm(false);
+                setShowLeaveForm(false);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download Family List"
-              }
-            </PDFDownloadLink>
+              {showFamily ? "Hide" : "Show"} Family Form
+            </button>
+            {showFamily && (
+              <div className="my-2 mx-auto">
+                {/* <FamilyList data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<FamilyList data={inputField} />}
+                  fileName={`Family List of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Family List"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-info m-2"
-          onClick={() => {
-            setShowFamily(false);
-            setShowTopSheet(!showTopSheet);
-            setShowHRAForm(false);
-            setShowDCRGForm(false);
-            setShowLTAForm(false);
-            setShowLeaveForm(false);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showTopSheet ? "Hide" : "Show"} Top Sheet Form
-        </button>
-        {showTopSheet && (
-          <div className="my-2 mx-auto">
-            {/* <TopSheetEPension data={inputField} /> */}
-            <PDFDownloadLink
-              document={<TopSheetEPension data={inputField} />}
-              fileName={`Top Sheet of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-info m-2"
+              onClick={() => {
+                setShowFamily(false);
+                setShowTopSheet(!showTopSheet);
+                setShowHRAForm(false);
+                setShowDCRGForm(false);
+                setShowLTAForm(false);
+                setShowLeaveForm(false);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download Top Sheet"
-              }
-            </PDFDownloadLink>
+              {showTopSheet ? "Hide" : "Show"} Top Sheet Form
+            </button>
+            {showTopSheet && (
+              <div className="my-2 mx-auto">
+                {/* <TopSheetEPension data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<TopSheetEPension data={inputField} />}
+                  fileName={`Top Sheet of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Top Sheet"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-primary m-2"
-          onClick={() => {
-            setShowFamily(false);
-            setShowTopSheet(false);
-            setShowHRAForm(!showHRAForm);
-            setShowDCRGForm(false);
-            setShowLTAForm(false);
-            setShowLeaveForm(false);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showHRAForm ? "Hide" : "Show"} HRA Form
-        </button>
-        {showHRAForm && (
-          <div className="my-2 mx-auto">
-            {/* <PensionHRA data={inputField} /> */}
-            <PDFDownloadLink
-              document={<PensionHRA data={inputField} />}
-              fileName={`HRA Form of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-primary m-2"
+              onClick={() => {
+                setShowFamily(false);
+                setShowTopSheet(false);
+                setShowHRAForm(!showHRAForm);
+                setShowDCRGForm(false);
+                setShowLTAForm(false);
+                setShowLeaveForm(false);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download HRA Form"
-              }
-            </PDFDownloadLink>
+              {showHRAForm ? "Hide" : "Show"} HRA Form
+            </button>
+            {showHRAForm && (
+              <div className="my-2 mx-auto">
+                {/* <PensionHRA data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<PensionHRA data={inputField} />}
+                  fileName={`HRA Form of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download HRA Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-success m-2"
-          onClick={() => {
-            setShowFamily(false);
-            setShowTopSheet(false);
-            setShowHRAForm(false);
-            setShowDCRGForm(!showDCRGForm);
-            setShowLTAForm(false);
-            setShowLeaveForm(false);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showDCRGForm ? "Hide" : "Show"} DCRG Form
-        </button>
-        {showDCRGForm && (
-          <div className="my-2 mx-auto">
-            {/* <DCRGForm data={inputField} /> */}
-            <PDFDownloadLink
-              document={<DCRGForm data={inputField} />}
-              fileName={`DCRG Form of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-success m-2"
+              onClick={() => {
+                setShowFamily(false);
+                setShowTopSheet(false);
+                setShowHRAForm(false);
+                setShowDCRGForm(!showDCRGForm);
+                setShowLTAForm(false);
+                setShowLeaveForm(false);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download DCRG Form"
-              }
-            </PDFDownloadLink>
+              {showDCRGForm ? "Hide" : "Show"} DCRG Form
+            </button>
+            {showDCRGForm && (
+              <div className="my-2 mx-auto">
+                {/* <DCRGForm data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<DCRGForm data={inputField} />}
+                  fileName={`DCRG Form of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download DCRG Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-info m-2"
-          onClick={() => {
-            setShowFamily(false);
-            setShowTopSheet(false);
-            setShowHRAForm(false);
-            setShowDCRGForm(false);
-            setShowLTAForm(!showLTAForm);
-            setShowLeaveForm(false);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showLTAForm ? "Hide" : "Show"} LTA Form
-        </button>
-        {showLTAForm && (
-          <div className="my-2 mx-auto">
-            {/* <LTAForm data={inputField} /> */}
-            <PDFDownloadLink
-              document={<LTAForm data={inputField} />}
-              fileName={`LTA Form of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-info m-2"
+              onClick={() => {
+                setShowFamily(false);
+                setShowTopSheet(false);
+                setShowHRAForm(false);
+                setShowDCRGForm(false);
+                setShowLTAForm(!showLTAForm);
+                setShowLeaveForm(false);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download LTA Form"
-              }
-            </PDFDownloadLink>
+              {showLTAForm ? "Hide" : "Show"} LTA Form
+            </button>
+            {showLTAForm && (
+              <div className="my-2 mx-auto">
+                {/* <LTAForm data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<LTAForm data={inputField} />}
+                  fileName={`LTA Form of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download LTA Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
-        style={{ width: "50%" }}
-      >
-        <button
-          type="button"
-          className="btn btn-primary m-2"
-          onClick={() => {
-            setShowFamily(false);
-            setShowTopSheet(false);
-            setShowHRAForm(false);
-            setShowDCRGForm(false);
-            setShowLTAForm(false);
-            setShowLeaveForm(!showLeaveForm);
-            setShowModal(false);
-            setShowSalary(false);
-          }}
-        >
-          {showLeaveForm ? "Hide" : "Show"} Leave Form
-        </button>
-        {showLeaveForm && (
-          <div className="my-2 mx-auto">
-            {/* <PensionLeaveForm data={inputField} /> */}
-            <PDFDownloadLink
-              document={<PensionLeaveForm data={inputField} />}
-              fileName={`Leave Form of ${tname}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: "10px",
-                color: "#fff",
-                backgroundColor: "navy",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
+          <div
+            className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-2"
+            style={{ width: "50%" }}
+          >
+            <button
+              type="button"
+              className="btn btn-primary m-2"
+              onClick={() => {
+                setShowFamily(false);
+                setShowTopSheet(false);
+                setShowHRAForm(false);
+                setShowDCRGForm(false);
+                setShowLTAForm(false);
+                setShowLeaveForm(!showLeaveForm);
+                setShowModal(false);
+                setShowSalary(false);
               }}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download Leave Form"
-              }
-            </PDFDownloadLink>
+              {showLeaveForm ? "Hide" : "Show"} Leave Form
+            </button>
+            {showLeaveForm && (
+              <div className="my-2 mx-auto">
+                {/* <PensionLeaveForm data={inputField} /> */}
+                <PDFDownloadLink
+                  document={<PensionLeaveForm data={inputField} />}
+                  fileName={`Leave Form of ${tname}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: "10px",
+                    color: "#fff",
+                    backgroundColor: "navy",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Leave Form"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
       <div
         className="d-flex flex-column justify-content-center align-items-center mx-auto noprint my-5"
         style={{ width: "50%" }}
