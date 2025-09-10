@@ -32,7 +32,6 @@ import TopSheetEPension from "../../pdfs/TopSheetEPension";
 import PensionHRA from "../../pdfs/PensionHRA";
 import DCRGForm from "../../pdfs/DCRGForm";
 import LTAForm from "../../pdfs/LTAForm";
-import { set } from "mongoose";
 import PensionLeaveForm from "../../pdfs/PensionLeaveForm";
 export default function Page() {
   const PDFDownloadLink = dynamic(
@@ -98,7 +97,7 @@ export default function Page() {
       name: "",
       dob: `01-01-${new Date().getFullYear() - 25}`,
       gender: "",
-      selected: false,
+      selected: true,
     },
   ]);
   const [detailsFound, setDetailsFound] = useState(false);
@@ -135,7 +134,12 @@ export default function Page() {
   const addChildren = () => {
     const newChildren = [
       ...children,
-      { name: "", dob: `01-01-${new Date().getFullYear() - 25}`, gender: "" },
+      {
+        name: "",
+        dob: `01-01-${new Date().getFullYear() - 25}`,
+        gender: "",
+        selected: false,
+      },
     ];
     setChildren(newChildren);
     setInputField({
@@ -315,7 +319,7 @@ export default function Page() {
       }
 
       const gratuity = Math.round(basic * (1 + daPercent) * halfServiceLength);
-      const gainAgainstCommutation = commutedPension * 98.328;
+      const gainAgainstCommutation = Math.round(commutedPension * 98.328);
       const totalGain = gratuity + gainAgainstCommutation;
       setSalaryData({
         basic,
