@@ -393,7 +393,19 @@ export default function Page() {
     // --- Otherwise (before June 2025) → June 2025
     return `june-${thisYear}`;
   }
-
+  const downloadEpensiondata = async () => {
+    setLoader(true);
+    const querySnapshot = await getDocs(
+      query(collection(firestore, "epension"))
+    );
+    const data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    createDownloadLink(data, "epension");
+    setLoader(false);
+  };
   useEffect(() => {
     getData();
     // eslint-disable-next-line
@@ -411,6 +423,13 @@ export default function Page() {
         className="d-flex flex-column justify-content-center align-items-center mx-auto noprint"
         style={{ width: "50%" }}
       >
+        <button
+          type="button"
+          className="btn m-3 btn-sm m-2 btn-warning"
+          onClick={downloadEpensiondata}
+        >
+          Download Pension Data
+        </button>
         <button
           type="button"
           className="btn btn-dark m-2"
