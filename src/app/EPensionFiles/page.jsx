@@ -219,6 +219,21 @@ export default function Page() {
       toast.error("Please fill all the fields");
     }
   };
+  const deleteData = async () => {
+    setLoader(true);
+    const docRef = doc(firestore, "epension", id);
+    await deleteDoc(docRef)
+      .then(() => {
+        toast.success("Data Deleted Successfully");
+        setLoader(false);
+        router.back();
+      })
+      .catch((err) => {
+        toast.error("Data Deletation Failed");
+        setLoader(false);
+        console.log(err);
+      });
+  };
   const isFormValid = () => {
     if (
       !inputField.tname ||
@@ -817,7 +832,9 @@ export default function Page() {
                           checked={child.selected}
                           onChange={(e) => {
                             const list = [...children];
-                            list[index][e.target.name] = e.target.checked;
+                            list[index].selected = e.target.checked;
+                            setChildren(list);
+                            setInputField({ ...inputField, children: list });
                           }}
                           name="selected"
                           aria-label="Checkbox for following text input"
@@ -848,6 +865,21 @@ export default function Page() {
                     Save To DB
                   </button>
 
+                  {detailsFound && (
+                    <button
+                      className="btn btn-danger m-2"
+                      style={{
+                        backgroundColor: "darkred",
+                      }}
+                      type="button"
+                      onClick={() => {
+                        setShowModal(false);
+                        deleteData();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  )}
                   <button
                     className="btn btn-danger m-2"
                     type="button"

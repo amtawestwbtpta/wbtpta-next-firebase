@@ -295,9 +295,19 @@ export default function DCRGForm({ data }) {
                   },
                 ]}
               >
-                <Text style={[styles.textBold, { textAlign: "left" }]}>
-                  Name:- {children.filter((el) => el.selected === true)[0].name}
-                </Text>
+                {children
+                  .filter((el) => el.selected === true)
+                  .map((child, index) => (
+                    <Text
+                      style={[styles.textBold, { textAlign: "left" }]}
+                      key={index}
+                    >
+                      Name:-
+                      {children.filter((el) => el.selected === true).length >
+                        1 && ` ${index + 1}. `}{" "}
+                      {child.name}
+                    </Text>
+                  ))}
                 <Text style={[styles.textBold, { textAlign: "left" }]}>
                   Address:- <Text style={styles.text2}>{address}</Text>
                 </Text>
@@ -312,7 +322,12 @@ export default function DCRGForm({ data }) {
                   },
                 ]}
               >
-                <Text style={styles.text}>100%</Text>
+                <Text style={styles.text}>
+                  {Math.ceil(
+                    100 / children.filter((el) => el.selected === true).length
+                  )}
+                  %
+                </Text>
               </View>
             </View>
           </View>

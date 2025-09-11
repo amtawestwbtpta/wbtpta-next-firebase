@@ -416,7 +416,7 @@ const EditTeacher = () => {
             name="rank"
             id="rank"
             aria-label=".form-select-sm example"
-            defaultValue={inputField?.rank}
+            defaultValue={inputField?.rank || ""}
             onChange={(e) => {
               setInputField({
                 ...inputField,
