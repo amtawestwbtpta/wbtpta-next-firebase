@@ -425,9 +425,9 @@ const EditTeacher = () => {
             }}
           >
             <option value="">Select Teacher Rank</option>
-            {filteredTeachers.map((teacher, ind) => (
-              <option key={ind} value={teacher.rank}>
-                {teacher.rank}
+            {filteredTeachers.map((_, ind) => (
+              <option key={ind} value={ind + 1}>
+                {ind + 1}
               </option>
             ))}
           </select>
