@@ -26,28 +26,48 @@ export async function POST(request: NextRequest) {
       url,
       photoName,
     }: any = reqBody;
-
-    const newUser = new User({
-      teachersID,
-      id,
-      username,
-      email,
-      tname,
-      school,
-      udise,
-      desig,
-      gender,
-      circle,
-      empid,
-      pan,
-      loggedin,
-      question,
-      password,
-      phone,
-      url,
-      photoName,
-    });
-    const savedUser = await newUser.save();
+    let userData = await User.findOne({ id: id });
+    if (userData) {
+      userData.tname = tname;
+      userData.school = school;
+      userData.desig = desig;
+      userData.pan = pan;
+      userData.udise = udise;
+      userData.circle = circle;
+      userData.empid = empid;
+      userData.question = question;
+      userData.email = email;
+      userData.phone = phone;
+      userData.url = url;
+      userData.photoName = photoName;
+      userData.loggedin = loggedin;
+      userData.password = password;
+      userData.username = username;
+      userData.teachersID = teachersID;
+      await userData.save();
+    } else {
+      const newUser = new User({
+        teachersID,
+        id,
+        username,
+        email,
+        tname,
+        school,
+        udise,
+        desig,
+        gender,
+        circle,
+        empid,
+        pan,
+        loggedin,
+        question,
+        password,
+        phone,
+        url,
+        photoName,
+      });
+      const savedUser = await newUser.save();
+    }
 
     return NextResponse.json(
       {
