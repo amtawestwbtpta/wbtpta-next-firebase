@@ -915,7 +915,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineOne?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineOne?.c2}</Text>
+                  <Text style={styles.text3}>{lineOne?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -959,7 +959,13 @@ export default function LeaveProposalNew({ data }) {
                     height: lineOne?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineOne?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineOne?.c6) > 4 ? styles.text2 : styles.text
+                    }
+                  >
+                    {lineOne?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -987,7 +993,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineOne?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineOne?.c8}</Text>
+                  <Text style={styles.text3}>{lineOne?.c8}</Text>
                 </View>
 
                 <View
@@ -1029,7 +1035,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineTwo?.c2}</Text>
+                  <Text style={styles.text3}>{lineTwo?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1073,7 +1079,13 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineTwo?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineTwo?.c6) > 4 ? styles.text2 : styles.text
+                    }
+                  >
+                    {lineTwo?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1101,7 +1113,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineTwo?.c8}</Text>
+                  <Text style={styles.text3}>{lineTwo?.c8}</Text>
                 </View>
 
                 <View
@@ -1199,7 +1211,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineThree?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineThree?.c6) > 4
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineThree?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1229,7 +1249,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineThree?.c8}</Text>
+                  <Text style={styles.text3}>{lineThree?.c8}</Text>
                 </View>
 
                 <View
@@ -1325,7 +1345,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFour?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFour?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineFour?.c6) > 4
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineFour?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1355,7 +1383,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFour?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFour?.c8}</Text>
+                  <Text style={styles.text3}>{lineFour?.c8}</Text>
                 </View>
 
                 <View
@@ -1399,7 +1427,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFive?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFive?.c2}</Text>
+                  <Text style={styles.text3}>{lineFive?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1443,7 +1471,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFive?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFive?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineFour?.c6) > 4
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineFive?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1473,7 +1509,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineFive?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineFive?.c8}</Text>
+                  <Text style={styles.text3}>{lineFive?.c8}</Text>
                 </View>
 
                 <View
@@ -1514,7 +1550,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineSix?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineSix?.c2}</Text>
+                  <Text style={styles.text3}>{lineSix?.c2}</Text>
                 </View>
                 <View
                   style={{
@@ -1558,7 +1594,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineSix?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineSix?.c6}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineFour?.c6) > 4
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineSix?.c6}
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -1586,7 +1630,7 @@ export default function LeaveProposalNew({ data }) {
                     height: lineSix?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text}>{lineSix?.c8}</Text>
+                  <Text style={styles.text3}>{lineSix?.c8}</Text>
                 </View>
 
                 <View
@@ -3227,9 +3271,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text3: {
-    fontSize: 12.5,
+    fontSize: 12,
     padding: 1,
     textAlign: "center",
+    fontFamily: "Times",
   },
   text2: {
     fontSize: 9,

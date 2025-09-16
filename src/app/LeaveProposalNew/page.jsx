@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -25,6 +25,7 @@ import {
 import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
 import { v4 as uuid } from "uuid";
+import { set } from "mongoose";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -138,6 +139,7 @@ export default function Page() {
   const [showEditLeave, setShowEditLeave] = useState(false);
   const [showEditLines, setShowEditLines] = useState(false);
   const [leaveReason, setLeaveReason] = useState("");
+  const [currentLeaveID, setCurrentLeaveID] = useState("");
   const getData = async () => {
     setLoader(true);
     const querySnapshot = await getDocs(query(collection(firestore, "leaves")));
@@ -252,7 +254,7 @@ export default function Page() {
     ) {
       setHpayLeave("-");
     } else {
-      setHpayLeave(`${diffDays * 2}HP`);
+      setHpayLeave(`${diffDays * 2} HPL`);
     }
     return diffDays;
   };
@@ -331,6 +333,60 @@ export default function Page() {
     c9: "",
   });
   const fillLines = () => {
+    let memoNo = "";
+    const found = teacherData
+      .filter((item) => item.id !== currentLeaveID)
+      .find((item) => item.leaveNature === leaveNature);
+    if (currentLeaveID !== "" && found) {
+      const prevLeaves = teacherData
+        .filter(
+          (item) =>
+            item.leaveNature === leaveNature && item.id !== currentLeaveID
+        )
+        .sort(
+          (a, b) =>
+            Date.parse(getCurrentDateInput(b.startingDate)) -
+            Date.parse(getCurrentDateInput(a.startingDate))
+        )[0];
+      const { startingDate, endingDate, leaveDays, hpayLeave } = prevLeaves;
+      memoNo = prevLeaves?.memoNo ? prevLeaves?.memoNo : "";
+      setLineTwo({
+        c1:
+          leaveNature === "HPL" ||
+          leaveNature === "COMMUTED" ||
+          leaveNature === "MEDICAL" ||
+          leaveNature === "LWP"
+            ? `${doj}\nTo\n${endingDate}`
+            : startingDate.split("-")[2],
+        c2:
+          leaveNature === "MATERNITY"
+            ? leaveDays
+            : leaveNature === "CCL"
+            ? 730
+            : leaveNature === "PATERNITY"
+            ? 30
+            : leaveNature === "MEDICAL"
+            ? `${serviceAge} x 15\n=${serviceAge * 15} `
+            : `${serviceAge} x 30\n=${earnedLeave} HPL`,
+        c3: startingDate,
+        c4: endingDate,
+        c5: `${leaveDays} DAYS`,
+        c6: `${hpayLeave} HPL`,
+        c7: `${leaveDays} DAYS`,
+        c8:
+          leaveNature == "MATERNITY"
+            ? "NIL"
+            : leaveNature == "PATERNITY"
+            ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
+            : leaveNature === "CCL"
+            ? `(730 - ${leaveDays})\n=${730 - leaveDays}`
+            : `(${earnedLeave / 2} - ${leaveDays})\n= ${
+                earnedLeave / 2 - leaveDays
+              }`,
+        c9: "",
+      });
+    }
+
     setLineThree({
       c1:
         leaveNature === "HPL" ||
@@ -351,9 +407,9 @@ export default function Page() {
           : `${serviceAge} x 30\n=${earnedLeave} HPL`,
       c3: startingDate,
       c4: endingDate,
-      c5: leaveDays,
-      c6: hpayLeave,
-      c7: leaveDays,
+      c5: `${leaveDays} DAYS`,
+      c6: `${hpayLeave}`,
+      c7: `${leaveDays} DAYS`,
       c8:
         leaveNature == "MATERNITY"
           ? "NIL"
@@ -364,7 +420,7 @@ export default function Page() {
           : `(${earnedLeave / 2} - ${leaveDays})\n= ${
               earnedLeave / 2 - leaveDays
             }`,
-      c9: "",
+      c9: memoNo,
     });
   };
   useEffect(() => {
@@ -519,6 +575,7 @@ export default function Page() {
                                     startingDateRef.current.value =
                                       getCurrentDateInput(item.startingDate);
                                     setEndingDate(item.endingDate);
+                                    setCurrentLeaveID(item.id);
                                     endingDateRef.current.value =
                                       getCurrentDateInput(item.endingDate);
 
