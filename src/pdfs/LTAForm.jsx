@@ -422,7 +422,7 @@ export default function LTAForm({ data }) {
               Signature, Name and Address
             </Text>
             <Text style={[styles.text2BoldunderLine, { textAlign: "left" }]}>
-              (Signature of the employee)
+              (Signature of the pensioner and address)
             </Text>
           </View>
           <View style={{ width: "95%", marginTop: 5 }}>
