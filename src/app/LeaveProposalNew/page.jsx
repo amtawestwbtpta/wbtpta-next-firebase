@@ -369,7 +369,7 @@ export default function Page() {
             : leaveNature === "PATERNITY"
             ? 30
             : leaveNature === "MEDICAL"
-            ? `${sAge} x 15\n=${sAge * 15} `
+            ? `${sAge} x 15\n=${sAge * 15}`
             : `${sAge} x 30\n=${earnedLeave} HPL`,
         c3: startingDate,
         c4: endingDate,
@@ -406,7 +406,7 @@ export default function Page() {
           : leaveNature === "PATERNITY"
           ? 30
           : leaveNature === "MEDICAL"
-          ? `${serviceAge} x 15\n=${serviceAge * 15} `
+          ? `${serviceAge} x 15\n=${serviceAge * 15}`
           : `${serviceAge} x 30\n=${earnedLeave} HPL`,
       c3: startingDate,
       c4: endingDate,
@@ -417,12 +417,12 @@ export default function Page() {
         leaveNature == "MATERNITY"
           ? "NIL"
           : leaveNature == "PATERNITY"
-          ? `(30 - ${leaveDays})\n=${30 - leaveDays}`
+          ? `(30 - ${leaveDays})\n=${30 - leaveDays} DAYS`
           : leaveNature === "CCL"
-          ? `(730 - ${leaveDays})\n=${730 - leaveDays}`
+          ? `(730 - ${leaveDays})\n=${730 - leaveDays} DAYS`
           : `(${earnedLeave / 2} - ${leaveDays})\n= ${
               earnedLeave / 2 - leaveDays
-            }`,
+            } DAYS`,
       c9: memoNo,
     });
   };

@@ -1113,7 +1113,13 @@ export default function LeaveProposalNew({ data }) {
                     height: lineTwo?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text3}>{lineTwo?.c8}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineTwo?.c8) > 5 ? styles.text2 : styles.text
+                    }
+                  >
+                    {lineTwo?.c8}
+                  </Text>
                 </View>
 
                 <View
@@ -1249,7 +1255,15 @@ export default function LeaveProposalNew({ data }) {
                     height: lineThree?.c1 !== "" ? 40 : 20,
                   }}
                 >
-                  <Text style={styles.text3}>{lineThree?.c8}</Text>
+                  <Text
+                    style={
+                      calStrLength(lineThree?.c8) > 5
+                        ? styles.text2
+                        : styles.text
+                    }
+                  >
+                    {lineThree?.c8}
+                  </Text>
                 </View>
 
                 <View
