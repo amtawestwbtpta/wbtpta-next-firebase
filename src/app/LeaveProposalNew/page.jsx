@@ -585,6 +585,17 @@ export default function Page() {
                                       getCurrentDateInput(item.startingDate);
                                     setEndingDate(item.endingDate);
                                     setCurrentLeaveID(item.id);
+                                    setLineTwo({
+                                      c1: "",
+                                      c2: "",
+                                      c3: "",
+                                      c4: "",
+                                      c5: "",
+                                      c6: "",
+                                      c7: "",
+                                      c8: "",
+                                      c9: "",
+                                    });
                                     endingDateRef.current.value =
                                       getCurrentDateInput(item.endingDate);
 
