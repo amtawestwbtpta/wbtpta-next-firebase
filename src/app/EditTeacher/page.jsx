@@ -79,12 +79,10 @@ const EditTeacher = () => {
             try {
               await updateDoc(docRefuser, {
                 tname: inputField.tname,
-                tsname: inputField.tsname,
                 school: inputField.school,
                 desig: inputField.desig,
                 pan: inputField.pan,
                 udise: inputField.udise,
-                sis: inputField.sis,
                 circle: inputField.circle,
                 empid: inputField.empid,
                 question: inputField.question,
