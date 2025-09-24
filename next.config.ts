@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "raw.githubusercontent.com" },
       { protocol: "https", hostname: "api.qrserver.com" },
     ],
+    // unoptimized: true, // disables Image Optimization API
   },
   eslint: {
     ignoreDuringBuilds: true,

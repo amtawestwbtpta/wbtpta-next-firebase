@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postexport": "next-sitemap"
   },
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
@@ -29,6 +30,7 @@
     "marked": "^16.1.1",
     "mongoose": "^8.16.4",
     "next": "15.4.3",
+    "next-sitemap": "^4.2.3",
     "nodemailer": "^7.0.5",
     "pdfjs-dist": "^5.3.93",
     "react": "^18.3.1",
