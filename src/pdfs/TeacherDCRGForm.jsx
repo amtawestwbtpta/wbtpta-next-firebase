@@ -556,11 +556,9 @@ export default function TeacherDCRGForm({ data }) {
             }}
           >
             <Text style={[styles.textBold, { textAlign: "left" }]}>
-              Witness to signature
+              Witness of signature
             </Text>
-            <Text style={[styles.text2, { textAlign: "left" }]}>
-              Name and Address
-            </Text>
+
             <View
               style={{
                 justifyContent: "center",
