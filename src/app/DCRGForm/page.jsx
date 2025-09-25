@@ -185,7 +185,7 @@ export default function page() {
           {showDCRGForm ? "Hide" : "Show"} DCRG Form
         </button>
       )}
-      {showDCRGForm && (
+      {!showModal && showDCRGForm && (
         <div className="m-3 mx-auto">
           {/* <TeacherDCRGForm
             data={{
