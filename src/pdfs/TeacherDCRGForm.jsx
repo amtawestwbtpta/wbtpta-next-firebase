@@ -25,7 +25,7 @@ export default function TeacherDCRGForm({ data }) {
     // >
     <Document
       style={{ margin: 5, padding: 5 }}
-      title={`Pension HRA Form OF ${tname}`}
+      title={`DCRG AND PF NOMINEE Form OF ${tname}`}
     >
       <Page size="A4" orientation="portrait" style={styles.page}>
         <View style={styles.pageMainView}>
@@ -832,7 +832,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   titleMain: {
-    fontSize: 22,
+    fontSize: 20,
     textAlign: "center",
   },
   textMain: {
