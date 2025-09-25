@@ -25,7 +25,7 @@ const YearWiseTeachers = () => {
       loading: () => <p>Please Wait...</p>,
     }
   );
-  const { state, teachersState } = useGlobalContext();
+  const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
   // const data = teachersState.filter((el) => el.association === "WBTPTA");
   const [data, setData] = useState(teachersState);
@@ -487,6 +487,16 @@ const YearWiseTeachers = () => {
                             Date of Retirement:
                             <br /> {el.dor}
                           </h6>
+                          <button
+                            type="button"
+                            className="btn btn-secondary btn-sm noprint m-3"
+                            onClick={() => {
+                              setStateObject(el);
+                              router.push("/DCRGForm");
+                            }}
+                          >
+                            DCRG Form
+                          </button>
                         </div>
                       );
                     })
