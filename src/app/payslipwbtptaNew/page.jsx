@@ -366,330 +366,29 @@ const PayslipWbtpta = () => {
               }}
               suppressHydrationWarning
             >
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="2"
-                >
-                  TEACHER'S NAME
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="3"
-                >
-                  <p className="text-center fs-5">{salary.tname}</p>
-                </th>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  DESIGNATION:
-                </th>
-
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  ID
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  PAN:
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="2"
-                  rowSpan={2}
-                >
-                  {salary.level}, {salary.cell}
-                </th>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.desig}
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.empid}
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.pan}
-                </th>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  SCHOOL NAME
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="4"
-                >
-                  <p className="text-center fs-5">
-                    {salary.school}, UDISE:({salary.udise})
-                  </p>
-                </th>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="2"
-                >
-                  EARNINGS
-                </th>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="2"
-                >
-                  DEDUCTIONS
-                </th>
-                <td
-                  rowSpan="7"
-                  style={{
-                    wordWrap: "break-word",
-                    minWidth: "50px",
-                    maxWidth: "50px",
-                    border: "1px solid",
-                  }}
-                >
-                  <p className="text-danger text-wrap text-center">
-                    <b>REMARKS:</b>
-                    <br /> This Payslip is Only For Reference Purpose. It can
-                    not be used as a Valid Proof of Salary. Please Use Payslip
-                    which is available form SIS Office as a Valid Salary Proof.
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  BASIC PAY
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.basicpay}
-                </td>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  GPF
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.pfund}
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  ADDL. REMUN.
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.addl}
-                </td>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  PTAX
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.ptax}
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  DA
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.da}
-                </td>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  GSLI
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.gsli}
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  HRA
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.hra}
-                </td>
-                <td
-                  rowSpan="2"
-                  colSpan="2"
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  <img
-                    src="https://raw.githubusercontent.com/ultimate365/jsondata/main/logo.png"
-                    alt="LOGO"
-                    width={"100vw"}
-                    className="opacity-25 p-2"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  MA
-                </th>
-                <td
-                  style={{
-                    textAlign: "center",
-                    border: "1px solid",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.ma}
-                </td>
-              </tr>
-              {salary.ir > 0 && (
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="2"
+                  >
+                    TEACHER'S NAME
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="3"
+                  >
+                    <p className="text-center fs-5">{salary.tname}</p>
+                  </th>
+                </tr>
                 <tr>
                   <th
                     style={{
@@ -698,7 +397,139 @@ const PayslipWbtpta = () => {
                       fontSize: "16px",
                     }}
                   >
-                    IR
+                    DESIGNATION:
+                  </th>
+
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    ID
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    PAN:
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="2"
+                    rowSpan={2}
+                  >
+                    {salary.level}, {salary.cell}
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.desig}
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.empid}
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.pan}
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    SCHOOL NAME
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="4"
+                  >
+                    <p className="text-center fs-5">
+                      {salary.school}, UDISE:({salary.udise})
+                    </p>
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="2"
+                  >
+                    EARNINGS
+                  </th>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="2"
+                  >
+                    DEDUCTIONS
+                  </th>
+                  <td
+                    rowSpan="7"
+                    style={{
+                      wordWrap: "break-word",
+                      minWidth: "50px",
+                      maxWidth: "50px",
+                      border: "1px solid",
+                    }}
+                  >
+                    <p className="text-danger text-wrap text-center">
+                      <b>REMARKS:</b>
+                      <br /> This Payslip is Only For Reference Purpose. It can
+                      not be used as a Valid Proof of Salary. Please Use Payslip
+                      which is available form SIS Office as a Valid Salary
+                      Proof.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    BASIC PAY
                   </th>
                   <td
                     style={{
@@ -707,78 +538,250 @@ const PayslipWbtpta = () => {
                       fontSize: "16px",
                     }}
                   >
-                    {salary.ir}
+                    {salary.basicpay}
+                  </td>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    GPF
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.pfund}
                   </td>
                 </tr>
-              )}
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  GROSS SALARY
-                </th>
-                <td
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.gross}
-                </td>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  TOTAL DEDUCTIONS
-                </th>
-                <td
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.deduction}
-                </td>
-              </tr>
-              <tr>
-                <th
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  NET SALARY
-                </th>
-                <td
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                >
-                  {salary.netpay}
-                </td>
-                <td
-                  style={{
-                    border: "1px solid",
-                    textAlign: "center",
-                    fontSize: "16px",
-                  }}
-                  colSpan="4"
-                >
-                  {NumInWords(salary.netpay)}
-                </td>
-              </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    ADDL. REMUN.
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.addl}
+                  </td>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    PTAX
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.ptax}
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    DA
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.da}
+                  </td>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    GSLI
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.gsli}
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    HRA
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.hra}
+                  </td>
+                  <td
+                    rowSpan="2"
+                    colSpan="2"
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    <img
+                      src="https://raw.githubusercontent.com/ultimate365/jsondata/main/logo.png"
+                      alt="LOGO"
+                      width={"100vw"}
+                      className="opacity-25 p-2"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    MA
+                  </th>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.ma}
+                  </td>
+                </tr>
+                {salary.ir > 0 && (
+                  <tr>
+                    <th
+                      style={{
+                        border: "1px solid",
+                        textAlign: "center",
+                        fontSize: "16px",
+                      }}
+                    >
+                      IR
+                    </th>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        border: "1px solid",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {salary.ir}
+                    </td>
+                  </tr>
+                )}
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    GROSS SALARY
+                  </th>
+                  <td
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.gross}
+                  </td>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    TOTAL DEDUCTIONS
+                  </th>
+                  <td
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.deduction}
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    NET SALARY
+                  </th>
+                  <td
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {salary.netpay}
+                  </td>
+                  <td
+                    style={{
+                      border: "1px solid",
+                      textAlign: "center",
+                      fontSize: "16px",
+                    }}
+                    colSpan="4"
+                  >
+                    {NumInWords(salary.netpay)}
+                  </td>
+                </tr>
+              </thead>
             </table>
           </div>
 

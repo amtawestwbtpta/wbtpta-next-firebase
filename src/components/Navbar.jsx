@@ -215,8 +215,10 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    // if (process.env.NODE_ENV !== "development") {
+    //   checkLogin();
+    // }
     checkLogin();
-
     const teacherDifference = (Date.now() - teacherUpdateTime) / 1000 / 60 / 15;
     if (teacherDifference >= 1 || teachersState.length === 0) {
       // if (process.env.NODE_ENV === "development") {

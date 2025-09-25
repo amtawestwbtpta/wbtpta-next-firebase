@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SwiperSlides from "../components/SwiperSlides";
 import Typed from "typed.js";
 import { useGlobalContext } from "../context/Store";
@@ -13,16 +13,16 @@ export default function Home() {
     const parentNode = childRef.current?.parentNode;
 
     if (parentNode && childRef.current) {
-        try {
-            parentNode.removeChild(childRef.current);
-            console.log("Child node removed.");
-        } catch (error) {
-            console.error("Error removing child node:", error);
-        }
+      try {
+        parentNode.removeChild(childRef.current);
+        console.log("Child node removed.");
+      } catch (error) {
+        console.error("Error removing child node:", error);
+      }
     } else {
-        console.error("Child node is not a child of the parent node.");
+      console.error("Child node is not a child of the parent node.");
     }
-};
+  };
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Homepage";
     const typed = new Typed(el.current, {
@@ -45,33 +45,40 @@ export default function Home() {
   return (
     <div className="container my-3">
       <div id="parent">
-      <div ref={childRef} id="child" className="my-3" style={{ height: "70px" }}>
-        {width < 780 ? (
-          <span
-            className="text-primary text-center fs-6 mb-3 web-message"
-            ref={el}
-          />
-        ) : (
-          <span
-            className="text-primary text-center fs-3 mb-3 web-message"
-            ref={el}
-          />
-        )}
-      </div>
-
-      <SwiperSlides />
-      {state === "admin" && slideState.length > 0 && (
-        <button
-          type="button"
-          className="btn btn-sm m-5 btn-warning"
-          onClick={() => {
-            createDownloadLink(slideState, "slides");
-          }}
+        <div
+          ref={childRef}
+          id="child"
+          className="my-3"
+          style={{ height: "70px" }}
         >
-          Download Slide Data
+          {width < 780 ? (
+            <span
+              className="text-primary text-center fs-6 mb-3 web-message"
+              ref={el}
+            />
+          ) : (
+            <span
+              className="text-primary text-center fs-3 mb-3 web-message"
+              ref={el}
+            />
+          )}
+        </div>
+
+        {/* <SwiperSlides /> */}
+        {state === "admin" && slideState.length > 0 && (
+          <button
+            type="button"
+            className="btn btn-sm m-5 btn-warning"
+            onClick={() => {
+              createDownloadLink(slideState, "slides");
+            }}
+          >
+            Download Slide Data
+          </button>
+        )}
+        <button style={{ display: "none" }} onClick={removeChild}>
+          Remove Child
         </button>
-      )}
-      <button style={{display:"none"}} onClick={removeChild}>Remove Child</button>
       </div>
     </div>
   );
