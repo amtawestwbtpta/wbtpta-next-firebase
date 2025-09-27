@@ -17,10 +17,7 @@ const Footer = () => {
             </h6>
             <h6 className="h-font fw-bold fs-6">Howrah Gramin District</h6>
             <h6 className="h-font fw-bold fs-6">Sikshak Bhawan</h6>
-            <h6 className="h-font fw-bold fs-6">
-              Vill.- Joypur Fakirdas, P.O.- Joypur, P.S.- JoyPur, District-
-              Howrah, PIN- 711401
-            </h6>
+            <h6 className="h-font fw-bold fs-6">Joypur, Howrah- 711401</h6>
           </div>
 
           <div className="col-lg-6">
@@ -43,14 +40,14 @@ const Footer = () => {
             </Link>
             <br />
 
-            <Link
+            {/* <Link
               href="tel: +919330536561"
               className="d-inline-block mb-2 text-decoration-none text-dark"
             >
               <i className="bi bi-telephone-fill"></i>+ 91 93305 36561, Sanjoy
               Kumar Bag, District Member
             </Link>
-            <br />
+            <br /> */}
 
             <Link
               href="tel: +919933684468"

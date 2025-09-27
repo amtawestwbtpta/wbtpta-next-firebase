@@ -58,9 +58,9 @@ export default function WBTPTAPaySLip({ data }) {
             <Text style={styles.title}>
               * AMTA WEST CIRCLE * HOWRAH GRAMIN DISTRICT *
             </Text>
-            <Text style={[styles.title2, { color: "darkgreen" }]}>
+            {/* <Text style={[styles.title2, { color: "darkgreen" }]}>
               * Sikshak Bhawan, Vill.- Joypur Fakirdas, P.O.- Joypur,
-            </Text>
+            </Text> */}
             <Text style={[styles.title2, { color: "darkgreen" }]}>
               P.S.- Joypur, District- Howrah, PIN-711401. *
             </Text>
