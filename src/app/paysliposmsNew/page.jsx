@@ -12,7 +12,7 @@ import {
 import OSMSPaySLip from "../../pdfs/OSMSPaySLip";
 import dynamic from "next/dynamic";
 import Loader from "../../components/Loader";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 const PaySlipOsmsNew = () => {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -262,6 +262,18 @@ const PaySlipOsmsNew = () => {
   return (
     <Suspense>
       <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={1500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         {loader ? (
           <Loader />
         ) : (

@@ -13,7 +13,7 @@ import {
 import ropa from "../../modules/ropa";
 import axios from "axios";
 import Loader from "../../components/Loader";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 const TechSalary = () => {
   const { state, stateArray, setStateObject } = useGlobalContext();
   const router = useRouter();
@@ -128,6 +128,18 @@ const TechSalary = () => {
 
   return (
     <div className="container-fluid my-5">
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {loader ? (
         <Loader />
       ) : (

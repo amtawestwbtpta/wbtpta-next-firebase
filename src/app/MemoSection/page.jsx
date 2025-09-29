@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   getDownloadURL,
@@ -805,6 +805,18 @@ const MemoSection = () => {
 
   return (
     <div className="container my-3">
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {loader && <Loader />}
       <h3 className="text-primary text-center">Memo Number Section</h3>
       {(teacherdetails.circle === "admin" ||

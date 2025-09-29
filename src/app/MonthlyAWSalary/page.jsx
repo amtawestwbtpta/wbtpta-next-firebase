@@ -5,7 +5,7 @@ import { useGlobalContext } from "../../context/Store";
 import Link from "next/link";
 import { GetMonthName, readCSVFile } from "../../modules/calculatefunctions";
 import Loader from "../../components/Loader";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import TeacherSalaryPDF from "../../pdfs/TeacherSalaryPDF";
 // import * as XLSX from "xlsx";
@@ -145,6 +145,18 @@ const MonthlyAWSalary = () => {
 
   return (
     <div className="container-fluid my-5">
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {loader ? (
         <Loader />
       ) : (

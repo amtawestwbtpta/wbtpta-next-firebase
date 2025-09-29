@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import bcrypt from "bcryptjs";
 import "react-toastify/dist/ReactToastify.css";
 import { firestore } from "../context/FirebaseContext";
@@ -158,6 +158,18 @@ const PasswordForm = (props) => {
 
   return (
     <div className="container p-2">
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {loader ? <Loader /> : null}
       <div className="row m-auto login p-2">
         <form autoComplete="off" method="post">
