@@ -7,10 +7,12 @@ import { myAPIKey, githubUsername } from "../../modules/constants";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import { v4 as uuid } from "uuid";
-import PDFViewer from "../../components/PDFViewer";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
+const PDFViewer = dynamic(() => import("../../components/PDFViewer"), {
+  ssr: false,
+});
 export default function GithubManager() {
   const { state } = useGlobalContext();
   const router = useRouter();
