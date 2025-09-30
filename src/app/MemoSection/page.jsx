@@ -635,9 +635,9 @@ const MemoSection = () => {
     {
       name: "Download",
       selector: (row) =>
-        row.url !== "" ? (
+        row.githubUrl !== "" ? (
           <a
-            href={row.url}
+            href={row.githubUrl}
             className="btn btn-success btn-sm my-3 rounded text-decoration-none"
             target="_blank"
             rel="noopener noreferrer"
