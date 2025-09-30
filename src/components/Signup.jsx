@@ -128,16 +128,7 @@ const SignUp = () => {
         });
       }
     } else {
-      toast.error("Form Is Invalid", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Form Is Invalid");
     }
   };
   const validForm = () => {

@@ -564,7 +564,7 @@ const TeacherDatabase = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {showTable && !showDelTeachers ? (

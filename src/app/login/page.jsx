@@ -104,7 +104,9 @@ const page = () => {
               encryptObjData("CheckAuth", CheckAuth, 10080);
               setCookie("t", teacherData.tname, 10080);
               setCookie("loggedAt", Date.now(), 10080);
-              router.push("/dashboard");
+              setTimeout(() => {
+                router.push("/dashboard");
+              }, 1500);
             } else {
               setLoader(false);
               toast.error("Your Account is Disabled!");
@@ -144,62 +146,28 @@ const page = () => {
                 encryptObjData("CheckAuth", CheckAuth, 10080);
                 setCookie("t", teacherData.tname, 10080);
                 setCookie("loggedAt", Date.now(), 10080);
-                router.push("/dashboard");
+                setTimeout(() => {
+                  router.push("/dashboard");
+                }, 1500);
               } else {
                 setLoader(false);
                 toast.error("Invalid Username or Password!");
               }
             } else {
               setLoader(false);
-              toast.error("Your Account is Disabled!", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+              toast.error("Your Account is Disabled!");
             }
           } else {
             setLoader(false);
-            toast.error("Wrong Password!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.error("Wrong Password!");
           }
         } else {
           setLoader(false);
-          toast.error("Invalid Username!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("Invalid Username!");
         }
       }
     } else {
-      toast.error("Form Is Invalid", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Form Is Invalid");
     }
   };
 
@@ -233,14 +201,14 @@ const page = () => {
     <div className="container text-black p-2 ">
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
 

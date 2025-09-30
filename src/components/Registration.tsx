@@ -343,7 +343,7 @@ const Registration: React.FC<RegistrationProps> = ({ data, setSignUpTrue }) => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <div className="row login text-black m-auto p-2">

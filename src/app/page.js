@@ -64,7 +64,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* <SwiperSlides /> */}
+        <SwiperSlides />
         {state === "admin" && slideState.length > 0 && (
           <button
             type="button"

@@ -37,22 +37,22 @@ const SwiperSlides = () => {
   };
   const getSlides = async () => {
     let data = [];
-    try {
-      const q = query(collection(firestore, "slides"));
-      const querySnapshot = await getDocs(q);
-      data = querySnapshot.docs.map((doc) => ({
-        // doc.data() is never undefined for query doc snapshots
-        ...doc.data(),
-        id: doc.id,
-      }));
-    } catch (error) {
-      console.error("Error fetching slides data: ", error);
-      const url = `/api/getSlides`;
-      const response = await axios.post(url);
-      data = response.data.data;
-    }
+    // try {
+    const q = query(collection(firestore, "slides"));
+    const querySnapshot = await getDocs(q);
+    data = querySnapshot.docs.map((doc) => ({
+      // doc.data() is never undefined for query doc snapshots
+      ...doc.data(),
+      id: doc.id,
+    }));
+    // } catch (error) {
+    //   console.error("Error fetching slides data: ", error);
+    //   const url = `/api/getSlides`;
+    //   const response = await axios.post(url);
+    //   data = response.data.data;
+    // }
     let imageUrls = [];
-    data.map((el) => imageUrls.push(el.url));
+    data.map((el) => imageUrls.push(el.githubUrl));
     setImages(imageUrls);
     setData(data);
     setSlideState(data);
@@ -121,7 +121,7 @@ const SwiperSlides = () => {
                 </div>
                 <div className="slideImage">
                   <Image
-                    src={el.url}
+                    src={el.githubUrl}
                     width={0}
                     height={0}
                     sizes="100vw"

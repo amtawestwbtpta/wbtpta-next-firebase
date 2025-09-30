@@ -157,7 +157,7 @@ const ViewDetails = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <h3 className="text-primary my-3 text center">

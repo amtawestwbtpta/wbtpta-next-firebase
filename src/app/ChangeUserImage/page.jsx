@@ -163,16 +163,7 @@ const ChangePhoto = () => {
           .catch((error) => {
             // Uh-oh, an error occurred!
             console.log(error);
-            toast.error("Something Went Wrong!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.error("Something Went Wrong!");
             setLoader(false);
           });
       }
@@ -260,7 +251,7 @@ const ChangePhoto = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader ? <Loader /> : null}

@@ -103,29 +103,11 @@ const EditTeacher = () => {
               });
             }
           } catch (e) {
-            toast.error("Teacher Not Registered Yet!!!", {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.error("Teacher Not Registered Yet!!!");
           }
           setLoader(false);
 
-          toast.success("Congrats! Teacher Details Updated Successfully!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Congrats! Teacher Details Updated Successfully!");
         } else {
           setLoader(false);
           toast.error("Unable To Update Teacher Details!!!", {

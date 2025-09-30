@@ -1,17 +1,15 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import {
-  compareObjects,
   createDownloadLink,
   getCurrentDateInput,
   getSubmitDateInput,
   IndianFormat,
   readCSVFile,
   titleCase,
-  todayInString,
 } from "../../modules/calculatefunctions";
 
 import dynamic from "next/dynamic";
@@ -22,7 +20,6 @@ import {
   getDocs,
   query,
   setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { firestore } from "../../context/FirebaseContext";
@@ -33,6 +30,7 @@ import PensionHRA from "../../pdfs/PensionHRA";
 import DCRGForm from "../../pdfs/DCRGForm";
 import LTAForm from "../../pdfs/LTAForm";
 import PensionLeaveForm from "../../pdfs/PensionLeaveForm";
+import GoogleDriveFolderLink from "../../components/GoogleDriveFolderLink";
 export default function Page() {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -89,6 +87,7 @@ export default function Page() {
     children: [],
     applicationNo: "",
     disability: "",
+    gdriveId: "",
   });
   const [loader, setLoader] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -442,7 +441,7 @@ export default function Page() {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader && <Loader />}
@@ -780,6 +779,26 @@ export default function Page() {
                       });
                     }}
                     required
+                  />
+                </div>
+                <div className=" mb-3">
+                  <label className="form-label">Google Drive Folder ID</label>
+                  <label className="form-label">
+                    (e.g.
+                    https://drive.google.com/drive/folders/FOLDER_ID?usp=sharing
+                    )
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Google Drive Folder ID"
+                    value={inputField.gdriveId}
+                    onChange={(e) => {
+                      setInputField({
+                        ...inputField,
+                        gdriveId: e.target.value,
+                      });
+                    }}
                   />
                 </div>
                 {children.map((child, index) => (
@@ -1332,6 +1351,9 @@ export default function Page() {
           Go to e-Pension
         </a>
       </div>
+      {inputField.gdriveId && (
+        <GoogleDriveFolderLink gdriveFolderID={inputField.gdriveId} />
+      )}
     </div>
   );
 }

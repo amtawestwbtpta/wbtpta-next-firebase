@@ -102,32 +102,14 @@ const PasswordForm = (props) => {
           });
 
           setLoader(false);
-          toast.success("Congrats! You are Password Reset is Successfull!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Congrats! You are Password Reset is Successfull!");
 
           setTimeout(() => {
             router.push("/logout");
           }, 1500);
         } else {
           setLoader(false);
-          toast.error(record.message, {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error(record.message);
         }
       } catch (e) {
         setLoader(false);
@@ -167,7 +149,7 @@ const PasswordForm = (props) => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader ? <Loader /> : null}

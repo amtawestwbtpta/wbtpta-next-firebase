@@ -157,7 +157,7 @@ export default function page() {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <h1 className="text-center">DCRG Form</h1>

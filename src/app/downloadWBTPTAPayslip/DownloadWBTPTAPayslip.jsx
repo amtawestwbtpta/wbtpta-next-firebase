@@ -243,7 +243,7 @@ export default function DownloadWBTPTAPayslip() {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <div className="mx-auto my-3 noprint">

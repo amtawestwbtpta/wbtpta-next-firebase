@@ -469,7 +469,7 @@ export default function Page() {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader && <Loader />}

@@ -33,9 +33,11 @@ import {
 } from "../../modules/calculatefunctions";
 import DataTable from "react-data-table-component";
 import { useGlobalContext } from "../../context/Store";
-import axios from "axios";
 import dynamic from "next/dynamic";
-
+import {
+  deleteFileFromGithub,
+  uploadFileToGithub,
+} from "../../modules/gitFileHndler";
 const MemoSection = () => {
   const PDFViewer = dynamic(() => import("../../components/PDFViewer"), {
     ssr: false,
@@ -112,9 +114,12 @@ const MemoSection = () => {
   const addmemo = async () => {
     setLoader(true);
     if (addImage) {
-      const filestorageRef = ref(
-        storage,
-        `/memoFiles/${docId + "-" + file.name}`
+      const uploadableFileName = docId + "-" + file.name;
+      const filestorageRef = ref(storage, `/memoFiles/${uploadableFileName}`);
+      const githubUrl = await uploadFileToGithub(
+        file,
+        uploadableFileName,
+        "memoFiles"
       );
       const uploadTask = uploadBytesResumable(filestorageRef, file);
       uploadTask.on(
@@ -144,105 +149,90 @@ const MemoSection = () => {
                 memoNumber: memoNumber,
                 memoDate: memoDate,
                 url: photourl,
-                photoName: docId + "-" + file.name,
+                githubUrl,
+                photoName: uploadableFileName,
                 type: file.type,
               })
                 .then(async () => {
-                  const url = `/api/addMemo`;
-                  const response = await axios.post(url, {
-                    id: docId,
-                    date: Date.now(),
-                    addedBy: teacherdetails.tname,
-                    title: title,
-                    memoText: memoText,
-                    memoNumber: memoNumber,
-                    memoDate: memoDate,
-                    url: photourl,
-                    photoName: docId + "-" + file.name,
-                    type: file.type,
-                  });
-                  const record = response.data;
-                  if (record.success) {
-                    setMemoState(
-                      [
-                        ...memoState,
-                        {
-                          id: docId,
-                          date: Date.now(),
-                          addedBy: teacherdetails.tname,
-                          title: title,
-                          memoText: memoText,
-                          memoNumber: memoNumber,
-                          memoDate: memoDate,
-                          url: photourl,
-                          photoName: docId + "-" + file.name,
-                          type: file.type,
-                        },
-                      ].sort(
-                        (a, b) =>
-                          Date.parse(getCurrentDateInput(b.memoDate)) -
-                          Date.parse(getCurrentDateInput(a.memoDate))
-                      )
-                    );
-                    setAllData(
-                      [
-                        ...memoState,
-                        {
-                          id: docId,
-                          date: Date.now(),
-                          addedBy: teacherdetails.tname,
-                          title: title,
-                          memoText: memoText,
-                          memoNumber: memoNumber,
-                          memoDate: memoDate,
-                          url: photourl,
-                          photoName: docId + "-" + file.name,
-                          type: file.type,
-                        },
-                      ].sort(
-                        (a, b) =>
-                          Date.parse(getCurrentDateInput(b.memoDate)) -
-                          Date.parse(getCurrentDateInput(a.memoDate))
-                      )
-                    );
-                    setFilteredData(
-                      [
-                        ...memoState,
-                        {
-                          id: docId,
-                          date: Date.now(),
-                          addedBy: teacherdetails.tname,
-                          title: title,
-                          memoText: memoText,
-                          memoNumber: memoNumber,
-                          memoDate: memoDate,
-                          url: photourl,
-                          photoName: docId + "-" + file.name,
-                          type: file.type,
-                        },
-                      ].sort(
-                        (a, b) =>
-                          Date.parse(getCurrentDateInput(b.memoDate)) -
-                          Date.parse(getCurrentDateInput(a.memoDate))
-                      )
-                    );
-                    setMemoUpdateTime(Date.now());
-                    setmemoText("");
-                    setTitle("");
-                    setMemoNumber("");
-                    setMemoDate(todayInString());
-                    setLoader(false);
-                    setAddImage(false);
-                    toast.success("memo Added Successfully!");
-                    // getData();
-                    setFile({});
-                    setSrc("");
-                    setShowPercent(false);
-                    setProgress(0);
-                  } else {
-                    toast.error("Error Adding memo to Mongo");
-                    setLoader(false);
-                  }
+                  setMemoState(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        githubUrl,
+                        photoName: uploadableFileName,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
+                  setAllData(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        githubUrl,
+                        photoName: uploadableFileName,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
+                  setFilteredData(
+                    [
+                      ...memoState,
+                      {
+                        id: docId,
+                        date: Date.now(),
+                        addedBy: teacherdetails.tname,
+                        title: title,
+                        memoText: memoText,
+                        memoNumber: memoNumber,
+                        memoDate: memoDate,
+                        url: photourl,
+                        githubUrl,
+                        photoName: uploadableFileName,
+                        type: file.type,
+                      },
+                    ].sort(
+                      (a, b) =>
+                        Date.parse(getCurrentDateInput(b.memoDate)) -
+                        Date.parse(getCurrentDateInput(a.memoDate))
+                    )
+                  );
+                  setMemoUpdateTime(Date.now());
+                  setmemoText("");
+                  setTitle("");
+                  setMemoNumber("");
+                  setMemoDate(todayInString());
+                  setLoader(false);
+                  setAddImage(false);
+                  toast.success("memo Added Successfully!");
+                  // getData();
+                  setFile({});
+                  setSrc("");
+                  setShowPercent(false);
+                  setProgress(0);
                 })
                 .catch((e) => {
                   setLoader(false);
@@ -277,98 +267,84 @@ const MemoSection = () => {
           memoNumber: memoNumber,
           memoDate: memoDate,
           url: "",
+          githubUrl: "",
           photoName: "",
         })
           .then(async () => {
-            const url = `/api/addMemo`;
-            const response = await axios.post(url, {
-              id: docId,
-              date: Date.now(),
-              addedBy: teacherdetails.tname,
-              title: title,
-              memoText: memoText,
-              memoNumber: memoNumber,
-              memoDate: memoDate,
-              url: "",
-              photoName: "",
-            });
-            const record = response.data;
-            if (record.success) {
-              setMemoState(
-                [
-                  ...memoState,
-                  {
-                    id: docId,
-                    date: Date.now(),
-                    addedBy: teacherdetails.tname,
-                    title: title,
-                    memoText: memoText,
-                    memoNumber: memoNumber,
-                    memoDate: memoDate,
-                    url: "",
-                    photoName: "",
-                  },
-                ].sort(
-                  (a, b) =>
-                    Date.parse(getCurrentDateInput(b.memoDate)) -
-                    Date.parse(getCurrentDateInput(a.memoDate))
-                )
-              );
-              setAllData(
-                [
-                  ...memoState,
-                  {
-                    id: docId,
-                    date: Date.now(),
-                    addedBy: teacherdetails.tname,
-                    title: title,
-                    memoText: memoText,
-                    memoNumber: memoNumber,
-                    memoDate: memoDate,
-                    url: "",
-                    photoName: "",
-                  },
-                ].sort(
-                  (a, b) =>
-                    Date.parse(getCurrentDateInput(b.memoDate)) -
-                    Date.parse(getCurrentDateInput(a.memoDate))
-                )
-              );
-              setFilteredData(
-                [
-                  ...memoState,
-                  {
-                    id: docId,
-                    date: Date.now(),
-                    addedBy: teacherdetails.tname,
-                    title: title,
-                    memoText: memoText,
-                    memoNumber: memoNumber,
-                    memoDate: memoDate,
-                    url: "",
-                    photoName: "",
-                  },
-                ].sort(
-                  (a, b) =>
-                    Date.parse(getCurrentDateInput(b.memoDate)) -
-                    Date.parse(getCurrentDateInput(a.memoDate))
-                )
-              );
-              setMemoUpdateTime(Date.now());
-              setmemoText("");
-              setTitle("");
-              setMemoNumber("");
-              setMemoDate(todayInString());
-              setLoader(false);
-              setAddImage(false);
-              toast.success("memo Added Successfully!");
-              // getData();
-              setFile({});
-              setSrc("");
-            } else {
-              toast.error("Error Adding memo to Mongo");
-              setLoader(false);
-            }
+            setMemoState(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  githubUrl: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
+            setAllData(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  githubUrl: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
+            setFilteredData(
+              [
+                ...memoState,
+                {
+                  id: docId,
+                  date: Date.now(),
+                  addedBy: teacherdetails.tname,
+                  title: title,
+                  memoText: memoText,
+                  memoNumber: memoNumber,
+                  memoDate: memoDate,
+                  url: "",
+                  githubUrl: "",
+                  photoName: "",
+                },
+              ].sort(
+                (a, b) =>
+                  Date.parse(getCurrentDateInput(b.memoDate)) -
+                  Date.parse(getCurrentDateInput(a.memoDate))
+              )
+            );
+            setMemoUpdateTime(Date.now());
+            setmemoText("");
+            setTitle("");
+            setMemoNumber("");
+            setMemoDate(todayInString());
+            setLoader(false);
+            setAddImage(false);
+            toast.success("memo Added Successfully!");
+            // getData();
+            setFile({});
+            setSrc("");
           })
           .catch((e) => {
             setLoader(false);
@@ -405,59 +381,44 @@ const MemoSection = () => {
         addedBy: teacherdetails.tname,
       })
         .then(async () => {
-          const url = `/api/updateMemo`;
-          const response = await axios.post(url, {
-            id: editID,
-            title: editTitle,
-            memoText: editmemoText,
-            memoNumber: editMemoNumber,
-            memoDate: editMemoDate,
-            date: Date.now(),
-            addedBy: teacherdetails.tname,
-          });
-          const record = response.data;
-          if (record.success) {
-            let x = memoState.filter((el) => el.id === editID)[0];
-            let y = memoState.filter((el) => el.id !== editID);
-            y = [
-              ...y,
-              {
-                id: editID,
-                date: Date.now(),
-                addedBy: teacherdetails.tname,
-                title: editTitle,
-                memoText: editmemoText,
-                memoNumber: editMemoNumber,
-                memoDate: editMemoDate,
-                url: x.url,
-                photoName: x.photoName,
-                type: x.type,
-              },
-            ];
+          let x = memoState.filter((el) => el.id === editID)[0];
+          let y = memoState.filter((el) => el.id !== editID);
+          y = [
+            ...y,
+            {
+              id: editID,
+              date: Date.now(),
+              addedBy: teacherdetails.tname,
+              title: editTitle,
+              memoText: editmemoText,
+              memoNumber: editMemoNumber,
+              memoDate: editMemoDate,
+              url: x.url,
+              photoName: x.photoName,
+              type: x.type,
+            },
+          ];
 
-            let newData = y.sort(
-              (a, b) =>
-                Date.parse(getCurrentDateInput(b.memoDate)) -
-                Date.parse(getCurrentDateInput(a.memoDate))
-            );
-            setMemoState(newData);
-            setAllData(newData);
-            setFilteredData(newData);
-            setMemoUpdateTime(Date.now());
-            setLoader(false);
-            setEditTitle("");
-            setEditmemoText("");
-            setEditMemoNumber("");
-            setEditMemoDate(todayInString());
-            setMemo({});
-            setOrgTitle("");
-            setOrgmemoText("");
-            setOrgMemoNumber("");
-            setOrgMemoDate(todayInString());
-            toast.success("Details Updated Successfully");
-          } else {
-            toast.error("Error Updating memo in Mongo");
-          }
+          let newData = y.sort(
+            (a, b) =>
+              Date.parse(getCurrentDateInput(b.memoDate)) -
+              Date.parse(getCurrentDateInput(a.memoDate))
+          );
+          setMemoState(newData);
+          setAllData(newData);
+          setFilteredData(newData);
+          setMemoUpdateTime(Date.now());
+          setLoader(false);
+          setEditTitle("");
+          setEditmemoText("");
+          setEditMemoNumber("");
+          setEditMemoDate(todayInString());
+          setMemo({});
+          setOrgTitle("");
+          setOrgmemoText("");
+          setOrgMemoNumber("");
+          setOrgMemoDate(todayInString());
+          toast.success("Details Updated Successfully");
         })
         .catch((err) => {
           toast.error("Memo Updation Failed!");
@@ -465,6 +426,15 @@ const MemoSection = () => {
         });
     } else {
       try {
+        const isDelFromGithub = await deleteFileFromGithub(
+          editFileName,
+          "memoFiles"
+        );
+        if (isDelFromGithub) {
+          toast.success("File deleted successfully From Github!");
+        } else {
+          toast.error("Error Deleting File From Github!");
+        }
         const desertRef = ref(storage, `memoFiles/${editFileName}`);
         await deleteObject(desertRef);
         toast.success("File deleted successfully!");
@@ -472,6 +442,11 @@ const MemoSection = () => {
         console.log(e);
       }
       const uploadableFileName = docId + "-" + editFile.name;
+      const githubUrl = await uploadFileToGithub(
+        editFile,
+        uploadableFileName,
+        "memoFiles"
+      );
       const filestorageRef = ref(storage, `/memoFiles/${uploadableFileName}`);
       const uploadTask = uploadBytesResumable(filestorageRef, editFile);
       uploadTask.on(
@@ -495,72 +470,56 @@ const MemoSection = () => {
               memoNumber: editMemoNumber,
               memoDate: editMemoDate,
               url: photourl,
+              githubUrl,
               photoName: uploadableFileName,
               date: Date.now(),
               addedBy: teacherdetails.tname,
               type: editFile.type,
             })
               .then(async () => {
-                const url = `/api/updateMemo`;
-                const response = await axios.post(url, {
-                  id: editID,
-                  title: editTitle,
-                  memoText: editmemoText,
-                  memoNumber: editMemoNumber,
-                  memoDate: editMemoDate,
-                  url: photourl,
-                  photoName: uploadableFileName,
-                  date: Date.now(),
-                  addedBy: teacherdetails.tname,
-                  type: editFile.type,
-                });
-                const record = response.data;
-                if (record.success) {
-                  let x = memoState.filter((el) => el.id === editID)[0];
-                  let y = memoState.filter((el) => el.id !== editID);
-                  y = [
-                    ...y,
-                    {
-                      id: editID,
-                      date: Date.now(),
-                      addedBy: teacherdetails.tname,
-                      title: editTitle,
-                      memoText: editmemoText,
-                      memoNumber: editMemoNumber,
-                      memoDate: editMemoDate,
-                      url: photourl,
-                      photoName: uploadableFileName,
-                      type: editFile.type,
-                    },
-                  ];
+                let x = memoState.filter((el) => el.id === editID)[0];
+                let y = memoState.filter((el) => el.id !== editID);
+                y = [
+                  ...y,
+                  {
+                    id: editID,
+                    date: Date.now(),
+                    addedBy: teacherdetails.tname,
+                    title: editTitle,
+                    memoText: editmemoText,
+                    memoNumber: editMemoNumber,
+                    memoDate: editMemoDate,
+                    url: photourl,
+                    githubUrl,
+                    photoName: uploadableFileName,
+                    type: editFile.type,
+                  },
+                ];
 
-                  let newData = y.sort(
-                    (a, b) =>
-                      Date.parse(getCurrentDateInput(b.memoDate)) -
-                      Date.parse(getCurrentDateInput(a.memoDate))
-                  );
-                  setMemoState(newData);
-                  setAllData(newData);
-                  setFilteredData(newData);
-                  setMemoUpdateTime(Date.now());
-                  setLoader(false);
-                  setEditTitle("");
-                  setEditmemoText("");
-                  setEditMemoNumber("");
-                  setEditMemoDate(todayInString());
-                  setMemo({});
-                  setOrgTitle("");
-                  setOrgmemoText("");
-                  setOrgMemoNumber("");
-                  setOrgMemoDate(todayInString());
-                  setProgress(0);
-                  setEditAddImage(false);
-                  setEditFile({});
-                  setEditFileName("");
-                  toast.success("Details Updated Successfully");
-                } else {
-                  toast.error("Error Updating memo in Mongo");
-                }
+                let newData = y.sort(
+                  (a, b) =>
+                    Date.parse(getCurrentDateInput(b.memoDate)) -
+                    Date.parse(getCurrentDateInput(a.memoDate))
+                );
+                setMemoState(newData);
+                setAllData(newData);
+                setFilteredData(newData);
+                setMemoUpdateTime(Date.now());
+                setLoader(false);
+                setEditTitle("");
+                setEditmemoText("");
+                setEditMemoNumber("");
+                setEditMemoDate(todayInString());
+                setMemo({});
+                setOrgTitle("");
+                setOrgmemoText("");
+                setOrgMemoNumber("");
+                setOrgMemoDate(todayInString());
+                setProgress(0);
+                setEditAddImage(false);
+                setEditFile({});
+                setEditFileName("");
+                toast.success("Details Updated Successfully");
               })
               .catch((err) => {
                 toast.error("Memo Updation Failed!");
@@ -579,25 +538,25 @@ const MemoSection = () => {
         setAllData(memoState.filter((item) => item.id !== el.id));
         setFilteredData(memoState.filter((item) => item.id !== el.id));
         setMemoUpdateTime(Date.now());
-        const url = `/api/delMemo`;
-        const response = await axios.post(url, {
-          id: el.id,
-        });
-        const record = response.data;
-        if (record.success) {
-          try {
-            const desertRef = ref(storage, `memoFiles/${el.photoName}`);
-            await deleteObject(desertRef);
-
-            toast.success("File deleted successfully!");
-          } catch (e) {
-            console.log(e);
+        try {
+          const isDelFromGithub = await deleteFileFromGithub(
+            el.photoName,
+            "memoFiles"
+          );
+          if (isDelFromGithub) {
+            toast.success("File deleted successfully From Github!");
+          } else {
+            toast.error("Error Deleting File From Github!");
           }
-          setLoader(false);
-          toast.success("memo Deleted Successfully!");
-        } else {
-          toast.error("Error Deleting memo from Mongo");
+          const desertRef = ref(storage, `memoFiles/${el.photoName}`);
+          await deleteObject(desertRef);
+
+          toast.success("File deleted successfully!");
+        } catch (e) {
+          console.log(e);
         }
+        setLoader(false);
+        toast.success("memo Deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -814,7 +773,7 @@ const MemoSection = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader && <Loader />}
@@ -899,14 +858,14 @@ const MemoSection = () => {
             </div>
             <div className="modal-body">
               {memo.type === "image/jpeg" || memo.type === "image/png" ? (
-                <img src={memo.url} className="w-100" alt="..." />
-              ) : memo.url !== "" && memo.type === "application/pdf" ? (
+                <img src={memo.githubUrl} className="w-100" alt="..." />
+              ) : memo.githubUrl !== "" && memo.type === "application/pdf" ? (
                 <div>
-                  <PDFViewer pdfUrl={memo.url} />
+                  <PDFViewer pdfUrl={memo.githubUrl} />
                 </div>
-              ) : memo.url !== "" ? (
+              ) : memo.githubUrl !== "" ? (
                 <object
-                  data={memo.url}
+                  data={memo.githubUrl}
                   type={memo.type}
                   // width={width}
                   height={height}
@@ -914,7 +873,7 @@ const MemoSection = () => {
                   aria-labelledby="Pdf"
                 ></object>
               ) : (
-                memo.url === "" && (
+                memo.githubUrl === "" && (
                   <h5 className={`card-title timesFont`}>No File Available</h5>
                 )
               )}

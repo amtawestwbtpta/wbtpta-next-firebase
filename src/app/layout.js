@@ -1,6 +1,4 @@
 import "bootstrap/dist/css/bootstrap.css";
-import "react-toastify/dist/ReactToastify.css";
-import "react-toastify";
 import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-image-crop/dist/ReactCrop.css";
@@ -10,7 +8,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AppLink from "../components/AppLink";
 import localFont from "next/font/local";
-import { Bounce, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 const dejaVuBold = localFont({
   src: [
     {
@@ -98,6 +96,8 @@ export default function RootLayout({ children }) {
       <body
         className={`container-fluid text-center ${kalpurush.variable} ${timesNewRoman.variable} ${dejaVuBold.variable} ${dejaVuCondensed.variable} ${algerian.variable}`}
         suppressHydrationWarning={true}
+        lang="en"
+        data-scroll-behavior="smooth"
       >
         <AppLink />
         <GlobalContextProvider>
@@ -115,7 +115,6 @@ export default function RootLayout({ children }) {
             draggable
             pauseOnHover={false}
             theme="light"
-            transition={Bounce}
           />
           <BootstrapClient />
         </GlobalContextProvider>

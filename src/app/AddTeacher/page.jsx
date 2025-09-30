@@ -467,7 +467,7 @@ const AddTeacher = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <div className="all-data" id="box">

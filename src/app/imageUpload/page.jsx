@@ -96,7 +96,7 @@ const page = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       <div className="col-md-6 mx-auto">

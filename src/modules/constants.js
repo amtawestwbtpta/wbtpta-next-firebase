@@ -54,3 +54,7 @@ export const gpEngNames = [
   "NOWPARA",
   "THALIA",
 ];
+export const myAPIKey =
+  "U2FsdGVkX1907YhOCWr2/5guiYFb5aTHIqKldf5UapCGa7XqPCQK0jK6Yj3YRnDJPcdL0fo2FLezThXjhDXcuw2BKx1+RgPq/MGl+yruxKrLKiJIVqx2Sl+kWyTXKUeWl4rwdhYKdoJKAx084OZuSg==";
+export const AndroidAppLink = "1_BbnMY8Wic1AI_iTD92YHWAmhC6bTrG1";
+export const githubUsername = "amtawestwbtpta";

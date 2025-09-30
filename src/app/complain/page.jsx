@@ -171,7 +171,7 @@ const Complain = () => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="light"
       />
       {loader ? <Loader /> : null}

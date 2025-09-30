@@ -36,12 +36,12 @@ const NoticeDetails = ({ sata }) => {
       >
         {sata.title}
       </h3>
-      {sata.url !== "" ? (
+      {sata.githubUrl !== "" ? (
         sata.type.split("/")[0] === "image" ? (
           <img
             src={
-              sata.url !== ""
-                ? sata.url
+              sata.githubUrl !== ""
+                ? sata.githubUrl
                 : "https://raw.githubusercontent.com/awwbtpta/data/main/notice.png"
             }
             className="rounded-2 w-100 my-3"
@@ -51,7 +51,7 @@ const NoticeDetails = ({ sata }) => {
             data-bs-target="#exampleModal"
           />
         ) : sata.type.split("/")[0] === "application" ? (
-          <PDFViewer pdfUrl={sata.url} />
+          <PDFViewer pdfUrl={sata.githubUrl} />
         ) : null
       ) : null}
 
@@ -75,8 +75,8 @@ const NoticeDetails = ({ sata }) => {
             <div className="modal-body">
               <img
                 src={
-                  sata.url !== ""
-                    ? sata.url
+                  sata.githubUrl !== ""
+                    ? sata.githubUrl
                     : "https://raw.githubusercontent.com/awwbtpta/data/main/notice.png"
                 }
                 className="rounded-2 w-100 my-3"

@@ -127,30 +127,12 @@ const UpdateSelf = () => {
             email: email,
             phone: phone,
           });
-          toast.success("Congrats! You Profile Datas Chaged Successfully!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Congrats! You Profile Datas Chaged Successfully!");
           setTimeout(() => {
             router.push("/logout");
           }, 1500);
         } else {
-          toast.error("Something Went Wrong!", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("Something Went Wrong!");
         }
       } catch (e) {
         toast.error("Updation Failed", {
@@ -169,16 +151,7 @@ const UpdateSelf = () => {
         }, 1500);
       }
     } else {
-      toast.error("Form Is Invalid", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Form Is Invalid");
     }
   };
   return (
