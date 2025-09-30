@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Editor from "@monaco-editor/react";
 import Loader from "../../components/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import { decryptData } from "../../modules/encryption";
@@ -10,6 +9,8 @@ import { useGlobalContext } from "../../context/Store";
 import { v4 as uuid } from "uuid";
 import PDFViewer from "../../components/PDFViewer";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 export default function GithubManager() {
   const { state } = useGlobalContext();
   const router = useRouter();
