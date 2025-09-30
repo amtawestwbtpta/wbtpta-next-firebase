@@ -104,9 +104,7 @@ const page = () => {
               encryptObjData("CheckAuth", CheckAuth, 10080);
               setCookie("t", teacherData.tname, 10080);
               setCookie("loggedAt", Date.now(), 10080);
-              setTimeout(() => {
-                router.push("/dashboard");
-              }, 1500);
+              router.push("/dashboard");
             } else {
               setLoader(false);
               toast.error("Your Account is Disabled!");
@@ -146,9 +144,7 @@ const page = () => {
                 encryptObjData("CheckAuth", CheckAuth, 10080);
                 setCookie("t", teacherData.tname, 10080);
                 setCookie("loggedAt", Date.now(), 10080);
-                setTimeout(() => {
-                  router.push("/dashboard");
-                }, 1500);
+                router.push("/dashboard");
               } else {
                 setLoader(false);
                 toast.error("Invalid Username or Password!");
