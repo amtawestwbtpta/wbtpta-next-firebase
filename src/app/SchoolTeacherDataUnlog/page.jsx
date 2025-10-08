@@ -48,9 +48,9 @@ const SchoolTeacherDataUnlog = () => {
         >
           <option value="">Select School Name</option>
           {schoolData.length > 0
-            ? schoolData.map((el) => {
+            ? schoolData.map((el, ind) => {
                 return (
-                  <option key={el.id} value={el.udise}>
+                  <option key={ind} value={el.udise}>
                     {el.school}
                   </option>
                 );
@@ -85,14 +85,20 @@ const SchoolTeacherDataUnlog = () => {
             </div>
             <div className="col-md-3 m-1">
               <h6 className="text-primary text center">
-                Total Student {filteredSchool[0].year - 1}:{" "}
-                {filteredSchool[0].student}
+                Total Student {filteredSchool.year - 2}:{" "}
+                {filteredSchool.student_prev2}
               </h6>
             </div>
             <div className="col-md-3 m-1">
               <h6 className="text-primary text center">
-                Total Student {filteredSchool[0].year}:{" "}
-                {filteredSchool[0].student}
+                Total Student {filteredSchool.year - 1}:{" "}
+                {filteredSchool.student}
+              </h6>
+            </div>
+            <div className="col-md-3 m-1">
+              <h6 className="text-primary text center">
+                Total Student {filteredSchool.year}:{" "}
+                {filteredSchool.total_student}
               </h6>
             </div>
           </div>
@@ -190,36 +196,15 @@ const SchoolTeacherDataUnlog = () => {
       ) : null}
 
       <div className="row mx-auto my-3 rounded justify-content-evenly">
-        {filteredData.map((el) => {
+        {filteredData.map((el, ind) => {
           return (
-            <div className="col-md-3 m-2 p-2 rounded bg-light" key={el.id}>
+            <div className="col-md-3 m-2 p-2 rounded bg-light" key={ind}>
               <h6 className="text-center text-primary">
                 Teacher Name: {el.tname}
               </h6>
               <h6 className="text-center text-primary">
                 Designation: {el.desig}
               </h6>
-              <h6
-                className={
-                  el.association === "WBTPTA" ? "text-primary" : "text-danger"
-                }
-              >
-                Association: {el.association}
-              </h6>
-              {el.association === "WBTPTA" ? (
-                <>
-                  {el.gender === "male" ? (
-                    <h6>
-                      <a
-                        href={`tel: +91${el.phone}`}
-                        className="d-inline-block mb-1  p-0 text-decoration-none"
-                      >
-                        Phone: {el.phone}
-                      </a>
-                    </h6>
-                  ) : null}
-                </>
-              ) : null}
               {el.hoi === "Yes" ? (
                 <h6 className="text-success">Head of The Institute</h6>
               ) : null}

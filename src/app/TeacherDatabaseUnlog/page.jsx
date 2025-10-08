@@ -59,24 +59,6 @@ const TeacherDatabaseUnlog = () => {
       sortable: true,
       wrap: true,
     },
-    {
-      name: "Mobile",
-      selector: (row) =>
-        row.gender === "female" || row.association !== "WBTPTA" ? (
-          "CONTACT US"
-        ) : (
-          <a
-            href={`tel: +91${row.phone}`}
-            className="d-inline-block mb-2 text-decoration-none text-dark"
-          >
-            <i className="bi bi-telephone-fill"></i>
-            {"  "}
-            +91{row.phone}
-          </a>
-        ),
-      sortable: false,
-      wrap: true,
-    },
   ];
 
   return (
