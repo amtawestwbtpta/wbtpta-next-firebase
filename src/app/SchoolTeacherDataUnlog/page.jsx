@@ -85,20 +85,20 @@ const SchoolTeacherDataUnlog = () => {
             </div>
             <div className="col-md-3 m-1">
               <h6 className="text-primary text center">
-                Total Student {filteredSchool.year - 2}:{" "}
-                {filteredSchool.student_prev2}
+                Total Student {filteredSchool[0].year - 2}:{" "}
+                {filteredSchool[0].student_prev2}
               </h6>
             </div>
             <div className="col-md-3 m-1">
               <h6 className="text-primary text center">
-                Total Student {filteredSchool.year - 1}:{" "}
-                {filteredSchool.student}
+                Total Student {filteredSchool[0].year - 1}:{" "}
+                {filteredSchool[0].student}
               </h6>
             </div>
             <div className="col-md-3 m-1">
               <h6 className="text-primary text center">
-                Total Student {filteredSchool.year}:{" "}
-                {filteredSchool.total_student}
+                Total Student {filteredSchool[0].year}:{" "}
+                {filteredSchool[0].total_student}
               </h6>
             </div>
           </div>
