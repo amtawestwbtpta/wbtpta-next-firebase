@@ -160,7 +160,7 @@ const ViewDetails = () => {
         pauseOnHover={false}
         theme="light"
       />
-      <h3 className="text-primary my-3 text center">
+      <h3 className="text-primary my-3 text-center">
         Details of {tname} of {school}
       </h3>
       <div className="row d-flex justify-content-center text-black">
