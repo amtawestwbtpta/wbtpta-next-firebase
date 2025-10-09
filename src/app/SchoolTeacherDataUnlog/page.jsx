@@ -105,7 +105,7 @@ const SchoolTeacherDataUnlog = () => {
             <StudentCount
               info={filteredSchool[0]}
               divClassNames={"col-md-3 m-1"}
-              hClassNames={"text-primary text center"}
+              hClassNames={"text-primary text-center"}
             />
           </div>
           <div className="row my-2">

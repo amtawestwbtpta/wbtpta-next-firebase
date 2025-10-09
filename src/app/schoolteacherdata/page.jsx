@@ -243,7 +243,7 @@ const SchoolTeacherData = () => {
               <StudentCount
                 info={filteredSchool}
                 divClassNames={"col-md-3 m-1"}
-                hClassNames={"text-primary text center"}
+                hClassNames={"text-primary text-center"}
               />
               {/* <div className="col-md-3 m-1">
                 <h6 className="text-primary text center">
