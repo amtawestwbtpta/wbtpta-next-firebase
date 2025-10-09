@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { firestore } from "../../context/FirebaseContext";
 import { doc, updateDoc } from "firebase/firestore";
 import StudentCount from "../../components/StudentCount";
+import StudentInput from "../../components/StudentInput";
 const SchoolTeacherData = () => {
   const {
     state,
@@ -431,7 +432,7 @@ const SchoolTeacherData = () => {
                             ></button>
                           </div>
                           <div className="modal-body">
-                            <div className="row d-flex justify-content-center">
+                            {/* <div className="row d-flex justify-content-center">
                               <div className="mb-3 col-lg-6">
                                 <label className="form-label">
                                   School Name
@@ -570,6 +571,14 @@ const SchoolTeacherData = () => {
                                   onChange={handleChange}
                                 />
                               </div>
+                            </div> */}
+                            <div className="row d-flex justify-content-center">
+                              <StudentInput
+                                info={inputField}
+                                onInfoChange={setInputField}
+                                divClassNames="col-md-6 mb-3"
+                                hClassNames="text-primary text-center"
+                              />
                             </div>
                           </div>
                           <div className="modal-footer">
