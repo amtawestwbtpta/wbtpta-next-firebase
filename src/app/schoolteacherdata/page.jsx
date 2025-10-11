@@ -173,14 +173,13 @@ const SchoolTeacherData = () => {
       setStateArray(tData);
       setFilteredSchool(sData);
       setInputField(sData);
-      const student_number = Object.entries(sData)
-        .filter(([key]) => key.startsWith("student_"))
-        .map(([key, value]) => ({
-          year: key.split("_")[1], // Extract the year part
-          count: value,
-        }))
-        .sort((a, b) => a.year - b.year); // Sort by year ascending
-      const totalStudents = student_number[student_number.length - 1].count;
+      const totalStudents =
+        parseInt(sData.pp) +
+        parseInt(sData.i) +
+        parseInt(sData.ii) +
+        parseInt(sData.iii) +
+        parseInt(sData.iv) +
+        parseInt(sData.v);
       setTotal_student(totalStudents);
     } else {
       toast.error("Please Select School Name");

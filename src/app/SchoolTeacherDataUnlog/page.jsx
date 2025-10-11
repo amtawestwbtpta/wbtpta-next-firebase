@@ -47,14 +47,13 @@ const SchoolTeacherDataUnlog = () => {
     setFilteredData(teacherData.filter((el) => el.udise.match(e.target.value)));
 
     setFilteredSchool(selectedSchool);
-    const student_number = Object.entries(selectedSchool)
-      .filter(([key]) => key.startsWith("student_"))
-      .map(([key, value]) => ({
-        year: key.split("_")[1], // Extract the year part
-        count: value,
-      }))
-      .sort((a, b) => a.year - b.year); // Sort by year ascending
-    const totalStudents = student_number[student_number.length - 1].count;
+    const totalStudents =
+      parseInt(selectedSchool.pp) +
+      parseInt(selectedSchool.i) +
+      parseInt(selectedSchool.ii) +
+      parseInt(selectedSchool.iii) +
+      parseInt(selectedSchool.iv) +
+      parseInt(selectedSchool.v);
     setTotal_student(totalStudents);
   };
   useEffect(() => {
