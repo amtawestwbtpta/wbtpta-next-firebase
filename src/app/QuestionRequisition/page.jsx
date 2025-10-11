@@ -254,14 +254,6 @@ const QuestionRequisition = () => {
     let selectedData;
     if (e.target.value) {
       selectedData = JSON.parse(e.target.value);
-      const student_number = Object.entries(selectedData)
-        .filter(([key]) => key.startsWith("student_"))
-        .map(([key, value]) => ({
-          year: key.split("_")[1], // Extract the year part
-          count: value,
-        }))
-        .sort((a, b) => a.year - b.year); // Sort by year ascending
-      const totalStudents = student_number[student_number.length - 1].count;
       setAddInputField({
         ...addInputField,
         school: selectedData.school,
@@ -269,13 +261,19 @@ const QuestionRequisition = () => {
         gp: selectedData.gp,
         id: docId,
         sl: serial,
-        cl_pp_student: selectedData.pp,
-        cl_1_student: selectedData.i,
-        cl_2_student: selectedData.ii,
-        cl_3_student: selectedData.iii,
-        cl_4_student: selectedData.iv,
-        cl_5_student: selectedData.v,
-        total_student: totalStudents,
+        cl_pp_student: parseInt(selectedData.pp),
+        cl_1_student: parseInt(selectedData.i),
+        cl_2_student: parseInt(selectedData.ii),
+        cl_3_student: parseInt(selectedData.iii),
+        cl_4_student: parseInt(selectedData.iv),
+        cl_5_student: parseInt(selectedData.v),
+        total_student:
+          parseInt(selectedData.pp) +
+          parseInt(selectedData.i) +
+          parseInt(selectedData.ii) +
+          parseInt(selectedData.iii) +
+          parseInt(selectedData.iv) +
+          parseInt(selectedData.v),
         total_rate: Math.floor(
           selectedData.pp * questionRateState.pp_rate +
             selectedData.i * questionRateState.i_rate +
