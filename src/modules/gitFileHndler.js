@@ -53,8 +53,8 @@ export const uploadFileToGithub = async (uploadFile, fileName, repoName) => {
   });
 
   const data = await res.json();
-  const { html_url } = data.content; // Download url of the uploaded file
-  return html_url;
+  const { download_url } = data.content; // Download url of the uploaded file
+  return download_url;
 };
 export const deleteFileFromGithub = async (fileName, repoName) => {
   const url = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/${fileName}`;

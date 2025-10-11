@@ -169,7 +169,6 @@ const AdminUploadImage = () => {
       } else {
         setLoader(true);
         const githubUrl = await uploadFileToGithub(file, file.name, folder);
-        console.log(githubUrl);
         const filestorageRef = ref(storage, `/${folder}/${file.name}`);
         const uploadTask = uploadBytesResumable(filestorageRef, file);
         uploadTask.on(
