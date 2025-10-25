@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import Loader from "./Loader";
 
-// Ensure we only run this on the client-side
-if (typeof window !== "undefined") {
-  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@5.3.31/build/pdf.worker.min.mjs`;
-}
+// // Ensure we only run this on the client-side
+// if (typeof window !== "undefined") {
+//   pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@5.3.31/build/pdf.worker.min.mjs`;
+// }
 
 const PDFViewer = ({ pdfUrl }) => {
   const [numPages, setNumPages] = useState(null);
@@ -17,14 +17,14 @@ const PDFViewer = ({ pdfUrl }) => {
   const containerRef = useRef(null);
   const [key, setKey] = useState(0);
 
-  // Memoize options to prevent unnecessary reloads
-  const pdfOptions = useMemo(
-    () => ({
-      cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/",
+  // Memoize options using the same version dynamically
+  const pdfOptions = useMemo(() => {
+    const pdfjsVersion = pdfjs.version;
+    return {
+      cMapUrl: `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsVersion}/cmaps/`,
       cMapPacked: true,
-    }),
-    []
-  );
+    };
+  }, []);
 
   // Reset state when pdfUrl changes
   useEffect(() => {
@@ -34,7 +34,12 @@ const PDFViewer = ({ pdfUrl }) => {
     setError(null);
     setKey((prev) => prev + 1);
   }, [pdfUrl]);
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const pdfjsVersion = pdfjs.version;
+      pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.mjs`;
+    }
+  }, []);
   // Handle container resize
   useEffect(() => {
     const updateWidth = () => {
