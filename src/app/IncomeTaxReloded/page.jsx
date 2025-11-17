@@ -77,6 +77,7 @@ export default function IncomeTaxReloded() {
   const [newITData, setNewITDa] = useState({
     id: "",
     tname: "",
+    fname: "",
     school: "",
     pan: "",
     phone: "",
@@ -1130,7 +1131,7 @@ export default function IncomeTaxReloded() {
     });
   };
   const calCulateNewIT = async (data, year) => {
-    const { id, tname, school, pan, disability, desig, gender } = data;
+    const { id, tname, school, pan, disability, desig, gender, fname } = data;
     const marchSalary = march.filter((el) => el.id == id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -1624,6 +1625,7 @@ export default function IncomeTaxReloded() {
     }
     setNewITDa({
       tname,
+      fname,
       school,
       pan,
       desig,
