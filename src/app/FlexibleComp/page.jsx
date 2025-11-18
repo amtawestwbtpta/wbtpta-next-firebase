@@ -7,7 +7,11 @@ import {
 } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { gpEngNames, keysData } from "../../modules/constants";
+import {
+  gpEngNames,
+  keysData,
+  createDownloadLink,
+} from "../../modules/constants";
 import dynamic from "next/dynamic";
 import FlexibleTeacherList from "../../pdfs/FlexibleTeacherList";
 function FlexibleComp() {
@@ -291,6 +295,15 @@ function FlexibleComp() {
                 }}
               >
                 {showDownloadBtn ? "Hide Download" : "Show Download"}
+              </button>
+              <button
+                type="button"
+                className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
+                onClick={() => {
+                  createDownloadLink(filteredData, "flexibleData");
+                }}
+              >
+                Download Data
               </button>
               <div>
                 {gpEngNames.map((el, ind) => (
