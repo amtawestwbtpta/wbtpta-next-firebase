@@ -7,11 +7,7 @@ import {
 } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import {
-  gpEngNames,
-  keysData,
-  createDownloadLink,
-} from "../../modules/constants";
+import { gpEngNames, keysData } from "../../modules/constants";
 import dynamic from "next/dynamic";
 import FlexibleTeacherList from "../../pdfs/FlexibleTeacherList";
 function FlexibleComp() {
