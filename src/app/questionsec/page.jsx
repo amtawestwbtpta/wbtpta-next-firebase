@@ -79,7 +79,7 @@ function QuestionSec() {
   const [data, setData] = useState([]);
   const [isAccepting, setIsAccepting] = useState(true);
   const [showSlide, setShowSlide] = useState(false);
-
+  const [isAlphabatically, setIsAlphabatically] = useState(true);
   const [selectedSchool, setSelectedSchool] = useState({});
   const [inputField, setInputField] = useState({});
   const [addInputField, setAddInputField] = useState({
@@ -124,10 +124,10 @@ function QuestionSec() {
       .sort((a, b) => {
         // Compare by 'gp'
         if (a.gp < b.gp) {
-          return -1; // a comes first
+          return isAlphabatically ? -1 : 1; // a comes first
         }
         if (a.gp > b.gp) {
-          return 1; // b comes first
+          return isAlphabatically ? 1 : -1; // b comes first
         }
 
         // If 'gp' is the same, compare by 'school'
@@ -191,10 +191,10 @@ function QuestionSec() {
             const newData = [...questionState, addInputField].sort((a, b) => {
               // Compare by 'gp'
               if (a.gp < b.gp) {
-                return -1; // a comes first
+                return isAlphabatically ? -1 : 1; // a comes first
               }
               if (a.gp > b.gp) {
-                return 1; // b comes first
+                return isAlphabatically ? 1 : -1; // b comes first
               }
 
               // If 'gp' is the same, compare by 'school'
@@ -426,6 +426,7 @@ function QuestionSec() {
     setQuestionRateState(data);
     setQuestionRateUpdateTime(Date.now());
     setIsAccepting(data.isAccepting);
+    setIsAlphabatically(data.isAlphabatically);
   };
   const getQuestionData = async () => {
     const difference = (Date.now() - questionUpdateTime) / 1000 / 60 / 15;
@@ -435,10 +436,10 @@ function QuestionSec() {
       const data = questionState.sort((a, b) => {
         // Compare by 'gp'
         if (a.gp < b.gp) {
-          return -1; // a comes first
+          return isAlphabatically ? -1 : 1; // a comes first
         }
         if (a.gp > b.gp) {
-          return 1; // b comes first
+          return isAlphabatically ? 1 : -1; // b comes first
         }
 
         // If 'gp' is the same, compare by 'school'
@@ -569,6 +570,63 @@ function QuestionSec() {
         console.log(e);
       });
   };
+  const questionOrderChange = async (state) => {
+    setLoader(true);
+    setQuestionRateState({ ...questionRateState, isAlphabatically: state });
+    setQuestionRateUpdateTime(Date.now());
+    await updateDoc(doc(firestore, "question_rate", questionRateState.id), {
+      isAlphabatically: state,
+    })
+      .then(() => {
+        setLoader(false);
+        toast.success("Data Successfully Updated!!!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((e) => {
+        toast.error("Something Went Wrong in Server!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.log(e);
+      });
+
+    const questionArray = questionState.sort((a, b) => {
+      // Compare by 'gp'
+      if (a.gp < b.gp) {
+        return state ? -1 : 1; // a comes first
+      }
+      if (a.gp > b.gp) {
+        return state ? 1 : -1; // b comes first
+      }
+
+      // If 'gp' is the same, compare by 'school'
+      if (a.school < b.school) {
+        return -1; // a comes first
+      }
+      if (a.school > b.school) {
+        return 1; // b comes first
+      }
+
+      return 0; // They are equal
+    });
+    setQuestionState(questionArray);
+    setQuestionUpdateTime(Date.now());
+  };
+
   useEffect(() => {
     document.title = "WBTPTA AMTA WEST:Question Section";
     if (!state && questionadmin !== "admin") {
@@ -788,6 +846,33 @@ function QuestionSec() {
                   {isAccepting
                     ? "Question Requisition Accepting Allowed"
                     : "Question Requisition Accepting Closed"}
+                </label>
+              </div>
+            </div>
+            <div>
+              <p className="text-center text-primary">Question Display Order</p>
+
+              <div className="d-flex justify-content-center align-items-center form-check form-switch mx-auto text-center">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckCheckedQuestionOrder"
+                  checked={isAlphabatically}
+                  onChange={(e) => {
+                    setIsAlphabatically(!isAlphabatically);
+                    questionOrderChange(e.target.checked ? true : false);
+                  }}
+                />
+                <label
+                  className={`form-check-label mx-2 ${
+                    isAlphabatically ? "text-success" : "text-danger"
+                  }`}
+                  htmlFor="flexSwitchCheckCheckedQuestionOrder"
+                >
+                  {isAlphabatically
+                    ? "Question Data in A-Z Order"
+                    : "Question Data in Z-A Order"}
                 </label>
               </div>
             </div>

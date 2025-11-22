@@ -71,6 +71,7 @@ const GlobalContext = createContext({
     term: "1st",
     year: new Date().getFullYear(),
     isAccepting: false,
+    isAlphabatically: true,
   },
   setQuestionRateState: () => {},
   questionRateUpdateTime: "",
@@ -152,6 +153,7 @@ export const GlobalContextProvider = ({ children }) => {
     term: "1st",
     year: new Date().getFullYear(),
     isAccepting: false,
+    isAlphabatically: true,
   });
   const [questionRateUpdateTime, setQuestionRateUpdateTime] = useState("");
   const [userUpdateTime, setUserUpdateTime] = useState(Date.now() - 1000);
