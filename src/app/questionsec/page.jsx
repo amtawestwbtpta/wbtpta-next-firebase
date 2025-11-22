@@ -424,6 +424,7 @@ function QuestionSec() {
       id: doc.id,
     }))[0];
     setQuestionRateState(data);
+    setQuestionInputField(data);
     setQuestionRateUpdateTime(Date.now());
     setIsAccepting(data.isAccepting);
     setIsAlphabatically(data.isAlphabatically);
@@ -469,14 +470,8 @@ function QuestionSec() {
         isAccepting: questionRateState.isAccepting,
       });
     }
-    const questionRateDifference =
-      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
-    if (questionRateDifference >= 1 || questionRateState.length === 0) {
-      getAcceptingData();
-    } else {
-      setQuestionInputField(questionRateState);
-      setIsAccepting(questionRateState.isAccepting);
-    }
+
+    getAcceptingData();
   };
 
   const closeAccepting = async () => {
