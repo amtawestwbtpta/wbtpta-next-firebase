@@ -1,43 +1,30 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { NumInWords, round2dec } from "../../modules/calculatefunctions";
 const PrintQuestionAll = () => {
-  const { state, stateObject, questionRateState } = useGlobalContext();
+  const { state, questionRateState, questionState } = useGlobalContext();
   const router = useRouter();
 
-  const [allData, setAllData] = useState([]);
-  const [qRate, setQRate] = useState({
-    pp_rate: "",
-    i_rate: "",
-    ii_rate: "",
-    iii_rate: "",
-    iv_rate: "",
-    v_rate: "",
-    term: "",
-    year: "",
-  });
-  let pp_rate = qRate.pp_rate;
-  let i_rate = qRate.i_rate;
-  let ii_rate = qRate.ii_rate;
-  let iii_rate = qRate.iii_rate;
-  let iv_rate = qRate.iv_rate;
-  let v_rate = qRate.v_rate;
-  let term = qRate.term;
-  let year = qRate.year;
+  const pp_rate = questionRateState.pp_rate;
+  const i_rate = questionRateState.i_rate;
+  const ii_rate = questionRateState.ii_rate;
+  const iii_rate = questionRateState.iii_rate;
+  const iv_rate = questionRateState.iv_rate;
+  const v_rate = questionRateState.v_rate;
+  const term = questionRateState.term;
+  const year = questionRateState.year;
 
   useEffect(() => {
-    setAllData(stateObject);
-    setQRate(questionRateState);
     document.title = "WBTPTA AMTA WEST:Print All Question Invoice";
     if (!state) {
       router.push("/login");
     }
   }, []);
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <div>
         <div className="mx-auto my-5 noprint">
           <button
@@ -61,8 +48,8 @@ const PrintQuestionAll = () => {
           </button>
         </div>
 
-        {allData.length > 0 &&
-          allData.map((el, ind) => {
+        {questionState.length > 0 &&
+          questionState.map((el, ind) => {
             let cl_pp_rate = round2dec(el.cl_pp_student * 3 * pp_rate);
             let cl_1_rate = round2dec(el.cl_1_student * 3 * i_rate);
             let cl_2_rate = round2dec(el.cl_2_student * 3 * ii_rate);

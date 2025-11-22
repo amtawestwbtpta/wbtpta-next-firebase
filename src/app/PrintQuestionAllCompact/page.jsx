@@ -5,32 +5,20 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import { NumInWords, round5 } from "../../modules/calculatefunctions";
 const PrintQuestionAll = () => {
-  const { state, stateObject, questionRateState } = useGlobalContext();
+  const { state, stateObject, questionRateState, questionState } =
+    useGlobalContext();
   const router = useRouter();
 
-  const [allData, setAllData] = useState([]);
-  const [qRate, setQRate] = useState({
-    pp_rate: "",
-    i_rate: "",
-    ii_rate: "",
-    iii_rate: "",
-    iv_rate: "",
-    v_rate: "",
-    term: "",
-    year: "",
-  });
-  let pp_rate = qRate.pp_rate;
-  let i_rate = qRate.i_rate;
-  let ii_rate = qRate.ii_rate;
-  let iii_rate = qRate.iii_rate;
-  let iv_rate = qRate.iv_rate;
-  let v_rate = qRate.v_rate;
-  let term = qRate.term;
-  let year = qRate.year;
+  const pp_rate = questionRateState.pp_rate;
+  const i_rate = questionRateState.i_rate;
+  const ii_rate = questionRateState.ii_rate;
+  const iii_rate = questionRateState.iii_rate;
+  const iv_rate = questionRateState.iv_rate;
+  const v_rate = questionRateState.v_rate;
+  const term = questionRateState.term;
+  const year = questionRateState.year;
 
   useEffect(() => {
-    setAllData(stateObject);
-    setQRate(questionRateState);
     document.title = "WBTPTA AMTA WEST:Print All Question Invoice";
     if (!state) {
       router.push("/login");
@@ -62,7 +50,7 @@ const PrintQuestionAll = () => {
         </div>
         <table className="table table-resposive table-bordered border-dark border-1 text-center">
           <tbody>
-            {allData.map((el, ind) => {
+            {questionState.map((el, ind) => {
               let total_rate = round5(
                 el.cl_pp_student * pp_rate +
                   el.cl_1_student * i_rate +

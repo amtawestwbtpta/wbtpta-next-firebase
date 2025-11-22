@@ -16,15 +16,17 @@ import {
 } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
+import { useGlobalContext } from "../context/Store";
 
-export default function QuestionList({ data, title, qRate, state }) {
-  const list = data.sort((a, b) => {
+export default function QuestionList({ title }) {
+  const { questionState, questionRateState } = useGlobalContext();
+  const list = questionState.sort((a, b) => {
     // Compare by 'gp'
     if (a.gp < b.gp) {
-      return state ? -1 : 1; // a comes first
+      return questionRateState.isAlphabatically ? -1 : 1; // a comes first
     }
     if (a.gp > b.gp) {
-      return state ? 1 : -1; // b comes first
+      return questionRateState.isAlphabatically ? 1 : -1; // b comes first
     }
 
     // If 'gp' is the same, compare by 'school'
@@ -167,11 +169,11 @@ export default function QuestionList({ data, title, qRate, state }) {
                   id,
                 } = question;
                 const total_rate = round5(
-                  cl_1_student * qRate.i_rate +
-                    cl_2_student * qRate.ii_rate +
-                    cl_3_student * qRate.iii_rate +
-                    cl_4_student * qRate.iv_rate +
-                    cl_5_student * qRate.v_rate
+                  cl_1_student * questionRateState.i_rate +
+                    cl_2_student * questionRateState.ii_rate +
+                    cl_3_student * questionRateState.iii_rate +
+                    cl_4_student * questionRateState.iv_rate +
+                    cl_5_student * questionRateState.v_rate
                 );
                 return (
                   <View

@@ -76,10 +76,8 @@ function QuestionSec() {
   }
   const questionadmin = details?.question;
   const [loader, setLoader] = useState(false);
-  const [data, setData] = useState([]);
   const [isAccepting, setIsAccepting] = useState(true);
   const [showSlide, setShowSlide] = useState(false);
-  const [isAlphabatically, setIsAlphabatically] = useState(true);
   const [selectedSchool, setSelectedSchool] = useState({});
   const [inputField, setInputField] = useState({});
   const [addInputField, setAddInputField] = useState({
@@ -109,6 +107,7 @@ function QuestionSec() {
     term: "1st",
     year: 2024,
     isAccepting: false,
+    isAlphabatically: true,
   });
   const [showDldBtn, setShowDldBtn] = useState(false);
   const userData = async () => {
@@ -124,10 +123,10 @@ function QuestionSec() {
       .sort((a, b) => {
         // Compare by 'gp'
         if (a.gp < b.gp) {
-          return isAlphabatically ? -1 : 1; // a comes first
+          return questionRateState.isAlphabatically ? -1 : 1; // a comes first
         }
         if (a.gp > b.gp) {
-          return isAlphabatically ? 1 : -1; // b comes first
+          return questionRateState.isAlphabatically ? 1 : -1; // b comes first
         }
 
         // If 'gp' is the same, compare by 'school'
@@ -146,7 +145,6 @@ function QuestionSec() {
     setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
     setSerial(data.length + 1);
     setShowSlide(true);
-    setData(data);
     const q2 = query(collection(firestore, "question_rate"));
 
     const querySnapshot2 = await getDocs(q2);
@@ -167,6 +165,7 @@ function QuestionSec() {
       term: data2[0].term,
       year: data2[0].year,
       isAccepting: data2[0].isAccepting,
+      isAlphabatically: data2[0].isAlphabatically,
     });
   };
   const changeData = (e) => {
@@ -191,10 +190,10 @@ function QuestionSec() {
             const newData = [...questionState, addInputField].sort((a, b) => {
               // Compare by 'gp'
               if (a.gp < b.gp) {
-                return isAlphabatically ? -1 : 1; // a comes first
+                return questionRateState.isAlphabatically ? -1 : 1; // a comes first
               }
               if (a.gp > b.gp) {
-                return isAlphabatically ? 1 : -1; // b comes first
+                return questionRateState.isAlphabatically ? 1 : -1; // b comes first
               }
 
               // If 'gp' is the same, compare by 'school'
@@ -213,7 +212,6 @@ function QuestionSec() {
             );
             setSerial(newData.length + 1);
             setShowSlide(true);
-            setData(newData);
             toast.success("School Successfully Added!!!");
             setAddInputField({
               id: docId,
@@ -427,7 +425,6 @@ function QuestionSec() {
     setQuestionInputField(data);
     setQuestionRateUpdateTime(Date.now());
     setIsAccepting(data.isAccepting);
-    setIsAlphabatically(data.isAlphabatically);
   };
   const getQuestionData = async () => {
     const difference = (Date.now() - questionUpdateTime) / 1000 / 60 / 15;
@@ -437,10 +434,10 @@ function QuestionSec() {
       const data = questionState.sort((a, b) => {
         // Compare by 'gp'
         if (a.gp < b.gp) {
-          return isAlphabatically ? -1 : 1; // a comes first
+          return questionRateState.isAlphabatically ? -1 : 1; // a comes first
         }
         if (a.gp > b.gp) {
-          return isAlphabatically ? 1 : -1; // b comes first
+          return questionRateState.isAlphabatically ? 1 : -1; // b comes first
         }
 
         // If 'gp' is the same, compare by 'school'
@@ -456,7 +453,6 @@ function QuestionSec() {
       setDocId(`questions${data.length + 101}-${uuid().split("-")[0]}`);
       setSerial(data.length + 1);
       setShowSlide(true);
-      setData(data);
       setQuestionInputField({
         id: questionRateState.id,
         pp_rate: questionRateState.pp_rate,
@@ -470,8 +466,25 @@ function QuestionSec() {
         isAccepting: questionRateState.isAccepting,
       });
     }
-
-    getAcceptingData();
+    const rateDifference =
+      (Date.now() - questionRateUpdateTime) / 1000 / 60 / 15;
+    if (rateDifference >= 1) {
+      getAcceptingData();
+    } else {
+      setQuestionInputField({
+        id: questionRateState.id,
+        pp_rate: questionRateState.pp_rate,
+        i_rate: questionRateState.i_rate,
+        ii_rate: questionRateState.ii_rate,
+        iii_rate: questionRateState.iii_rate,
+        iv_rate: questionRateState.iv_rate,
+        v_rate: questionRateState.v_rate,
+        term: questionRateState.term,
+        year: questionRateState.year,
+        isAccepting: questionRateState.isAccepting,
+      });
+      setIsAccepting(questionRateState.isAccepting);
+    }
   };
 
   const closeAccepting = async () => {
@@ -593,7 +606,6 @@ function QuestionSec() {
         setQuestionRateState({ ...questionRateState, isAlphabatically: state });
         setQuestionRateUpdateTime(Date.now());
         setQuestionState(questionArray);
-        setData(questionArray);
         setQuestionUpdateTime(Date.now());
         setLoader(false);
         toast.success("Data Successfully Updated!!!", {
@@ -634,7 +646,7 @@ function QuestionSec() {
   }, []);
 
   useEffect(() => {}, [selectedSchool, questionInputField, addInputField]);
-  useEffect(() => {}, [data, isAlphabatically]);
+
   return (
     <div className="container my-5">
       <ToastContainer
@@ -677,7 +689,7 @@ function QuestionSec() {
             }}
             className="mySwiper"
           >
-            {data.map((el, ind) => {
+            {questionState.map((el, ind) => {
               return (
                 <SwiperSlide key={ind}>
                   <div
@@ -744,21 +756,12 @@ function QuestionSec() {
           }
         </button>
         {/* Add School modal */}
-        <Link
-          className="btn btn-sm btn-success m-2"
-          href={`/PrintQuestionAll`}
-          onClick={() => {
-            setStateObject(data);
-          }}
-        >
+        <Link className="btn btn-sm btn-success m-2" href={`/PrintQuestionAll`}>
           Print All Invoice
         </Link>
         <Link
           className="btn btn-sm btn-info "
           href={`/PrintQuestionAllCompact`}
-          onClick={() => {
-            setStateObject(data);
-          }}
         >
           Print Question All Compact
         </Link>
@@ -855,19 +858,20 @@ function QuestionSec() {
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckCheckedQuestionOrder"
-                  checked={isAlphabatically}
+                  checked={questionRateState.isAlphabatically}
                   onChange={(e) => {
-                    setIsAlphabatically(!isAlphabatically);
                     questionOrderChange(e.target.checked ? true : false);
                   }}
                 />
                 <label
                   className={`form-check-label mx-2 ${
-                    isAlphabatically ? "text-success" : "text-danger"
+                    questionRateState.isAlphabatically
+                      ? "text-success"
+                      : "text-danger"
                   }`}
                   htmlFor="flexSwitchCheckCheckedQuestionOrder"
                 >
-                  {isAlphabatically
+                  {questionRateState.isAlphabatically
                     ? "Question Data in A-Z Order"
                     : "Question Data in Z-A Order"}
                 </label>
@@ -903,10 +907,7 @@ function QuestionSec() {
                     <PDFDownloadLink
                       document={
                         <QuestionList
-                          data={data}
                           title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
-                          qRate={questionRateState}
-                          state={isAlphabatically}
                         />
                       }
                       fileName={`WBTPTA ${questionRateState.term} Summative Exam, ${questionRateState.year}.pdf`}
@@ -925,10 +926,7 @@ function QuestionSec() {
                       }
                     </PDFDownloadLink>
                     {/* <QuestionList
-                      data={data}
                       title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
-                      qRate={questionRateState}
-                      state={isAlphabatically}
                     /> */}
                   </div>
                 </div>
