@@ -624,6 +624,7 @@ function QuestionSec() {
       return 0; // They are equal
     });
     setQuestionState(questionArray);
+    setData(questionArray);
     setQuestionUpdateTime(Date.now());
   };
 
