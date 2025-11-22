@@ -567,12 +567,34 @@ function QuestionSec() {
   };
   const questionOrderChange = async (state) => {
     setLoader(true);
-    setQuestionRateState({ ...questionRateState, isAlphabatically: state });
-    setQuestionRateUpdateTime(Date.now());
     await updateDoc(doc(firestore, "question_rate", questionRateState.id), {
       isAlphabatically: state,
     })
       .then(() => {
+        const questionArray = questionState.sort((a, b) => {
+          // Compare by 'gp'
+          if (a.gp < b.gp) {
+            return state ? -1 : 1; // a comes first
+          }
+          if (a.gp > b.gp) {
+            return state ? 1 : -1; // b comes first
+          }
+
+          // If 'gp' is the same, compare by 'school'
+          if (a.school < b.school) {
+            return -1; // a comes first
+          }
+          if (a.school > b.school) {
+            return 1; // b comes first
+          }
+
+          return 0; // They are equal
+        });
+        setQuestionRateState({ ...questionRateState, isAlphabatically: state });
+        setQuestionRateUpdateTime(Date.now());
+        setQuestionState(questionArray);
+        setData(questionArray);
+        setQuestionUpdateTime(Date.now());
         setLoader(false);
         toast.success("Data Successfully Updated!!!", {
           position: "top-right",
@@ -586,6 +608,7 @@ function QuestionSec() {
         });
       })
       .catch((e) => {
+        setLoader(false);
         toast.error("Something Went Wrong in Server!", {
           position: "top-right",
           autoClose: 1500,
@@ -598,29 +621,6 @@ function QuestionSec() {
         });
         console.log(e);
       });
-
-    const questionArray = questionState.sort((a, b) => {
-      // Compare by 'gp'
-      if (a.gp < b.gp) {
-        return state ? -1 : 1; // a comes first
-      }
-      if (a.gp > b.gp) {
-        return state ? 1 : -1; // b comes first
-      }
-
-      // If 'gp' is the same, compare by 'school'
-      if (a.school < b.school) {
-        return -1; // a comes first
-      }
-      if (a.school > b.school) {
-        return 1; // b comes first
-      }
-
-      return 0; // They are equal
-    });
-    setQuestionState(questionArray);
-    setData(questionArray);
-    setQuestionUpdateTime(Date.now());
   };
 
   useEffect(() => {
@@ -634,6 +634,7 @@ function QuestionSec() {
   }, []);
 
   useEffect(() => {}, [selectedSchool, questionInputField, addInputField]);
+  useEffect(() => {}, [data, isAlphabatically]);
   return (
     <div className="container my-5">
       <ToastContainer
@@ -905,6 +906,7 @@ function QuestionSec() {
                           data={data}
                           title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
                           qRate={questionRateState}
+                          state={isAlphabatically}
                         />
                       }
                       fileName={`WBTPTA ${questionRateState.term} Summative Exam, ${questionRateState.year}.pdf`}
@@ -922,6 +924,12 @@ function QuestionSec() {
                         loading ? "Please Wait..." : "Download Question List"
                       }
                     </PDFDownloadLink>
+                    {/* <QuestionList
+                      data={data}
+                      title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
+                      qRate={questionRateState}
+                      state={isAlphabatically}
+                    /> */}
                   </div>
                 </div>
                 <div className="modal-footer">

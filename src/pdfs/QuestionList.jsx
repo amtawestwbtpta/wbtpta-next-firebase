@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect } from "react";
 import {
   Page,
   Text,
@@ -18,21 +17,27 @@ import {
 const width = 2480;
 const height = 3508;
 
-export default function QuestionList({ data, title, qRate }) {
+export default function QuestionList({ data, title, qRate, state }) {
   const list = data.sort((a, b) => {
+    // Compare by 'gp'
     if (a.gp < b.gp) {
-      return -1;
+      return state ? -1 : 1; // a comes first
     }
     if (a.gp > b.gp) {
-      return 1;
+      return state ? 1 : -1; // b comes first
     }
-    // If "school" keys are equal, compare the "rank" keys
-    return a.school - b.school;
+
+    // If 'gp' is the same, compare by 'school'
+    if (a.school < b.school) {
+      return -1; // a comes first
+    }
+    if (a.school > b.school) {
+      return 1; // b comes first
+    }
+
+    return 0; // They are equal
   });
   const pages = sliceArrayIntoChunks(list, 40);
-  useEffect(() => {
-    console.log(data);
-  }, []);
   return (
     // <PDFViewer
     //   style={{
