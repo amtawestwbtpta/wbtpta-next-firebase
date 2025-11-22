@@ -16,11 +16,9 @@ import {
 } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
-import { useGlobalContext } from "../context/Store";
 
-export default function QuestionList({ title }) {
-  const { questionState, questionRateState } = useGlobalContext();
-  const list = questionState.sort((a, b) => {
+export default function QuestionList({ title, data, questionRateState }) {
+  const list = data.sort((a, b) => {
     // Compare by 'gp'
     if (a.gp < b.gp) {
       return questionRateState.isAlphabatically ? -1 : 1; // a comes first

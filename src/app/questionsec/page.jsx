@@ -908,6 +908,8 @@ function QuestionSec() {
                       document={
                         <QuestionList
                           title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
+                          data={questionState}
+                          questionRateState={questionRateState}
                         />
                       }
                       fileName={`WBTPTA ${questionRateState.term} Summative Exam, ${questionRateState.year}.pdf`}
@@ -927,6 +929,8 @@ function QuestionSec() {
                     </PDFDownloadLink>
                     {/* <QuestionList
                       title={`WBTPTA Amta West Circle ${questionRateState.term} Summative Exam, ${questionRateState.year}`}
+                      data={questionState}
+                      questionRateState={questionRateState}
                     /> */}
                   </div>
                 </div>
