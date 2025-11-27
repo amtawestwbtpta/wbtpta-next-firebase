@@ -253,7 +253,7 @@ const Navbar = () => {
   const RenderMenu = () => {
     if (state === "admin") {
       return (
-        <Suspense>
+        <Suspense fallback={<Loader />}>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -583,7 +583,15 @@ const Navbar = () => {
               Flexible Component
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/LPCDIndicators"
+              onClick={handleNavCollapse}
+            >
+              LPCD Indicators
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -939,7 +947,15 @@ const Navbar = () => {
               Downloads
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/LPCDIndicators"
+              onClick={handleNavCollapse}
+            >
+              LPCD Indicators
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -1155,6 +1171,15 @@ const Navbar = () => {
               IT Reloded
             </Link>
           </li> */}
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/LPCDIndicators"
+              onClick={handleNavCollapse}
+            >
+              LPCD Indicators
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
