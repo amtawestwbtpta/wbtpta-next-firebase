@@ -7,8 +7,12 @@ import { createDownloadLink } from "../../modules/calculatefunctions";
 import { useGlobalContext } from "../../context/Store";
 import { AndroidAppLink } from "@/modules/constants";
 import GoogleDriveDownload from "../../components/GoogleDriveDownload";
-import PDFViewer from "../../components/PDFViewer";
+import dynamic from "next/dynamic";
 const Downloads = () => {
+  const PDFViewer = dynamic(() => import("../../components/PDFViewer"), {
+    ssr: false,
+    loading: () => <div>Loading PDF viewer...</div>,
+  });
   const [data, setData] = useState(false);
   const { state } = useGlobalContext();
   const [allData, setAllData] = useState([]);
