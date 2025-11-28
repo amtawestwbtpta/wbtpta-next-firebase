@@ -130,7 +130,7 @@ const Downloads = () => {
                             setUrl(el.githubUrl || el.url);
                             setFileName(el.fileName);
                             setFileType(el.fileType);
-                            setIsRelease(el.isRealease);
+                            setIsRelease(el.isRelease);
                           }}
                         >
                           View
