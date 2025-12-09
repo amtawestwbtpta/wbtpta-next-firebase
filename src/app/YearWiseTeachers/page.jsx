@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import {
+  GetMonthName,
   getServiceLife,
   monthNamesWithIndex,
   months,
@@ -47,7 +48,7 @@ const YearWiseTeachers = () => {
       return window.ReactNativeWebView !== undefined;
     }
   };
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
         let monthSelect = document.getElementById("month-select");
@@ -57,26 +58,32 @@ const YearWiseTeachers = () => {
       }
       setMonthText("");
       const selectedValue = e.target.value;
-      let x = [];
-      let y = [];
-      data.map((teacher) => {
-        const joiningYear = teacher.doj.split("-")[2];
-        const joiningMonth = teacher.doj.split("-")[1];
-        if (joiningYear === selectedValue) {
-          x.push(teacher);
+
+      const teacherPromises = data.map(async (teacher) => {
+        const newTeacher = { ...teacher };
+        if (new Date().getFullYear() - parseInt(selectedValue) < 3) {
+          newTeacher.basic = await getSalary(newTeacher.id);
         }
-        if (joiningYear === selectedValue) {
-          monthNamesWithIndex.map((month) => {
-            if (joiningMonth === month.index) {
-              y.push(month);
-            }
-          });
-        }
+        return newTeacher;
       });
+
+      const updatedTeachers = await Promise.all(teacherPromises);
+
+      const filteredTeachers = updatedTeachers.filter(
+        (teacher) => teacher.doj.split("-")[2] === selectedValue
+      );
+
+      const joiningMonthsForYear = filteredTeachers.map((teacher) => {
+        const joiningMonthIndex = teacher.doj.split("-")[1];
+        return monthNamesWithIndex.find((m) => m.index === joiningMonthIndex);
+      });
+
       setSelectedYear(selectedValue);
-      setFilteredData(x);
-      setMoreFilteredData(x);
-      setJoiningMonths(uniqArray(y).sort((a, b) => a.rank - b.rank));
+      setFilteredData(filteredTeachers);
+      setMoreFilteredData(filteredTeachers);
+      setJoiningMonths(
+        uniqArray(joiningMonthsForYear).sort((a, b) => a.rank - b.rank)
+      );
     } else {
       setFilteredData([]);
       setSelectedYear("");
@@ -152,6 +159,15 @@ const YearWiseTeachers = () => {
       });
     }
     setShowProforma(!showProforma);
+  };
+  const getSalary = async (id) => {
+    const today = new Date();
+    const monthIndex = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+    const year =
+      today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+    const monthName = GetMonthName(monthIndex);
+    const q1 = await readCSVFile(`${monthName.toLowerCase()}-${year}`);
+    return q1?.filter((el) => el.id === id)[0].basic;
   };
   useEffect(() => {
     getData();
