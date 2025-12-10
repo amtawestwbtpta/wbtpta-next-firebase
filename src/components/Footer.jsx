@@ -143,11 +143,19 @@ const Footer = () => {
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
-          href="https://www.wbbpe.org"
+          href="https://wbbpe.wb.gov.in"
           target="_blank"
           rel="noopener noreferrer"
         >
           <i className="bi bi-browser-chrome"></i> WBBPE
+        </Link>
+        <Link
+          className="d-inline-block m-2 text-decoration-none text-primary"
+          href="https://www.wbbpeonline.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i className="bi bi-browser-chrome"></i> WBBPE Online
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
@@ -193,8 +201,9 @@ const Footer = () => {
       </div>
       {/* {showLoader && <Loader />} */}
       <h6 className="text-center bg-dark text-white p-2 mb-0 h-font">
-        © Copyright WBTPTA AMTA WEST CIRCLE COMMITTEE- 2022. This Site is
-        Designed and Maintained By WBTPTA AMTA WEST CIRCLE.
+        © Copyright WBTPTA AMTA WEST CIRCLE COMMITTEE-{" "}
+        {new Date().getFullYear()}. This Site is Designed and Maintained By
+        WBTPTA AMTA WEST CIRCLE.
       </h6>
     </div>
   );
