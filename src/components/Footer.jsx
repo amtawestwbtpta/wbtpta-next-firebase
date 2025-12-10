@@ -127,11 +127,19 @@ const Footer = () => {
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
-          href="https://school.banglarshiksha.gov.in/sms/"
+          href="https://school.banglarshiksha.gov.in/instance/sms_login/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <i className="bi bi-browser-chrome"></i> SMS Portal
+        </Link>
+        <Link
+          className="d-inline-block m-2 text-decoration-none text-primary"
+          href="https://schoolinfo.banglarshiksha.gov.in/login"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i className="bi bi-browser-chrome"></i> UDISE+
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
