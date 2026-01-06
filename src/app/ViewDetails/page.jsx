@@ -44,6 +44,7 @@ const ViewDetails = () => {
     fname,
     question,
     hoi,
+    association,
   } = details;
   const [loader, setLoader] = useState(false);
   const [showDeductionForm, setShowDeductionForm] = useState(false);
@@ -224,6 +225,14 @@ const ViewDetails = () => {
           </div>
           <div>
             <p>{hoi}</p>
+          </div>
+        </div>
+        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+          <div>
+            <label>Association</label>
+          </div>
+          <div>
+            <p>{association}</p>
           </div>
         </div>
         <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">

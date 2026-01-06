@@ -184,12 +184,16 @@ const Footer = () => {
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
           href="mailto: westamta@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <i className="bi bi-envelope-at-fill"></i> Email Us
         </Link>
         <Link
           className="d-inline-block m-2 text-decoration-none text-primary"
           href="https://wbresults.nic.in"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <i className="bi bi-browser-chrome"></i> WB Results
         </Link>
