@@ -2857,8 +2857,10 @@ export default function IncomeTaxReloded() {
                               borderRadius: 10,
                             }}
                             onClick={() => {
-                              setShowOldModal(false);
-                              setShowForm16(false);
+                              setTimeout(() => {
+                                setShowOldModal(false);
+                                setShowForm16(false);
+                              }, 2000);
                             }}
                           >
                             {({ blob, url, loading, error }) =>
@@ -2900,8 +2902,10 @@ export default function IncomeTaxReloded() {
                                 borderRadius: 10,
                               }}
                               onClick={() => {
-                                setShowOldModal(false);
-                                setShowForm16(false);
+                                setTimeout(() => {
+                                  setShowOldModal(false);
+                                  setShowForm16(false);
+                                }, 2000);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
@@ -2975,8 +2979,10 @@ export default function IncomeTaxReloded() {
                               borderRadius: 10,
                             }}
                             onClick={() => {
-                              setShowNewModal(false);
-                              setShowForm16New(false);
+                              setTimeout(() => {
+                                setShowNewModal(false);
+                                setShowForm16New(false);
+                              }, 2000);
                             }}
                           >
                             {({ blob, url, loading, error }) =>
@@ -3018,8 +3024,10 @@ export default function IncomeTaxReloded() {
                                 borderRadius: 10,
                               }}
                               onClick={() => {
-                                setShowNewModal(false);
-                                setShowForm16New(false);
+                                setTimeout(() => {
+                                  setShowNewModal(false);
+                                  setShowForm16New(false);
+                                }, 2000);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
