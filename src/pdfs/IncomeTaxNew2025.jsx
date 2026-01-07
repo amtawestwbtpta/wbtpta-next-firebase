@@ -3308,9 +3308,10 @@ export default function IncomeTaxNew2025({ data }) {
                 <View
                   style={{ width: "40%", borderWidth: 1, marginBottom: 20 }}
                 >
-                  <Text style={[styles.text]}>
+                  {/* <Text style={[styles.text]}>
                     LAST DATE OF SUBMISSION:- 13/01/{nextYear}
-                  </Text>
+                  </Text> */}
+                  <Text style={[styles.text]}>LAST DATE OF SUBMISSION:-</Text>
                 </View>
               </View>
             </View>
