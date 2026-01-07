@@ -2860,7 +2860,7 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowOldModal(false);
                                 setShowForm16(false);
-                              }, 2000);
+                              }, 200);
                             }}
                           >
                             {({ blob, url, loading, error }) =>
@@ -2905,7 +2905,7 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowOldModal(false);
                                   setShowForm16(false);
-                                }, 2000);
+                                }, 200);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
@@ -2982,7 +2982,7 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowNewModal(false);
                                 setShowForm16New(false);
-                              }, 2000);
+                              }, 200);
                             }}
                           >
                             {({ blob, url, loading, error }) =>
@@ -3027,7 +3027,7 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowNewModal(false);
                                   setShowForm16New(false);
-                                }, 2000);
+                                }, 200);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
