@@ -2856,6 +2856,10 @@ export default function IncomeTaxReloded() {
                               width: "40%",
                               borderRadius: 10,
                             }}
+                            onClick={() => {
+                              setShowOldModal(false);
+                              setShowForm16(false);
+                            }}
                           >
                             {({ blob, url, loading, error }) =>
                               loading
@@ -2894,6 +2898,10 @@ export default function IncomeTaxReloded() {
                                 border: "1px solid #4a4a4a",
                                 width: "40%",
                                 borderRadius: 10,
+                              }}
+                              onClick={() => {
+                                setShowOldModal(false);
+                                setShowForm16(false);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
@@ -2966,6 +2974,10 @@ export default function IncomeTaxReloded() {
                               width: "40%",
                               borderRadius: 10,
                             }}
+                            onClick={() => {
+                              setShowNewModal(false);
+                              setShowForm16New(false);
+                            }}
                           >
                             {({ blob, url, loading, error }) =>
                               loading
@@ -3004,6 +3016,10 @@ export default function IncomeTaxReloded() {
                                 border: "1px solid #4a4a4a",
                                 width: "40%",
                                 borderRadius: 10,
+                              }}
+                              onClick={() => {
+                                setShowNewModal(false);
+                                setShowForm16New(false);
                               }}
                             >
                               {({ blob, url, loading, error }) =>
