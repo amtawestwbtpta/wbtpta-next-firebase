@@ -2860,6 +2860,8 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowOldModal(false);
                                 setShowForm16(false);
+                                setBankInterest(randBetween(500, 2000));
+                                setIntFrDeposit(0);
                               }, 200);
                             }}
                           >
@@ -2905,6 +2907,8 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowOldModal(false);
                                   setShowForm16(false);
+                                  setBankInterest(randBetween(500, 2000));
+                                  setIntFrDeposit(0);
                                 }, 200);
                               }}
                             >
@@ -2982,6 +2986,8 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowNewModal(false);
                                 setShowForm16New(false);
+                                setBankInterest(randBetween(500, 2000));
+                                setIntFrDeposit(0);
                               }, 200);
                             }}
                           >
@@ -3027,6 +3033,8 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowNewModal(false);
                                   setShowForm16New(false);
+                                  setBankInterest(randBetween(500, 2000));
+                                  setIntFrDeposit(0);
                                 }, 200);
                               }}
                             >

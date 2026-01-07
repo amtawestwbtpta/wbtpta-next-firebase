@@ -1887,7 +1887,7 @@ export default function IncomeTaxNew2025({ data }) {
                         </View>
                       </View>
                     </View>
-                    <View
+                    {/* <View
                       style={{
                         width: "60%",
                         borderWidth: 1,
@@ -1996,7 +1996,7 @@ export default function IncomeTaxNew2025({ data }) {
                           <Text style={styles.text}>NIL</Text>
                         </View>
                       </View>
-                    </View>
+                    </View> */}
                   </View>
                 ) : null}
               </View>
@@ -2096,7 +2096,7 @@ export default function IncomeTaxNew2025({ data }) {
                     }}
                   >
                     <View style={{ width: "73.7%", borderRightWidth: 1 }}>
-                      <Text
+                      {/* <Text
                         style={[
                           styles.text,
                           { textAlign: "left", paddingLeft: 2 },
@@ -2104,6 +2104,21 @@ export default function IncomeTaxNew2025({ data }) {
                       >
                         Less:- Deduction U/S 87A (REBATE U/S 87A UPTO RS. 7 LAKH
                         OVER GROSS INCOME ONLY FOR NEW TAX REGIME)
+                      </Text> */}
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "left", paddingLeft: 2 },
+                        ]}
+                      >
+                        Less:- Deduction U/S 87A ( (REBATE U/S 87A UPTO RS. 12
+                        LAKH OVER GROSS INCOME ONLY FOR NEW TAX REGIME)• Tax
+                        Rebate (Section 87A): A resident individual with taxable
+                        income up to ₹12 lakh can claim a full tax rebate (up to
+                        ₹60,000), resulting in zero tax liability. • Standard
+                        Deduction: Salaried individuals and pensioners can claim
+                        a standard deduction of ₹75,000, meaning those earning
+                        up to ₹12.75 lakh annually pay no tax.
                       </Text>
                     </View>
 
