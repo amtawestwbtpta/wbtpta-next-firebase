@@ -481,7 +481,7 @@ export default function IncomeTaxReloded() {
   const [showBnkInt, setShowBnkInt] = useState(false);
   const [BankInterest, setBankInterest] = useState(randBetween(1200, 2000));
   const [IntFrDeposit, setIntFrDeposit] = useState(0);
-  const calCulateOldIT = async (data) => {
+  const calCulateOldIT = async (data, isBulk = false) => {
     const { id, tname, school, pan, disability, desig, gender, fname, phone } =
       data;
     const marchSalary = march.filter((el) => el.id == id)[0];
@@ -922,7 +922,7 @@ export default function IncomeTaxReloded() {
     const isUnderRebate = CalculatedIT >= 12500 ? false : true;
     const eduCess = CalculatedIT * 0.04;
     const AddedEduCess = CalculatedIT + CalculatedIT * 0.04;
-    setOldITData({
+    const finalData = {
       id,
       tname,
       fname,
@@ -1116,9 +1116,11 @@ export default function IncomeTaxReloded() {
       januaryNetpay,
       februaryNetpay,
       grossNetpay,
-    });
+    };
+    if (isBulk) return finalData;
+    setOldITData(finalData);
   };
-  const calCulateNewIT = async (data, year) => {
+  const calCulateNewIT = async (data, year, isBulk = false) => {
     const { id, tname, school, pan, disability, desig, gender, fname } = data;
     const marchSalary = march.filter((el) => el.id == id)[0];
     const marchArrear = marchSalary?.arrear;
@@ -1611,7 +1613,7 @@ export default function IncomeTaxReloded() {
       eduCess = Math.floor(IncomeTaxAfterRelief * 0.04);
       AddedEduCess = IncomeTaxAfterRelief + eduCess;
     }
-    setNewITDa({
+    const finalData = {
       tname,
       fname,
       school,
@@ -1790,7 +1792,71 @@ export default function IncomeTaxReloded() {
       grossNetpay,
       TotalGross,
       GrossArrear,
-    });
+    };
+    if (isBulk) return finalData;
+    setNewITDa(finalData);
+  };
+
+  const handleBulkDownload = async (docType) => {
+    if (filteredData.length === 0) {
+      toast.error("No teachers to download!");
+      return;
+    }
+    const confirm = window.confirm(
+      `Are you sure you want to download ${docType} for ${filteredData.length} teachers? This might take a while.`
+    );
+    if (!confirm) return;
+
+    setLoader(true);
+    try {
+      const { pdf } = await import("@react-pdf/renderer");
+      for (let i = 0; i < filteredData.length; i++) {
+        const teacher = filteredData[i];
+        const fData = teachersState.filter((t) => t.id === teacher.id)[0];
+
+        if (!fData || teacher.AllGross === 0) continue;
+
+        let data;
+        let DocumentComponent;
+        let fileName;
+
+        if (docType === "ITOld") {
+          data = await calCulateOldIT(fData, true);
+          DocumentComponent = IncomeTaxOld2025;
+          fileName = `IT_Statement_${fData.tname}_OLD_2025.pdf`;
+        } else if (docType === "ITNew") {
+          data = await calCulateNewIT(fData, prevYear, true);
+          DocumentComponent = IncomeTaxNew2025;
+          fileName = `IT_Statement_${fData.tname}_NEW_2025.pdf`;
+        } else if (docType === "Form16Old") {
+          data = await calCulateOldIT(fData, true);
+          DocumentComponent = Form16New;
+          fileName = `Form16_${fData.tname}_OLD.pdf`;
+        } else if (docType === "Form16New") {
+          data = await calCulateNewIT(fData, prevYear, true);
+          DocumentComponent = Form16NewRegime;
+          fileName = `Form16_${fData.tname}_NEW.pdf`;
+        }
+
+        if (data && DocumentComponent) {
+          const blob = await pdf(<DocumentComponent data={data} />).toBlob();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+      }
+      toast.success("All files downloaded successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred during bulk download.");
+    }
+    setLoader(false);
   };
 
   const getDeduction = async () => {
@@ -2097,6 +2163,39 @@ export default function IncomeTaxReloded() {
               >
                 Change Financial Year
               </button>
+            </div>
+            <div className="my-2 noprint d-flex flex-column align-items-center justify-content-center">
+              <h5 className="my-2">Bulk Download</h5>
+              <div className="d-flex flex-wrap">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-success m-1"
+                  onClick={() => handleBulkDownload("ITOld")}
+                >
+                  Download All Old IT
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-primary m-1"
+                  onClick={() => handleBulkDownload("ITNew")}
+                >
+                  Download All New IT
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-warning m-1"
+                  onClick={() => handleBulkDownload("Form16Old")}
+                >
+                  Download All Form 16 Old
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-info m-1"
+                  onClick={() => handleBulkDownload("Form16New")}
+                >
+                  Download All Form 16 New
+                </button>
+              </div>
             </div>
 
             {state === "admin" ? (
