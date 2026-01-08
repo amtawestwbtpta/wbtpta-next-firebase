@@ -16,12 +16,12 @@ const height = 3508;
 
 export default function TeacherList({ data, title }) {
   const list = data.sort((a, b) => {
-    if (a.gp < b.gp) {
-      return -1;
-    }
-    if (a.gp > b.gp) {
-      return 1;
-    }
+    // if (a.gp < b.gp) {
+    //   return -1;
+    // }
+    // if (a.gp > b.gp) {
+    //   return 1;
+    // }
     if (a.school < b.school) {
       return -1;
     }
