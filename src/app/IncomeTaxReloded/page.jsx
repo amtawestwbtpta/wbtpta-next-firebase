@@ -1824,19 +1824,23 @@ export default function IncomeTaxReloded() {
         if (docType === "ITOld") {
           data = await calCulateOldIT(fData, true);
           DocumentComponent = IncomeTaxOld2025;
-          fileName = `IT_Statement_${fData.tname}_OLD_2025.pdf`;
+          fileName = `${fData.tname
+            .split(" ")
+            .join("_")}_IT_Statement_OLD_2025.pdf`;
         } else if (docType === "ITNew") {
           data = await calCulateNewIT(fData, prevYear, true);
           DocumentComponent = IncomeTaxNew2025;
-          fileName = `IT_Statement_${fData.tname}_NEW_2025.pdf`;
+          fileName = `${fData.tname
+            .split(" ")
+            .join("_")}_IT_Statement_NEW_2025.pdf`;
         } else if (docType === "Form16Old") {
           data = await calCulateOldIT(fData, true);
           DocumentComponent = Form16New;
-          fileName = `Form16_${fData.tname}_OLD.pdf`;
+          fileName = `${fData.tname.split(" ").join("_")}_Form16_OLD.pdf`;
         } else if (docType === "Form16New") {
           data = await calCulateNewIT(fData, prevYear, true);
           DocumentComponent = Form16NewRegime;
-          fileName = `Form16_${fData.tname}_NEW.pdf`;
+          fileName = `${fData.tname.split(" ").join("_")}_Form16_NEW.pdf`;
         }
 
         if (data && DocumentComponent) {
