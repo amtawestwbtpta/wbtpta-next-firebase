@@ -268,124 +268,62 @@ export default function TeacherSalaryPDF({
 
                 netpay = gross - deduction;
                 return (
-                  <View
-                    style={[
-                      styles.rowStartView,
-                      {
-                        padding: 0,
-                        borderBottomWidth: ind === page?.length - 1 ? 0 : 1,
-                      },
-                    ]}
-                    key={ind}
-                  >
+                  basicpay && (
                     <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "3%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
+                      style={[
+                        styles.rowStartView,
+                        {
+                          padding: 0,
+                          borderBottomWidth: ind === page?.length - 1 ? 0 : 1,
+                        },
+                      ]}
+                      key={ind}
                     >
-                      <Text style={styles.text}>
-                        {list.findIndex((i) => i.id === id) + 1}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "20%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={[
-                          styles.text,
-                          { fontSize: tname.length >= 22 ? 6 : 8 },
-                        ]}
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "3%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
                       >
-                        {tname}
-                      </Text>
-                    </View>
+                        <Text style={styles.text}>{ind + 1}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "20%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.text,
+                            { fontSize: tname.length >= 22 ? 6 : 8 },
+                          ]}
+                        >
+                          {tname}
+                        </Text>
+                      </View>
 
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "20%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={[
-                          styles.text,
-                          { fontSize: school.length >= 19 ? 6 : 8 },
-                        ]}
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "20%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
                       >
-                        {school}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "4%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{desig}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "6%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{basicpay}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "5%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{addl}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "6%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{da}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "6%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{hra}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "4%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{ma}</Text>
-                    </View>
-                    {month === "July" && year === 2024 && (
+                        <Text
+                          style={[
+                            styles.text,
+                            { fontSize: school.length >= 19 ? 6 : 8 },
+                          ]}
+                        >
+                          {school}
+                        </Text>
+                      </View>
                       <View
                         style={{
                           borderRightWidth: 1,
@@ -394,60 +332,122 @@ export default function TeacherSalaryPDF({
                           justifyContent: "center",
                         }}
                       >
-                        <Text style={styles.text}>{ir}</Text>
+                        <Text style={styles.text}>{desig}</Text>
                       </View>
-                    )}
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "6%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{gross}</Text>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "6%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{basicpay}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "5%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{addl}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "6%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{da}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "6%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{hra}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "4%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{ma}</Text>
+                      </View>
+                      {month === "July" && year === 2024 && (
+                        <View
+                          style={{
+                            borderRightWidth: 1,
+                            width: "4%",
+                            height: 20,
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text style={styles.text}>{ir}</Text>
+                        </View>
+                      )}
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "6%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{gross}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "5%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{pfund}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "4%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{gsli}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 1,
+                          width: "4%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{ptax}</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderRightWidth: 0,
+                          width: "6%",
+                          height: 20,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={styles.text}>{netpay}</Text>
+                      </View>
                     </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "5%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{pfund}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "4%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{gsli}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "4%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{ptax}</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 0,
-                        width: "6%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{netpay}</Text>
-                    </View>
-                  </View>
+                  )
                 );
               })}
             </View>
