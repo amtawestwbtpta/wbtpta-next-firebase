@@ -287,7 +287,7 @@ export default function TeacherSalaryPDF({
                           justifyContent: "center",
                         }}
                       >
-                        <Text style={styles.text}>{ind + 1}</Text>
+                        <Text style={styles.text}>{index * 40 + ind + 1}</Text>
                       </View>
                       <View
                         style={{
