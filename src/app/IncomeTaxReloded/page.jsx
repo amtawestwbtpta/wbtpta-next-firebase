@@ -458,18 +458,6 @@ export default function IncomeTaxReloded() {
     desig: "",
   });
   const date = new Date();
-  const month = date.getMonth() + 1;
-  // let thisYear, nextYear, prevYear;
-  // if (month < 4) {
-  // thisYear = date.getFullYear();
-  // nextYear = date.getFullYear() + 1;
-  // prevYear = date.getFullYear() - 1;
-  // } else {
-  //   thisYear = date.getFullYear() - 1;
-  //   nextYear = date.getFullYear();
-  //   prevYear = date.getFullYear() - 2;
-  // }
-  // const finYear = `${thisYear}-${nextYear}`;
   const [thisYear, setThisYear] = useState(date.getFullYear());
   const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
   const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
@@ -491,7 +479,7 @@ export default function IncomeTaxReloded() {
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
   const [showBnkInt, setShowBnkInt] = useState(false);
-  const [BankInterest, setBankInterest] = useState(randBetween(500, 2000));
+  const [BankInterest, setBankInterest] = useState(randBetween(1200, 2000));
   const [IntFrDeposit, setIntFrDeposit] = useState(0);
   const calCulateOldIT = async (data) => {
     const { id, tname, school, pan, disability, desig, gender, fname, phone } =
@@ -2837,7 +2825,7 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowOldModal(false);
                             setShowForm16(false);
-                            setBankInterest(randBetween(500, 2000));
+                            setBankInterest(randBetween(1200, 2000));
                             setIntFrDeposit(0);
                           }}
                         ></button>
@@ -2860,7 +2848,7 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowOldModal(false);
                                 setShowForm16(false);
-                                setBankInterest(randBetween(500, 2000));
+                                setBankInterest(randBetween(1200, 2000));
                                 setIntFrDeposit(0);
                               }, 200);
                             }}
@@ -2907,7 +2895,7 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowOldModal(false);
                                   setShowForm16(false);
-                                  setBankInterest(randBetween(500, 2000));
+                                  setBankInterest(randBetween(1200, 2000));
                                   setIntFrDeposit(0);
                                 }, 200);
                               }}
@@ -2926,7 +2914,7 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowOldModal(false);
                             setShowForm16(false);
-                            setBankInterest(randBetween(500, 2000));
+                            setBankInterest(randBetween(1200, 2000));
                             setIntFrDeposit(0);
                           }}
                         >
@@ -2963,7 +2951,7 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowNewModal(false);
                             setShowForm16New(false);
-                            setBankInterest(randBetween(500, 2000));
+                            setBankInterest(randBetween(1200, 2000));
                             setIntFrDeposit(0);
                           }}
                         ></button>
@@ -2986,7 +2974,7 @@ export default function IncomeTaxReloded() {
                               setTimeout(() => {
                                 setShowNewModal(false);
                                 setShowForm16New(false);
-                                setBankInterest(randBetween(500, 2000));
+                                setBankInterest(randBetween(1200, 2000));
                                 setIntFrDeposit(0);
                               }, 200);
                             }}
@@ -3033,7 +3021,7 @@ export default function IncomeTaxReloded() {
                                 setTimeout(() => {
                                   setShowNewModal(false);
                                   setShowForm16New(false);
-                                  setBankInterest(randBetween(500, 2000));
+                                  setBankInterest(randBetween(1200, 2000));
                                   setIntFrDeposit(0);
                                 }, 200);
                               }}
@@ -3052,7 +3040,7 @@ export default function IncomeTaxReloded() {
                           onClick={() => {
                             setShowNewModal(false);
                             setShowForm16New(false);
-                            setBankInterest(randBetween(500, 2000));
+                            setBankInterest(randBetween(1200, 2000));
                             setIntFrDeposit(0);
                           }}
                         >
