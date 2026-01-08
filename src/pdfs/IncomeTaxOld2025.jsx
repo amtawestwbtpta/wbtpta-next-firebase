@@ -1103,7 +1103,7 @@ export default function IncomeTaxOld2025({ data }) {
                           { textAlign: "left", paddingLeft: 2 },
                         ]}
                       >
-                        Rent Paid over 10% of sotary
+                        Rent Paid over 10% of Salary
                       </Text>
                     </View>
                     <View style={{ width: "20%", borderRightWidth: 1 }}>
