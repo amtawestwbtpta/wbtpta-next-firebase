@@ -886,12 +886,12 @@ export default function IncomeTaxReloded() {
       januaryArrear +
       februaryArrear +
       otherIncome;
-
+    const thisBankInterest = isBulk ? randBetween(1200, 2000) : BankInterest;
     const GrossTotalIncome =
       AllGross -
       grossPTax -
       50000 +
-      BankInterest +
+      thisBankInterest +
       IntFrDeposit -
       hbLoanInterest;
     const deductionVIA =
@@ -909,7 +909,7 @@ export default function IncomeTaxReloded() {
       nscInterest;
     const limitVIA = deductionVIA >= 150000 ? 150000 : deductionVIA;
     const OtherVIA =
-      BankInterest +
+      thisBankInterest +
       mediclaim +
       disabilityDeduction +
       terminalDisease +
@@ -936,7 +936,7 @@ export default function IncomeTaxReloded() {
       nextYear,
       prevYear,
       finYear,
-      BankInterest,
+      BankInterest: thisBankInterest,
       IntFrDeposit,
       teacherDeduction,
       hbLoanPrincipal,
@@ -1502,7 +1502,8 @@ export default function IncomeTaxReloded() {
       decemberArrear +
       januaryArrear +
       februaryArrear;
-    const GrossTotalIncome = AllGross - 75000 + BankInterest + IntFrDeposit; //H36
+    const thisBankInterest = isBulk ? randBetween(1200, 2000) : BankInterest;
+    const GrossTotalIncome = AllGross - 75000 + thisBankInterest + IntFrDeposit; //H36
     const TotalRoundOffIncome = roundSo(GrossTotalIncome, 10);
     let ThirtyIT = 0;
     let ThirtyITTax = 0;
@@ -1760,7 +1761,7 @@ export default function IncomeTaxReloded() {
       CalculatedIT,
       eduCess,
       AddedEduCess,
-      BankInterest,
+      BankInterest: thisBankInterest,
       IntFrDeposit,
 
       GrossRelief,
@@ -1848,7 +1849,7 @@ export default function IncomeTaxReloded() {
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          await new Promise((resolve) => setTimeout(resolve, 3000));
+          await new Promise((resolve) => setTimeout(resolve, 2000));
         }
       }
       toast.success("All files downloaded successfully!");
