@@ -1824,23 +1824,19 @@ export default function IncomeTaxReloded() {
         if (docType === "ITOld") {
           data = await calCulateOldIT(fData, true);
           DocumentComponent = IncomeTaxOld2025;
-          fileName = `${fData.tname
-            .split(" ")
-            .join("_")}_IT_Statement_OLD_2025.pdf`;
+          fileName = `${fData.tname}_IT_Statement_OLD_2025.pdf`;
         } else if (docType === "ITNew") {
           data = await calCulateNewIT(fData, prevYear, true);
           DocumentComponent = IncomeTaxNew2025;
-          fileName = `${fData.tname
-            .split(" ")
-            .join("_")}_IT_Statement_NEW_2025.pdf`;
+          fileName = `${fData.tname}_IT_Statement_NEW_2025.pdf`;
         } else if (docType === "Form16Old") {
           data = await calCulateOldIT(fData, true);
           DocumentComponent = Form16New;
-          fileName = `${fData.tname.split(" ").join("_")}_Form16_OLD.pdf`;
+          fileName = `${fData.tname}_Form16_OLD.pdf`;
         } else if (docType === "Form16New") {
           data = await calCulateNewIT(fData, prevYear, true);
           DocumentComponent = Form16NewRegime;
-          fileName = `${fData.tname.split(" ").join("_")}_Form16_NEW.pdf`;
+          fileName = `${fData.tname}_Form16_NEW.pdf`;
         }
 
         if (data && DocumentComponent) {
@@ -1853,7 +1849,7 @@ export default function IncomeTaxReloded() {
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          await new Promise((resolve) => setTimeout(resolve, 2000));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
       toast.success("All files downloaded successfully!");
