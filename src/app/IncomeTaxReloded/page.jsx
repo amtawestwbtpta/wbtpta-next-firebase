@@ -2934,7 +2934,7 @@ export default function IncomeTaxReloded() {
                         <div className="mx-auto noprint my-5">
                           <PDFDownloadLink
                             document={<IncomeTaxOld2025 data={oldITData} />}
-                            fileName={`IT Statement of ${TeacherData.tname} OLD TAX REGIME 2025.pdf`}
+                            fileName={`${TeacherData.tname}_IT_Statement_OLD_2025.pdf`}
                             style={{
                               textDecoration: "none",
                               padding: "10px",
@@ -2981,7 +2981,7 @@ export default function IncomeTaxReloded() {
                           <div className="mx-auto noprint my-5">
                             <PDFDownloadLink
                               document={<Form16New data={oldITData} />}
-                              fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
+                              fileName={`${TeacherData.tname}_Form16_OLD.pdf`}
                               style={{
                                 textDecoration: "none",
                                 padding: "10px",
@@ -3060,7 +3060,7 @@ export default function IncomeTaxReloded() {
                         <div className="mx-auto noprint my-5">
                           <PDFDownloadLink
                             document={<IncomeTaxNew2025 data={newITData} />}
-                            fileName={`IT Statement of ${TeacherData.tname} NEW TAX REGIME 2025.pdf`}
+                            fileName={`${TeacherData.tname}_IT_Statement_NEW_2025.pdf`}
                             style={{
                               textDecoration: "none",
                               padding: "10px",
@@ -3107,7 +3107,7 @@ export default function IncomeTaxReloded() {
                           <div className="mx-auto noprint my-5">
                             <PDFDownloadLink
                               document={<Form16NewRegime data={newITData} />}
-                              fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
+                              fileName={`${TeacherData.tname}_Form16_NEW.pdf`}
                               style={{
                                 textDecoration: "none",
                                 padding: "10px",
