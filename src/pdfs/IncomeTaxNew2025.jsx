@@ -3414,7 +3414,11 @@ export default function IncomeTaxNew2025({ data }) {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={styles.text7}>{school}</Text>
+                      <Text
+                        style={school.length > 38 ? styles.text8 : styles.text7}
+                      >
+                        {school}
+                      </Text>
                     </View>
                   </View>
                   {/* 10 Gross */}
