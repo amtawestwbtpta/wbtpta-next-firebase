@@ -3415,7 +3415,9 @@ export default function IncomeTaxNew2025({ data }) {
                       }}
                     >
                       <Text
-                        style={school.length > 38 ? styles.text8 : styles.text7}
+                        style={
+                          school.length >= 34 ? styles.text8 : styles.text7
+                        }
                       >
                         {school}
                       </Text>
