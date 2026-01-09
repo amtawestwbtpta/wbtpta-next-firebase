@@ -2095,7 +2095,7 @@ export default function IncomeTaxReloded() {
                         setFilteredData(fData);
                       } else {
                         setFilteredData(
-                          salary.filter((salary) => salary?.NetTax !== 0)
+                          salary.filter((salary) => salary?.NetTax <= 0)
                         );
                       }
                       setFilterClicked(true);
@@ -2271,6 +2271,7 @@ export default function IncomeTaxReloded() {
                           <p className="m-0 p-0">
                             Gross Salary: {`₹ ${IndianFormat(row?.AllGross)}`}
                           </p>
+                          {/*
                           <p className="m-0 p-0">
                             Gross 80C:{" "}
                             {row?.limit80C !== 0
@@ -2300,7 +2301,7 @@ export default function IncomeTaxReloded() {
                             {row?.AddedEduCess !== 0
                               ? `₹ ${IndianFormat(row?.AddedEduCess)}`
                               : "NIL"}
-                          </p>
+                          </p> */}
                           <div>
                             {state === "admin" && (
                               <button
