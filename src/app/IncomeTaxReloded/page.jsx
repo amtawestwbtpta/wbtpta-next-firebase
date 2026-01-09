@@ -1799,6 +1799,15 @@ export default function IncomeTaxReloded() {
     setNewITDa(finalData);
   };
 
+  const [isPdfDownloading, setIsPdfDownloading] = useState(false);
+  const cancelBulkRef = React.useRef(false);
+  const stopBulkDownload = () => {
+    cancelBulkRef.current = true;
+    setLoader(false);
+    setIsPdfDownloading(false);
+    toast.info("Bulk download stopped.");
+  };
+
   const handleBulkDownload = async (docType) => {
     if (filteredData.length === 0) {
       toast.error("No teachers to download!");
@@ -1809,10 +1818,17 @@ export default function IncomeTaxReloded() {
     );
     if (!confirm) return;
 
-    setLoader(true);
+    // reset cancel flag and show loader
+    cancelBulkRef.current = false;
+    setIsPdfDownloading(true);
     try {
       const { pdf } = await import("@react-pdf/renderer");
       for (let i = 0; i < filteredData.length; i++) {
+        if (cancelBulkRef.current) {
+          // user cancelled
+          toast.info("Bulk download cancelled by user.");
+          break;
+        }
         const teacher = filteredData[i];
         const fData = teachersState.filter((t) => t.id === teacher.id)[0];
 
@@ -1841,7 +1857,24 @@ export default function IncomeTaxReloded() {
         }
 
         if (data && DocumentComponent) {
-          const blob = await pdf(<DocumentComponent data={data} />).toBlob();
+          const toBlobPromise = pdf(<DocumentComponent data={data} />).toBlob();
+
+          const cancelPromise = new Promise((resolve) => {
+            const check = () => {
+              if (cancelBulkRef.current) resolve("cancel");
+              else setTimeout(check, 100);
+            };
+            check();
+          });
+
+          const result = await Promise.race([toBlobPromise, cancelPromise]);
+
+          if (result === "cancel") {
+            toast.info("Bulk download cancelled by user.");
+            break;
+          }
+
+          const blob = result;
           const url = URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
@@ -1850,15 +1883,18 @@ export default function IncomeTaxReloded() {
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 300));
         }
       }
-      toast.success("All files downloaded successfully!");
+      if (!cancelBulkRef.current) {
+        toast.success("All files downloaded successfully!");
+      }
     } catch (error) {
       console.error(error);
       toast.error("An error occurred during bulk download.");
+    } finally {
+      setIsPdfDownloading(false);
     }
-    setLoader(false);
   };
 
   const getDeduction = async () => {
@@ -1993,8 +2029,44 @@ export default function IncomeTaxReloded() {
         pauseOnHover={false}
         theme="light"
       />
-      {loader ? (
-        <Loader />
+      {loader && <Loader />}
+      {isPdfDownloading ? (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.45)",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              padding: 24,
+              borderRadius: 8,
+              boxShadow: "0 6px 24px rgba(0,0,0,0.25)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              minWidth: 280,
+            }}
+          >
+            <h4>Downloading PDFs...</h4>
+            <p>Please wait while the documents are being prepared.</p>
+            <div style={{ marginTop: 16 }}>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={stopBulkDownload}
+              >
+                Stop Downloads
+              </button>
+            </div>
+          </div>
+        </div>
       ) : showYearSelection ? (
         <div
           className="modal fade show"

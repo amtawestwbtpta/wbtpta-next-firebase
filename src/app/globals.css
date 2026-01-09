@@ -76,7 +76,7 @@ option {
 .loader-container .spinner .path {
   stroke: #93bfec;
   stroke-linecap: round;
-  animation: dash 1.5s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite, colors 6s ease-in-out infinite;
 }
 
 @keyframes rotate {
@@ -99,6 +99,24 @@ option {
   100% {
     stroke-dasharray: 90, 150;
     stroke-dashoffset: -124;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
   }
 }
 .error {
