@@ -37,6 +37,7 @@ export default function IncomeTaxReloded() {
     setDeductionState,
     teachersState,
     setSalaryState,
+    salaryState,
     setIndSalaryState,
     state,
     USER,
@@ -1956,6 +1957,27 @@ export default function IncomeTaxReloded() {
 
     // eslint-disable-next-line
   }, [salary, filteredData]);
+  const removeTeacher = (id) => {
+    const confirmRemove =
+      typeof window !== "undefined"
+        ? window.confirm("Are you sure you want to remove this teacher?")
+        : true;
+    if (!confirmRemove) return;
+    setSalary((prev) => prev.filter((s) => s.id !== id));
+    setFilteredData((prev) => prev.filter((s) => s.id !== id));
+    toast.success("Teacher removed from the list.");
+  };
+  const showAllTeachers = () => {
+    if (salaryState && salaryState.length > 0) {
+      setFilteredData(salaryState);
+    } else {
+      setFilteredData(salary);
+    }
+    setFilterClicked(true);
+    setSearch("");
+    setSchSearch("");
+    toast.info("Showing all teachers.");
+  };
 
   return (
     <div className="container-fluid">
@@ -2084,6 +2106,7 @@ export default function IncomeTaxReloded() {
                   >
                     Below Five Lakh
                   </button>
+
                   <button
                     type="button"
                     className="btn btn-sm btn-info m-2"
@@ -2126,18 +2149,13 @@ export default function IncomeTaxReloded() {
                       Only WBTPTA Teachers
                     </button>
                   )}
-                  {salary.length !== filteredData.length && (
+                  {salaryState.length !== filteredData.length && (
                     <button
                       type="button"
                       className="btn btn-sm btn-danger m-2"
-                      onClick={() => {
-                        setFilteredData(salary);
-                        setFilterClicked(false);
-                        setSearch("");
-                        setSchSearch("");
-                      }}
+                      onClick={() => showAllTeachers()}
                     >
-                      Clear Filter
+                      All Teachers
                     </button>
                   )}
                 </div>
@@ -2256,10 +2274,20 @@ export default function IncomeTaxReloded() {
                     ) {
                       return (
                         <div
-                          className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak"
+                          className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak position-relative"
                           style={{ backgroundColor: "seashell" }}
                           key={index}
                         >
+                          {state === "admin" && (
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1 noprint"
+                              aria-label="Remove teacher"
+                              onClick={() => removeTeacher(row.id)}
+                            >
+                              ✖
+                            </button>
+                          )}
                           <p className="m-0 p-0">
                             SL:{" "}
                             {filterClicked
@@ -2319,6 +2347,8 @@ export default function IncomeTaxReloded() {
                                 Update Deduction
                               </button>
                             )}
+
+                            {/* remove icon placed at card top-right */}
 
                             <button
                               type="button"
