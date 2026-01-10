@@ -17,6 +17,8 @@ import BenefitApplication from "../../pdfs/BenefitApplication";
 import dynamic from "next/dynamic";
 import NewTeacherArrear from "../../pdfs/NewTeacherArrear";
 import AppServiceConfirmation from "../../pdfs/AppServiceConfirmation";
+import Loader from "../../components/Loader";
+import { set } from "mongoose";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -43,11 +45,7 @@ const YearWiseTeachers = () => {
   const [showProforma, setShowProforma] = useState(false);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [showArrearForm, setShowArrearForm] = useState(false);
-  const isReactNativeWebView = () => {
-    if (typeof window !== undefined) {
-      return window.ReactNativeWebView !== undefined;
-    }
-  };
+  const [loader, setLoader] = useState(false);
   const handleChange = async (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -165,12 +163,14 @@ const YearWiseTeachers = () => {
     setShowProforma(!showProforma);
   };
   const getSalary = async (id) => {
+    setLoader(true);
     const today = new Date();
     const monthIndex = today.getMonth() == 0 ? 11 : today.getMonth() - 1;
     const year =
       today.getMonth() == 0 ? today.getFullYear() - 1 : today.getFullYear();
     const monthName = GetMonthName(monthIndex);
     const q1 = await readCSVFile(`${monthName.toLowerCase()}-${year}`);
+    setLoader(false);
     return q1?.filter((el) => el.id == id)[0]?.basic;
   };
   useEffect(() => {
@@ -183,6 +183,7 @@ const YearWiseTeachers = () => {
   }, [data]);
   return (
     <div className="container-fluid my-3">
+      {loader && <Loader />}
       {showTeacherSelection ? (
         <div
           className="modal fade show"
