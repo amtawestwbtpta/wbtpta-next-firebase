@@ -745,7 +745,7 @@ const YearWiseTeachers = () => {
               {new Date().getFullYear() - parseInt(selectedYear) == 2 &&
                 showConfForm && (
                   <div className="my-5">
-                    <div>
+                    <div className="my-5">
                       <PDFDownloadLink
                         document={<ServiceConfirmation data={filteredData} />}
                         fileName={`Service Confirmation Form.pdf`}
@@ -767,7 +767,7 @@ const YearWiseTeachers = () => {
                         }
                       </PDFDownloadLink>
                     </div>
-                    <div>
+                    <div className="my-5">
                       <PDFDownloadLink
                         document={
                           <AppServiceConfirmation data={filteredData} />
