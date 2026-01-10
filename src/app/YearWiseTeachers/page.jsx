@@ -28,7 +28,7 @@ const YearWiseTeachers = () => {
   );
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
-  // const data = teachersState.filter((el) => el.association === "WBTPTA");
+  // const data = teachersState.filter((el) => el.association == "WBTPTA");
   const [data, setData] = useState(teachersState);
   const [showTeacherSelection, setShowTeacherSelection] = useState(true);
   const [isWBTPTA, setIsWBTPTA] = useState(false);
@@ -70,12 +70,12 @@ const YearWiseTeachers = () => {
       const updatedTeachers = await Promise.all(teacherPromises);
 
       const filteredTeachers = updatedTeachers.filter(
-        (teacher) => teacher.doj.split("-")[2] === selectedValue
+        (teacher) => teacher.doj.split("-")[2] == selectedValue
       );
 
       const joiningMonthsForYear = filteredTeachers.map((teacher) => {
         const joiningMonthIndex = teacher.doj.split("-")[1];
-        return monthNamesWithIndex.find((m) => m.index === joiningMonthIndex);
+        return monthNamesWithIndex.find((m) => m.index == joiningMonthIndex);
       });
 
       setSelectedYear(selectedValue);
@@ -94,7 +94,7 @@ const YearWiseTeachers = () => {
     data.map((teacher) => {
       const joiningYear = teacher.doj.split("-")[2];
       const joiningMonth = teacher.doj.split("-")[1];
-      if (joiningYear === selectedYear && joiningMonth === month.index) {
+      if (joiningYear == selectedYear && joiningMonth == month.index) {
         return x.push(teacher);
       }
     });
@@ -117,7 +117,7 @@ const YearWiseTeachers = () => {
     let x = [];
     data.map((teacher) => {
       const joiningYear = teacher.doj.split("-")[2];
-      if (joiningYear === year) {
+      if (joiningYear == year) {
         x.push(teacher);
       }
     });
@@ -131,13 +131,13 @@ const YearWiseTeachers = () => {
         const { doj, id } = teacher;
         const joiningMonth = parseInt(doj?.split("-")[1]);
         const joiningMonthName = monthNamesWithIndex.find(
-          (month) => month.rank === joiningMonth
+          (month) => month.rank == joiningMonth
         ).monthName;
         console.log(joiningMonthName);
         const year = new Date().getFullYear();
 
         const q1 = await readCSVFile(`january-${year}`);
-        const januaryMonthSalary = q1?.filter((el) => el.id === id)[0];
+        const januaryMonthSalary = q1?.filter((el) => el.id == id)[0];
         teacher.mbasic = januaryMonthSalary.basic;
         const normalIncrement = RoundTo(
           januaryMonthSalary.basic + januaryMonthSalary.basic * 0.03,
@@ -162,12 +162,14 @@ const YearWiseTeachers = () => {
   };
   const getSalary = async (id) => {
     const today = new Date();
-    const monthIndex = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+    const monthIndex = today.getMonth() == 0 ? 11 : today.getMonth() - 1;
     const year =
-      today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+      today.getMonth() == 0 ? today.getFullYear() - 1 : today.getFullYear();
     const monthName = GetMonthName(monthIndex);
     const q1 = await readCSVFile(`${monthName.toLowerCase()}-${year}`);
-    return q1?.filter((el) => el.id === id)[0].basic;
+    // console.log(q1);
+    console.log(q1?.filter((el) => el.id == id)[0]?.basic);
+    return q1?.filter((el) => el.id == id)[0]?.basic;
   };
   useEffect(() => {
     getData();
@@ -216,7 +218,7 @@ const YearWiseTeachers = () => {
                       onClick={() => {
                         setData(
                           teachersState.filter(
-                            (el) => el.association === "WBTPTA"
+                            (el) => el.association == "WBTPTA"
                           )
                         );
                         setShowTeacherSelection(false);
@@ -303,7 +305,7 @@ const YearWiseTeachers = () => {
                   {joiningMonths.map((month, index) => {
                     if (
                       moreFilteredData.filter(
-                        (m) => m.doj.split("-")[1] === month.index
+                        (m) => m.doj.split("-")[1] == month.index
                       ).length > 0
                     ) {
                       return (
@@ -315,11 +317,11 @@ const YearWiseTeachers = () => {
                           {month.monthName +
                             " - " +
                             moreFilteredData.filter(
-                              (m) => m.doj.split("-")[1] === month.index
+                              (m) => m.doj.split("-")[1] == month.index
                             ).length +
                             ` ${
                               moreFilteredData.filter(
-                                (m) => m.doj.split("-")[1] === month.index
+                                (m) => m.doj.split("-")[1] == month.index
                               ).length > 1
                                 ? " Teachers"
                                 : " Teacher"
@@ -474,7 +476,7 @@ const YearWiseTeachers = () => {
                             Association:{" "}
                             <span
                               className={`text-center ${
-                                el.association === "WBTPTA"
+                                el.association == "WBTPTA"
                                   ? "text-success"
                                   : "text-danger"
                               }`}
@@ -711,9 +713,9 @@ const YearWiseTeachers = () => {
               </div>
             </div>
           )}
-          {state === "admin" && (
+          {state == "admin" && (
             <div className="noprint">
-              {new Date().getFullYear() - parseInt(selectedYear) === 2 && (
+              {new Date().getFullYear() - parseInt(selectedYear) == 2 && (
                 <div>
                   <button
                     type="button"
@@ -737,7 +739,7 @@ const YearWiseTeachers = () => {
                   </button>
                 </div>
               )}
-              {new Date().getFullYear() - parseInt(selectedYear) === 2 &&
+              {new Date().getFullYear() - parseInt(selectedYear) == 2 &&
                 showConfForm && (
                   <div className="my-5">
                     <PDFDownloadLink
@@ -804,8 +806,8 @@ const YearWiseTeachers = () => {
                   {/* <NewTeacherArrear data={filteredData} /> */}
                 </div>
               )}
-              {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
-                new Date().getFullYear() - parseInt(selectedYear) === 20) && (
+              {(new Date().getFullYear() - parseInt(selectedYear) == 10 ||
+                new Date().getFullYear() - parseInt(selectedYear) == 20) && (
                 <div>
                   <button
                     type="button"
@@ -827,8 +829,8 @@ const YearWiseTeachers = () => {
                   </button>
                 </div>
               )}
-              {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
-                new Date().getFullYear() - parseInt(selectedYear) === 20) &&
+              {(new Date().getFullYear() - parseInt(selectedYear) == 10 ||
+                new Date().getFullYear() - parseInt(selectedYear) == 20) &&
                 showProforma && (
                   <div className="my-5">
                     <PDFDownloadLink
@@ -856,8 +858,8 @@ const YearWiseTeachers = () => {
                     </PDFDownloadLink>
                   </div>
                 )}
-              {(new Date().getFullYear() - parseInt(selectedYear) === 10 ||
-                new Date().getFullYear() - parseInt(selectedYear) === 20) &&
+              {(new Date().getFullYear() - parseInt(selectedYear) == 10 ||
+                new Date().getFullYear() - parseInt(selectedYear) == 20) &&
                 showApplicationForm && (
                   <div className="my-5">
                     <PDFDownloadLink
