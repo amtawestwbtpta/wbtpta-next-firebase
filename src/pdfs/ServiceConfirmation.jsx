@@ -22,6 +22,7 @@ export default function ServiceConfirmation({ data }) {
     >
       {data.map((teacher, index) => {
         const level = Ropa(teacher?.basic).lv;
+        console.log(teacher?.basic);
         return (
           <Page
             size="A4"

@@ -91,7 +91,7 @@ const YearWiseTeachers = () => {
   };
   const handleMonthChange = (month) => {
     let x = [];
-    data.map((teacher) => {
+    filteredData.map((teacher) => {
       const joiningYear = teacher.doj.split("-")[2];
       const joiningMonth = teacher.doj.split("-")[1];
       if (joiningYear == selectedYear && joiningMonth == month.index) {
