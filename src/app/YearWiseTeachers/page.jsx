@@ -167,8 +167,6 @@ const YearWiseTeachers = () => {
       today.getMonth() == 0 ? today.getFullYear() - 1 : today.getFullYear();
     const monthName = GetMonthName(monthIndex);
     const q1 = await readCSVFile(`${monthName.toLowerCase()}-${year}`);
-    // console.log(q1);
-    console.log(q1?.filter((el) => el.id == id)[0]?.basic);
     return q1?.filter((el) => el.id == id)[0]?.basic;
   };
   useEffect(() => {
