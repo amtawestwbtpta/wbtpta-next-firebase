@@ -449,6 +449,12 @@ const TechersAccuitance = () => {
                             <br /> DEDUCTION
                           </th>
                           <th
+                            className="text-center text-wrap"
+                            style={{ border: "1px solid" }}
+                          >
+                            Arrear
+                          </th>
+                          <th
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
@@ -481,7 +487,8 @@ const TechersAccuitance = () => {
                             ptax,
                             pfund,
                             gsli,
-                            gross;
+                            gross,
+                            arrear;
 
                           const marchSalary = march.filter(
                             (e) => e.id === id
@@ -530,6 +537,7 @@ const TechersAccuitance = () => {
                             pfund = januarySalary?.gpf;
                             gsli = januarySalary?.gsli;
                             ma = januarySalary?.ma;
+                            arrear = januarySalary?.arrear;
                           } else if (index === 1) {
                             basicpay = februarySalary?.basic;
                             da = Math.round(
@@ -545,6 +553,7 @@ const TechersAccuitance = () => {
                             pfund = februarySalary?.gpf;
                             gsli = februarySalary?.gsli;
                             ma = februarySalary?.ma;
+                            arrear = februarySalary?.arrear;
                           } else if (index === 2) {
                             basicpay = marchSalary?.basic;
                             da = Math.round(basicpay * marchSalary?.daPercent);
@@ -558,6 +567,7 @@ const TechersAccuitance = () => {
                             pfund = marchSalary?.gpf;
                             gsli = marchSalary?.gsli;
                             ma = marchSalary?.ma;
+                            arrear = marchSalary?.arrear;
                           } else if (index === 3) {
                             basicpay = aprilSalary?.basic;
                             da = Math.round(basicpay * aprilSalary?.daPercent);
@@ -571,6 +581,7 @@ const TechersAccuitance = () => {
                             pfund = aprilSalary?.gpf;
                             gsli = aprilSalary?.gsli;
                             ma = aprilSalary?.ma;
+                            arrear = aprilSalary?.arrear;
                           } else if (index === 4) {
                             basicpay = maySalary?.basic;
                             da = Math.round(basicpay * maySalary?.daPercent);
@@ -582,6 +593,7 @@ const TechersAccuitance = () => {
                             pfund = maySalary?.gpf;
                             gsli = maySalary?.gsli;
                             ma = maySalary?.ma;
+                            arrear = maySalary?.arrear;
                           } else if (index === 5) {
                             basicpay = juneSalary?.basic;
                             da = Math.round(basicpay * juneSalary?.daPercent);
@@ -593,6 +605,7 @@ const TechersAccuitance = () => {
                             pfund = juneSalary?.gpf;
                             gsli = juneSalary?.gsli;
                             ma = juneSalary?.ma;
+                            arrear = juneSalary?.arrear;
                           } else if (index === 6) {
                             basicpay = julySalary?.basic;
                             da = Math.round(basicpay * julySalary?.daPercent);
@@ -604,6 +617,7 @@ const TechersAccuitance = () => {
                             pfund = julySalary?.gpf;
                             gsli = julySalary?.gsli;
                             ma = julySalary?.ma;
+                            arrear = julySalary?.arrear;
                           } else if (index === 7) {
                             basicpay = augustSalary?.basic;
                             da = Math.round(basicpay * augustSalary?.daPercent);
@@ -617,6 +631,7 @@ const TechersAccuitance = () => {
                             pfund = augustSalary?.gpf;
                             gsli = augustSalary?.gsli;
                             ma = augustSalary?.ma;
+                            arrear = augustSalary?.arrear;
                           } else if (index === 8) {
                             basicpay = septemberSalary?.basic;
                             da = Math.round(
@@ -632,6 +647,7 @@ const TechersAccuitance = () => {
                             pfund = septemberSalary?.gpf;
                             gsli = septemberSalary?.gsli;
                             ma = septemberSalary?.ma;
+                            arrear = septemberSalary?.arrear;
                           } else if (index === 9) {
                             basicpay = octoberSalary?.basic;
                             da = Math.round(
@@ -647,6 +663,7 @@ const TechersAccuitance = () => {
                             pfund = octoberSalary?.gpf;
                             gsli = octoberSalary?.gsli;
                             ma = octoberSalary?.ma;
+                            arrear = octoberSalary?.arrear;
                           } else if (index === 10) {
                             basicpay = novemberSalary?.basic;
                             da = Math.round(
@@ -662,6 +679,7 @@ const TechersAccuitance = () => {
                             pfund = novemberSalary?.gpf;
                             gsli = novemberSalary?.gsli;
                             ma = novemberSalary?.ma;
+                            arrear = novemberSalary?.arrear;
                           } else if (index === 11) {
                             basicpay = decemberSalary?.basic;
                             da = Math.round(
@@ -677,6 +695,7 @@ const TechersAccuitance = () => {
                             pfund = decemberSalary?.gpf;
                             gsli = decemberSalary?.gsli;
                             ma = decemberSalary?.ma;
+                            arrear = decemberSalary?.arrear;
                           }
 
                           if (year === 2024 && index === 6) {
@@ -703,7 +722,7 @@ const TechersAccuitance = () => {
 
                           let deduction = gsli + pfund + ptax;
 
-                          let netpay = gross - deduction;
+                          let netpay = gross - deduction + arrear;
 
                           if (
                             el.monthData[index].value &&
@@ -803,6 +822,12 @@ const TechersAccuitance = () => {
                                   style={{ border: "1px solid" }}
                                 >
                                   {deduction}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {arrear}
                                 </td>
                                 <td
                                   className="text-center"
