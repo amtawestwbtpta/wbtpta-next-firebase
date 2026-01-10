@@ -744,44 +744,52 @@ const YearWiseTeachers = () => {
               {new Date().getFullYear() - parseInt(selectedYear) == 2 &&
                 showConfForm && (
                   <div className="my-5">
-                    <PDFDownloadLink
-                      document={<ServiceConfirmation data={filteredData} />}
-                      fileName={`Service Confirmation Form.pdf`}
-                      style={{
-                        textDecoration: "none",
-                        padding: 11,
-                        color: "#fff",
-                        backgroundColor: "darkgreen",
-                        border: "1px solid #4a4a4a",
-                        width: "40%",
-                        borderRadius: 10,
-                        margin: 20,
-                      }}
-                    >
-                      {({ blob, url, loading, error }) =>
-                        loading
-                          ? "Please Wait..."
-                          : "Download Confirmation Proforma"
-                      }
-                    </PDFDownloadLink>
-                    <PDFDownloadLink
-                      document={<AppServiceConfirmation data={filteredData} />}
-                      fileName={`Service Confirmation Application Form.pdf`}
-                      style={{
-                        textDecoration: "none",
-                        padding: 11,
-                        color: "#fff",
-                        backgroundColor: "blue",
-                        border: "1px solid #4a4a4a",
-                        width: "40%",
-                        borderRadius: 10,
-                        margin: 20,
-                      }}
-                    >
-                      {({ blob, url, loading, error }) =>
-                        loading ? "Please Wait..." : "Download Application Form"
-                      }
-                    </PDFDownloadLink>
+                    <div>
+                      <PDFDownloadLink
+                        document={<ServiceConfirmation data={filteredData} />}
+                        fileName={`Service Confirmation Form.pdf`}
+                        style={{
+                          textDecoration: "none",
+                          padding: 11,
+                          color: "#fff",
+                          backgroundColor: "darkgreen",
+                          border: "1px solid #4a4a4a",
+                          width: "40%",
+                          borderRadius: 10,
+                          margin: 20,
+                        }}
+                      >
+                        {({ blob, url, loading, error }) =>
+                          loading
+                            ? "Please Wait..."
+                            : "Download Confirmation Proforma"
+                        }
+                      </PDFDownloadLink>
+                    </div>
+                    <div>
+                      <PDFDownloadLink
+                        document={
+                          <AppServiceConfirmation data={filteredData} />
+                        }
+                        fileName={`Service Confirmation Application Form.pdf`}
+                        style={{
+                          textDecoration: "none",
+                          padding: 11,
+                          color: "#fff",
+                          backgroundColor: "blue",
+                          border: "1px solid #4a4a4a",
+                          width: "40%",
+                          borderRadius: 10,
+                          margin: 20,
+                        }}
+                      >
+                        {({ blob, url, loading, error }) =>
+                          loading
+                            ? "Please Wait..."
+                            : "Download Application Form"
+                        }
+                      </PDFDownloadLink>
+                    </div>
                   </div>
                 )}
 
