@@ -89,15 +89,19 @@ const YearWiseTeachers = () => {
       setSelectedYear("");
     }
   };
-  const handleMonthChange = (month) => {
-    let x = [];
-    filteredData.map((teacher) => {
+  const handleMonthChange = async (month) => {
+    const teacherPromises = data.map(async (teacher) => {
       const joiningYear = teacher.doj.split("-")[2];
       const joiningMonth = teacher.doj.split("-")[1];
       if (joiningYear == selectedYear && joiningMonth == month.index) {
-        return x.push(teacher);
+        const newTeacher = { ...teacher };
+        if (new Date().getFullYear() - parseInt(selectedYear) < 3) {
+          newTeacher.basic = await getSalary(newTeacher.id);
+        }
+        return newTeacher;
       }
     });
+    const x = (await Promise.all(teacherPromises)).filter((el) => el);
     setFilteredData(x);
     setMonthText(month.monthName);
   };
