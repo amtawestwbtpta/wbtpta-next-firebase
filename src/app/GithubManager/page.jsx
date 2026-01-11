@@ -44,6 +44,7 @@ export default function GithubManager() {
     "images",
     "otherimages",
     "profileImage",
+    "salaryRemodified",
   ];
   // Upload / Edit
   const handleUploadOrEdit = async () => {

@@ -51,7 +51,7 @@ const NoticeDetails = ({ sata }) => {
             data-bs-target="#exampleModal"
           />
         ) : sata.type.split("/")[0] === "application" ? (
-          <PDFViewer pdfUrl={sata.githubUrl} />
+          <PDFViewer pdfUrl={sata.githubUrl} url={sata.url} />
         ) : null
       ) : null}
 

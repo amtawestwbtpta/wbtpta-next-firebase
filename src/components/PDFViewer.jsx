@@ -3,17 +3,18 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import Loader from "./Loader";
 
-// // Ensure we only run this on the client-side
-// if (typeof window !== "undefined") {
-//   pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@5.3.31/build/pdf.worker.min.mjs`;
-// }
+// Ensure we only run this on the client-side
+if (typeof window !== "undefined") {
+  pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+}
 
-const PDFViewer = ({ pdfUrl }) => {
+const PDFViewer = ({ pdfUrl, url = "" }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [containerWidth, setContainerWidth] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fileSource, setFileSource] = useState(pdfUrl);
   const containerRef = useRef(null);
   const [key, setKey] = useState(0);
 
@@ -21,25 +22,20 @@ const PDFViewer = ({ pdfUrl }) => {
   const pdfOptions = useMemo(() => {
     const pdfjsVersion = pdfjs.version;
     return {
-      cMapUrl: `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsVersion}/cmaps/`,
+      cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/cmaps/`,
       cMapPacked: true,
     };
   }, []);
 
   // Reset state when pdfUrl changes
   useEffect(() => {
+    setFileSource(pdfUrl);
     setNumPages(null);
     setPageNumber(1);
     setLoading(true);
     setError(null);
     setKey((prev) => prev + 1);
   }, [pdfUrl]);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const pdfjsVersion = pdfjs.version;
-      pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.mjs`;
-    }
-  }, []);
   // Handle container resize
   useEffect(() => {
     const updateWidth = () => {
@@ -68,8 +64,15 @@ const PDFViewer = ({ pdfUrl }) => {
 
   const onDocumentLoadError = (error) => {
     console.error("PDF loading error:", error);
-    setError(error.message || "Failed to load PDF");
-    setLoading(false);
+    if (fileSource === pdfUrl && url && url !== pdfUrl) {
+      setFileSource(url);
+      setLoading(true);
+      setError(null);
+      setKey((prev) => prev + 1);
+    } else {
+      setError(error.message || "Failed to load PDF");
+      setLoading(false);
+    }
   };
 
   const changePage = (offset) => {
@@ -86,12 +89,16 @@ const PDFViewer = ({ pdfUrl }) => {
     setPageNumber(1);
   };
 
+  if (!pdfUrl) {
+    return <Loader />;
+  }
+
   return (
     <div className="pdf-viewer-container">
       {/* Download button */}
       <div className="pdf-download-container">
         <a
-          href={pdfUrl}
+          href={fileSource}
           download
           className="pdf-download-button"
           aria-label="Download PDF"
@@ -118,7 +125,7 @@ const PDFViewer = ({ pdfUrl }) => {
           <>
             <Document
               key={key}
-              file={pdfUrl}
+              file={fileSource}
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
               loading={<Loader />}

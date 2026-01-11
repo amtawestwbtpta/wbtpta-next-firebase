@@ -18,6 +18,7 @@ const Downloads = () => {
   const [allData, setAllData] = useState([]);
   const [showFile, setShowFile] = useState(false);
   const [url, setUrl] = useState("");
+  const [secondUrl, setSecondUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
   const [isRelease, setIsRelease] = useState(false);
@@ -128,6 +129,7 @@ const Downloads = () => {
                           onClick={() => {
                             setShowFile(true);
                             setUrl(el.githubUrl || el.url);
+                            setSecondUrl(el.url);
                             setFileName(el.fileName);
                             setFileType(el.fileType);
                             setIsRelease(el.isRelease);
@@ -177,6 +179,7 @@ const Downloads = () => {
                   onClick={() => {
                     setShowFile(false);
                     setUrl("");
+                    setSecondUrl("");
                     setFileName("");
                     setFileType("");
                   }}
@@ -185,7 +188,7 @@ const Downloads = () => {
               <div className="modal-body modal-xl">
                 {fileType === "application/pdf" ? (
                   !isRelease ? (
-                    <PDFViewer pdfUrl={url} />
+                    <PDFViewer pdfUrl={url} url={secondUrl} />
                   ) : (
                     <a
                       href={url}
@@ -207,6 +210,7 @@ const Downloads = () => {
                   onClick={() => {
                     setShowFile(false);
                     setUrl("");
+                    setSecondUrl("");
                     setFileName("");
                     setFileType("");
                   }}

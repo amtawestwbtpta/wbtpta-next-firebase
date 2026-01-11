@@ -861,7 +861,7 @@ const MemoSection = () => {
                 <img src={memo.githubUrl} className="w-100" alt="..." />
               ) : memo.githubUrl !== "" && memo.type === "application/pdf" ? (
                 <div>
-                  <PDFViewer pdfUrl={memo.githubUrl} />
+                  <PDFViewer pdfUrl={memo.githubUrl} url={memo.url} />
                 </div>
               ) : memo.githubUrl !== "" ? (
                 <object
