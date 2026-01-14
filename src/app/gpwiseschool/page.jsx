@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { firestore } from "../../context/FirebaseContext";
 import { collection, getDocs, query } from "firebase/firestore";
+import StudentCount from "../../components/StudentCount";
 
 function GpWiseSchool() {
   const { state, teachersState, schoolState } = useGlobalContext();
@@ -94,7 +95,17 @@ function GpWiseSchool() {
             </thead>
             <tbody>
               {filteredSchool.map((el, ind) => {
-                let selectedSchool = el.udise;
+                const selectedSchool = el.udise;
+                const totalStudents =
+                  parseInt(el.pp) +
+                  parseInt(el.i) +
+                  parseInt(el.ii) +
+                  parseInt(el.iii) +
+                  parseInt(el.iv) +
+                  parseInt(el.v);
+                const teachers = teacherData.filter((t) =>
+                  t.udise.match(selectedSchool)
+                );
                 return (
                   <tr
                     key={el.id}
@@ -113,26 +124,23 @@ function GpWiseSchool() {
                     <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
-                      {
-                        teacherData.filter((el) =>
-                          el.udise.match(selectedSchool)
-                        ).length
-                      }
+                      {teachers.length}
                     </td>
                     <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
-                      {el.total_student}
+                      <StudentCount
+                        info={el}
+                        divClassNames={""}
+                        hClassNames={"text-center"}
+                      />
+
+                      {el.v != 0 && <>(Class V)</>}
                     </td>
                     <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
-                      {Math.floor(
-                        el.total_student /
-                          teacherData.filter((el) =>
-                            el.udise.match(selectedSchool)
-                          ).length
-                      )}
+                      {Math.floor(totalStudents / teachers.length)}
                     </td>
                     <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}

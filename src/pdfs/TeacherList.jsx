@@ -31,7 +31,7 @@ export default function TeacherList({ data, title }) {
     // If "school" keys are equal, compare the "rank" keys
     return a.rank - b.rank;
   });
-  const pages = sliceArrayIntoChunks(list, 40);
+  const pages = sliceArrayIntoChunks(list, 35);
 
   return (
     // <PDFViewer
@@ -40,7 +40,7 @@ export default function TeacherList({ data, title }) {
     //     height: height / 3,
     //   }}
     // >
-    <Document style={{ margin: 2, padding: 2 }} title={title}>
+    <Document title={title}>
       {pages.map((page, index) => (
         <Page size="A4" orientation="portrait" style={styles.page} key={index}>
           <View style={styles.pageMainView}>
@@ -182,8 +182,8 @@ export default function TeacherList({ data, title }) {
                   {
                     marginVertical: 2,
                     position: "absolute",
-                    left: "30%",
-                    right: "30%",
+                    left: "20%",
+                    right: "20%",
                     bottom: 0,
                   },
                 ]}
@@ -219,15 +219,15 @@ const styles = StyleSheet.create({
     height: height,
   },
   pageMainView: {
-    padding: 10,
+    padding: 5,
     margin: 5,
     backgroundColor: "#FFFFFF",
     alignSelf: "center",
-    width: "98%",
-    height: "98%",
+    width: "99%",
+    height: "99%",
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: "TimesBold",
     textAlign: "center",
   },

@@ -570,7 +570,35 @@ const TeacherDatabase = () => {
       {showTable && !showDelTeachers ? (
         <>
           <h3 className="text-center text-primary">Displaying Teachers Data</h3>
-
+          <div className="mx-auto m-2">
+            <p className="text-info m-0 p-0">
+              Total Teachers: {teachersState.length}
+            </p>
+            <p className="text-primary m-0 p-0">
+              Total WBTPTA Teachers:{" "}
+              {teachersState.filter((el) => el.association === "WBTPTA").length}
+              {", "}
+              {(
+                (teachersState.filter((el) => el.association === "WBTPTA")
+                  .length /
+                  teachersState.length) *
+                100
+              ).toFixed(2)}
+              %
+            </p>
+            <p className="text-danger m-0 p-0">
+              Total OTHER Teachers:{" "}
+              {teachersState.filter((el) => el.association !== "WBTPTA").length}
+              {", "}
+              {(
+                (teachersState.filter((el) => el.association !== "WBTPTA")
+                  .length /
+                  teachersState.length) *
+                100
+              ).toFixed(2)}
+              %
+            </p>
+          </div>
           <button
             type="button"
             className="btn btn-info m-3"

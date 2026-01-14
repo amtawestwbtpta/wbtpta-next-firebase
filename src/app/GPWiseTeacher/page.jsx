@@ -2,8 +2,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import TeacherList from "../../pdfs/TeacherList";
 
 export default function GPWiseTeacher() {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    }
+  );
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
   const [teacherData, setTeacherData] = useState([]);
@@ -11,6 +21,7 @@ export default function GPWiseTeacher() {
   const [filteredData, setFilteredData] = useState([]);
   const [clickedTeaches, setClickedTeaches] = useState([]);
   const [isclicked, setIsclicked] = useState(false);
+  const [showDownload, setShowDownload] = useState(false);
   const [showAssoc, setShowAssoc] = useState(true);
   const userData = async () => {
     let x = teachersState;
@@ -24,7 +35,7 @@ export default function GPWiseTeacher() {
       router.push("/login");
     }
   }, []);
-  useEffect(() => {}, [clickedTeaches, teacherData]);
+  useEffect(() => {}, [clickedTeaches, teacherData, gp]);
   return (
     <div className="container-fluid my-5">
       <div className="col-md-4 mx-auto mb-3">
@@ -87,31 +98,31 @@ export default function GPWiseTeacher() {
                     key={el.id}
                     style={{ textAlign: "center", verticalAlign: "middle" }}
                   >
-                    <th
+                    <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {ind + 1}
-                    </th>
-                    <th
+                    </td>
+                    <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {el.tname},
                       {el.hoi === "Yes" ? ` (${el.desig}), (HOI)` : ` (AT)`}
                       {showAssoc && `, (${el.association})`}
-                    </th>
-                    <th
+                    </td>
+                    <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {el.phone}
-                    </th>
-                    <th
+                    </td>
+                    <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {el.school}
-                    </th>
-                    <th
+                    </td>
+                    <td
                       style={{ textAlign: "center", verticalAlign: "middle" }}
-                    ></th>
+                    ></td>
                   </tr>
                 );
               })}
@@ -128,6 +139,50 @@ export default function GPWiseTeacher() {
           >
             Print
           </button>
+          <button
+            type="button"
+            className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+            onClick={() => setShowDownload(!showDownload)}
+          >
+            {showDownload ? "Hide Download" : "Show Download"}
+          </button>
+          {showDownload && (
+            <div className="my-3">
+              <PDFDownloadLink
+                document={
+                  <TeacherList
+                    data={clickedTeaches}
+                    title={`All ${
+                      isclicked ? "WBTPTA" : ""
+                    } Teacher's Data of ${gp}`}
+                  />
+                }
+                fileName={`All ${
+                  isclicked ? "WBTPTA" : ""
+                } Teacher's Data of ${gp}.pdf`}
+                style={{
+                  textDecoration: "none",
+                  padding: 11,
+                  color: "#fff",
+                  backgroundColor: "purple",
+                  border: "1px solid #4a4a4a",
+                  width: "40%",
+                  borderRadius: 10,
+                  margin: 20,
+                }}
+                onClick={() =>
+                  setTimeout(() => {
+                    setShowDownload(false);
+                  }, 0)
+                }
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Please Wait..." : "Download Teacher List"
+                }
+              </PDFDownloadLink>
+            </div>
+          )}
+
           {!isclicked ? (
             <button
               type="button"
