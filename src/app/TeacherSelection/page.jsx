@@ -16,12 +16,12 @@ const TeacherTransferComponent = () => {
   );
   const { teachersState } = useGlobalContext();
   const asSorted = teachersState.sort((a, b) => {
-    if (a.gp < b.gp) {
-      return -1;
-    }
-    if (a.gp > b.gp) {
-      return 1;
-    }
+    // if (a.gp < b.gp) {
+    //   return -1;
+    // }
+    // if (a.gp > b.gp) {
+    //   return 1;
+    // }
     if (a.school < b.school) {
       return -1;
     }
@@ -113,12 +113,12 @@ const TeacherTransferComponent = () => {
 
   const sortTeacher = async (teachers) => {
     const newDatas = teachers.sort((a, b) => {
-      if (a.gp < b.gp) {
-        return -1;
-      }
-      if (a.gp > b.gp) {
-        return 1;
-      }
+      // if (a.gp < b.gp) {
+      //   return -1;
+      // }
+      // if (a.gp > b.gp) {
+      //   return 1;
+      // }
       if (a.school < b.school) {
         return -1;
       }
