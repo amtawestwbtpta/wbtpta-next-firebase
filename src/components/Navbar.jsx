@@ -50,7 +50,7 @@ const Navbar = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [question, setQuestion] = useState("taw");
   const navbarSupportedContent = document.querySelector(
-    "#navbarSupportedContent"
+    "#navbarSupportedContent",
   );
   const handleNavCollapse = () => {
     if (typeof window !== undefined) {
@@ -167,7 +167,7 @@ const Navbar = () => {
         const collectionRef = collection(firestore, "userteachers");
         const q = query(
           collectionRef,
-          where("username", "==", userdetails?.username)
+          where("username", "==", userdetails?.username),
         );
         const querySnapshot = await getDocs(q);
         data = querySnapshot.docs[0]?.data();
@@ -338,8 +338,8 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails?.udise
-                  )
+                    (el) => el.udise === teacherdetails?.udise,
+                  ),
                 );
               }}
             >
@@ -354,8 +354,8 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails?.udise
-                  )
+                    (el) => el.udise === teacherdetails?.udise,
+                  ),
                 );
               }}
             >
@@ -676,6 +676,15 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/TET2012"
+              onClick={handleNavCollapse}
+            >
+              TET 2012 Result
+            </Link>
+          </li>
           <div className="row">
             <li className="nav-item">
               {/* <Image
@@ -812,8 +821,8 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails?.udise
-                  )
+                    (el) => el.udise === teacherdetails?.udise,
+                  ),
                 );
               }}
             >
@@ -828,8 +837,8 @@ const Navbar = () => {
                 handleNavCollapse();
                 setStateArray(
                   teachersState.filter(
-                    (el) => el.udise === teacherdetails?.udise
-                  )
+                    (el) => el.udise === teacherdetails?.udise,
+                  ),
                 );
               }}
             >
@@ -1031,6 +1040,15 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              href="/TET2012"
+              onClick={handleNavCollapse}
+            >
+              TET 2012 Result
+            </Link>
+          </li>
           <div className="row">
             <li className="nav-item">
               <Image
