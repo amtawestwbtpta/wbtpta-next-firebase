@@ -17,8 +17,13 @@ const TechersAccuitance = () => {
   const [mainData, setMainData] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [school, setSchool] = useState("");
-  const [editTeacher, setEditTeacher] = useState({});
   const [year, setYear] = useState(new Date().getFullYear() - 1);
+  const startYear = 2023;
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let i = startYear; i <= currentYear; i++) {
+    years.push(i);
+  }
   useEffect(() => {
     if (!state) {
       router.push("/logout");
@@ -141,66 +146,31 @@ const TechersAccuitance = () => {
                 style={{ backgroundColor: "#a19e9d" }}
               >
                 <h4 className="text-black">Select Year</h4>
-                <button
-                  type="button"
-                  className="btn btn-primary m-2"
-                  onClick={() => {
-                    setYear(new Date().getFullYear() - 2);
-                    getModifiedSalary(new Date().getFullYear() - 2);
-                    if (typeof window !== undefined) {
-                      let trList = document.querySelectorAll("tr");
-                      let divList = document.querySelectorAll("div");
-                      for (let i = 0; i < trList.length; i++) {
-                        trList[i].classList.remove("d-none");
+                {years.map((y) => (
+                  <button
+                    key={y}
+                    type="button"
+                    className={`btn btn-${
+                      y === year ? "success" : "primary"
+                    } m-2`}
+                    onClick={() => {
+                      setYear(y);
+                      getModifiedSalary(y);
+                      if (typeof window !== "undefined") {
+                        let trList = document.querySelectorAll("tr");
+                        let divList = document.querySelectorAll("div");
+                        for (let i = 0; i < trList.length; i++) {
+                          trList[i].classList.remove("d-none");
+                        }
+                        for (let i = 0; i < divList.length; i++) {
+                          divList[i].classList.remove("d-none");
+                        }
                       }
-                      for (let i = 0; i < divList.length; i++) {
-                        divList[i].classList.remove("d-none");
-                      }
-                    }
-                  }}
-                >
-                  {new Date().getFullYear() - 2}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-success m-2"
-                  onClick={() => {
-                    setYear(new Date().getFullYear() - 1);
-                    getModifiedSalary(new Date().getFullYear() - 1);
-                    if (typeof window !== undefined) {
-                      let trList = document.querySelectorAll("tr");
-                      let divList = document.querySelectorAll("div");
-                      for (let i = 0; i < trList.length; i++) {
-                        trList[i].classList.remove("d-none");
-                      }
-                      for (let i = 0; i < divList.length; i++) {
-                        divList[i].classList.remove("d-none");
-                      }
-                    }
-                  }}
-                >
-                  {new Date().getFullYear() - 1}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-warning m-2"
-                  onClick={() => {
-                    setYear(new Date().getFullYear());
-                    getModifiedSalary(new Date().getFullYear());
-                    if (typeof window !== undefined) {
-                      let trList = document.querySelectorAll("tr");
-                      let divList = document.querySelectorAll("div");
-                      for (let i = 0; i < trList.length; i++) {
-                        trList[i].classList.remove("d-none");
-                      }
-                      for (let i = 0; i < divList.length; i++) {
-                        divList[i].classList.remove("d-none");
-                      }
-                    }
-                  }}
-                >
-                  {new Date().getFullYear()}
-                </button>
+                    }}
+                  >
+                    {y}
+                  </button>
+                ))}
               </div>
 
               <div
@@ -257,7 +227,7 @@ const TechersAccuitance = () => {
                               className="btn btn-danger btn-sm m-1"
                               onClick={() => {
                                 const updatedArray = filteredData.filter(
-                                  (t) => t.id !== teacher.id
+                                  (t) => t.id !== teacher.id,
                                 );
                                 setFilteredData(updatedArray);
                               }}
@@ -315,7 +285,7 @@ const TechersAccuitance = () => {
                   0,
                   year === new Date().getFullYear()
                     ? new Date().getMonth()
-                    : months.length
+                    : months.length,
                 )
                 .map((month, index) => (
                   <div
@@ -491,47 +461,47 @@ const TechersAccuitance = () => {
                             arrear;
 
                           const marchSalary = march.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const aprilSalary = april.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const ir = Math.round(aprilSalary?.basic * 0.04);
                           const maySalary = may.filter((e) => e.id === id)[0];
                           const juneSalary = june.filter((e) => e.id === id)[0];
                           const julySalary = july.filter((e) => e.id === id)[0];
                           const augustSalary = august.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const septemberSalary = september.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const octoberSalary = october.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const novemberSalary = november.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const decemberSalary = december.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const januarySalary = january.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
                           const februarySalary = february.filter(
-                            (e) => e.id === id
+                            (e) => e.id === id,
                           )[0];
 
                           if (index === 0) {
                             basicpay = januarySalary?.basic;
                             da = Math.round(
-                              basicpay * januarySalary?.daPercent
+                              basicpay * januarySalary?.daPercent,
                             );
                             hra =
                               januarySalary?.hraPercent > 10
                                 ? januarySalary?.hraPercent
                                 : Math.round(
-                                    basicpay * januarySalary?.hraPercent
+                                    basicpay * januarySalary?.hraPercent,
                                   );
                             addl = januarySalary?.addl;
                             pfund = januarySalary?.gpf;
@@ -541,13 +511,13 @@ const TechersAccuitance = () => {
                           } else if (index === 1) {
                             basicpay = februarySalary?.basic;
                             da = Math.round(
-                              basicpay * februarySalary?.daPercent
+                              basicpay * februarySalary?.daPercent,
                             );
                             hra =
                               februarySalary?.hraPercent > 10
                                 ? februarySalary?.hraPercent
                                 : Math.round(
-                                    basicpay * februarySalary?.hraPercent
+                                    basicpay * februarySalary?.hraPercent,
                                   );
                             addl = februarySalary?.addl;
                             pfund = februarySalary?.gpf;
@@ -561,7 +531,7 @@ const TechersAccuitance = () => {
                               marchSalary?.hraPercent > 10
                                 ? marchSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * marchSalary?.hraPercent
+                                    basicpay * marchSalary?.hraPercent,
                                   );
                             addl = marchSalary?.addl;
                             pfund = marchSalary?.gpf;
@@ -575,7 +545,7 @@ const TechersAccuitance = () => {
                               aprilSalary?.hraPercent > 10
                                 ? aprilSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * aprilSalary?.hraPercent
+                                    basicpay * aprilSalary?.hraPercent,
                                   );
                             addl = aprilSalary?.addl;
                             pfund = aprilSalary?.gpf;
@@ -625,7 +595,7 @@ const TechersAccuitance = () => {
                               augustSalary?.hraPercent > 10
                                 ? augustSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * augustSalary?.hraPercent
+                                    basicpay * augustSalary?.hraPercent,
                                   );
                             addl = augustSalary?.addl;
                             pfund = augustSalary?.gpf;
@@ -635,13 +605,13 @@ const TechersAccuitance = () => {
                           } else if (index === 8) {
                             basicpay = septemberSalary?.basic;
                             da = Math.round(
-                              basicpay * septemberSalary?.daPercent
+                              basicpay * septemberSalary?.daPercent,
                             );
                             hra =
                               septemberSalary?.hraPercent > 10
                                 ? septemberSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * septemberSalary?.hraPercent
+                                    basicpay * septemberSalary?.hraPercent,
                                   );
                             addl = septemberSalary?.addl;
                             pfund = septemberSalary?.gpf;
@@ -651,13 +621,13 @@ const TechersAccuitance = () => {
                           } else if (index === 9) {
                             basicpay = octoberSalary?.basic;
                             da = Math.round(
-                              basicpay * octoberSalary?.daPercent
+                              basicpay * octoberSalary?.daPercent,
                             );
                             hra =
                               octoberSalary?.hraPercent > 10
                                 ? octoberSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * octoberSalary?.hraPercent
+                                    basicpay * octoberSalary?.hraPercent,
                                   );
                             addl = octoberSalary?.addl;
                             pfund = octoberSalary?.gpf;
@@ -667,13 +637,13 @@ const TechersAccuitance = () => {
                           } else if (index === 10) {
                             basicpay = novemberSalary?.basic;
                             da = Math.round(
-                              basicpay * novemberSalary?.daPercent
+                              basicpay * novemberSalary?.daPercent,
                             );
                             hra =
                               novemberSalary?.hraPercent > 10
                                 ? novemberSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * novemberSalary?.hraPercent
+                                    basicpay * novemberSalary?.hraPercent,
                                   );
                             addl = novemberSalary?.addl;
                             pfund = novemberSalary?.gpf;
@@ -683,13 +653,13 @@ const TechersAccuitance = () => {
                           } else if (index === 11) {
                             basicpay = decemberSalary?.basic;
                             da = Math.round(
-                              basicpay * decemberSalary?.daPercent
+                              basicpay * decemberSalary?.daPercent,
                             );
                             hra =
                               decemberSalary?.hraPercent > 10
                                 ? decemberSalary?.hraPercent
                                 : Math.round(
-                                    basicpay * decemberSalary?.hraPercent
+                                    basicpay * decemberSalary?.hraPercent,
                                   );
                             addl = decemberSalary?.addl;
                             pfund = decemberSalary?.gpf;
@@ -858,7 +828,7 @@ const TechersAccuitance = () => {
                                               month +
                                               "-" +
                                               index
-                                            }`
+                                            }`,
                                           )
                                           .classList.add("d-none");
                                       }

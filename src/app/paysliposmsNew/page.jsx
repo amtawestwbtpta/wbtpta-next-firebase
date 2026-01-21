@@ -20,80 +20,47 @@ const PaySlipOsmsNew = () => {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
   const thisYear = new Date().getFullYear();
-  const preYear = thisYear - 1;
-  const pre2ndYear = thisYear - 2;
-  const thisYearMonths = [
-    `January-${thisYear}`,
-    `February-${thisYear}`,
-    `March-${thisYear}`,
-    `April-${thisYear}`,
-    `May-${thisYear}`,
-    `June-${thisYear}`,
-    `July-${thisYear}`,
-    `August-${thisYear}`,
-    `September-${thisYear}`,
-    `October-${thisYear}`,
-    `November-${thisYear}`,
-    `December-${thisYear}`,
-  ];
-  const preYearMonths = [
-    `January-${preYear}`,
-    `February-${preYear}`,
-    `March-${preYear}`,
-    `April-${preYear}`,
-    `May-${preYear}`,
-    `June-${preYear}`,
-    `July-${preYear}`,
-    `August-${preYear}`,
-    `September-${preYear}`,
-    `October-${preYear}`,
-    `November-${preYear}`,
-    `December-${preYear}`,
-  ];
-  const pre2ndYearMonths = [
-    `January-${pre2ndYear}`,
-    `February-${pre2ndYear}`,
-    `March-${pre2ndYear}`,
-    `April-${pre2ndYear}`,
-    `May-${pre2ndYear}`,
-    `June-${pre2ndYear}`,
-    `July-${pre2ndYear}`,
-    `August-${pre2ndYear}`,
-    `September-${pre2ndYear}`,
-    `October-${pre2ndYear}`,
-    `November-${pre2ndYear}`,
-    `December-${pre2ndYear}`,
-  ];
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
   const [index, setIndex] = useState(
-    today.getMonth() === 0 ? 11 : today.getMonth() - 1
+    today.getMonth() === 0 ? 11 : today.getMonth() - 1,
   );
   const [month, setMonth] = useState(
-    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
   );
-  const [year, setYear] = useState(today.getFullYear());
+  const [year, setYear] = useState(
+    today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear(),
+  );
   const lastmonth = GetMonthName(today.getMonth() - 1);
   const lastMonthIndex = today.getMonth();
+  const startYear = 2023;
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   let paySlipArray = [];
-  if (state === "admin") {
-    paySlipArray = thisYearMonths
-      // .slice(0, lastMonthIndex)
-      .reverse()
-      .concat(preYearMonths.reverse())
-      .concat(pre2ndYearMonths.reverse());
-  } else {
-    paySlipArray = thisYearMonths
-      .slice(0, lastMonthIndex)
-      .reverse()
-      .concat(preYearMonths.reverse())
-      .concat(pre2ndYearMonths.reverse());
+  for (let y = thisYear; y >= startYear; y--) {
+    let monthsOfYear = monthNames.map((m) => `${m}-${y}`);
+    if (y === thisYear && state !== "admin") {
+      monthsOfYear = monthsOfYear.slice(0, lastMonthIndex);
+    }
+    paySlipArray = paySlipArray.concat(monthsOfYear.reverse());
   }
   let details = stateObject;
   let tname,
@@ -293,7 +260,7 @@ const PaySlipOsmsNew = () => {
                   router.push(
                     `/downloadOsmsPayslip?data=${JSON.stringify(salary)}&key=${
                       process.env.NEXT_PUBLIC_ANYKEY
-                    }`
+                    }`,
                   );
                 }}
               >

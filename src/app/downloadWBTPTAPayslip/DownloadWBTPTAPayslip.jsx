@@ -15,51 +15,40 @@ export default function DownloadWBTPTAPayslip() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
-  const thisYear = new Date().getFullYear();
-  const nextYear = thisYear + 1;
-  const preYear = thisYear - 1;
-  const thisYearMonths = [
-    `January-${thisYear}`,
-    `February-${thisYear}`,
-    `March-${thisYear}`,
-    `April-${thisYear}`,
-    `May-${thisYear}`,
-    `June-${thisYear}`,
-    `July-${thisYear}`,
-    `August-${thisYear}`,
-    `September-${thisYear}`,
-    `October-${thisYear}`,
-    `November-${thisYear}`,
-    `December-${thisYear}`,
-  ];
-  const preYearMonths = [
-    `January-${preYear}`,
-    `February-${preYear}`,
-    `March-${preYear}`,
-    `April-${preYear}`,
-    `May-${preYear}`,
-    `June-${preYear}`,
-    `July-${preYear}`,
-    `August-${preYear}`,
-    `September-${preYear}`,
-    `October-${preYear}`,
-    `November-${preYear}`,
-    `December-${preYear}`,
-  ];
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
   const [index, setIndex] = useState(
-    today.getMonth() === 0 ? 11 : today.getMonth() - 1
+    today.getMonth() === 0 ? 11 : today.getMonth() - 1,
   );
   const [month, setMonth] = useState(
-    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
   );
-  const [year, setYear] = useState(today.getFullYear());
+  const [year, setYear] = useState(
+    today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear(),
+  );
   const lastmonth = GetMonthName(today.getMonth() - 1);
   const lastMonthIndex = today.getMonth();
+  const startYear = 2023;
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const thisYearMonths = monthNames.slice(0, lastMonthIndex);
+  const preYearMonths = monthNames.slice(lastMonthIndex);
   const paySlipArray = thisYearMonths
     .slice(0, lastMonthIndex)
     .reverse()

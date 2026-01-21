@@ -35,7 +35,7 @@ const SchoolTeacherData = () => {
     id: "",
     school: "",
     gp: "",
-    year: 2025,
+    year: new Date().getFullYear(),
     udise: "",
     student_2023: 0,
     student_2024: 0,
@@ -61,7 +61,7 @@ const SchoolTeacherData = () => {
     id: "",
     school: "",
     gp: "",
-    year: 2025,
+    year: new Date().getFullYear(),
     udise: "",
     student_2023: 0,
     student_2024: 0,
@@ -80,7 +80,6 @@ const SchoolTeacherData = () => {
       student_2023: parseInt(inputField.student_2023),
       student_2024: parseInt(inputField.student_2024),
       student_2025: parseInt(inputField.student_2025),
-      student_2026: parseInt(inputField.student_2026) || 0,
       year: parseInt(inputField.year),
     };
     newData[`student_${newData.year}`] =

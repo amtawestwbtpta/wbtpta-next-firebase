@@ -16,7 +16,7 @@ const MonthlyAWSalary = () => {
     {
       ssr: false,
       loading: () => <p className="m-0 p-0">Please Wait...</p>,
-    }
+    },
   );
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
@@ -25,74 +25,44 @@ const MonthlyAWSalary = () => {
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
   const [title, setTitle] = useState("");
+  const [showDldBtn, setShowDldBtn] = useState(false);
   const thisYear = new Date().getFullYear();
-  const preYear = thisYear - 1;
-  const pre2ndYear = thisYear - 2;
-  const thisYearMonths = [
-    `January-${thisYear}`,
-    `February-${thisYear}`,
-    `March-${thisYear}`,
-    `April-${thisYear}`,
-    `May-${thisYear}`,
-    `June-${thisYear}`,
-    `July-${thisYear}`,
-    `August-${thisYear}`,
-    `September-${thisYear}`,
-    `October-${thisYear}`,
-    `November-${thisYear}`,
-    `December-${thisYear}`,
-  ];
-  const preYearMonths = [
-    `January-${preYear}`,
-    `February-${preYear}`,
-    `March-${preYear}`,
-    `April-${preYear}`,
-    `May-${preYear}`,
-    `June-${preYear}`,
-    `July-${preYear}`,
-    `August-${preYear}`,
-    `September-${preYear}`,
-    `October-${preYear}`,
-    `November-${preYear}`,
-    `December-${preYear}`,
-  ];
-  const pre2ndYearMonths = [
-    `January-${pre2ndYear}`,
-    `February-${pre2ndYear}`,
-    `March-${pre2ndYear}`,
-    `April-${pre2ndYear}`,
-    `May-${pre2ndYear}`,
-    `June-${pre2ndYear}`,
-    `July-${pre2ndYear}`,
-    `August-${pre2ndYear}`,
-    `September-${pre2ndYear}`,
-    `October-${pre2ndYear}`,
-    `November-${pre2ndYear}`,
-    `December-${pre2ndYear}`,
-  ];
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
-  const [showDldBtn, setShowDldBtn] = useState(false);
-  const [month, setMonth] = useState(
-    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+  const [index, setIndex] = useState(
+    today.getMonth() === 0 ? 11 : today.getMonth() - 1,
   );
-  const [year, setYear] = useState(today.getFullYear());
-
-  const lastMonthIndex = today.getMonth() === 11 ? 11 : today.getMonth() + 1;
+  const [month, setMonth] = useState(
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
+  );
+  const [year, setYear] = useState(
+    today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear(),
+  );
+  const lastmonth = GetMonthName(today.getMonth() - 1);
+  const lastMonthIndex = today.getMonth();
+  const startYear = 2023;
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   let paySlipArray = [];
-  if (state === "admin") {
-    paySlipArray = thisYearMonths
-      // .slice(0, lastMonthIndex)
-      .reverse()
-      .concat(preYearMonths.reverse())
-      .concat(pre2ndYearMonths.reverse());
-  } else {
-    paySlipArray = thisYearMonths
-      .slice(0, lastMonthIndex)
-      .reverse()
-      .concat(preYearMonths.reverse())
-      .concat(pre2ndYearMonths.reverse());
+  for (let y = thisYear; y >= startYear; y--) {
+    let monthsOfYear = monthNames.map((m) => `${m}-${y}`);
+    if (y === thisYear && state !== "admin") {
+      monthsOfYear = monthsOfYear.slice(0, lastMonthIndex);
+    }
+    paySlipArray = paySlipArray.concat(monthsOfYear.reverse());
   }
 
   const [monthSalary, setMonthSalary] = useState([]);
@@ -134,9 +104,9 @@ const MonthlyAWSalary = () => {
       teachersState.length === filteredData.length
         ? "All Teacher's"
         : filteredData.length ===
-          teachersState.filter((el) => el.association === "WBTPTA").length
-        ? "WBTPTA Teachers"
-        : ""
+            teachersState.filter((el) => el.association === "WBTPTA").length
+          ? "WBTPTA Teachers"
+          : ""
     }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta West Circle`;
     document.title = docTitle;
     setTitle(docTitle);
@@ -226,7 +196,7 @@ const MonthlyAWSalary = () => {
                 className="btn btn-info  p-2 rounded"
                 onClick={() =>
                   setFilteredData(
-                    teachersState.filter((el) => el.association === "WBTPTA")
+                    teachersState.filter((el) => el.association === "WBTPTA"),
                   )
                 }
               >
@@ -316,8 +286,8 @@ const MonthlyAWSalary = () => {
                       teachersState.filter((el) =>
                         el.tname
                           .toLowerCase()
-                          .includes(e.target.value.toLowerCase())
-                      )
+                          .includes(e.target.value.toLowerCase()),
+                      ),
                     );
                   }}
                 />
@@ -334,8 +304,8 @@ const MonthlyAWSalary = () => {
                       teachersState.filter((el) =>
                         el.school
                           .toLowerCase()
-                          .includes(e.target.value.toLowerCase())
-                      )
+                          .includes(e.target.value.toLowerCase()),
+                      ),
                     );
                   }}
                 />
@@ -433,10 +403,10 @@ const MonthlyAWSalary = () => {
                       netpay,
                       basicpay;
                     const techersSalary = monthSalary?.filter(
-                      (el) => el.id === id
+                      (el) => el.id === id,
                     )[0];
                     const teachersAprilSalary = aprilSalary?.filter(
-                      (el) => el.id === id
+                      (el) => el.id === id,
                     )[0];
                     if (
                       month === "July" &&
