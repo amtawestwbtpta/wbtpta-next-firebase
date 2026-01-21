@@ -24,6 +24,7 @@ const SchoolTeacherData = () => {
   const [teacherData, setTeacherData] = useState(teachersState);
   const [schoolData, setschoolData] = useState(schoolState);
   const [filteredData, setFilteredData] = useState([]);
+  const [showClassV, setShowClassV] = useState(false);
   const [filteredSchool, setFilteredSchool] = useState({
     pp: 0,
     i: 0,
@@ -429,7 +430,21 @@ const SchoolTeacherData = () => {
                                 onInfoChange={setInputField}
                                 divClassNames="col-md-6 mb-3"
                                 hClassNames="text-primary text-center"
+                                showClassV={showClassV}
                               />
+                            </div>
+                            <div className="form-check col-md-4 mx-auto my-2">
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                checked={showClassV}
+                                onChange={(e) =>
+                                  setShowClassV(e.target.checked)
+                                }
+                              />
+                              <p className="text-primary">
+                                Show Class V Student Field
+                              </p>
                             </div>
                           </div>
                           <div className="modal-footer">

@@ -6,6 +6,7 @@ const StudentInput = ({
   onInfoChange, // callback to pass updated info object to parent
   divClassNames = "m-1",
   hClassNames = "text-primary text-center",
+  showClassV = false,
 }) => {
   // Local controlled copy of the info object so inputs stay controlled
   const [localInfo, setLocalInfo] = useState(() => ({ ...info }));
@@ -15,7 +16,7 @@ const StudentInput = ({
   // could change the types and cause the input to flip to text. Storing the
   // initial numeric keys in a ref prevents that.
   const numericKeysRef = useRef(
-    Object.keys(info).filter((k) => typeof info[k] === "number")
+    Object.keys(info).filter((k) => typeof info[k] === "number"),
   );
   const numericKeys = numericKeysRef.current;
 
@@ -98,7 +99,7 @@ const StudentInput = ({
                       onChange={(e) => handleChange(key, e.target.value)}
                     />
                   </div>
-                ) : key === "v" && value > 0 ? (
+                ) : key === "v" && showClassV ? (
                   <div className={divClassNames} key={key}>
                     <label
                       htmlFor={id}
