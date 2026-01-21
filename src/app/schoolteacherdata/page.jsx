@@ -39,6 +39,7 @@ const SchoolTeacherData = () => {
     student_2023: 0,
     student_2024: 0,
     student_2025: 0,
+    student_2026: 0,
   });
   const [total_student, setTotal_student] = useState(0);
   useEffect(() => {
@@ -64,6 +65,7 @@ const SchoolTeacherData = () => {
     student_2023: 0,
     student_2024: 0,
     student_2025: 0,
+    student_2026: 0,
   });
   const update = async () => {
     const newData = {
@@ -77,8 +79,16 @@ const SchoolTeacherData = () => {
       student_2023: parseInt(inputField.student_2023),
       student_2024: parseInt(inputField.student_2024),
       student_2025: parseInt(inputField.student_2025),
+      student_2026: parseInt(inputField.student_2026) || 0,
       year: parseInt(inputField.year),
     };
+    newData[`student_${newData.year}`] =
+      (newData.pp || 0) +
+      (newData.i || 0) +
+      (newData.ii || 0) +
+      (newData.iii || 0) +
+      (newData.iv || 0) +
+      (newData.v || 0);
     try {
       const docRef = doc(firestore, "schools", newData.id);
       await updateDoc(docRef, newData);
@@ -471,10 +481,10 @@ const SchoolTeacherData = () => {
                       el.association === "WBTPTA"
                         ? "text-success"
                         : el.association === "WBPTA"
-                        ? "text-primary"
-                        : el.association === "BJP"
-                        ? "text-warning"
-                        : "text-danger"
+                          ? "text-primary"
+                          : el.association === "BJP"
+                            ? "text-warning"
+                            : "text-danger"
                     } `}
                   >
                     {el.association}
