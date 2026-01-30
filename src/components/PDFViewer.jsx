@@ -14,7 +14,7 @@ const PDFViewer = ({ pdfUrl, url = "" }) => {
   const [containerWidth, setContainerWidth] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [fileSource, setFileSource] = useState(pdfUrl);
+  const [fileSource, setFileSource] = useState(pdfUrl || url);
   const containerRef = useRef(null);
   const [key, setKey] = useState(0);
 
@@ -29,13 +29,13 @@ const PDFViewer = ({ pdfUrl, url = "" }) => {
 
   // Reset state when pdfUrl changes
   useEffect(() => {
-    setFileSource(pdfUrl);
+    setFileSource(pdfUrl || url);
     setNumPages(null);
     setPageNumber(1);
     setLoading(true);
     setError(null);
     setKey((prev) => prev + 1);
-  }, [pdfUrl]);
+  }, [pdfUrl, url]);
   // Handle container resize
   useEffect(() => {
     const updateWidth = () => {
@@ -77,7 +77,7 @@ const PDFViewer = ({ pdfUrl, url = "" }) => {
 
   const changePage = (offset) => {
     setPageNumber((prevPage) =>
-      Math.max(1, Math.min(numPages, prevPage + offset))
+      Math.max(1, Math.min(numPages, prevPage + offset)),
     );
   };
   // Add this function to handle PDF reload
@@ -89,7 +89,7 @@ const PDFViewer = ({ pdfUrl, url = "" }) => {
     setPageNumber(1);
   };
 
-  if (!pdfUrl) {
+  if (!pdfUrl && !url) {
     return <Loader />;
   }
 
