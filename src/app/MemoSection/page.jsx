@@ -650,7 +650,7 @@ const MemoSection = () => {
     {
       name: "Download",
       selector: (row) =>
-        row.githubUrl !== "" && row.url !== "" ? (
+        row.url !== "" ? (
           <a
             href={row.githubUrl ? row.githubUrl : row.url}
             className="btn btn-success btn-sm my-3 rounded text-decoration-none"
@@ -878,9 +878,7 @@ const MemoSection = () => {
                   className="w-100"
                   alt="..."
                 />
-              ) : memo.githubUrl !== "" &&
-                memo.url !== "" &&
-                memo.type === "application/pdf" ? (
+              ) : memo.url !== "" && memo.type === "application/pdf" ? (
                 <div>
                   <PDFViewer pdfUrl={memo.githubUrl} url={memo.url} />
                 </div>
