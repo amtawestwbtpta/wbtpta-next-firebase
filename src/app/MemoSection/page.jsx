@@ -873,14 +873,20 @@ const MemoSection = () => {
             </div>
             <div className="modal-body">
               {memo.type === "image/jpeg" || memo.type === "image/png" ? (
-                <img src={memo.githubUrl} className="w-100" alt="..." />
-              ) : memo.githubUrl !== "" && memo.type === "application/pdf" ? (
+                <img
+                  src={memo.githubUrl ? memo.githubUrl : memo.url}
+                  className="w-100"
+                  alt="..."
+                />
+              ) : memo.githubUrl !== "" &&
+                memo.url !== "" &&
+                memo.type === "application/pdf" ? (
                 <div>
                   <PDFViewer pdfUrl={memo.githubUrl} url={memo.url} />
                 </div>
-              ) : memo.githubUrl !== "" ? (
+              ) : memo.githubUrl !== "" && memo.url !== "" ? (
                 <object
-                  data={memo.githubUrl}
+                  data={memo.githubUrl ? memo.githubUrl : memo.url}
                   type={memo.type}
                   // width={width}
                   height={height}
