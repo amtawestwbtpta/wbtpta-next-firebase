@@ -102,7 +102,7 @@ const MemoSection = () => {
       .sort(
         (a, b) =>
           Date.parse(getCurrentDateInput(b.memoDate)) -
-          Date.parse(getCurrentDateInput(a.memoDate))
+          Date.parse(getCurrentDateInput(a.memoDate)),
       );
     setLoader(false);
     setAllData(datas);
@@ -116,18 +116,25 @@ const MemoSection = () => {
     if (addImage) {
       const uploadableFileName = docId + "-" + file.name;
       const filestorageRef = ref(storage, `/memoFiles/${uploadableFileName}`);
-      const githubUrl = await uploadFileToGithub(
-        file,
-        uploadableFileName,
-        "memoFiles"
-      );
+      let githubUrl = "";
+      //check file size is less than 1MB
+      if (file.size < 1000000) {
+        githubUrl = await uploadFileToGithub(
+          file,
+          uploadableFileName,
+          "memoFiles",
+        );
+      } else {
+        toast.error("File size exceeds 1MB limit for Github upload!");
+        githubUrl = "";
+      }
       const uploadTask = uploadBytesResumable(filestorageRef, file);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           setShowPercent(true);
           const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
           );
 
           // // update progress
@@ -173,8 +180,8 @@ const MemoSection = () => {
                     ].sort(
                       (a, b) =>
                         Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
+                        Date.parse(getCurrentDateInput(a.memoDate)),
+                    ),
                   );
                   setAllData(
                     [
@@ -195,8 +202,8 @@ const MemoSection = () => {
                     ].sort(
                       (a, b) =>
                         Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
+                        Date.parse(getCurrentDateInput(a.memoDate)),
+                    ),
                   );
                   setFilteredData(
                     [
@@ -217,8 +224,8 @@ const MemoSection = () => {
                     ].sort(
                       (a, b) =>
                         Date.parse(getCurrentDateInput(b.memoDate)) -
-                        Date.parse(getCurrentDateInput(a.memoDate))
-                    )
+                        Date.parse(getCurrentDateInput(a.memoDate)),
+                    ),
                   );
                   setMemoUpdateTime(Date.now());
                   setmemoText("");
@@ -254,7 +261,7 @@ const MemoSection = () => {
               setLoader(false);
             }
           });
-        }
+        },
       );
     } else {
       try {
@@ -289,8 +296,8 @@ const MemoSection = () => {
               ].sort(
                 (a, b) =>
                   Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
+                  Date.parse(getCurrentDateInput(a.memoDate)),
+              ),
             );
             setAllData(
               [
@@ -310,8 +317,8 @@ const MemoSection = () => {
               ].sort(
                 (a, b) =>
                   Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
+                  Date.parse(getCurrentDateInput(a.memoDate)),
+              ),
             );
             setFilteredData(
               [
@@ -331,8 +338,8 @@ const MemoSection = () => {
               ].sort(
                 (a, b) =>
                   Date.parse(getCurrentDateInput(b.memoDate)) -
-                  Date.parse(getCurrentDateInput(a.memoDate))
-              )
+                  Date.parse(getCurrentDateInput(a.memoDate)),
+              ),
             );
             setMemoUpdateTime(Date.now());
             setmemoText("");
@@ -402,7 +409,7 @@ const MemoSection = () => {
           let newData = y.sort(
             (a, b) =>
               Date.parse(getCurrentDateInput(b.memoDate)) -
-              Date.parse(getCurrentDateInput(a.memoDate))
+              Date.parse(getCurrentDateInput(a.memoDate)),
           );
           setMemoState(newData);
           setAllData(newData);
@@ -428,7 +435,7 @@ const MemoSection = () => {
       try {
         const isDelFromGithub = await deleteFileFromGithub(
           editFileName,
-          "memoFiles"
+          "memoFiles",
         );
         if (isDelFromGithub) {
           toast.success("File deleted successfully From Github!");
@@ -442,11 +449,18 @@ const MemoSection = () => {
         console.log(e);
       }
       const uploadableFileName = docId + "-" + editFile.name;
-      const githubUrl = await uploadFileToGithub(
-        editFile,
-        uploadableFileName,
-        "memoFiles"
-      );
+      let githubUrl = "";
+      //check file size is less than 1MB
+      if (editFile.size < 1000000) {
+        githubUrl = await uploadFileToGithub(
+          editFile,
+          uploadableFileName,
+          "memoFiles",
+        );
+      } else {
+        toast.error("File size exceeds 1MB limit for Github upload!");
+        githubUrl = "";
+      }
       const filestorageRef = ref(storage, `/memoFiles/${uploadableFileName}`);
       const uploadTask = uploadBytesResumable(filestorageRef, editFile);
       uploadTask.on(
@@ -454,7 +468,7 @@ const MemoSection = () => {
         (snapshot) => {
           setShowPercent(true);
           const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
           );
 
           // // update progress
@@ -499,7 +513,7 @@ const MemoSection = () => {
                 let newData = y.sort(
                   (a, b) =>
                     Date.parse(getCurrentDateInput(b.memoDate)) -
-                    Date.parse(getCurrentDateInput(a.memoDate))
+                    Date.parse(getCurrentDateInput(a.memoDate)),
                 );
                 setMemoState(newData);
                 setAllData(newData);
@@ -526,7 +540,7 @@ const MemoSection = () => {
                 console.log(err);
               });
           });
-        }
+        },
       );
     }
   };
@@ -541,7 +555,7 @@ const MemoSection = () => {
         try {
           const isDelFromGithub = await deleteFileFromGithub(
             el.photoName,
-            "memoFiles"
+            "memoFiles",
           );
           if (isDelFromGithub) {
             toast.success("File deleted successfully From Github!");
@@ -597,36 +611,37 @@ const MemoSection = () => {
           {row.type === "application/pdf"
             ? "PDF"
             : row.type === "image/jpeg"
-            ? "JPEG"
-            : row.type === "image/png"
-            ? "PNG"
-            : row.type === "application/msword"
-            ? "WORD"
-            : row.type ===
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            ? "WORD"
-            : row.type ===
-              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            ? "POWERPOINT"
-            : row.type === "application/vnd.ms-excel"
-            ? "EXCEL"
-            : row.type ===
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            ? "EXCEL"
-            : row.type === "application/vnd.ms-excel.sheet.macroEnabled.12"
-            ? "EXCEL"
-            : row.type === "application/vnd.ms-powerpoint"
-            ? "EXCEL"
-            : row.type === "application/zip"
-            ? "ZIP"
-            : row.type === "application/vnd.rar"
-            ? "RAR"
-            : row.type === "text/csv"
-            ? "CSV"
-            : row.type ===
-              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            ? "POWERPOINT"
-            : "No File"}
+              ? "JPEG"
+              : row.type === "image/png"
+                ? "PNG"
+                : row.type === "application/msword"
+                  ? "WORD"
+                  : row.type ===
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    ? "WORD"
+                    : row.type ===
+                        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                      ? "POWERPOINT"
+                      : row.type === "application/vnd.ms-excel"
+                        ? "EXCEL"
+                        : row.type ===
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                          ? "EXCEL"
+                          : row.type ===
+                              "application/vnd.ms-excel.sheet.macroEnabled.12"
+                            ? "EXCEL"
+                            : row.type === "application/vnd.ms-powerpoint"
+                              ? "EXCEL"
+                              : row.type === "application/zip"
+                                ? "ZIP"
+                                : row.type === "application/vnd.rar"
+                                  ? "RAR"
+                                  : row.type === "text/csv"
+                                    ? "CSV"
+                                    : row.type ===
+                                        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                                      ? "POWERPOINT"
+                                      : "No File"}
         </h6>
       ),
       center: +true,
@@ -635,9 +650,9 @@ const MemoSection = () => {
     {
       name: "Download",
       selector: (row) =>
-        row.githubUrl !== "" ? (
+        row.githubUrl !== "" && row.url !== "" ? (
           <a
-            href={row.githubUrl}
+            href={row.githubUrl ? row.githubUrl : row.url}
             className="btn btn-success btn-sm my-3 rounded text-decoration-none"
             target="_blank"
             rel="noopener noreferrer"
@@ -704,7 +719,7 @@ const MemoSection = () => {
                 onClick={() => {
                   // eslint-disable-next-line
                   let conf = confirm(
-                    "Are you sure you want to Delete this Memo?"
+                    "Are you sure you want to Delete this Memo?",
                   );
                   if (conf) {
                     deletememo(el);
@@ -743,7 +758,7 @@ const MemoSection = () => {
       let newData = memoState.sort(
         (a, b) =>
           Date.parse(getCurrentDateInput(b.memoDate)) -
-          Date.parse(getCurrentDateInput(a.memoDate))
+          Date.parse(getCurrentDateInput(a.memoDate)),
       );
       setLoader(false);
       setAllData(newData);
