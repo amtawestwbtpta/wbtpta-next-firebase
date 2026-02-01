@@ -99,7 +99,7 @@ export default function TET2012() {
         fixedHeader
         subHeader
         subHeaderComponent={
-          <>
+          <div className="d-flex flex-column justify-content-center align-items-center">
             <div className="my-2">
               <input
                 type="text"
@@ -138,7 +138,7 @@ export default function TET2012() {
                 }}
               />
             </div>
-          </>
+          </div>
         }
         subHeaderAlign="right"
         paginationPerPage={40}
