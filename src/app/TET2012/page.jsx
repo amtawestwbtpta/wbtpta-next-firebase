@@ -13,7 +13,7 @@ export default function TET2012() {
     {
       name: "Sl",
       selector: (row, ind) => ind + 1,
-      width: "10%",
+      // width: "10%",
       center: +true,
     },
     {
@@ -22,7 +22,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "20%",
+      // width: "20%",
     },
     {
       name: "Teacher Name",
@@ -30,7 +30,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "25%",
+      // width: "25%",
     },
     {
       name: "PH",
@@ -38,7 +38,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "5%",
+      // width: "5%",
     },
     {
       name: "Category 1",
@@ -46,7 +46,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "10%",
+      // width: "10%",
     },
     {
       name: "Category 2",
@@ -54,7 +54,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "10%",
+      // width: "10%",
     },
     {
       name: "Marks",
@@ -62,7 +62,7 @@ export default function TET2012() {
       sortable: true,
       wrap: true,
       center: +true,
-      width: "20%",
+      // width: "20%",
     },
   ];
 
@@ -81,6 +81,16 @@ export default function TET2012() {
         pauseOnHover
         theme="light"
       />
+      <div className="my-4">
+        <a
+          href="https://wbbpe.wb.gov.in/file/3b27ef6b-c18e-4fa0-a99e-eee95c48a1be.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary"
+        >
+          Download PDF
+        </a>
+      </div>
       <DataTable
         columns={columns}
         data={filteredData}
@@ -90,40 +100,44 @@ export default function TET2012() {
         subHeader
         subHeaderComponent={
           <>
-            <input
-              type="text"
-              placeholder="Search by Roll"
-              className="w-25 form-control m-2"
-              value={rollSearch}
-              onFocus={() => setNameSearch("")}
-              onChange={(e) => {
-                setRollSearch(e.target.value);
-                setFilteredData(
-                  allResult.filter((el) =>
-                    el?.roll
-                      .toLowerCase()
-                      .includes(e.target.value.toLowerCase()),
-                  ),
-                );
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Search By Name"
-              className="w-25 form-control m-2"
-              value={nameSearch}
-              onFocus={() => setRollSearch("")}
-              onChange={(e) => {
-                setNameSearch(e.target.value);
-                setFilteredData(
-                  allResult.filter((el) =>
-                    el?.name
-                      ?.toLowerCase()
-                      ?.includes(e.target.value.toLowerCase()),
-                  ),
-                );
-              }}
-            />
+            <div className="my-2">
+              <input
+                type="text"
+                placeholder="Search by Roll"
+                className="form-control m-2"
+                value={rollSearch}
+                onFocus={() => setNameSearch("")}
+                onChange={(e) => {
+                  setRollSearch(e.target.value);
+                  setFilteredData(
+                    allResult.filter((el) =>
+                      el?.roll
+                        .toLowerCase()
+                        .includes(e.target.value.toLowerCase()),
+                    ),
+                  );
+                }}
+              />
+            </div>
+            <div className="my-2">
+              <input
+                type="text"
+                placeholder="Search By Name"
+                className="form-control m-2"
+                value={nameSearch}
+                onFocus={() => setRollSearch("")}
+                onChange={(e) => {
+                  setNameSearch(e.target.value);
+                  setFilteredData(
+                    allResult.filter((el) =>
+                      el?.name
+                        ?.toLowerCase()
+                        ?.includes(e.target.value.toLowerCase()),
+                    ),
+                  );
+                }}
+              />
+            </div>
           </>
         }
         subHeaderAlign="right"

@@ -1279,6 +1279,15 @@ const Navbar = () => {
           <li className="nav-item">
             <Link
               className="nav-link"
+              href="/TET2012"
+              onClick={handleNavCollapse}
+            >
+              TET 2012 Result
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               href="/login"
               onClick={handleNavCollapse}
             >
