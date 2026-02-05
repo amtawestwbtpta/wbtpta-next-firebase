@@ -610,7 +610,7 @@ const Navbar = () => {
               ROPA 2019
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link
               className="nav-link"
               href="/daarrearcalculation"
@@ -618,7 +618,7 @@ const Navbar = () => {
             >
               DA Arrear Calculation
             </Link>
-          </li> */}
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -974,7 +974,7 @@ const Navbar = () => {
               Tax Calculator
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link
               className="nav-link"
               href="/daarrearcalculation"
@@ -982,7 +982,7 @@ const Navbar = () => {
             >
               DA Arrear Calculation
             </Link>
-          </li> */}
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -1207,7 +1207,7 @@ const Navbar = () => {
               Tax Calculator
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link
               className="nav-link"
               href="/daarrearcalculation"
@@ -1215,7 +1215,7 @@ const Navbar = () => {
             >
               DA Arrear Calculation
             </Link>
-          </li> */}
+          </li>
           <li className="nav-item">
             <Link
               className="nav-link"
