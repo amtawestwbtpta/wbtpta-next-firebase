@@ -14,7 +14,7 @@ import { sliceArrayIntoChunks } from "../modules/calculatefunctions";
 const width = 2480;
 const height = 3508;
 
-export default function TeacherList({ data, title }) {
+export default function TeacherList({ data, title, keys }) {
   const list = data.sort((a, b) => {
     // if (a.gp < b.gp) {
     //   return -1;
@@ -31,7 +31,28 @@ export default function TeacherList({ data, title }) {
     // If "school" keys are equal, compare the "rank" keys
     return a.rank - b.rank;
   });
-  const pages = sliceArrayIntoChunks(list, 35);
+  const pages = sliceArrayIntoChunks(list, 38);
+  const columns =
+    keys && keys.length > 0
+      ? [
+          { label: "NAME", key: "tname", width: "35%" },
+          { label: "SCHOOL", key: "school", width: "45%" },
+          // { label: "GP", key: "gp", width: "20%" },
+          ...keys.map((key) =>
+            typeof key === "string"
+              ? {
+                  label: key.toUpperCase(),
+                  key: key,
+                  width: `${20 / keys.length}%`,
+                }
+              : key,
+          ),
+        ]
+      : [
+          { label: "NAME", key: "tname", width: "35%" },
+          { label: "SCHOOL", key: "school", width: "45%" },
+          { label: "GP", key: "gp", width: "15%" },
+        ];
 
   return (
     // <PDFViewer
@@ -57,40 +78,22 @@ export default function TeacherList({ data, title }) {
                 >
                   <Text style={styles.text}>Sl</Text>
                 </View>
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "40%",
-                    height: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={styles.text}>NAME</Text>
-                </View>
-
-                <View
-                  style={{
-                    borderRightWidth: 1,
-                    width: "50%",
-                    height: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={styles.text}>SCHOOL</Text>
-                </View>
-                <View
-                  style={{
-                    borderRightWidth: 0,
-                    width: "15%",
-                    height: 20,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={styles.text}>GP</Text>
-                </View>
+                {columns.map((col, index) => (
+                  <View
+                    key={index}
+                    style={{
+                      borderRightWidth: index === columns.length - 1 ? 0 : 1,
+                      width: col.width,
+                      height: 20,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>{col.label}</Text>
+                  </View>
+                ))}
               </View>
               {page?.map((teacher, ind) => {
-                const { tname, desig, school, phone, id, gp } = teacher;
+                const { id } = teacher;
                 return (
                   <View
                     style={[
@@ -114,51 +117,42 @@ export default function TeacherList({ data, title }) {
                         {list.findIndex((i) => i.id === id) + 1}
                       </Text>
                     </View>
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "40%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={[
-                          styles.text,
-                          { fontSize: tname.length >= 22 ? 11 : 13 },
-                        ]}
+                    {columns.map((col, index) => (
+                      <View
+                        key={index}
+                        style={{
+                          borderRightWidth:
+                            index === columns.length - 1 ? 0 : 1,
+                          width: col.width,
+                          height: 20,
+                          justifyContent: "center",
+                        }}
                       >
-                        {tname}
-                      </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        borderRightWidth: 1,
-                        width: "50%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={[
-                          styles.text,
-                          { fontSize: school.length >= 19 ? 10 : 11 },
-                        ]}
-                      >
-                        {school}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        borderRightWidth: 0,
-                        width: "15%",
-                        height: 20,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text style={styles.text}>{gp}</Text>
-                    </View>
+                        <Text
+                          style={[
+                            styles.text,
+                            col.key === "tname"
+                              ? {
+                                  fontSize:
+                                    String(teacher[col.key] ?? "").length >= 22
+                                      ? 11
+                                      : 13,
+                                }
+                              : col.key === "school"
+                                ? {
+                                    fontSize:
+                                      String(teacher[col.key] ?? "").length >=
+                                      19
+                                        ? 10
+                                        : 11,
+                                  }
+                                : {},
+                          ]}
+                        >
+                          {String(teacher[col.key] ?? "")}
+                        </Text>
+                      </View>
+                    ))}
                   </View>
                 );
               })}
@@ -232,7 +226,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: "Times",
     textAlign: "center",
   },

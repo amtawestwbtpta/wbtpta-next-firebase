@@ -8,8 +8,18 @@ import {
   uniqArray,
 } from "../../modules/calculatefunctions";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import TeacherList from "../../pdfs/TeacherList";
 
 const Retirement = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    },
+  );
   const { setStateObject, teachersState } = useGlobalContext();
   const router = useRouter();
   const data = teachersState;
@@ -19,7 +29,7 @@ const Retirement = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [RetirementMonths, setRetirementMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
-
+  const [showDownloadList, setShowDownloadList] = useState(false);
   const handleChange = (e) => {
     if (e.target.value !== "") {
       if (typeof window !== undefined) {
@@ -164,11 +174,11 @@ const Retirement = () => {
                   {month.monthName +
                     " - " +
                     moreFilteredData.filter(
-                      (m) => m.dor.split("-")[1] === month.index
+                      (m) => m.dor.split("-")[1] === month.index,
                     ).length +
                     ` ${
                       moreFilteredData.filter(
-                        (m) => m.dor.split("-")[1] === month.index
+                        (m) => m.dor.split("-")[1] === month.index,
                       ).length > 1
                         ? " Teachers"
                         : " Teacher"
@@ -195,6 +205,50 @@ const Retirement = () => {
                 Print Page
               </button>
             </div>
+            <div className="m-1 noprint">
+              <button
+                type="button"
+                className="btn btn-dark text-white font-weight-bold p-2 rounded"
+                onClick={() => {
+                  setShowDownloadList(!showDownloadList);
+                }}
+              >
+                {showDownloadList ? "Hide Download" : "Download List"}
+              </button>
+            </div>
+            {showDownloadList && (
+              <div className="noprint">
+                <PDFDownloadLink
+                  document={
+                    <TeacherList
+                      data={filteredData}
+                      title={`Year ${selectedYear} ${monthText || "All"} Retirement Teachers List`}
+                      keys={["dor"]}
+                    />
+                  }
+                  fileName={`Year ${selectedYear} ${monthText || "All"} Retirement Teachers List.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 10,
+                  }}
+                  onClick={() =>
+                    setTimeout(() => {
+                      setShowDownloadList(false);
+                    }, 0)
+                  }
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download List"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
             <div className="m-1 noprint">
               <button
                 type="button"
@@ -344,6 +398,50 @@ const Retirement = () => {
                 Print Page
               </button>
             </div>
+            <div className="m-1 noprint">
+              <button
+                type="button"
+                className="btn btn-dark text-white font-weight-bold p-2 rounded"
+                onClick={() => {
+                  setShowDownloadList(!showDownloadList);
+                }}
+              >
+                {showDownloadList ? "Hide Download" : "Download List"}
+              </button>
+            </div>
+            {showDownloadList && (
+              <div className="noprint">
+                <PDFDownloadLink
+                  document={
+                    <TeacherList
+                      data={filteredData}
+                      title={`Year ${selectedYear} ${monthText || "All"} Retirement Teachers List`}
+                      keys={["dor"]}
+                    />
+                  }
+                  fileName={`Year ${selectedYear} ${monthText || "All"} Retirement Teachers List.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 10,
+                  }}
+                  onClick={() =>
+                    setTimeout(() => {
+                      setShowDownloadList(false);
+                    }, 0)
+                  }
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download List"
+                  }
+                </PDFDownloadLink>
+              </div>
+            )}
             <div className="m-1 noprint">
               <button
                 type="button"

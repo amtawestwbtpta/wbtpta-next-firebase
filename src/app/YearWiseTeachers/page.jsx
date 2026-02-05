@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 import NewTeacherArrear from "../../pdfs/NewTeacherArrear";
 import AppServiceConfirmation from "../../pdfs/AppServiceConfirmation";
 import Loader from "../../components/Loader";
-import { set } from "mongoose";
+import TeacherList from "../../pdfs/TeacherList";
 const YearWiseTeachers = () => {
   const PDFDownloadLink = dynamic(
     async () =>
@@ -26,7 +26,7 @@ const YearWiseTeachers = () => {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, teachersState, setStateObject } = useGlobalContext();
   const router = useRouter();
@@ -40,6 +40,7 @@ const YearWiseTeachers = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [joiningMonths, setJoiningMonths] = useState([]);
   const [serviceArray, setServiceArray] = useState([]);
+  const [showDownloadList, setShowDownloadList] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [showConfForm, setShowConfForm] = useState(false);
   const [showProforma, setShowProforma] = useState(false);
@@ -68,7 +69,7 @@ const YearWiseTeachers = () => {
       const updatedTeachers = await Promise.all(teacherPromises);
 
       const filteredTeachers = updatedTeachers.filter(
-        (teacher) => teacher.doj.split("-")[2] == selectedValue
+        (teacher) => teacher.doj.split("-")[2] == selectedValue,
       );
 
       const joiningMonthsForYear = filteredTeachers.map((teacher) => {
@@ -80,7 +81,7 @@ const YearWiseTeachers = () => {
       setFilteredData(filteredTeachers);
       setMoreFilteredData(filteredTeachers);
       setJoiningMonths(
-        uniqArray(joiningMonthsForYear).sort((a, b) => a.rank - b.rank)
+        uniqArray(joiningMonthsForYear).sort((a, b) => a.rank - b.rank),
       );
     } else {
       setFilteredData([]);
@@ -133,7 +134,7 @@ const YearWiseTeachers = () => {
         const { doj, id } = teacher;
         const joiningMonth = parseInt(doj?.split("-")[1]);
         const joiningMonthName = monthNamesWithIndex.find(
-          (month) => month.rank == joiningMonth
+          (month) => month.rank == joiningMonth,
         ).monthName;
         console.log(joiningMonthName);
         const year = new Date().getFullYear();
@@ -143,12 +144,12 @@ const YearWiseTeachers = () => {
         teacher.mbasic = januaryMonthSalary.basic;
         const normalIncrement = RoundTo(
           januaryMonthSalary.basic + januaryMonthSalary.basic * 0.03,
-          100
+          100,
         );
         if (joiningMonth < 7) {
           teacher.basic = RoundTo(
             normalIncrement + normalIncrement * 0.03,
-            100
+            100,
           );
         } else {
           teacher.basic = normalIncrement;
@@ -221,8 +222,8 @@ const YearWiseTeachers = () => {
                       onClick={() => {
                         setData(
                           teachersState.filter(
-                            (el) => el.association == "WBTPTA"
-                          )
+                            (el) => el.association == "WBTPTA",
+                          ),
                         );
                         setShowTeacherSelection(false);
                         setIsWBTPTA(true);
@@ -308,7 +309,7 @@ const YearWiseTeachers = () => {
                   {joiningMonths.map((month, index) => {
                     if (
                       moreFilteredData.filter(
-                        (m) => m.doj.split("-")[1] == month.index
+                        (m) => m.doj.split("-")[1] == month.index,
                       ).length > 0
                     ) {
                       return (
@@ -320,11 +321,11 @@ const YearWiseTeachers = () => {
                           {month.monthName +
                             " - " +
                             moreFilteredData.filter(
-                              (m) => m.doj.split("-")[1] == month.index
+                              (m) => m.doj.split("-")[1] == month.index,
                             ).length +
                             ` ${
                               moreFilteredData.filter(
-                                (m) => m.doj.split("-")[1] == month.index
+                                (m) => m.doj.split("-")[1] == month.index,
                               ).length > 1
                                 ? " Teachers"
                                 : " Teacher"
@@ -353,6 +354,54 @@ const YearWiseTeachers = () => {
                     Print Page
                   </button>
                 </div>
+                <div className="m-1 noprint">
+                  <button
+                    type="button"
+                    className="btn btn-dark text-white font-weight-bold p-2 rounded"
+                    onClick={() => {
+                      setShowDownloadList(!showDownloadList);
+                    }}
+                  >
+                    {showDownloadList ? "Hide Download" : "Download List"}
+                  </button>
+                </div>
+                {showDownloadList && (
+                  <div className="noprint">
+                    <PDFDownloadLink
+                      document={
+                        <TeacherList
+                          data={filteredData}
+                          title={`Year ${selectedYear} ${
+                            isWBTPTA ? "WBTPTA" : ""
+                          } Teachers List`}
+                          keys={["doj"]}
+                        />
+                      }
+                      fileName={`Year ${selectedYear} ${
+                        isWBTPTA ? "WBTPTA" : ""
+                      } Teachers List.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        padding: 11,
+                        color: "#fff",
+                        backgroundColor: "darkgreen",
+                        border: "1px solid #4a4a4a",
+                        width: "40%",
+                        borderRadius: 10,
+                        margin: 10,
+                      }}
+                      onClick={() =>
+                        setTimeout(() => {
+                          setShowDownloadList(false);
+                        }, 0)
+                      }
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Please Wait..." : "Download List"
+                      }
+                    </PDFDownloadLink>
+                  </div>
+                )}
                 <div className="m-1 noprint">
                   <button
                     type="button"
