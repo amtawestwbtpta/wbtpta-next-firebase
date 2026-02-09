@@ -17,7 +17,7 @@ function FlexibleComp() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
@@ -103,7 +103,7 @@ function FlexibleComp() {
               <div className=" justify-content-center align-items-center mx-auto">
                 {selectedKeys.map((el, ind) => {
                   const currentKey = keysData.filter(
-                    (keys) => keys.keyName === el
+                    (keys) => keys.keyName === el,
                   )[0];
                   return (
                     <span
@@ -113,10 +113,10 @@ function FlexibleComp() {
                       key={ind}
                       onClick={() => {
                         setSelectedKeys(
-                          selectedKeys.filter((keys) => keys !== el)
+                          selectedKeys.filter((keys) => keys !== el),
                         );
                         const currentKey = keysData.filter(
-                          (keys) => keys.keyName === el
+                          (keys) => keys.keyName === el,
                         )[0];
                         setTeacherData([...teacherData, currentKey]);
                       }}
@@ -153,7 +153,7 @@ function FlexibleComp() {
                     return el.tname
                       .toLowerCase()
                       .includes(search.toLowerCase());
-                  })
+                  }),
                 );
               }}
             />
@@ -219,13 +219,14 @@ function FlexibleComp() {
                                 ?.toString()
                                 ?.toLowerCase()
                                 ?.includes(fvalue?.toString()?.toLowerCase());
-                            })
+                            }),
                       );
                       setShowDownloadBtn(false);
                     }}
                   >
                     Filter
                   </button>
+
                   <button
                     type="button"
                     className="btn btn-danger noprint text-white font-weight-bold p-2 m-5 rounded"
@@ -248,15 +249,15 @@ function FlexibleComp() {
                 className="btn btn-success noprint text-white font-weight-bold p-2 m-5 rounded"
                 onClick={() => {
                   const fData = filteredData.filter((el) =>
-                    fetchedData.filter((el) => el.association !== "WBTPTA")
+                    fetchedData.filter((el) => el.association !== "WBTPTA"),
                   );
                   if (fData.length > 0) {
                     setFilteredData(
-                      fetchedData.filter((el) => el.association === "WBTPTA")
+                      fetchedData.filter((el) => el.association === "WBTPTA"),
                     );
                   } else {
                     setFilteredData(
-                      filteredData.filter((el) => el.association === "WBTPTA")
+                      filteredData.filter((el) => el.association === "WBTPTA"),
                     );
                   }
                   setShowDownloadBtn(false);
@@ -264,6 +265,50 @@ function FlexibleComp() {
               >
                 Filter WBTPTA
               </button>
+
+              <button
+                type="button"
+                className="btn btn-warning noprint text-white font-weight-bold p-2 m-5 rounded"
+                onClick={() => {
+                  setFilteredData(fetchedData);
+                  setIsclicked(false);
+                  if (showPagination) {
+                    setFirstItem(0);
+                    setVisibleItems(10);
+                  } else {
+                    setFirstItem(0);
+                    setVisibleItems(filteredData.length);
+                  }
+                  setShowDownloadBtn(false);
+                }}
+              >
+                All Teachers
+              </button>
+              {showPagination ? (
+                <button
+                  type="button"
+                  className="btn btn-warning noprint text-white font-weight-bold p-2 m-5 rounded"
+                  onClick={() => {
+                    setFirstItem(0);
+                    setVisibleItems(filteredData.length);
+                    setShowPagination(false);
+                  }}
+                >
+                  Hide Pagination
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-warning noprint text-white font-weight-bold p-2 m-5 rounded"
+                  onClick={() => {
+                    setFirstItem(0);
+                    setVisibleItems(10);
+                    setShowPagination(true);
+                  }}
+                >
+                  Show Pagination
+                </button>
+              )}
               <button
                 type="button"
                 className="btn btn-danger noprint text-white font-weight-bold p-2 m-5 rounded"
@@ -309,7 +354,7 @@ function FlexibleComp() {
                     key={ind}
                     onClick={() => {
                       setFilteredData(
-                        filteredData.filter((tea) => tea.gp === el)
+                        filteredData.filter((tea) => tea.gp === el),
                       );
                     }}
                   >
@@ -366,7 +411,7 @@ function FlexibleComp() {
                   <th className="text-center">Sl No.</th>
                   {selectedKeys.map((el, ind) => {
                     const currentKey = keysData.filter(
-                      (keys) => keys.keyName === el
+                      (keys) => keys.keyName === el,
                     )[0];
                     return (
                       <th className="text-center" key={ind}>
@@ -380,7 +425,7 @@ function FlexibleComp() {
                 {getValues(
                   selectedKeys,
                   filteredData.slice(firstItem, visibleItems),
-                  firstItem
+                  firstItem,
                 )}
               </tbody>
             </table>
@@ -476,7 +521,7 @@ function FlexibleComp() {
               className="btn btn-primary noprint text-white font-weight-bold p-2 m-5 rounded"
               onClick={() => {
                 setFilteredData(
-                  filteredData.filter((el) => el.association === "WBTPTA")
+                  filteredData.filter((el) => el.association === "WBTPTA"),
                 );
                 setIsclicked(true);
                 if (showPagination) {

@@ -32,7 +32,7 @@ export default function FlexibleTeacherList({ data, title, selectedKeys }) {
     // If "school" keys are equal, compare the "rank" keys
     return a.rank - b.rank;
   });
-  const pages = sliceArrayIntoChunks(list, 40);
+  const pages = sliceArrayIntoChunks(list, 41);
   const GetViewValues = (firstArray, secondArray) => {
     return secondArray.map((obj, index) => {
       const { id } = obj;
@@ -123,7 +123,7 @@ export default function FlexibleTeacherList({ data, title, selectedKeys }) {
                 />
                 {selectedKeys.map((el, ind) => {
                   const currentKey = keysData.filter(
-                    (keys) => keys.keyName === el
+                    (keys) => keys.keyName === el,
                   )[0];
                   return (
                     <THead
@@ -139,7 +139,7 @@ export default function FlexibleTeacherList({ data, title, selectedKeys }) {
               </View>
               {GetViewValues(selectedKeys, page)}
             </View>
-            {index !== pages.length - 1 ? (
+            {/* {index !== pages.length - 1 ? (
               <Text style={[styles.text, { marginVertical: 2 }]}>
                 {`Generated on: ${new Date()
                   .toISOString()
@@ -172,7 +172,7 @@ export default function FlexibleTeacherList({ data, title, selectedKeys }) {
                   index + 1
                 } of ${pages.length}`}
               </Text>
-            )}
+            )} */}
           </View>
         </Page>
       ))}

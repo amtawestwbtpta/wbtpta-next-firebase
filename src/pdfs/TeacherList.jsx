@@ -36,7 +36,7 @@ export default function TeacherList({ data, title, keys }) {
     keys && keys.length > 0
       ? [
           { label: "NAME", key: "tname", width: "35%" },
-          { label: "SCHOOL", key: "school", width: "45%" },
+          { label: "SCHOOL", key: "school", width: "35%" },
           // { label: "GP", key: "gp", width: "20%" },
           ...keys.map((key) =>
             typeof key === "string"
@@ -143,8 +143,8 @@ export default function TeacherList({ data, title, keys }) {
                                     fontSize:
                                       String(teacher[col.key] ?? "").length >=
                                       19
-                                        ? 10
-                                        : 11,
+                                        ? 8
+                                        : 9,
                                   }
                                 : {},
                           ]}
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    fontSize: 10,
+    fontSize: 8,
     fontFamily: "Times",
     textAlign: "center",
   },

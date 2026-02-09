@@ -12,7 +12,7 @@ export default function GPWiseTeacher() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, teachersState } = useGlobalContext();
   const router = useRouter();
@@ -44,10 +44,10 @@ export default function GPWiseTeacher() {
           defaultValue={""}
           onChange={(e) => {
             setFilteredData(
-              teacherData.filter((el) => el.gp.match(e.target.value))
+              teacherData.filter((el) => el.gp.match(e.target.value)),
             );
             setClickedTeaches(
-              teacherData.filter((el) => el.gp.match(e.target.value))
+              teacherData.filter((el) => el.gp.match(e.target.value)),
             );
 
             setGp(e.target.value);
@@ -71,6 +71,50 @@ export default function GPWiseTeacher() {
           <h3 className="text-center text-primary">
             All {isclicked && "WBTPTA"} Teacher's Data of {gp}
           </h3>
+          <button
+            type="button"
+            className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+            onClick={() => setShowDownload(!showDownload)}
+          >
+            {showDownload ? "Hide Download" : "Show Download"}
+          </button>
+          {showDownload && (
+            <div className="my-3">
+              <PDFDownloadLink
+                document={
+                  <TeacherList
+                    data={clickedTeaches}
+                    title={`All ${
+                      isclicked ? "WBTPTA" : ""
+                    } Teacher's Data of ${gp}`}
+                    keys={["phone"]}
+                  />
+                }
+                fileName={`All ${
+                  isclicked ? "WBTPTA" : ""
+                } Teacher's Data of ${gp}.pdf`}
+                style={{
+                  textDecoration: "none",
+                  padding: 11,
+                  color: "#fff",
+                  backgroundColor: "purple",
+                  border: "1px solid #4a4a4a",
+                  width: "40%",
+                  borderRadius: 10,
+                  margin: 20,
+                }}
+                onClick={() =>
+                  setTimeout(() => {
+                    setShowDownload(false);
+                  }, 0)
+                }
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Please Wait..." : "Download Teacher List"
+                }
+              </PDFDownloadLink>
+            </div>
+          )}
           <table className="table table-bordered align-middle table-responsive">
             <thead>
               <tr>
@@ -155,6 +199,7 @@ export default function GPWiseTeacher() {
                     title={`All ${
                       isclicked ? "WBTPTA" : ""
                     } Teacher's Data of ${gp}`}
+                    keys={["phone"]}
                   />
                 }
                 fileName={`All ${
@@ -189,7 +234,7 @@ export default function GPWiseTeacher() {
               className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
               onClick={() => {
                 setClickedTeaches(
-                  filteredData.filter((el) => el.association === "WBTPTA")
+                  filteredData.filter((el) => el.association === "WBTPTA"),
                 );
                 setIsclicked(true);
               }}
