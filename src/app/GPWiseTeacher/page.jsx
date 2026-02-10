@@ -4,6 +4,7 @@ import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import TeacherList from "../../pdfs/TeacherList";
+import { keysData } from "../../modules/constants";
 
 export default function GPWiseTeacher() {
   const PDFDownloadLink = dynamic(
@@ -23,6 +24,7 @@ export default function GPWiseTeacher() {
   const [isclicked, setIsclicked] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [showAssoc, setShowAssoc] = useState(true);
+  const [selectedKeys, setSelectedKeys] = useState(["phone"]);
   const userData = async () => {
     let x = teachersState;
     x = x.sort((a, b) => a.school.localeCompare(b.school) && b.rank > a.rank);
@@ -68,9 +70,46 @@ export default function GPWiseTeacher() {
       </div>
       {gp !== "" ? (
         <div className="text-center my-2">
+          <div>
+            {!isclicked ? (
+              <button
+                type="button"
+                className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setClickedTeaches(
+                    filteredData.filter((el) => el.association === "WBTPTA"),
+                  );
+                  setIsclicked(true);
+                }}
+              >
+                Only WBTPTA Teachers
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-info text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setClickedTeaches(filteredData);
+                  setIsclicked(false);
+                }}
+              >
+                All Teachers
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
+              onClick={() => {
+                setShowAssoc(!showAssoc);
+              }}
+            >
+              {showAssoc ? "Hide Association" : "Show Association"}
+            </button>
+          </div>
           <h3 className="text-center text-primary">
             All {isclicked && "WBTPTA"} Teacher's Data of {gp}
           </h3>
+
           <button
             type="button"
             className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
@@ -80,6 +119,40 @@ export default function GPWiseTeacher() {
           </button>
           {showDownload && (
             <div className="my-3">
+              <div className="row mx-auto my-3 noprint">
+                <h5 className="text-center my-2">Select Keys for Download</h5>
+                {keysData.map((el, ind) => (
+                  <div
+                    className="col-md-3 form-check form-switch"
+                    key={ind}
+                    style={{ textAlign: "left" }}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id={`flexSwitchCheckDefault${ind}`}
+                      value={el.keyName}
+                      checked={selectedKeys.includes(el.keyName)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedKeys([...selectedKeys, e.target.value]);
+                        } else {
+                          setSelectedKeys(
+                            selectedKeys.filter((el) => el !== e.target.value),
+                          );
+                        }
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={`flexSwitchCheckDefault${ind}`}
+                    >
+                      {el.displayName}
+                    </label>
+                  </div>
+                ))}
+              </div>
               <PDFDownloadLink
                 document={
                   <TeacherList
@@ -87,7 +160,7 @@ export default function GPWiseTeacher() {
                     title={`All ${
                       isclicked ? "WBTPTA" : ""
                     } Teacher's Data of ${gp}`}
-                    keys={["phone"]}
+                    keys={selectedKeys}
                   />
                 }
                 fileName={`All ${
@@ -183,85 +256,43 @@ export default function GPWiseTeacher() {
           >
             Print
           </button>
-          <button
-            type="button"
-            className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
-            onClick={() => setShowDownload(!showDownload)}
-          >
-            {showDownload ? "Hide Download" : "Show Download"}
-          </button>
-          {showDownload && (
-            <div className="my-3">
-              <PDFDownloadLink
-                document={
-                  <TeacherList
-                    data={clickedTeaches}
-                    title={`All ${
-                      isclicked ? "WBTPTA" : ""
-                    } Teacher's Data of ${gp}`}
-                    keys={["phone"]}
-                  />
-                }
-                fileName={`All ${
-                  isclicked ? "WBTPTA" : ""
-                } Teacher's Data of ${gp}.pdf`}
-                style={{
-                  textDecoration: "none",
-                  padding: 11,
-                  color: "#fff",
-                  backgroundColor: "purple",
-                  border: "1px solid #4a4a4a",
-                  width: "40%",
-                  borderRadius: 10,
-                  margin: 20,
-                }}
-                onClick={() =>
-                  setTimeout(() => {
-                    setShowDownload(false);
-                  }, 0)
-                }
-              >
-                {({ blob, url, loading, error }) =>
-                  loading ? "Please Wait..." : "Download Teacher List"
-                }
-              </PDFDownloadLink>
-            </div>
-          )}
 
-          {!isclicked ? (
+          <div>
+            {!isclicked ? (
+              <button
+                type="button"
+                className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setClickedTeaches(
+                    filteredData.filter((el) => el.association === "WBTPTA"),
+                  );
+                  setIsclicked(true);
+                }}
+              >
+                Only WBTPTA Teachers
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-info text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setClickedTeaches(filteredData);
+                  setIsclicked(false);
+                }}
+              >
+                All Teachers
+              </button>
+            )}
             <button
               type="button"
-              className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+              className="btn btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
               onClick={() => {
-                setClickedTeaches(
-                  filteredData.filter((el) => el.association === "WBTPTA"),
-                );
-                setIsclicked(true);
+                setShowAssoc(!showAssoc);
               }}
             >
-              Only WBTPTA Teachers
+              {showAssoc ? "Hide Association" : "Show Association"}
             </button>
-          ) : (
-            <button
-              type="button"
-              className="btn btn-info text-white font-weight-bold p-2 m-2 noprint rounded"
-              onClick={() => {
-                setClickedTeaches(filteredData);
-                setIsclicked(false);
-              }}
-            >
-              All Teachers
-            </button>
-          )}
-          <button
-            type="button"
-            className="btn btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
-            onClick={() => {
-              setShowAssoc(!showAssoc);
-            }}
-          >
-            {showAssoc ? "Hide Association" : "Show Association"}
-          </button>
+          </div>
         </div>
       ) : null}
     </div>
