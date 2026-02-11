@@ -69,7 +69,7 @@ export function NumInWords(number) {
           first[Math.floor(tempNumber / Math.pow(1000, i))] +
             mad[i] +
             " " +
-            word
+            word,
         );
       } else {
         word = titleCase(
@@ -78,7 +78,7 @@ export function NumInWords(number) {
             first[Math.floor(tempNumber / Math.pow(1000, i)) % 10] +
             mad[i] +
             " " +
-            word
+            word,
         );
       }
     }
@@ -88,7 +88,7 @@ export function NumInWords(number) {
       word = titleCase(
         first[Math.floor(tempNumber / (100 * Math.pow(1000, i)))] +
           "hunderd " +
-          word
+          word,
       );
   }
   return word;
@@ -278,12 +278,12 @@ export const CalculateIncomeTax = (totalTaxableIncome) => {
   return totalTaxableIncome > 1000000
     ? Math.round(12500 + 100000 + ((totalTaxableIncome - 1000000) * 30) / 100)
     : totalTaxableIncome > 500000
-    ? Math.round(12500 + ((totalTaxableIncome - 500000) * 20) / 100)
-    : totalTaxableIncome > 250000
-    ? Math.round(((totalTaxableIncome - 250000) * 5) / 100)
-    : totalTaxableIncome < 250000
-    ? 0
-    : 0;
+      ? Math.round(12500 + ((totalTaxableIncome - 500000) * 20) / 100)
+      : totalTaxableIncome > 250000
+        ? Math.round(((totalTaxableIncome - 250000) * 5) / 100)
+        : totalTaxableIncome < 250000
+          ? 0
+          : 0;
 };
 export function CalculateNewIncomeTax(taxableIncome) {
   // Tax slabs for the new tax regime in India (FY 2023-24)
@@ -304,7 +304,7 @@ export function CalculateNewIncomeTax(taxableIncome) {
     const slab = taxSlabs[i];
     const taxableAmount = Math.min(
       remainingIncome,
-      slab.slab - (i > 0 ? taxSlabs[i - 1].slab : 0)
+      slab.slab - (i > 0 ? taxSlabs[i - 1].slab : 0),
     );
     incomeTax += taxableAmount * slab.rate;
     remainingIncome -= taxableAmount;
@@ -734,7 +734,7 @@ export const getServiceLife = (date) => {
   let monthinMillis = 2629800000;
   let age = Math.floor((currentDate - birthDate) / yearInMillis);
   let months = Math.floor(
-    ((currentDate - birthDate) % yearInMillis) / monthinMillis
+    ((currentDate - birthDate) % yearInMillis) / monthinMillis,
   );
   if (age) {
     return `${age} years ${months} months`;
@@ -750,7 +750,7 @@ export const getRetirementLife = (doj, dor) => {
   let monthinMillis = 2629800000;
   let age = Math.floor((retirementDate - joiningDate) / yearInMillis);
   let months = Math.floor(
-    ((retirementDate - joiningDate) % yearInMillis) / monthinMillis
+    ((retirementDate - joiningDate) % yearInMillis) / monthinMillis,
   );
   if (age) {
     return `${age} years ${months} months`;
@@ -867,7 +867,26 @@ export const calStrLength = (value) => {
 };
 export const readCSVFile = async (fileName) => {
   const response = await axios.get(
-    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${fileName}.csv`
+    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${fileName}.csv`,
+  );
+  const { data: text } = response;
+  const rows = text.split("\n").filter((row) => row.trim());
+
+  if (!rows.length) return;
+
+  const headers = rows[0].split(",").map((h) => h.trim());
+  const parsedData = rows.slice(1).map((row) => {
+    const values = row.split(",");
+    return headers.reduce((obj, header, i) => {
+      obj[header] = convertValue(values[i]);
+      return obj;
+    }, {});
+  });
+  return parsedData;
+};
+export const readCSVFileV2 = async (fileName, finYear) => {
+  const response = await axios.get(
+    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${finYear}/${fileName}.csv`,
   );
   const { data: text } = response;
   const rows = text.split("\n").filter((row) => row.trim());
@@ -896,7 +915,7 @@ export const readExcelData = async (fileName) => {
   try {
     const response = await axios.get(
       `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${fileName}.xlsx`,
-      { responseType: "arraybuffer" }
+      { responseType: "arraybuffer" },
     );
 
     const arrayBuffer = response.data;

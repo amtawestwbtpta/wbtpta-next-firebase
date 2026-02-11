@@ -8,9 +8,9 @@ import {
   randBetween,
   roundSo,
   CalculateIncomeTax,
-  readCSVFile,
   createDownloadLink,
   createYearArray,
+  readCSVFile,
 } from "../../modules/calculatefunctions";
 import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
@@ -29,7 +29,7 @@ export default function IncomeTaxReloded() {
     {
       ssr: false,
       loading: () => <p className="m-0 p-0">Please Wait...</p>,
-    }
+    },
   );
   const router = useRouter();
   const {
@@ -585,7 +585,7 @@ export default function IncomeTaxReloded() {
     const septemberBasic = septemberSalary?.basic;
     const septemberAddl = septemberSalary?.addl;
     const septemberDA = Math.round(
-      septemberSalary?.basic * septemberSalary?.daPercent
+      septemberSalary?.basic * septemberSalary?.daPercent,
     );
     const septemberHRA =
       septemberSalary?.hraPercent > 10
@@ -604,7 +604,7 @@ export default function IncomeTaxReloded() {
     const octoberBasic = octoberSalary?.basic;
     const octoberAddl = octoberSalary?.addl;
     const octoberDA = Math.round(
-      octoberSalary?.basic * octoberSalary?.daPercent
+      octoberSalary?.basic * octoberSalary?.daPercent,
     );
     const octoberHRA =
       octoberSalary?.hraPercent > 10
@@ -622,7 +622,7 @@ export default function IncomeTaxReloded() {
     const novemberBasic = novemberSalary?.basic;
     const novemberAddl = novemberSalary?.addl;
     const novemberDA = Math.round(
-      novemberSalary?.basic * novemberSalary?.daPercent
+      novemberSalary?.basic * novemberSalary?.daPercent,
     );
     const novemberHRA =
       novemberSalary?.hraPercent > 10
@@ -641,7 +641,7 @@ export default function IncomeTaxReloded() {
     const decemberBasic = decemberSalary?.basic;
     const decemberAddl = decemberSalary?.addl;
     const decemberDA = Math.round(
-      decemberSalary?.basic * decemberSalary?.daPercent
+      decemberSalary?.basic * decemberSalary?.daPercent,
     );
     const decemberHRA =
       decemberSalary?.hraPercent > 10
@@ -660,7 +660,7 @@ export default function IncomeTaxReloded() {
     const januaryBasic = januarySalary?.basic;
     const januaryAddl = januarySalary?.addl;
     const januaryDA = Math.round(
-      januarySalary?.basic * januarySalary?.daPercent
+      januarySalary?.basic * januarySalary?.daPercent,
     );
     const januaryHRA =
       januarySalary?.hraPercent > 10
@@ -678,7 +678,7 @@ export default function IncomeTaxReloded() {
     const februaryBasic = februarySalary?.basic;
     const februaryAddl = februarySalary?.addl;
     const februaryDA = Math.round(
-      februarySalary?.basic * februarySalary?.daPercent
+      februarySalary?.basic * februarySalary?.daPercent,
     );
     const februaryHRA =
       februarySalary?.hraPercent > 10
@@ -1223,7 +1223,7 @@ export default function IncomeTaxReloded() {
     const septemberBasic = septemberSalary?.basic;
     const septemberAddl = septemberSalary?.addl;
     const septemberDA = Math.round(
-      septemberSalary?.basic * septemberSalary?.daPercent
+      septemberSalary?.basic * septemberSalary?.daPercent,
     );
     const septemberHRA =
       septemberSalary?.hraPercent > 10
@@ -1242,7 +1242,7 @@ export default function IncomeTaxReloded() {
     const octoberBasic = octoberSalary?.basic;
     const octoberAddl = octoberSalary?.addl;
     const octoberDA = Math.round(
-      octoberSalary?.basic * octoberSalary?.daPercent
+      octoberSalary?.basic * octoberSalary?.daPercent,
     );
     const octoberHRA =
       octoberSalary?.hraPercent > 10
@@ -1260,7 +1260,7 @@ export default function IncomeTaxReloded() {
     const novemberBasic = novemberSalary?.basic;
     const novemberAddl = novemberSalary?.addl;
     const novemberDA = Math.round(
-      novemberSalary?.basic * novemberSalary?.daPercent
+      novemberSalary?.basic * novemberSalary?.daPercent,
     );
     const novemberHRA =
       novemberSalary?.hraPercent > 10
@@ -1279,7 +1279,7 @@ export default function IncomeTaxReloded() {
     const decemberBasic = decemberSalary?.basic;
     const decemberAddl = decemberSalary?.addl;
     const decemberDA = Math.round(
-      decemberSalary?.basic * decemberSalary?.daPercent
+      decemberSalary?.basic * decemberSalary?.daPercent,
     );
     const decemberHRA =
       decemberSalary?.hraPercent > 10
@@ -1298,7 +1298,7 @@ export default function IncomeTaxReloded() {
     const januaryBasic = januarySalary?.basic;
     const januaryAddl = januarySalary?.addl;
     const januaryDA = Math.round(
-      januarySalary?.basic * januarySalary?.daPercent
+      januarySalary?.basic * januarySalary?.daPercent,
     );
     const januaryHRA =
       januarySalary?.hraPercent > 10
@@ -1316,7 +1316,7 @@ export default function IncomeTaxReloded() {
     const februaryBasic = februarySalary?.basic;
     const februaryAddl = februarySalary?.addl;
     const februaryDA = Math.round(
-      februarySalary?.basic * februarySalary?.daPercent
+      februarySalary?.basic * februarySalary?.daPercent,
     );
     const februaryHRA =
       februarySalary?.hraPercent > 10
@@ -1545,7 +1545,7 @@ export default function IncomeTaxReloded() {
           : 0;
       FiveITTax = FiveIT * 0.05;
       CalculatedIT = Math.floor(
-        ThirtyITTax + TwentyITTax + FifteenITTax + TenITTax + FiveITTax
+        ThirtyITTax + TwentyITTax + FifteenITTax + TenITTax + FiveITTax,
       ); //H46
       const cal1 = GrossTotalIncome > 700000 ? GrossTotalIncome : 0; //G67
       const cal2 = GrossTotalIncome > 700000 ? cal1 - 700000 : 0; //G68
@@ -1601,7 +1601,7 @@ export default function IncomeTaxReloded() {
           TwentyITTax +
           FifteenITTax +
           TenITTax +
-          FiveITTax
+          FiveITTax,
       ); //H46
       const cal1 = GrossTotalIncome > 1200000 ? GrossTotalIncome : 0; //G67
       const cal2 = GrossTotalIncome > 1200000 ? cal1 - 700000 : 0; //G68
@@ -1814,7 +1814,7 @@ export default function IncomeTaxReloded() {
       return;
     }
     const confirm = window.confirm(
-      `Are you sure you want to download ${docType} for ${filteredData.length} teachers? This might take a while.`
+      `Are you sure you want to download ${docType} for ${filteredData.length} teachers? This might take a while.`,
     );
     if (!confirm) return;
 
@@ -1918,7 +1918,7 @@ export default function IncomeTaxReloded() {
       .then(() => {
         setLoader(false);
         const newData = deductionState.map((item) =>
-          item.id === teacherDeduction.id ? teacherDeduction : item
+          item.id === teacherDeduction.id ? teacherDeduction : item,
         );
         setDeductionState(newData);
         toast.success("Deduction Updated Successfully!");
@@ -1931,10 +1931,22 @@ export default function IncomeTaxReloded() {
         console.log(e);
       });
   };
+  // const getSalary = async (year, finYear) => {
+  //   setLoader(true);
+  //   const respronse = await axios.get(
+  //     `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${finYear}/Salary-${year}.json`,
+  //   );
+  //   const data = respronse.data;
+  //   const thisTeacher = data?.filter((teacher) => teacher?.id === USER.id);
+  //   setSalary(state === "admin" ? data : thisTeacher);
+  //   setFilteredData(state === "admin" ? data : thisTeacher);
+  //   setSalaryState(data);
+  //   setLoader(false);
+  // };
   const getSalary = async (year) => {
     setLoader(true);
     const respronse = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary-${year}.json`
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary-${year}.json`,
     );
     const data = respronse.data;
     const thisTeacher = data?.filter((teacher) => teacher?.id === USER.id);
@@ -1987,7 +1999,50 @@ export default function IncomeTaxReloded() {
     });
     setLoader(false);
   };
+  // const getMonthlySalary = async (thisYear, prevYear, finYear) => {
+  //   setLoader(false);
+  //   const q1 = await readCSVFileV2(`january-${thisYear}`, finYear);
+  //   const q2 = await readCSVFileV2(`february-${thisYear}`, finYear);
+  //   const q3 = await readCSVFileV2(`march-${prevYear}`, finYear);
+  //   const q4 = await readCSVFileV2(`april-${prevYear}`, finYear);
+  //   const q5 = await readCSVFileV2(`may-${prevYear}`, finYear);
+  //   const q6 = await readCSVFileV2(`june-${prevYear}`, finYear);
+  //   const q7 = await readCSVFileV2(`july-${prevYear}`, finYear);
+  //   const q8 = await readCSVFileV2(`august-${prevYear}`, finYear);
+  //   const q9 = await readCSVFileV2(`september-${prevYear}`, finYear);
+  //   const q10 = await readCSVFileV2(`october-${prevYear}`, finYear);
+  //   const q11 = await readCSVFileV2(`november-${prevYear}`, finYear);
+  //   const q12 = await readCSVFileV2(`december-${prevYear}`, finYear);
 
+  //   setJanuary(q1);
+  //   setFebruary(q2);
+  //   setMarch(q3);
+  //   setApril(q4);
+  //   setMay(q5);
+  //   setJune(q6);
+  //   setJuly(q7);
+  //   setAugust(q8);
+  //   setSeptember(q9);
+  //   setOctober(q10);
+  //   setNovember(q11);
+  //   setDecember(q12);
+  //   setLoader(true);
+  //   setIndSalaryState({
+  //     march: q1,
+  //     april: q2,
+  //     may: q3,
+  //     june: q4,
+  //     july: q5,
+  //     august: q6,
+  //     september: q7,
+  //     october: q8,
+  //     november: q9,
+  //     december: q10,
+  //     january: q11,
+  //     february: q12,
+  //   });
+  //   setLoader(false);
+  // };
   useEffect(() => {
     getDeduction();
 
@@ -2102,6 +2157,8 @@ export default function IncomeTaxReloded() {
 
                         getMonthlySalary(endYear, startYear);
                         getSalary(startYear);
+                        // getMonthlySalary(endYear, startYear, selectedFinYear);
+                        // getSalary(startYear, selectedFinYear);
                       } else {
                         toast.error("Please select a valid financial year.");
                       }
@@ -2145,13 +2202,13 @@ export default function IncomeTaxReloded() {
                     className="btn btn-sm btn-primary m-2"
                     onClick={() => {
                       const fData = filteredData.filter(
-                        (salary) => salary?.AllGross >= 500000
+                        (salary) => salary?.AllGross >= 500000,
                       );
                       if (fData.length !== 0) {
                         setFilteredData(fData);
                       } else {
                         setFilteredData(
-                          salary.filter((salary) => salary?.AllGross >= 500000)
+                          salary.filter((salary) => salary?.AllGross >= 500000),
                         );
                       }
                       setFilterClicked(true);
@@ -2164,13 +2221,13 @@ export default function IncomeTaxReloded() {
                     className="btn btn-sm btn-success m-2"
                     onClick={() => {
                       const fData = filteredData.filter(
-                        (salary) => salary?.AllGross <= 500000
+                        (salary) => salary?.AllGross <= 500000,
                       );
                       if (fData.length !== 0) {
                         setFilteredData(fData);
                       } else {
                         setFilteredData(
-                          salary.filter((salary) => salary?.AllGross <= 500000)
+                          salary.filter((salary) => salary?.AllGross <= 500000),
                         );
                       }
                       setFilterClicked(true);
@@ -2184,13 +2241,13 @@ export default function IncomeTaxReloded() {
                     className="btn btn-sm btn-info m-2"
                     onClick={() => {
                       const fData = filteredData.filter(
-                        (salary) => salary?.NetTax !== 0
+                        (salary) => salary?.NetTax !== 0,
                       );
                       if (fData.length !== 0) {
                         setFilteredData(fData);
                       } else {
                         setFilteredData(
-                          salary.filter((salary) => salary?.NetTax <= 0)
+                          salary.filter((salary) => salary?.NetTax <= 0),
                         );
                       }
                       setFilterClicked(true);
@@ -2204,15 +2261,15 @@ export default function IncomeTaxReloded() {
                       className="btn btn-sm btn-warning m-2"
                       onClick={() => {
                         const fData = filteredData.filter(
-                          (salary) => salary?.association === "WBTPTA"
+                          (salary) => salary?.association === "WBTPTA",
                         );
                         if (fData.length !== 0) {
                           setFilteredData(fData);
                         } else {
                           setFilteredData(
                             salary.filter(
-                              (salary) => salary?.association === "WBTPTA"
-                            )
+                              (salary) => salary?.association === "WBTPTA",
+                            ),
                           );
                         }
                         setFilterClicked(true);
@@ -2311,8 +2368,8 @@ export default function IncomeTaxReloded() {
                             salary.filter((el) =>
                               el.tname
                                 .toLowerCase()
-                                .includes(e.target.value.toLowerCase())
-                            )
+                                .includes(e.target.value.toLowerCase()),
+                            ),
                           );
                         }}
                       />
@@ -2329,8 +2386,8 @@ export default function IncomeTaxReloded() {
                             salary.filter((el) =>
                               el.school
                                 .toLowerCase()
-                                .includes(e.target.value.toLowerCase())
-                            )
+                                .includes(e.target.value.toLowerCase()),
+                            ),
                           );
                         }}
                       />
@@ -2409,7 +2466,7 @@ export default function IncomeTaxReloded() {
                                 className="btn btn-sm btn-info m-1 noprint"
                                 onClick={() => {
                                   const fData = deductionState.filter(
-                                    (d) => d.id === row?.id
+                                    (d) => d.id === row?.id,
                                   )[0];
                                   setTeacherDeduction(fData);
                                   setShowDeductionForm(true);
@@ -2427,7 +2484,7 @@ export default function IncomeTaxReloded() {
                               className="btn btn-sm btn-success m-1 noprint"
                               onClick={() => {
                                 const fData = teachersState.filter(
-                                  (teacher) => teacher?.id === row.id
+                                  (teacher) => teacher?.id === row.id,
                                 )[0];
                                 calCulateOldIT(fData);
                                 setTeacherData(fData);
@@ -2441,7 +2498,7 @@ export default function IncomeTaxReloded() {
                               className="btn btn-sm btn-primary m-1 noprint"
                               onClick={() => {
                                 const fData = teachersState.filter(
-                                  (teacher) => teacher?.id === row.id
+                                  (teacher) => teacher?.id === row.id,
                                 )[0];
                                 calCulateNewIT(fData, prevYear);
                                 setTeacherData(fData);
@@ -2456,7 +2513,7 @@ export default function IncomeTaxReloded() {
                                 className="btn btn-sm btn-warning m-1 noprint"
                                 onClick={() => {
                                   const fData = deductionState.filter(
-                                    (d) => d.id === row?.id
+                                    (d) => d.id === row?.id,
                                   )[0];
                                   setShowBnkInt(true);
                                 }}
@@ -3037,7 +3094,7 @@ export default function IncomeTaxReloded() {
                         <div className="mx-auto noprint my-5">
                           <PDFDownloadLink
                             document={<IncomeTaxOld2025 data={oldITData} />}
-                            fileName={`${TeacherData.tname}_IT_Statement_OLD_2025.pdf`}
+                            fileName={`${TeacherData.tname}_IT_Statement_OLD_${finYear}.pdf`}
                             style={{
                               textDecoration: "none",
                               padding: "10px",
@@ -3059,7 +3116,7 @@ export default function IncomeTaxReloded() {
                             {({ blob, url, loading, error }) =>
                               loading
                                 ? "Please Wait..."
-                                : "Download 2025 IT Statement"
+                                : `Download ${finYear} IT Statement`
                             }
                           </PDFDownloadLink>
                           <div className="my-5">
@@ -3084,7 +3141,7 @@ export default function IncomeTaxReloded() {
                           <div className="mx-auto noprint my-5">
                             <PDFDownloadLink
                               document={<Form16New data={oldITData} />}
-                              fileName={`${TeacherData.tname}_Form16_OLD.pdf`}
+                              fileName={`${TeacherData.tname}_Form16_OLD_${finYear}.pdf`}
                               style={{
                                 textDecoration: "none",
                                 padding: "10px",
@@ -3104,7 +3161,9 @@ export default function IncomeTaxReloded() {
                               }}
                             >
                               {({ blob, url, loading, error }) =>
-                                loading ? "Please Wait..." : "Download Form 16"
+                                loading
+                                  ? "Please Wait..."
+                                  : `Download Form 16 ${finYear}`
                               }
                             </PDFDownloadLink>
                           </div>
@@ -3163,7 +3222,7 @@ export default function IncomeTaxReloded() {
                         <div className="mx-auto noprint my-5">
                           <PDFDownloadLink
                             document={<IncomeTaxNew2025 data={newITData} />}
-                            fileName={`${TeacherData.tname}_IT_Statement_NEW_2025.pdf`}
+                            fileName={`${TeacherData.tname}_IT_Statement_NEW_${finYear}.pdf`}
                             style={{
                               textDecoration: "none",
                               padding: "10px",
@@ -3185,7 +3244,7 @@ export default function IncomeTaxReloded() {
                             {({ blob, url, loading, error }) =>
                               loading
                                 ? "Please Wait..."
-                                : "Download 2025 IT Statement"
+                                : `Download ${finYear} IT Statement`
                             }
                           </PDFDownloadLink>
                           <div className="my-5">
@@ -3210,7 +3269,7 @@ export default function IncomeTaxReloded() {
                           <div className="mx-auto noprint my-5">
                             <PDFDownloadLink
                               document={<Form16NewRegime data={newITData} />}
-                              fileName={`${TeacherData.tname}_Form16_NEW.pdf`}
+                              fileName={`${TeacherData.tname}_Form16_NEW_${finYear}.pdf`}
                               style={{
                                 textDecoration: "none",
                                 padding: "10px",
@@ -3230,7 +3289,9 @@ export default function IncomeTaxReloded() {
                               }}
                             >
                               {({ blob, url, loading, error }) =>
-                                loading ? "Please Wait..." : "Download Form 16"
+                                loading
+                                  ? "Please Wait..."
+                                  : `Download Form 16 for ${finYear}`
                               }
                             </PDFDownloadLink>
                           </div>
