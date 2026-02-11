@@ -20,8 +20,7 @@ const ViewDetails = () => {
     }
   }, []);
 
-  let details = stateObject;
-  let {
+  const {
     udise,
     tname,
     desig,
@@ -45,7 +44,8 @@ const ViewDetails = () => {
     question,
     hoi,
     association,
-  } = details;
+    isAmtaTeacher,
+  } = stateObject;
   const [loader, setLoader] = useState(false);
   const [showDeductionForm, setShowDeductionForm] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
@@ -241,6 +241,14 @@ const ViewDetails = () => {
           </div>
           <div>
             <p>{gp}</p>
+          </div>
+        </div>
+        <div className="bg-light rounded shadow-sm d-flex flex-column justify-content-evenly text-center col-md-3 m-2 p-2">
+          <div>
+            <label>Is Amta Teacher: </label>
+          </div>
+          <div>
+            <p>{isAmtaTeacher ? "Yes" : "No"}</p>
           </div>
         </div>
 

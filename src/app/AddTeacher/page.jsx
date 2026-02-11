@@ -35,7 +35,7 @@ const AddTeacher = () => {
     setData(schoolState);
     setTeachersData(teachersState);
     setTeacherId(
-      "teachers" + (teachersState.length + 101) + "-" + uuid().split("-")[0]
+      "teachers" + (teachersState.length + 101) + "-" + uuid().split("-")[0],
     );
   };
   const [inputField, setInputField] = useState({
@@ -48,6 +48,7 @@ const AddTeacher = () => {
     fname: "",
     circle: "taw",
     gp: "",
+    isAmtaTeacher: false,
     association: "WBTPTA",
     phone: "",
     email: "",
@@ -80,6 +81,7 @@ const AddTeacher = () => {
     errdesig: "",
     errfname: "",
     errgp: "",
+    errIsAmtaTeacher: false,
     errassociation: "",
     errphone: "",
     erremail: "",
@@ -139,6 +141,7 @@ const AddTeacher = () => {
       errdesig: "",
       errfname: "",
       errgp: "",
+      errIsAmtaTeacher: false,
       errassociation: "",
       errphone: "",
       erremail: "",
@@ -206,6 +209,13 @@ const AddTeacher = () => {
       setErrField((prevState) => ({
         ...prevState,
         errgp: "Please Enter GP Name",
+      }));
+    }
+    if (inputField.isAmtaTeacher === "") {
+      formIsValid = false;
+      setErrField((prevState) => ({
+        ...prevState,
+        errIsAmtaTeacher: "Please Select Is Amta Teacher",
       }));
     }
     if (inputField.association === "") {
@@ -339,7 +349,7 @@ const AddTeacher = () => {
               draggable: true,
               progress: undefined,
               theme: "light",
-            }
+            },
           );
           setTimeout(() => {
             router.push("/teacherdatabase");
@@ -377,7 +387,7 @@ const AddTeacher = () => {
     if (object.target.value.length > object.target.maxLength) {
       object.target.value = object.target.value.slice(
         0,
-        object.target.maxLength
+        object.target.maxLength,
       );
     }
   };
@@ -391,6 +401,7 @@ const AddTeacher = () => {
       errdesig: "",
       errfname: "",
       errgp: "",
+      errIsAmtaTeacher: false,
       errassociation: "",
       errphone: "",
       erremail: "",
@@ -419,6 +430,7 @@ const AddTeacher = () => {
       fname: "",
       circle: "taw",
       gp: "",
+      isAmtaTeacher: false,
       association: "WBTPTA",
       phone: "",
       email: "",
@@ -688,18 +700,19 @@ const AddTeacher = () => {
                       <span className="error">{errField.errassociation}</span>
                     )}
                   </div>
+
                   <div className="mb-3 col-md-3">
-                    <label className="form-label">Is Registered?</label>
+                    <label className="form-label">Is AMTA Teacher?</label>
 
                     <select
                       className="form-select form-select-sm mb-3"
                       aria-label=".form-select-sm example"
-                      name="registered"
-                      id="registered"
-                      defaultValue={inputField.registered}
+                      name="isAmtaTeacher"
+                      id="isAmtaTeacher"
+                      defaultValue={inputField.isAmtaTeacher}
                       onChange={formHandler}
                     >
-                      <option value="">Select Is Registered</option>
+                      <option value="">Select Is AMTA Teacher</option>
                       <option value={true}>Yes</option>
                       <option value={false}>No</option>
                     </select>
@@ -762,7 +775,7 @@ const AddTeacher = () => {
                         setInputField({
                           ...inputField,
                           dor: calculateRetirementDate(
-                            getCurrentDateInput(inputField.dob)
+                            getCurrentDateInput(inputField.dob),
                           ),
                         });
                       }}
@@ -967,7 +980,7 @@ const AddTeacher = () => {
                       defaultValue={inputField.gp}
                       onChange={(e) => {
                         let totalTeachers = teachersData.filter(
-                          (el) => el.udise === inputField.udise
+                          (el) => el.udise === inputField.udise,
                         ).length;
                         setInputField({
                           ...inputField,

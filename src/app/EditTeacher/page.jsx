@@ -34,7 +34,7 @@ const EditTeacher = () => {
   const router = useRouter();
   const [inputField, setInputField] = useState(stateObject);
   const filteredTeachers = teachersState.filter(
-    (teacher) => teacher.udise === stateObject.udise
+    (teacher) => teacher.udise === stateObject.udise,
   );
   const [loader, setLoader] = useState(false);
   const updateData = async () => {
@@ -43,80 +43,82 @@ const EditTeacher = () => {
       try {
         const docRef = doc(firestore, "teachers", inputField.id);
         const url = `/api/updteacher`;
-        let response = await axios.post(url, inputField);
-        let record = response.data;
-        if (record.success) {
-          await updateDoc(docRef, inputField);
-          let x = teachersState.filter((el) => el.id !== inputField.id);
-          x = [...x, inputField];
-          const newData = x.sort((a, b) => {
-            // First, compare the "school" keys
-            if (a.school < b.school) {
-              return -1;
-            }
-            if (a.school > b.school) {
-              return 1;
-            }
-            // If "school" keys are equal, compare the "rank" keys
-            return a.rank - b.rank;
-          });
-          setTeachersState(newData);
-          setTeacherUpdateTime(Date.now());
-          const collectionRefUser = collection(firestore, "userteachers");
-          const qq = query(
-            collectionRefUser,
-            where("teachersID", "==", inputField.id)
-          );
-          try {
-            const qSnap = await getDocs(qq);
-
-            const docRefuser = doc(
-              firestore,
-              "userteachers",
-              qSnap.docs[0].data().id
-            );
-
-            try {
-              await updateDoc(docRefuser, {
-                tname: inputField.tname,
-                school: inputField.school,
-                desig: inputField.desig,
-                pan: inputField.pan,
-                udise: inputField.udise,
-                circle: inputField.circle,
-                empid: inputField.empid,
-                question: inputField.question,
-                email: inputField.email,
-                phone: inputField.phone,
-              });
-            } catch (e) {
-              console.log(e);
-              toast.error("UserTeachers Database Not Updated!!!", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
-            }
-          } catch (e) {
-            toast.error("Teacher Not Registered Yet!!!");
-          }
-          setLoader(false);
-
-          toast.success("Congrats! Teacher Details Updated Successfully!");
-        } else {
-          setLoader(false);
-          toast.error("Unable To Update Teacher Details!!!", {
+        try {
+          await axios.post(url, inputField);
+        } catch (error) {
+          toast.error("Error updating teacher details on Mongo server!", {
             position: "top-right",
             autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
           });
+          console.log(error);
         }
+        await updateDoc(docRef, inputField);
+        let x = teachersState.filter((el) => el.id !== inputField.id);
+        x = [...x, inputField];
+        const newData = x.sort((a, b) => {
+          // First, compare the "school" keys
+          if (a.school < b.school) {
+            return -1;
+          }
+          if (a.school > b.school) {
+            return 1;
+          }
+          // If "school" keys are equal, compare the "rank" keys
+          return a.rank - b.rank;
+        });
+        setTeachersState(newData);
+        setTeacherUpdateTime(Date.now());
+        const collectionRefUser = collection(firestore, "userteachers");
+        const qq = query(
+          collectionRefUser,
+          where("teachersID", "==", inputField.id),
+        );
+        try {
+          const qSnap = await getDocs(qq);
+
+          const docRefuser = doc(
+            firestore,
+            "userteachers",
+            qSnap.docs[0].data().id,
+          );
+
+          try {
+            await updateDoc(docRefuser, {
+              tname: inputField.tname,
+              school: inputField.school,
+              desig: inputField.desig,
+              pan: inputField.pan,
+              udise: inputField.udise,
+              circle: inputField.circle,
+              empid: inputField.empid,
+              question: inputField.question,
+              email: inputField.email,
+              phone: inputField.phone,
+            });
+          } catch (e) {
+            console.log(e);
+            toast.error("UserTeachers Database Not Updated!!!", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        } catch (e) {
+          toast.error("Teacher Not Registered Yet!!!");
+        }
+        setLoader(false);
+
+        toast.success("Congrats! Teacher Details Updated Successfully!");
       } catch (e) {
         setLoader(false);
         toast.error("Unable To Send Query!!!", {
@@ -534,7 +536,26 @@ const EditTeacher = () => {
             <option value="THALIA">THALIA</option>
           </select>
         </div>
-
+        <div className="mb-0 col-md-3">
+          <label className="form-label">Is Amta Teacher ?</label>
+          <br />
+          <select
+            className="form-select form-select-sm mb-3"
+            aria-label=".form-select-lg example"
+            name="isAmtaTeacher"
+            id="isAmtaTeacher"
+            value={inputField?.isAmtaTeacher}
+            onChange={(e) => {
+              setInputField({
+                ...inputField,
+                isAmtaTeacher: e.target.value,
+              });
+            }}
+          >
+            <option value={true}>YES</option>
+            <option value={false}>NO</option>
+          </select>
+        </div>
         <div className="mb-3 col-md-3">
           <label className="form-label">Association</label>
 

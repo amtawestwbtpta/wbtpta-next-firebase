@@ -43,6 +43,7 @@ export const keysData = [
   { id: "key28", keyName: "id", displayName: "ID" },
   { id: "key29", keyName: "rank", displayName: "RANK" },
   { id: "key30", keyName: "dataYear", displayName: "DATAYEAR" },
+  { id: "key31", keyName: "isAmtaTeacher", displayName: "IS AMTA TEACHER?" },
 ];
 export const gpEngNames = [
   "AMORAGORI",
