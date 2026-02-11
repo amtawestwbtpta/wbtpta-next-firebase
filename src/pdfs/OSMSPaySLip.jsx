@@ -97,16 +97,16 @@ export default function OSMSPaySLip({ data }) {
             </View>
             <View style={[styles.columnFlexView, { alignItems: "flex-start" }]}>
               <View style={styles.rowFlexView}>
-                <Text style={styles.text}>Employee ID:&nbsp;</Text>
-                <Text style={styles.text2}>{empid}</Text>
+                <Text style={styles.text2}>Employee ID:&nbsp;</Text>
+                <Text style={styles.text}>{empid}</Text>
               </View>
               <View style={styles.rowFlexView}>
-                <Text style={styles.text}>DESIGNATION:&nbsp;</Text>
-                <Text style={styles.text2}>{desig}</Text>
+                <Text style={styles.text2}>DESIGNATION:&nbsp;</Text>
+                <Text style={styles.text}>{desig}</Text>
               </View>
               <View style={styles.rowFlexView}>
-                <Text style={styles.text}>PAN:&nbsp;</Text>
-                <Text style={styles.text2}>{pan}</Text>
+                <Text style={styles.text2}>PAN:&nbsp;</Text>
+                <Text style={styles.text}>{pan}</Text>
               </View>
             </View>
           </View>
