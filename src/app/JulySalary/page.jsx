@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { DA, HRA } from "../../modules/constants";
-import axios from "axios";
 import Loader from "../../components/Loader";
-import { readCSVFile } from "../../modules/calculatefunctions";
+import { readCSVFileV2 } from "../../modules/calculatefunctions";
 
 const JulySalary = () => {
   const router = useRouter();
@@ -18,8 +16,8 @@ const JulySalary = () => {
   const year = new Date().getFullYear();
   const getSalary = async () => {
     setLoader(true);
-    const q1 = await readCSVFile(`april-${year}`);
-    const q5 = await readCSVFile(`july-${year}`);
+    const q1 = await readCSVFileV2(`april-${year}`, year);
+    const q5 = await readCSVFileV2(`july-${year}`, year);
     setApril(q1);
     setJuly(q5);
     setLoader(false);
@@ -69,7 +67,7 @@ const JulySalary = () => {
               className="btn btn-success text-white btn-sm font-weight-bold m-2 noprint rounded"
               onClick={() => {
                 setData(
-                  teachersState.filter((el) => el.association === "WBTPTA")
+                  teachersState.filter((el) => el.association === "WBTPTA"),
                 );
                 setIsclicked(true);
               }}
@@ -207,7 +205,7 @@ const JulySalary = () => {
               className="btn btn-success text-white btn-sm font-weight-bold m-2 noprint rounded"
               onClick={() => {
                 setData(
-                  teachersState.filter((el) => el.association === "WBTPTA")
+                  teachersState.filter((el) => el.association === "WBTPTA"),
                 );
                 setIsclicked(true);
               }}

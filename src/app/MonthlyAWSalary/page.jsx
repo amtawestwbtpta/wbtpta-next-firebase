@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import Link from "next/link";
-import { GetMonthName, readCSVFile } from "../../modules/calculatefunctions";
+import { GetMonthName, readCSVFileV2 } from "../../modules/calculatefunctions";
 import Loader from "../../components/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import dynamic from "next/dynamic";
@@ -82,8 +82,8 @@ const MonthlyAWSalary = () => {
 
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
-    const q2 = await readCSVFile(`april-2024`);
+    const q1 = await readCSVFileV2(`${month.toLowerCase()}-${year}`, year);
+    const q2 = await readCSVFileV2(`april-2024`, 2024);
     setLoader(false);
     setMonthSalary(q1);
     setAprilSalary(q2);

@@ -7,7 +7,7 @@ import {
   getServiceLife,
   monthNamesWithIndex,
   months,
-  readCSVFile,
+  readCSVFileV2,
   RoundTo,
   uniqArray,
 } from "../../modules/calculatefunctions";
@@ -139,7 +139,7 @@ const YearWiseTeachers = () => {
         console.log(joiningMonthName);
         const year = new Date().getFullYear();
 
-        const q1 = await readCSVFile(`january-${year}`);
+        const q1 = await readCSVFileV2(`january-${year}`, year);
         const januaryMonthSalary = q1?.filter((el) => el.id == id)[0];
         teacher.mbasic = januaryMonthSalary.basic;
         const normalIncrement = RoundTo(
@@ -170,7 +170,7 @@ const YearWiseTeachers = () => {
     const year =
       today.getMonth() == 0 ? today.getFullYear() - 1 : today.getFullYear();
     const monthName = GetMonthName(monthIndex);
-    const q1 = await readCSVFile(`${monthName.toLowerCase()}-${year}`);
+    const q1 = await readCSVFileV2(`${monthName.toLowerCase()}-${year}`, year);
     setLoader(false);
     return q1?.filter((el) => el.id == id)[0]?.basic;
   };

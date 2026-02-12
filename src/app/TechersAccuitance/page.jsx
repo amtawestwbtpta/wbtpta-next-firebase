@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../context/Store";
 import {
   months,
-  readCSVFile,
+  readCSVFileV2,
   titleCase,
 } from "../../modules/calculatefunctions";
 import { DA, HRA, PREV6DA, PREVDA } from "../../modules/constants";
@@ -46,18 +46,18 @@ const TechersAccuitance = () => {
   const [february, setFebruary] = useState([]);
   const getModifiedSalary = async (year) => {
     setShowTable(false);
-    const q1 = await readCSVFile(`january-${year}`);
-    const q2 = await readCSVFile(`february-${year}`);
-    const q3 = await readCSVFile(`march-${year}`);
-    const q4 = await readCSVFile(`april-${year}`);
-    const q5 = await readCSVFile(`may-${year}`);
-    const q6 = await readCSVFile(`june-${year}`);
-    const q7 = await readCSVFile(`july-${year}`);
-    const q8 = await readCSVFile(`august-${year}`);
-    const q9 = await readCSVFile(`september-${year}`);
-    const q10 = await readCSVFile(`october-${year}`);
-    const q11 = await readCSVFile(`november-${year}`);
-    const q12 = await readCSVFile(`december-${year}`);
+    const q1 = await readCSVFileV2(`january-${year}`, year);
+    const q2 = await readCSVFileV2(`february-${year}`, year);
+    const q3 = await readCSVFileV2(`march-${year}`, year);
+    const q4 = await readCSVFileV2(`april-${year}`, year);
+    const q5 = await readCSVFileV2(`may-${year}`, year);
+    const q6 = await readCSVFileV2(`june-${year}`, year);
+    const q7 = await readCSVFileV2(`july-${year}`, year);
+    const q8 = await readCSVFileV2(`august-${year}`, year);
+    const q9 = await readCSVFileV2(`september-${year}`, year);
+    const q10 = await readCSVFileV2(`october-${year}`, year);
+    const q11 = await readCSVFileV2(`november-${year}`, year);
+    const q12 = await readCSVFileV2(`december-${year}`, year);
 
     setJanuary(q1);
     setFebruary(q2);

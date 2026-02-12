@@ -9,7 +9,7 @@ import {
   GetMonthName,
   NumInWords,
   printDate,
-  readCSVFile,
+  readCSVFileV2,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
 import WBTPTAPaySLip from "../../pdfs/WBTPTAPaySLip";
@@ -154,8 +154,8 @@ const PayslipWbtpta = () => {
   };
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
-    const q2 = await readCSVFile(`april-2024`);
+    const q1 = await readCSVFileV2(`${month.toLowerCase()}-${year}`, year);
+    const q2 = await readCSVFileV2(`april-2024`, 2024);
     const monthSalary = q1?.filter((el) => el.id === stateObject.id)[0];
     const aprilSalary = q2?.filter((el) => el.id === stateObject.id)[0];
     if (month === "July" && year === 2024 && aprilSalary?.basic > 0) {

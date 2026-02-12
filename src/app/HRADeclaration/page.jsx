@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/Store";
 import { useRouter } from "next/navigation";
-import { readCSVFile, titleCase } from "../../modules/calculatefunctions";
+import { readCSVFileV2, titleCase } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
 import HRADeclaration from "../../pdfs/HRADeclaration";
 import Loader from "../../components/Loader";
@@ -14,7 +14,7 @@ export default function HRA() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, stateObject } = useGlobalContext();
   const router = useRouter();
@@ -61,7 +61,7 @@ export default function HRA() {
 
   const getSalary = async () => {
     setLoader(true);
-    const q1 = await readCSVFile(`${salaryMonth}-${year}`);
+    const q1 = await readCSVFileV2(`${salaryMonth}-${year}`, year);
     const monthSalary = q1?.filter((el) => el.id === id)[0];
     const basicpay = monthSalary?.basic;
     const hra =
@@ -240,7 +240,7 @@ export default function HRA() {
                               ...salary,
                               spouseBasic: parseInt(e.target.value),
                               spouseHra: Math.round(
-                                parseInt(e.target.value) * 0.12
+                                parseInt(e.target.value) * 0.12,
                               ),
                             });
                           }}

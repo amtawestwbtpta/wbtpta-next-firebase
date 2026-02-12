@@ -10,7 +10,7 @@ import {
   CalculateIncomeTax,
   createDownloadLink,
   createYearArray,
-  readCSVFile,
+  readCSVFileV2,
 } from "../../modules/calculatefunctions";
 import { firestore } from "../../context/FirebaseContext";
 import Loader from "../../components/Loader";
@@ -463,7 +463,7 @@ export default function IncomeTaxReloded() {
   const [nextYear, setNextYear] = useState(date.getFullYear() + 1);
   const [prevYear, setPrevYear] = useState(date.getFullYear() - 1);
   const [finYear, setFinYear] = useState(`${thisYear}-${nextYear}`);
-  const yearArray = createYearArray(2024);
+  const yearArray = createYearArray(2023);
   const [showYearSelection, setShowYearSelection] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showOldModal, setShowOldModal] = useState(false);
@@ -1931,22 +1931,11 @@ export default function IncomeTaxReloded() {
         console.log(e);
       });
   };
-  // const getSalary = async (year, finYear) => {
-  //   setLoader(true);
-  //   const respronse = await axios.get(
-  //     `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${finYear}/Salary-${year}.json`,
-  //   );
-  //   const data = respronse.data;
-  //   const thisTeacher = data?.filter((teacher) => teacher?.id === USER.id);
-  //   setSalary(state === "admin" ? data : thisTeacher);
-  //   setFilteredData(state === "admin" ? data : thisTeacher);
-  //   setSalaryState(data);
-  //   setLoader(false);
-  // };
+
   const getSalary = async (year) => {
     setLoader(true);
     const respronse = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary-${year}.json`,
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${year}/Salary-${year}.json`,
     );
     const data = respronse.data;
     const thisTeacher = data?.filter((teacher) => teacher?.id === USER.id);
@@ -1957,18 +1946,18 @@ export default function IncomeTaxReloded() {
   };
   const getMonthlySalary = async (thisYear, prevYear) => {
     setLoader(false);
-    const q1 = await readCSVFile(`january-${thisYear}`);
-    const q2 = await readCSVFile(`february-${thisYear}`);
-    const q3 = await readCSVFile(`march-${prevYear}`);
-    const q4 = await readCSVFile(`april-${prevYear}`);
-    const q5 = await readCSVFile(`may-${prevYear}`);
-    const q6 = await readCSVFile(`june-${prevYear}`);
-    const q7 = await readCSVFile(`july-${prevYear}`);
-    const q8 = await readCSVFile(`august-${prevYear}`);
-    const q9 = await readCSVFile(`september-${prevYear}`);
-    const q10 = await readCSVFile(`october-${prevYear}`);
-    const q11 = await readCSVFile(`november-${prevYear}`);
-    const q12 = await readCSVFile(`december-${prevYear}`);
+    const q1 = await readCSVFileV2(`january-${thisYear}`, thisYear);
+    const q2 = await readCSVFileV2(`february-${thisYear}`, thisYear);
+    const q3 = await readCSVFileV2(`march-${prevYear}`, prevYear);
+    const q4 = await readCSVFileV2(`april-${prevYear}`, prevYear);
+    const q5 = await readCSVFileV2(`may-${prevYear}`, prevYear);
+    const q6 = await readCSVFileV2(`june-${prevYear}`, prevYear);
+    const q7 = await readCSVFileV2(`july-${prevYear}`, prevYear);
+    const q8 = await readCSVFileV2(`august-${prevYear}`, prevYear);
+    const q9 = await readCSVFileV2(`september-${prevYear}`, prevYear);
+    const q10 = await readCSVFileV2(`october-${prevYear}`, prevYear);
+    const q11 = await readCSVFileV2(`november-${prevYear}`, prevYear);
+    const q12 = await readCSVFileV2(`december-${prevYear}`, prevYear);
 
     setJanuary(q1);
     setFebruary(q2);
@@ -1999,50 +1988,7 @@ export default function IncomeTaxReloded() {
     });
     setLoader(false);
   };
-  // const getMonthlySalary = async (thisYear, prevYear, finYear) => {
-  //   setLoader(false);
-  //   const q1 = await readCSVFileV2(`january-${thisYear}`, finYear);
-  //   const q2 = await readCSVFileV2(`february-${thisYear}`, finYear);
-  //   const q3 = await readCSVFileV2(`march-${prevYear}`, finYear);
-  //   const q4 = await readCSVFileV2(`april-${prevYear}`, finYear);
-  //   const q5 = await readCSVFileV2(`may-${prevYear}`, finYear);
-  //   const q6 = await readCSVFileV2(`june-${prevYear}`, finYear);
-  //   const q7 = await readCSVFileV2(`july-${prevYear}`, finYear);
-  //   const q8 = await readCSVFileV2(`august-${prevYear}`, finYear);
-  //   const q9 = await readCSVFileV2(`september-${prevYear}`, finYear);
-  //   const q10 = await readCSVFileV2(`october-${prevYear}`, finYear);
-  //   const q11 = await readCSVFileV2(`november-${prevYear}`, finYear);
-  //   const q12 = await readCSVFileV2(`december-${prevYear}`, finYear);
 
-  //   setJanuary(q1);
-  //   setFebruary(q2);
-  //   setMarch(q3);
-  //   setApril(q4);
-  //   setMay(q5);
-  //   setJune(q6);
-  //   setJuly(q7);
-  //   setAugust(q8);
-  //   setSeptember(q9);
-  //   setOctober(q10);
-  //   setNovember(q11);
-  //   setDecember(q12);
-  //   setLoader(true);
-  //   setIndSalaryState({
-  //     march: q1,
-  //     april: q2,
-  //     may: q3,
-  //     june: q4,
-  //     july: q5,
-  //     august: q6,
-  //     september: q7,
-  //     october: q8,
-  //     november: q9,
-  //     december: q10,
-  //     january: q11,
-  //     february: q12,
-  //   });
-  //   setLoader(false);
-  // };
   useEffect(() => {
     getDeduction();
 

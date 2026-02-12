@@ -884,9 +884,9 @@ export const readCSVFile = async (fileName) => {
   });
   return parsedData;
 };
-export const readCSVFileV2 = async (fileName, finYear) => {
+export const readCSVFileV2 = async (fileName, year) => {
   const response = await axios.get(
-    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${finYear}/${fileName}.csv`,
+    `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${year}/${fileName}.csv`,
   );
   const { data: text } = response;
   const rows = text.split("\n").filter((row) => row.trim());

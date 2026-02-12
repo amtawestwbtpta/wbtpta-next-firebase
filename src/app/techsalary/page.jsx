@@ -8,7 +8,7 @@ import {
   GetMonthName,
   RoundTo,
   months,
-  readCSVFile,
+  readCSVFileV2,
 } from "../../modules/calculatefunctions";
 import ropa from "../../modules/ropa";
 import axios from "axios";
@@ -23,16 +23,12 @@ const TechSalary = () => {
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(
-    today.getMonth() === 0 ? 11 : today.getMonth() - 1,
-  );
   const [month, setMonth] = useState(
     GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
   );
   const [year, setYear] = useState(
     today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear(),
   );
-  const lastmonth = GetMonthName(today.getMonth() - 1);
   const lastMonthIndex = today.getMonth();
   const startYear = 2023;
   const monthNames = [
@@ -74,8 +70,8 @@ const TechSalary = () => {
 
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const q1 = await readCSVFile(`${month.toLowerCase()}-${year}`);
-    const q2 = await readCSVFile(`april-2024`);
+    const q1 = await readCSVFileV2(`${month.toLowerCase()}-${year}`, year);
+    const q2 = await readCSVFileV2(`april-2024`, 2024);
     setLoader(false);
     setMonthSalary(q1);
     setAprilSalary(q2);

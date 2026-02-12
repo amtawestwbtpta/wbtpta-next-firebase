@@ -8,7 +8,7 @@ import {
   randBetween,
   roundSo,
   CalculateIncomeTax,
-  readCSVFile,
+  readCSVFileV2,
   createYearArray,
 } from "../../modules/calculatefunctions";
 import dynamic from "next/dynamic";
@@ -24,7 +24,7 @@ export default function Form16NewPage() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -136,10 +136,10 @@ export default function Form16NewPage() {
   const septemberBasic = septemberSalary?.basic;
   const septemberAddl = septemberSalary?.addl;
   const septemberDA = Math.round(
-    septemberSalary?.basic * septemberSalary?.daPercent
+    septemberSalary?.basic * septemberSalary?.daPercent,
   );
   const septemberHRA = Math.round(
-    septemberSalary?.basic * septemberSalary?.hraPercent
+    septemberSalary?.basic * septemberSalary?.hraPercent,
   );
   const septemberMA = septemberSalary?.ma;
   const septemberGross =
@@ -153,7 +153,7 @@ export default function Form16NewPage() {
   const octoberAddl = octoberSalary?.addl;
   const octoberDA = Math.round(octoberSalary?.basic * octoberSalary?.daPercent);
   const octoberHRA = Math.round(
-    octoberSalary?.basic * octoberSalary?.hraPercent
+    octoberSalary?.basic * octoberSalary?.hraPercent,
   );
   const octoberMA = octoberSalary?.ma;
   const octoberGross =
@@ -166,10 +166,10 @@ export default function Form16NewPage() {
   const novemberBasic = novemberSalary?.basic;
   const novemberAddl = novemberSalary?.addl;
   const novemberDA = Math.round(
-    novemberSalary?.basic * novemberSalary?.daPercent
+    novemberSalary?.basic * novemberSalary?.daPercent,
   );
   const novemberHRA = Math.round(
-    novemberSalary?.basic * novemberSalary?.hraPercent
+    novemberSalary?.basic * novemberSalary?.hraPercent,
   );
   const novemberMA = novemberSalary?.ma;
   const novemberGross =
@@ -182,10 +182,10 @@ export default function Form16NewPage() {
   const decemberBasic = decemberSalary?.basic;
   const decemberAddl = decemberSalary?.addl;
   const decemberDA = Math.round(
-    decemberSalary?.basic * decemberSalary?.daPercent
+    decemberSalary?.basic * decemberSalary?.daPercent,
   );
   const decemberHRA = Math.round(
-    decemberSalary?.basic * decemberSalary?.hraPercent
+    decemberSalary?.basic * decemberSalary?.hraPercent,
   );
   const decemberMA = decemberSalary?.ma;
   const decemberGross =
@@ -199,7 +199,7 @@ export default function Form16NewPage() {
   const januaryAddl = januarySalary?.addl;
   const januaryDA = Math.round(januarySalary?.basic * januarySalary?.daPercent);
   const januaryHRA = Math.round(
-    januarySalary?.basic * januarySalary?.hraPercent
+    januarySalary?.basic * januarySalary?.hraPercent,
   );
   const januaryMA = januarySalary?.ma;
   const januaryGross =
@@ -212,10 +212,10 @@ export default function Form16NewPage() {
   const februaryBasic = februarySalary?.basic;
   const februaryAddl = februarySalary?.addl;
   const februaryDA = Math.round(
-    februarySalary?.basic * februarySalary?.daPercent
+    februarySalary?.basic * februarySalary?.daPercent,
   );
   const februaryHRA = Math.round(
-    februarySalary?.basic * februarySalary?.hraPercent
+    februarySalary?.basic * februarySalary?.hraPercent,
   );
   const februaryMA = februarySalary?.ma;
   const februaryGross =
@@ -361,18 +361,18 @@ export default function Form16NewPage() {
 
   const getMonthlySalary = async (thisYear, prevYear) => {
     setLoader(true);
-    const q1 = await readCSVFile(`january-${thisYear}`);
-    const q2 = await readCSVFile(`february-${thisYear}`);
-    const q3 = await readCSVFile(`march-${prevYear}`);
-    const q4 = await readCSVFile(`april-${prevYear}`);
-    const q5 = await readCSVFile(`may-${prevYear}`);
-    const q6 = await readCSVFile(`june-${prevYear}`);
-    const q7 = await readCSVFile(`july-${prevYear}`);
-    const q8 = await readCSVFile(`august-${prevYear}`);
-    const q9 = await readCSVFile(`september-${prevYear}`);
-    const q10 = await readCSVFile(`october-${prevYear}`);
-    const q11 = await readCSVFile(`november-${prevYear}`);
-    const q12 = await readCSVFile(`december-${prevYear}`);
+    const q1 = await readCSVFileV2(`january-${thisYear}`, thisYear);
+    const q2 = await readCSVFileV2(`february-${thisYear}`, thisYear);
+    const q3 = await readCSVFileV2(`march-${prevYear}`, prevYear);
+    const q4 = await readCSVFileV2(`april-${prevYear}`, prevYear);
+    const q5 = await readCSVFileV2(`may-${prevYear}`, prevYear);
+    const q6 = await readCSVFileV2(`june-${prevYear}`, prevYear);
+    const q7 = await readCSVFileV2(`july-${prevYear}`, prevYear);
+    const q8 = await readCSVFileV2(`august-${prevYear}`, prevYear);
+    const q9 = await readCSVFileV2(`september-${prevYear}`, prevYear);
+    const q10 = await readCSVFileV2(`october-${prevYear}`, prevYear);
+    const q11 = await readCSVFileV2(`november-${prevYear}`, prevYear);
+    const q12 = await readCSVFileV2(`december-${prevYear}`, prevYear);
 
     setJanuary(q1);
     setFebruary(q2);

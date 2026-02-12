@@ -8,7 +8,7 @@ import {
   getCurrentDateInput,
   getSubmitDateInput,
   IndianFormat,
-  readCSVFile,
+  readCSVFileV2,
   titleCase,
 } from "../../modules/calculatefunctions";
 
@@ -38,7 +38,7 @@ export default function Page() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const router = useRouter();
   const { state, stateObject } = useGlobalContext();
@@ -265,7 +265,7 @@ export default function Page() {
     try {
       const q = query(
         collection(firestore, "epension"),
-        where("id", "==", inputField.id)
+        where("id", "==", inputField.id),
       );
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs.length === 0) {
@@ -290,7 +290,7 @@ export default function Page() {
     try {
       const salaryMonth = await getRetirementMonthYear();
       setLoader(true);
-      const q1 = await readCSVFile(salaryMonth);
+      const q1 = await readCSVFileV2(salaryMonth, salaryMonth.split("-")[1]);
 
       const techersSalary = q1?.filter((el) => el.id === id)[0];
       const { basic, daPercent, hraPercent, addl, ma, gpf, gsli, disability } =
@@ -410,7 +410,7 @@ export default function Page() {
   const downloadEpensiondata = async () => {
     setLoader(true);
     const querySnapshot = await getDocs(
-      query(collection(firestore, "epension"))
+      query(collection(firestore, "epension")),
     );
     const data = querySnapshot.docs.map((doc) => ({
       // doc.data() is never undefined for query doc snapshots
