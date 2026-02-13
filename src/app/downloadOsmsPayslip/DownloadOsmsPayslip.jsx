@@ -2,11 +2,7 @@
 import ropa from "../../modules/ropa";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  GetMonthName,
-  readCSVFileV2,
-  readCSVFileV2,
-} from "../../modules/calculatefunctions";
+import { GetMonthName, readCSVFileV2 } from "../../modules/calculatefunctions";
 import OSMSPaySLip from "../../pdfs/OSMSPaySLip";
 import dynamic from "next/dynamic";
 
