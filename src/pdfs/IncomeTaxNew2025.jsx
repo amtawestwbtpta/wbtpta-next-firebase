@@ -3230,7 +3230,7 @@ export default function IncomeTaxNew2025({ data }) {
                 ]}
               >
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.text]}>Designation:-</Text>
+                  <Text style={[styles.text]}>Designation:- {desig}</Text>
                 </View>
                 <View style={{ width: "50%" }}>
                   <Text style={[styles.text]}> </Text>

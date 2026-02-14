@@ -1464,7 +1464,7 @@ export default function IncomeTaxOld2025({ data }) {
                       <Text style={styles.text8}>
                         Rs.{" "}
                         {IndianFormat(
-                          AllGross + BankInterest + IntFrDeposit - 50000
+                          AllGross + BankInterest + IntFrDeposit - 50000,
                         )}
                       </Text>
                     </View>
@@ -1699,7 +1699,7 @@ export default function IncomeTaxOld2025({ data }) {
                             BankInterest +
                             IntFrDeposit -
                             50000 -
-                            grossPTax
+                            grossPTax,
                         )}
                       </Text>
                     </View>
@@ -1875,7 +1875,7 @@ export default function IncomeTaxOld2025({ data }) {
                             BankInterest -
                             50000 -
                             grossPTax -
-                            hbLoanInterest
+                            hbLoanInterest,
                         )}
                       </Text>
                     </View>
@@ -2414,7 +2414,7 @@ export default function IncomeTaxOld2025({ data }) {
                             50000 -
                             grossPTax -
                             hbLoanInterest -
-                            limitVIA
+                            limitVIA,
                         )}
                       </Text>
                     </View>
@@ -2536,7 +2536,7 @@ export default function IncomeTaxOld2025({ data }) {
                             50000 -
                             grossPTax -
                             hbLoanInterest -
-                            limitVIA
+                            limitVIA,
                         )}
                       </Text>
                     </View>
@@ -3176,8 +3176,8 @@ export default function IncomeTaxOld2025({ data }) {
                         TotalRoundOffIncome < 1000000
                           ? IndianFormat(
                               Math.round(
-                                ((TotalRoundOffIncome - 500000) * 20) / 100
-                              )
+                                ((TotalRoundOffIncome - 500000) * 20) / 100,
+                              ),
                             )
                           : "NIL"}
                       </Text>
@@ -3218,8 +3218,8 @@ export default function IncomeTaxOld2025({ data }) {
                         {TotalRoundOffIncome > 1000000
                           ? IndianFormat(
                               Math.round(
-                                ((TotalRoundOffIncome - 1000000) * 30) / 100
-                              )
+                                ((TotalRoundOffIncome - 1000000) * 30) / 100,
+                              ),
                             )
                           : "NIL"}
                       </Text>
@@ -4401,7 +4401,7 @@ export default function IncomeTaxOld2025({ data }) {
                 ]}
               >
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.text]}>Designation:-</Text>
+                  <Text style={[styles.text]}>Designation:- {desig}</Text>
                 </View>
                 <View style={{ width: "50%" }}>
                   <Text style={[styles.text]}> </Text>

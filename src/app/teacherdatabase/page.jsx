@@ -26,7 +26,18 @@ import { createDownloadLink } from "../../modules/calculatefunctions";
 import bcrypt from "bcryptjs";
 import { notifyAll } from "../../modules/notification";
 import axios from "axios";
+import { keysData } from "@/modules/constants";
+import TeacherList from "@/pdfs/TeacherList";
+import dynamic from "next/dynamic";
 const TeacherDatabase = () => {
+  const PDFDownloadLink = dynamic(
+    async () =>
+      await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+    {
+      ssr: false,
+      loading: () => <p>Please Wait...</p>,
+    },
+  );
   const {
     state,
     teachersState,
@@ -80,11 +91,14 @@ const TeacherDatabase = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [progress, setProgress] = useState(0);
   const [showPercent, setShowPercent] = useState(false);
-
+  const [isclicked, setIsclicked] = useState(false);
+  const [isAmtaTeacher, setIsAmtaTeacher] = useState(false);
+  const [showDownload, setShowDownload] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState(["phone"]);
   const userData = async () => {
     setLoader(true);
     let newDatas = teachersState.sort(
-      (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank
+      (a, b) => a.school.localeCompare(b.school) && b.rank > a.rank,
     );
     setData(newDatas);
     setFilteredData(newDatas);
@@ -168,7 +182,7 @@ const TeacherDatabase = () => {
           onClick={() => {
             // eslint-disable-next-line
             let conf = confirm(
-              `Are you sure you want to Delete Teacher ${row.tname}?`
+              `Are you sure you want to Delete Teacher ${row.tname}?`,
             );
             if (conf) {
               deleteTeacher(row);
@@ -243,7 +257,7 @@ const TeacherDatabase = () => {
           onClick={() => {
             // eslint-disable-next-line
             let conf = confirm(
-              `Are you sure you want to Restore Teacher ${row.tname}?`
+              `Are you sure you want to Restore Teacher ${row.tname}?`,
             );
             if (conf) {
               restoreTeacher(row);
@@ -419,7 +433,7 @@ const TeacherDatabase = () => {
     setLoader(true);
     const filestorageRef = ref(
       storage,
-      `/profileImage/${user.id + "-" + file.name}`
+      `/profileImage/${user.id + "-" + file.name}`,
     );
     const uploadTask = uploadBytesResumable(filestorageRef, file);
     uploadTask.on(
@@ -427,7 +441,7 @@ const TeacherDatabase = () => {
       (snapshot) => {
         setShowPercent(true);
         const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
         );
 
         // // update progress
@@ -466,7 +480,7 @@ const TeacherDatabase = () => {
               .then(async () => {
                 await setDoc(
                   doc(firestore, "userteachers", techerData.id),
-                  techerData
+                  techerData,
                 );
                 await setDoc(doc(firestore, "profileImage", techerData.id), {
                   title: techerData.tname,
@@ -480,11 +494,11 @@ const TeacherDatabase = () => {
                       registered: true,
                     });
                     let x = teachersState.filter(
-                      (el) => el.id === techerData.id
+                      (el) => el.id === techerData.id,
                     )[0];
                     x.registered = true;
                     let y = teachersState.filter(
-                      (el) => el.id !== techerData.id
+                      (el) => el.id !== techerData.id,
                     );
                     y = [...y, x];
                     const newData = y.sort((a, b) => {
@@ -512,7 +526,7 @@ const TeacherDatabase = () => {
                     await notifyAll(title, body).then(async () => {
                       setLoader(false);
                       toast.success(
-                        `Congratulation ${techerData.tname} Is Successfully Registered!`
+                        `Congratulation ${techerData.tname} Is Successfully Registered!`,
                       );
                       setFile({});
                       setSrc(null);
@@ -538,7 +552,7 @@ const TeacherDatabase = () => {
             console.log(e.response.data.data);
           }
         });
-      }
+      },
     );
   };
 
@@ -569,7 +583,9 @@ const TeacherDatabase = () => {
       />
       {showTable && !showDelTeachers ? (
         <>
-          <h3 className="text-center text-primary">Displaying Teachers Data</h3>
+          <h3 className="text-center text-primary">
+            All {isclicked && "WBTPTA"} Teacher's Data
+          </h3>
           <div className="mx-auto m-2">
             <p className="text-info m-0 p-0">
               Total Teachers: {teachersState.length}
@@ -630,7 +646,137 @@ const TeacherDatabase = () => {
           >
             Download School Data
           </button>
+          <div>
+            {!isclicked ? (
+              <button
+                type="button"
+                className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setFilteredData(
+                    teachersState.filter((el) => el.association === "WBTPTA"),
+                  );
+                  setIsclicked(true);
+                }}
+              >
+                Only WBTPTA Teachers
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-info text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setFilteredData(teachersState);
+                  setIsclicked(false);
+                }}
+              >
+                All Teachers
+              </button>
+            )}
+          </div>
+          <div>
+            {!isAmtaTeacher ? (
+              <button
+                type="button"
+                className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setFilteredData(
+                    isclicked
+                      ? filteredData.filter((el) => el.isAmtaTeacher)
+                      : teachersState.filter((el) => el.isAmtaTeacher),
+                  );
+                  setIsAmtaTeacher(true);
+                }}
+              >
+                Only Amta Teachers
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
+                onClick={() => {
+                  setFilteredData(teachersState);
+                  setIsAmtaTeacher(false);
+                }}
+              >
+                All Teachers
+              </button>
+            )}
+          </div>
 
+          <button
+            type="button"
+            className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
+            onClick={() => setShowDownload(!showDownload)}
+          >
+            {showDownload ? "Hide Download PDF List" : "Show Download PDF List"}
+          </button>
+          {showDownload && (
+            <div className="my-3">
+              <div className="row mx-auto my-3 noprint">
+                <h5 className="text-center my-2">Select Keys for Download</h5>
+                {keysData.map((el, ind) => (
+                  <div
+                    className="col-md-3 form-check form-switch"
+                    key={ind}
+                    style={{ textAlign: "left" }}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id={`flexSwitchCheckDefault${ind}`}
+                      value={el.keyName}
+                      checked={selectedKeys.includes(el.keyName)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedKeys([...selectedKeys, e.target.value]);
+                        } else {
+                          setSelectedKeys(
+                            selectedKeys.filter((el) => el !== e.target.value),
+                          );
+                        }
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={`flexSwitchCheckDefault${ind}`}
+                    >
+                      {el.displayName}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              <PDFDownloadLink
+                document={
+                  <TeacherList
+                    data={filteredData}
+                    title={`All ${isclicked ? (isAmtaTeacher ? "WBTPTA Amta" : "WBTPTA") : ""} Teacher's Data`}
+                    keys={selectedKeys}
+                  />
+                }
+                fileName={`All ${isclicked ? (isAmtaTeacher ? "WBTPTA Amta" : "WBTPTA") : ""} Teacher's Data.pdf`}
+                style={{
+                  textDecoration: "none",
+                  padding: 11,
+                  color: "#fff",
+                  backgroundColor: "purple",
+                  border: "1px solid #4a4a4a",
+                  width: "40%",
+                  borderRadius: 10,
+                  margin: 20,
+                }}
+                onClick={() =>
+                  setTimeout(() => {
+                    setShowDownload(false);
+                  }, 0)
+                }
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Please Wait..." : "Download Teacher List"
+                }
+              </PDFDownloadLink>
+            </div>
+          )}
           <DataTable
             columns={columns}
             data={filteredData}
@@ -653,8 +799,8 @@ const TeacherDatabase = () => {
                         teachersState.filter((el) =>
                           el.tname
                             .toLowerCase()
-                            .includes(e.target.value.toLowerCase())
-                        )
+                            .includes(e.target.value.toLowerCase()),
+                        ),
                       );
                     }}
                   />
@@ -671,8 +817,8 @@ const TeacherDatabase = () => {
                         teachersState.filter((el) =>
                           el.school
                             .toLowerCase()
-                            .includes(e.target.value.toLowerCase())
-                        )
+                            .includes(e.target.value.toLowerCase()),
+                        ),
                       );
                     }}
                   />
