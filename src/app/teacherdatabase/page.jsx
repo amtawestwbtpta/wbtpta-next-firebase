@@ -653,7 +653,11 @@ const TeacherDatabase = () => {
                 className="btn btn-success text-white font-weight-bold p-2 m-2 noprint rounded"
                 onClick={() => {
                   setFilteredData(
-                    teachersState.filter((el) => el.association === "WBTPTA"),
+                    isAmtaTeacher
+                      ? filteredData.filter((el) => el.association === "WBTPTA")
+                      : teachersState.filter(
+                          (el) => el.association === "WBTPTA",
+                        ),
                   );
                   setIsclicked(true);
                 }}
