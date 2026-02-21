@@ -327,8 +327,8 @@ const PaySlipOsmsNew = () => {
                   <div>
                     <img
                       className="img2"
-                      src="https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=f21c8d21-ac4e-4f2e-b416-2064d91ffe4f"
-                      style={{ position: "absolute", width: 80, left: 51 }}
+                      src="https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/images%2Fiosms.png?alt=media&token=b75b21dd-6543-423d-8415-a0356c2c6746"
+                      style={{ position: "absolute", width: 50, left: 51 }}
                       alt="OSMS LOGO"
                     />
                   </div>
