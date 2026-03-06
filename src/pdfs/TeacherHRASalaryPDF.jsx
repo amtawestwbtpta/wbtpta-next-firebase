@@ -101,7 +101,6 @@ export default function TeacherHRASalaryPDF({ data, title, monthSalary }) {
 
                 <View
                   style={{
-                    borderRightWidth: 1,
                     width: "10%",
                     height: 20,
                     justifyContent: "center",
@@ -186,7 +185,6 @@ export default function TeacherHRASalaryPDF({ data, title, monthSalary }) {
                       </View>
                       <View
                         style={{
-                          borderRightWidth: 1,
                           width: "10%",
                           height: 20,
                           justifyContent: "center",
