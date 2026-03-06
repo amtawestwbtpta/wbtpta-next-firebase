@@ -209,7 +209,7 @@ const MonthlyAWSalary = () => {
             <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
-                className="btn btn-info  p-2 rounded"
+                className="btn btn-primary p-2 rounded"
                 onClick={() =>
                   setFilteredData(
                     teachersState.filter((el) => el.association !== "WBTPTA"),
@@ -283,7 +283,7 @@ const MonthlyAWSalary = () => {
             <div className="mx-auto mb-3 noprint">
               <button
                 type="button"
-                className="btn btn-dark  p-2 rounded"
+                className="btn btn-primary  p-2 rounded"
                 onClick={() => {
                   setShowHRADldBtn(!showHRADldBtn);
                   if (showHRADldBtn) {
@@ -315,7 +315,7 @@ const MonthlyAWSalary = () => {
                     textDecoration: "none",
                     padding: 11,
                     color: "#fff",
-                    backgroundColor: "purple",
+                    backgroundColor: "darkgreen",
                     border: "1px solid #4a4a4a",
                     width: "40%",
                     borderRadius: 10,
