@@ -374,7 +374,7 @@ const YearWiseTeachers = () => {
                           title={`Year ${selectedYear} ${
                             isWBTPTA ? "WBTPTA" : ""
                           } Teachers List`}
-                          keys={["doj"]}
+                          keys={["doj", "phone"]}
                         />
                       }
                       fileName={`Year ${selectedYear} ${
