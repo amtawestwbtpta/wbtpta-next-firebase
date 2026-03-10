@@ -282,18 +282,18 @@ export default function LeaveProposalNew({ data }) {
                       leaveNature === "HPL"
                         ? 250
                         : leaveNature === "COMMUTED"
-                        ? 300
-                        : leaveNature === "MATERNITY"
-                        ? 390
-                        : leaveNature === "MEDICAL"
-                        ? 450
-                        : leaveNature === "LWP"
-                        ? 500
-                        : leaveNature === "CCL"
-                        ? 535
-                        : leaveNature === "PATERNITY"
-                        ? 60
-                        : 250,
+                          ? 300
+                          : leaveNature === "MATERNITY"
+                            ? 390
+                            : leaveNature === "MEDICAL"
+                              ? 450
+                              : leaveNature === "LWP"
+                                ? 500
+                                : leaveNature === "CCL"
+                                  ? 535
+                                  : leaveNature === "PATERNITY"
+                                    ? 60
+                                    : 250,
                   }}
                 />
               </View>
@@ -735,21 +735,21 @@ export default function LeaveProposalNew({ data }) {
                             height: 15,
                             width: 15,
                             position: "absolute",
-                            marginLeft: 0,
+                            marginLeft: leaveNature === "CCL" ? 40 : 0,
                             marginTop:
                               leaveNature === "COMMUTED"
                                 ? 0
                                 : leaveNature === "MATERNITY"
-                                ? 15
-                                : leaveNature === "MEDICAL"
-                                ? 28
-                                : leaveNature === "LWP"
-                                ? 45
-                                : leaveNature === "CCL"
-                                ? 42
-                                : leaveNature === "PATERNITY"
-                                ? 60
-                                : 60,
+                                  ? 15
+                                  : leaveNature === "MEDICAL"
+                                    ? 28
+                                    : leaveNature === "LWP"
+                                      ? 45
+                                      : leaveNature === "CCL"
+                                        ? 42
+                                        : leaveNature === "PATERNITY"
+                                          ? 60
+                                          : 60,
                           }}
                         />
                       )}
@@ -2205,16 +2205,16 @@ export default function LeaveProposalNew({ data }) {
                       leaveNature === "COMMUTED"
                         ? 60
                         : leaveNature === "MATERNITY"
-                        ? 120
-                        : leaveNature === "MEDICAL"
-                        ? 170
-                        : leaveNature === "LWP"
-                        ? 210
-                        : leaveNature === "CCL"
-                        ? 245
-                        : leaveNature === "PATERNITY"
-                        ? 285
-                        : 300,
+                          ? 120
+                          : leaveNature === "MEDICAL"
+                            ? 170
+                            : leaveNature === "LWP"
+                              ? 210
+                              : leaveNature === "CCL"
+                                ? 245
+                                : leaveNature === "PATERNITY"
+                                  ? 285
+                                  : 300,
                   }}
                 />
               )}
