@@ -8,6 +8,7 @@ import Loader from "../../components/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import TeacherSalaryPDF from "../../pdfs/TeacherSalaryPDF";
+import TeacherHRASalaryPDF from "../../pdfs/TeacherHRASalaryPDF";
 // import * as XLSX from "xlsx";
 const MonthlyAWSalary = () => {
   const PDFDownloadLink = dynamic(
@@ -25,21 +26,19 @@ const MonthlyAWSalary = () => {
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
   const [title, setTitle] = useState("");
+  const [prevTitle, setPrevTitle] = useState("");
   const [showDldBtn, setShowDldBtn] = useState(false);
+  const [showHRADldBtn, setShowHRADldBtn] = useState(false);
   const thisYear = new Date().getFullYear();
 
   const today = new Date();
   const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(
-    today.getMonth() === 0 ? 11 : today.getMonth() - 1,
-  );
   const [month, setMonth] = useState(
     GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
   );
   const [year, setYear] = useState(
     today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear(),
   );
-  const lastmonth = GetMonthName(today.getMonth() - 1);
   const lastMonthIndex = today.getMonth();
   const startYear = 2023;
   const monthNames = [
@@ -106,10 +105,14 @@ const MonthlyAWSalary = () => {
         : filteredData.length ===
             teachersState.filter((el) => el.association === "WBTPTA").length
           ? "WBTPTA Teachers"
-          : ""
+          : filteredData.length ===
+              teachersState.filter((el) => el.association !== "WBTPTA").length
+            ? "NOT WBTPTA Teachers"
+            : ""
     }${" "}Salary Data for The Month of ${month.toUpperCase()}' ${year} of Amta West Circle`;
     document.title = docTitle;
     setTitle(docTitle);
+    setPrevTitle(docTitle);
     // eslint-disable-next-line
   }, [filteredData, month, year]);
 
@@ -203,6 +206,19 @@ const MonthlyAWSalary = () => {
                 WBTPTA Teachers
               </button>
             </div>
+            <div className="mx-auto mb-3 noprint">
+              <button
+                type="button"
+                className="btn btn-primary p-2 rounded"
+                onClick={() =>
+                  setFilteredData(
+                    teachersState.filter((el) => el.association !== "WBTPTA"),
+                  )
+                }
+              >
+                OTHER Teachers
+              </button>
+            </div>
 
             <div className="mx-auto mb-3 col-md-2 noprint">
               <h6 className="text-primary">Select Salary Month:</h6>
@@ -262,14 +278,54 @@ const MonthlyAWSalary = () => {
                     loading ? "Please Wait..." : "Download Teacher Salary"
                   }
                 </PDFDownloadLink>
-                {/* <TeacherSalaryPDF
-                  data={filteredData}
-                  title={title}
-                  monthSalary={monthSalary}
-                  aprilSalary={aprilSalary}
-                  month={month}
-                  year={year}
-                /> */}
+              </div>
+            )}
+            <div className="mx-auto mb-3 noprint">
+              <button
+                type="button"
+                className="btn btn-primary  p-2 rounded"
+                onClick={() => {
+                  setShowHRADldBtn(!showHRADldBtn);
+                  if (showHRADldBtn) {
+                    setTitle(prevTitle);
+                  } else {
+                    setTitle(
+                      `HRA Data for The Month of ${month.toUpperCase()}' ${year} of Amta West Circle`,
+                    );
+                  }
+                }}
+              >
+                {showHRADldBtn
+                  ? "Hide HRA Download Button"
+                  : "Show HRA Download Button"}
+              </button>
+            </div>
+            {showHRADldBtn && (
+              <div className="my-4">
+                <PDFDownloadLink
+                  document={
+                    <TeacherHRASalaryPDF
+                      data={filteredData}
+                      title={title}
+                      monthSalary={monthSalary}
+                    />
+                  }
+                  fileName={`${title}.pdf`}
+                  style={{
+                    textDecoration: "none",
+                    padding: 11,
+                    color: "#fff",
+                    backgroundColor: "darkgreen",
+                    border: "1px solid #4a4a4a",
+                    width: "40%",
+                    borderRadius: 10,
+                    margin: 20,
+                  }}
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Please Wait..." : "Download Teacher HRA Salary"
+                  }
+                </PDFDownloadLink>
               </div>
             )}
             <h3 className="text-center text-primary">{title}</h3>
