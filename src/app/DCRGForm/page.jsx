@@ -32,7 +32,7 @@ export default function page() {
     {
       ssr: false,
       loading: () => <p>Please Wait...</p>,
-    }
+    },
   );
   const { state, stateObject } = useGlobalContext();
   const { id, tname, address } = stateObject;
@@ -303,6 +303,8 @@ export default function page() {
                       <option value="MOTHER">MOTHER</option>
                       <option value="SON">SON</option>
                       <option value="DAUGHTER">DAUGHTER</option>
+                      <option value="SISTER">SISTER</option>
+                      <option value="BROTHER">BROTHER</option>
                     </select>
                   </div>
                   <div className="m-3">
